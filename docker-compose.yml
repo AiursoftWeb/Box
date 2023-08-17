@@ -24,13 +24,14 @@ services:
     image: caddy
     volumes:
       - ./stage/configuration/caddy:/etc/caddy
-      - ./stage/logs:/var/log/caddy
+      - ./stage/logs/caddy:/var/log/caddy
     networks:
       - internal
     ports:
       - "2019:2019"
       - "2020:2020"
       - "2021:2021"
+      - "2022:2022"
 
   prometheus:
     depends_on:
@@ -39,16 +40,24 @@ services:
     image: prom/prometheus:v2.30.3
     volumes:
       - ./stage/configuration/prometheus:/etc/prometheus
-      # - ./stage/datastore/prometheus:/prometheus
+      - ./stage/datastore/prometheus:/prometheus
     environment:
       - TZ=UTC
     networks:
       - internal
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9090/-/ready"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
+
+  grafana:
+    depends_on:
+      - prometheus
+    restart: unless-stopped
+    image: grafana/grafana:8.1.5
+    volumes:
+      - ./stage/configuration/grafana:/etc/grafana
+      - ./stage/datastore/grafana:/var/lib/grafana
+    environment:
+      - TZ=UTC
+    networks:
+      - internal
 
   # mssql:
   #   restart: unless-stopped
@@ -65,24 +74,7 @@ services:
 
 
 
-  # grafana:
-  #   depends_on:
-  #     - prometheus
-  #   restart: unless-stopped
-  #   image: grafana/grafana:8.1.5
-  #   volumes:
-  #     - ./grafana_data:/var/lib/grafana
-  #   environment:
-  #     - TZ=UTC
-  #   networks:
-  #     - internal
-  #   healthcheck:
-  #     test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
-  #     interval: 30s
-  #     timeout: 10s
-  #     retries: 5
-  #   ports:
-  #     - "3000:3000"
+
 
   # jellyfin:
   #   restart: unless-stopped
