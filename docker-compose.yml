@@ -1,0 +1,145 @@
+version: '3'
+
+networks:
+  internal:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.0.0.0/8
+
+services:
+  remotely:
+    restart: unless-stopped
+    image: immybot/remotely
+    volumes:
+      - ./stage/configuration/remotely:/remotely-data
+    networks:
+      - internal
+    ports:
+      - "5000:5000"
+
+  # mssql:
+  #   restart: unless-stopped
+  #   image: mcr.microsoft.com/mssql/server
+  #   volumes:
+  #     - ./mssql-store:/var/opt/mssql
+  #   environment:
+  #     - ACCEPT_EULA=Y
+  #     - SA_PASSWORD=<-Passw0rd@1234->
+  #   networks:
+  #     - internal
+  #   ports:
+  #     - "1433:1433"
+
+  # prometheus:
+  #   depends_on:
+  #     - caddy
+  #   restart: unless-stopped
+  #   image: prom/prometheus:v2.30.3
+  #   volumes:
+  #     - ./prometheus:/etc/prometheus
+  #   environment:
+  #     - TZ=UTC
+  #   networks:
+  #     - internal
+  #   healthcheck:
+  #     test: ["CMD", "curl", "-f", "http://localhost:9090/-/ready"]
+  #     interval: 30s
+  #     timeout: 10s
+  #     retries: 5
+  #   ports:
+  #     - "9090:9090"
+
+  # grafana:
+  #   depends_on:
+  #     - prometheus
+  #   restart: unless-stopped
+  #   image: grafana/grafana:8.1.5
+  #   volumes:
+  #     - ./grafana_data:/var/lib/grafana
+  #   environment:
+  #     - TZ=UTC
+  #   networks:
+  #     - internal
+  #   healthcheck:
+  #     test: ["CMD", "curl", "-f", "http://localhost:3000/api/health"]
+  #     interval: 30s
+  #     timeout: 10s
+  #     retries: 5
+  #   ports:
+  #     - "3000:3000"
+
+  # jellyfin:
+  #   restart: unless-stopped
+  #   image: jellyfin/jellyfin
+  #   volumes:
+  #     - ./jellyfin-config:/config
+  #     - ./jellyfin-cache:/cache
+  #   networks:
+  #     - internal
+  #   ports:
+  #     - "8096:8096"
+
+  # caddy:
+  #   restart: unless-stopped
+  #   image: caddy
+  #   volumes:
+  #     - ./caddy-store:/etc/caddy
+  #   networks:
+  #     - internal
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+    
+  # memos:
+  #   restart: unless-stopped
+  #   image: ghcr.io/usememos/memos
+  #   volumes:
+  #     - ./memos-store:/var/opt/memos
+  #   networks:
+  #     - internal
+  #   ports:
+  #     - "5230:5230"
+    
+  # frpc:
+  #   restart: always
+  #   image: snowdreamtech/frpc
+  #   volumes:
+  #     - ./frpc-store:/etc/frp
+  #   networks:
+  #     - internal
+
+  # mariadb:
+  #   restart: always
+  #   image: mariadb
+  #   volumes:
+  #     - ./mardiadb-store:/var/lib/mysql
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: ROOT_SUPER_EVIL_PASSWORD@1234
+  #     MYSQL_DATABASE: MoongladePure
+  #     MYSQL_USER: WebApp
+  #     MYSQL_PASSWORD: WebApp@Passw0rd
+  #   networks:
+  #     - internal
+  #   ports:
+  #     - "3306:3306"
+
+  # moongladePure:
+  #   depends_on:
+  #     - mariadb
+  #   restart: always
+  #   image: anduin2019/moongladepure
+  #   volumes:
+  #     - ./moonpure-store:/mnt/datastore
+  #   environment:
+  #     ConnectionStrings__MoongladeDatabase: "Server=mariadb;Database=MoongladePure;Uid=WebApp;Pwd=WebApp@Passw0rd;"
+  #   networks:
+  #     - internal
+  #   healthcheck:
+  #     test: ["CMD", "curl", "-f", "http://localhost:80"]
+  #     interval: 30s
+  #     timeout: 10s
+  #     retries: 5
+  #   ports:
+  #     - "8080:80"
