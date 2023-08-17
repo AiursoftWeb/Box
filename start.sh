@@ -14,6 +14,7 @@ sleep 1
 echo "Setting permissions..."
 sudo chmod -R 777 ./stage/datastore
 sudo chmod -R 777 ./stage/logs
+sleep 3
 
 echo "Starting..."
 docker-compose up

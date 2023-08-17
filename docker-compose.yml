@@ -13,7 +13,8 @@ services:
     restart: unless-stopped
     image: immybot/remotely
     volumes:
-      - ./stage/configuration/remotely:/remotely-data
+      - ./stage/configuration/remotely/appsettings.json:/remotely-data/appsettings.json
+      - ./stage/datastore/remotely:/remotely-data
     networks:
       - internal
 
@@ -41,6 +42,7 @@ services:
     volumes:
       - ./stage/configuration/prometheus:/etc/prometheus
       - ./stage/datastore/prometheus:/prometheus
+      - ./stage/logs/prometheus:/prometheus/logs
     environment:
       - TZ=UTC
     networks:
@@ -54,10 +56,24 @@ services:
     volumes:
       - ./stage/configuration/grafana:/etc/grafana
       - ./stage/datastore/grafana:/var/lib/grafana
+      - ./stage/logs/grafana:/var/log/grafana
     environment:
       - TZ=UTC
     networks:
       - internal
+
+  # gitlab:
+  #   depends_on:
+  #     - caddy
+  #   restart: unless-stopped
+  #   image: gitlab/gitlab-ce:latest
+  #   volumes:
+  #     - ./stage/configuration/gitlab:/etc/gitlab
+  #     - ./stage/datastore/gitlab:/var/opt/gitlab
+  #   environment:
+  #     - TZ=UTC
+  #   networks:
+  #     - internal
 
   # mssql:
   #   restart: unless-stopped
