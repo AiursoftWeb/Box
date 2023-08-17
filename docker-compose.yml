@@ -6,9 +6,38 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet: 10.233.0.0/8
+        - subnet: 10.233.0.0/16
 
 services:
+
+  # Service A Moonglade Pure.
+  mariadb:
+    restart: always
+    image: mariadb:latest
+    volumes:
+      - ./stage/datastore/mariadb:/var/lib/mysql
+      - ./stage/logs/mariadb:/var/log/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ROOT_SUPER_EVIL_PASSWORD@1234
+      MYSQL_DATABASE: MoongladePure
+      MYSQL_USER: WebApp
+      MYSQL_PASSWORD: WebApp@Passw0rd
+    networks:
+      - internal
+
+  moongladepure:
+    depends_on:
+      - mariadb
+    restart: always
+    image: anduin2019/moongladepure:latest
+    volumes:
+      - ./stage/datastore/moongladepure:/mnt/datastore
+    environment:
+      ConnectionStrings__MoongladeDatabase: "Server=mariadb;Database=MoongladePure;Uid=WebApp;Pwd=WebApp@Passw0rd;"
+    networks:
+      - internal
+
+  # Service B Remotley.
   remotely:
     restart: unless-stopped
     image: immybot/remotely
@@ -21,6 +50,7 @@ services:
   caddy:
     depends_on:
       - remotely
+      - moongladepure
     restart: unless-stopped
     image: caddy
     volumes:
@@ -29,10 +59,12 @@ services:
     networks:
       - internal
     ports:
-      - "2019:2019"
-      - "2020:2020"
-      - "2021:2021"
-      - "2022:2022"
+      - "2019:2019" # Metrics
+      - "2020:2020" # Remotely
+      - "2021:2021" # Prometheus
+      - "2022:2022" # Grafana
+      - "2023:2023" # MoongladePure
+      - "2024:2024" # Jellyfin
 
   prometheus:
     depends_on:
@@ -59,6 +91,16 @@ services:
       - ./stage/logs/grafana:/var/log/grafana
     environment:
       - TZ=UTC
+    networks:
+      - internal
+
+  jellyfin:
+    restart: unless-stopped
+    image: jellyfin/jellyfin
+    volumes:
+      - ./stage/configuration/jellyfin/system.xml:/config/config/system.xml
+      - ./stage/datastore/jellyfin-movies:/mnt/movies
+      - ./stage/datastore/jellyfin-data:/config
     networks:
       - internal
 
@@ -123,36 +165,6 @@ services:
   #   networks:
   #     - internal
 
-  # mariadb:
-  #   restart: always
-  #   image: mariadb
-  #   volumes:
-  #     - ./mardiadb-store:/var/lib/mysql
-  #   environment:
-  #     MYSQL_ROOT_PASSWORD: ROOT_SUPER_EVIL_PASSWORD@1234
-  #     MYSQL_DATABASE: MoongladePure
-  #     MYSQL_USER: WebApp
-  #     MYSQL_PASSWORD: WebApp@Passw0rd
-  #   networks:
-  #     - internal
-  #   ports:
-  #     - "3306:3306"
 
-  # moongladePure:
-  #   depends_on:
-  #     - mariadb
-  #   restart: always
-  #   image: anduin2019/moongladepure
-  #   volumes:
-  #     - ./moonpure-store:/mnt/datastore
-  #   environment:
-  #     ConnectionStrings__MoongladeDatabase: "Server=mariadb;Database=MoongladePure;Uid=WebApp;Pwd=WebApp@Passw0rd;"
-  #   networks:
-  #     - internal
-  #   healthcheck:
-  #     test: ["CMD", "curl", "-f", "http://localhost:80"]
-  #     interval: 30s
-  #     timeout: 10s
-  #     retries: 5
-  #   ports:
-  #     - "8080:80"
+
+

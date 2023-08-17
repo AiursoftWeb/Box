@@ -46,3 +46,17 @@
     }
 }
 
+:2023 {
+    log
+    encode gzip
+    reverse_proxy http://moongladepure:80 {
+    }
+}
+
+:2024 {
+    log
+    encode gzip
+    reverse_proxy http://jellyfin:8096 {
+    }
+}
+
