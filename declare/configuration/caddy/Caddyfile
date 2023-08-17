@@ -1,0 +1,41 @@
+{
+    log {
+		output file /var/log/caddy/caddy.log {
+			roll_size 1gb
+			roll_uncompressed
+		}
+		level info
+	}
+
+    servers {
+        metrics
+    }
+}
+
+:2019 {
+    log
+    encode gzip
+
+    @metrics {
+		path /metrics
+	}
+
+	handle @metrics {
+        metrics
+	}
+}
+
+:2020 {
+    log
+    encode gzip
+    reverse_proxy http://remotely:5000 {
+    }
+}
+
+:2021 {
+    log
+    encode gzip
+    reverse_proxy http://prometheus:9090 {
+    }
+}
+

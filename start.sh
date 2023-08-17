@@ -9,7 +9,7 @@ sleep 1
 
 echo "Staging configuration..."
 cp -r ./declare/configuration ./stage/
-sleep 1
+sleep 3
 
 echo "Starting..."
 docker-compose up
