@@ -38,7 +38,7 @@ services:
     depends_on:
       - caddy
     restart: unless-stopped
-    image: prom/prometheus:v2.30.3
+    image: prom/prometheus:latest
     volumes:
       - ./stage/configuration/prometheus:/etc/prometheus
       - ./stage/datastore/prometheus:/prometheus
@@ -52,7 +52,7 @@ services:
     depends_on:
       - prometheus
     restart: unless-stopped
-    image: grafana/grafana:8.1.5
+    image: grafana/grafana:latest
     volumes:
       - ./stage/configuration/grafana:/etc/grafana
       - ./stage/datastore/grafana:/var/lib/grafana
