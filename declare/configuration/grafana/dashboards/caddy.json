@@ -603,7 +603,7 @@
         "targets": [
           {
 
-            "expr": "histogram_quantile(0.99, sum(rate(caddy_http_request_duration_seconds_bucket{handler=\"reverse_proxy\", service=\"[[service]]\", namespace=\"[[namespace]]\"}[1m])) by (le))",
+            "expr": "histogram_quantile(0.99, sum(rate(caddy_http_request_duration_seconds_bucket[1m])) by (le))",
             "interval": "",
             "legendFormat": "p99",
             "refId": "A"
@@ -686,60 +686,6 @@
       "caddy",
       "prometheus"
     ],
-    "templating": {
-      "list": [
-        {
-          "current": {
-            "isNone": true,
-            "selected": false,
-            "text": "None",
-            "value": ""
-          },
-
-          "definition": "label_values(caddy_admin_http_requests_total, service)",
-          "hide": 0,
-          "includeAll": false,
-          "label": "Service",
-          "multi": false,
-          "name": "service",
-          "options": [],
-          "query": "label_values(caddy_admin_http_requests_total, service)",
-          "refresh": 1,
-          "regex": "",
-          "skipUrlSync": false,
-          "sort": 1,
-          "tagValuesQuery": "",
-          "tagsQuery": "",
-          "type": "query",
-          "useTags": false
-        },
-        {
-          "current": {
-            "isNone": true,
-            "selected": false,
-            "text": "None",
-            "value": ""
-          },
-
-          "definition": "label_values(caddy_admin_http_requests_total, namespace)",
-          "hide": 0,
-          "includeAll": false,
-          "label": "Namespace",
-          "multi": false,
-          "name": "namespace",
-          "options": [],
-          "query": "label_values(caddy_admin_http_requests_total, namespace)",
-          "refresh": 1,
-          "regex": "",
-          "skipUrlSync": false,
-          "sort": 1,
-          "tagValuesQuery": "",
-          "tagsQuery": "",
-          "type": "query",
-          "useTags": false
-        }
-      ]
-    },
     "time": {
       "from": "now-6h",
       "to": "now"
@@ -757,7 +703,6 @@
         "1d"
       ]
     },
-    "timezone": "",
     "title": "Caddy Community",
     "uid": "TZBbz9TMk",
     "version": 9,
