@@ -8,11 +8,11 @@ sudo rm -rf ./stage/configuration
 sleep 1
 
 echo "Staging configuration..."
-mkdir -p ./stage
-mkdir -p ./stage/configuration
-mkdir -p ./stage/datastore
-mkdir -p ./stage/logs
-cp -r ./declare/configuration ./stage/
+sudo mkdir -p ./stage
+sudo mkdir -p ./stage/configuration
+sudo mkdir -p ./stage/datastore
+sudo mkdir -p ./stage/logs
+sudo cp -r ./declare/configuration ./stage/
 sleep 1
 
 echo "Setting permissions..."

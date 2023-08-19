@@ -98,7 +98,7 @@ services:
     restart: unless-stopped
     image: jellyfin/jellyfin
     volumes:
-      - ./stage/configuration/jellyfin/system.xml:/config/config/system.xml
+      # - ./stage/configuration/jellyfin/system.xml:/config/config/system.xml
       - ./stage/datastore/jellyfin-movies:/mnt/movies
       - ./stage/datastore/jellyfin-data:/config
     networks:
