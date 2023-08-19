@@ -4,7 +4,7 @@ docker-compose rm -f
 sleep 1
 
 echo "Cleaning staged configuration..."
-rm -rf ./stage/configuration
+sudo rm -rf ./stage/configuration
 sleep 1
 
 echo "Staging configuration..."
