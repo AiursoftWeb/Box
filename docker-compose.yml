@@ -52,8 +52,9 @@ services:
     restart: unless-stopped
     image: nextcloud:latest
     volumes:
-      - ./stage/configuration/nextcloud:/var/www/html
-      - ./stage/datastore/nextcloud:/var/www/html/data
+      - ./stage/configuration/nextcloud/config.php:/var/www/html/config/config.php
+      - ./stage/datastore/nextcloud-program:/var/www/html
+      - ./stage/datastore/nextcloud-files:/mnt/data
       - ./stage/logs/nextcloud:/var/log/apache2
     networks:
       - internal
