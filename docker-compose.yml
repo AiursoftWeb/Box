@@ -98,8 +98,11 @@ services:
     restart: unless-stopped
     image: jellyfin/jellyfin
     volumes:
-      - ./stage/configuration/jellyfin/:/config
-      - ./stage/datastore/jellyfin-cache/:/cache
+      - ./stage/configuration/jellyfin/config/:/config/config
+      - ./stage/configuration/jellyfin/root/:/config/root
+      - ./stage/datastore/jellyfin-data/:/config/data
+      - ./stage/datastore/jellyfin-movies/:/mnt/movies
+      - ./logs/jellyfin/:/config/logs
     networks:
       - internal
 

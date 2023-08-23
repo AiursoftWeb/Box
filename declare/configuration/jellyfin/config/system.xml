@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ServerConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <LogFileRetentionDays>3</LogFileRetentionDays>
-  <IsStartupWizardCompleted>false</IsStartupWizardCompleted>
-  <EnableMetrics>false</EnableMetrics>
+  <IsStartupWizardCompleted>true</IsStartupWizardCompleted>
+  <EnableMetrics>true</EnableMetrics>
   <EnableNormalizedItemByNameIds>true</EnableNormalizedItemByNameIds>
   <IsPortAuthorized>true</IsPortAuthorized>
   <QuickConnectAvailable>true</QuickConnectAvailable>
