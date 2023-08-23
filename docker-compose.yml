@@ -99,7 +99,7 @@ services:
     image: jellyfin/jellyfin
     volumes:
       - ./stage/configuration/jellyfin/:/config
-      - ./stage/configuration/jellyfin-cache/:/cache
+      - ./stage/datastore/jellyfin-cache/:/cache
     networks:
       - internal
 
