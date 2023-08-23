@@ -102,7 +102,7 @@ services:
       - ./stage/configuration/jellyfin/root/:/config/root
       - ./stage/datastore/jellyfin-data/:/config/data
       - ./stage/datastore/jellyfin-movies/:/mnt/movies
-      - ./stage/log/jellyfin/:/config/logs
+      - ./stage/logs/jellyfin/:/config/log
     networks:
       - internal
 
