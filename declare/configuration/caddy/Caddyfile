@@ -60,3 +60,10 @@
     }
 }
 
+:2025 {
+    log
+    encode gzip
+    reverse_proxy http://nextcloud:80 {
+    }
+}
+

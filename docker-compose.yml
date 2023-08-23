@@ -47,6 +47,17 @@ services:
     networks:
       - internal
 
+  # Service C Nextcloud.
+  nextcloud:
+    restart: unless-stopped
+    image: nextcloud:latest
+    volumes:
+      - ./stage/configuration/nextcloud:/var/www/html
+      - ./stage/datastore/nextcloud:/var/www/html/data
+      - ./stage/logs/nextcloud:/var/log/apache2
+    networks:
+      - internal
+
   caddy:
     depends_on:
       - remotely
@@ -65,6 +76,7 @@ services:
       - "2022:2022" # Grafana
       - "2023:2023" # MoongladePure
       - "2024:2024" # Jellyfin
+      - "2025:2025" # Nextcloud
 
   prometheus:
     depends_on:
