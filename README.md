@@ -1,5 +1,7 @@
 # Box
 
+[![ManHours](https://manhours.aiursoft.cn/gitlab/gitlab.aiursoft.cn/aiursoft/box)](https://gitlab.aiursoft.cn/aiursoft/box/-/commits/master?ref_type=heads)
+
 This project tries to describe a datacenter based on pure files and configuration:
 
 ```bash
