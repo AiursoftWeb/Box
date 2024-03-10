@@ -2,7 +2,7 @@ version: '3.3'
 
 services:
   app:
-    restart: unless-stopped
+    restart: always
     image: hub.aiursoft.cn/aiursoft/tracer:latest
     volumes:
       - tracer-data:/data
