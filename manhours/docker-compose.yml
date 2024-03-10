@@ -1,0 +1,22 @@
+version: '3.3'
+
+services:
+  manhours:
+    restart: always
+    image: hub.aiursoft.cn/aiursoft/manhours:latest
+    volumes:
+      - manhours-data:/data
+    networks:
+      - net
+    ports:
+      - 48467:5000
+    deploy:
+      replicas: 3
+
+networks:
+  net:
+    driver: overlay
+
+volumes:
+  manhours-data:
+    driver: local
