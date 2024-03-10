@@ -7,6 +7,8 @@ services:
       - manhours-data:/data
     ports:
       - 48467:5000
+    deploy:
+      replicas: 3
 
 volumes:
   manhours-data:
