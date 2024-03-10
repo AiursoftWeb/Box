@@ -12,7 +12,7 @@ services:
 
 volumes:
   manhours-data:
-    driver: local
+    driver: nfs
     driver_opts:
       type: "nfs"
       o: "addr=172.16.1.1,rw"
