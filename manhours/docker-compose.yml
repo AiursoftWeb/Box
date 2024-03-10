@@ -12,8 +12,4 @@ services:
 
 volumes:
   manhours-data:
-    driver: nfs
-    driver_opts:
-      type: "nfs"
-      o: "addr=health,rw"
-      device: ":/manhours"
+    driver: local

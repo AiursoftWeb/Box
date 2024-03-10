@@ -12,8 +12,4 @@ services:
 
 volumes:
   tracer-data:
-    driver: nfs
-    driver_opts:
-      type: "nfs"
-      o: "addr=health,rw"
-      device: ":/tracer"
+    driver: local

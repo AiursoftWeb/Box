@@ -85,14 +85,6 @@ networks:
 
 volumes:
   db-data:
-    driver: nfs
-    driver_opts:
-      type: "nfs"
-      o: "addr=health,rw"
-      device: ":/swarmpit/db"
+    driver: local
   influx-data:
-    driver: nfs
-    driver_opts:
-      type: "nfs"
-      o: "addr=health,rw"
-      device: ":/swarmpit/influxdb"
+    driver: local
