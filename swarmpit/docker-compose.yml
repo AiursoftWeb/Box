@@ -88,11 +88,11 @@ volumes:
     driver: nfs
     driver_opts:
       type: "nfs"
-      o: "addr=172.16.1.1,rw"
-      device: ":/mnt/data/swarmpit/db"
+      o: "addr=health,rw"
+      device: ":/swarmpit/db"
   influx-data:
     driver: nfs
     driver_opts:
       type: "nfs"
-      o: "addr=172.16.1.1,rw"
-      device: ":/mnt/data/swarmpit/influxdb"
+      o: "addr=health,rw"
+      device: ":/swarmpit/influxdb"
