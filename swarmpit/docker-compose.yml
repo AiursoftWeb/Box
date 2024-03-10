@@ -85,10 +85,14 @@ networks:
 
 volumes:
   db-data:
-    driver: nfs
+    driver: local
     driver_opts:
-      share: 172.16.1.1:/mnt/docker/swarmpit/db
+      type: "nfs"
+      o: "addr=172.16.1.1,rw"
+      device: ":/mnt/data/swarmpit/db"
   influx-data:
-    driver: nfs
+    driver: local
     driver_opts:
-      share: 172.16.1.1:/mnt/docker/swarmpit/influx
+      type: "nfs"
+      o: "addr=172.16.1.1,rw"
+      device: ":/mnt/data/swarmpit/influxdb"
