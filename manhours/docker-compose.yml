@@ -10,4 +10,6 @@ services:
 
 volumes:
   manhours-data:
-    driver: local
+    driver: nfs
+    driver_opts:
+      share: 172.16.1.1:/mnt/docker
