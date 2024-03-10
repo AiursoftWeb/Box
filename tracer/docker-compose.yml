@@ -1,0 +1,22 @@
+version: '3.3'
+
+services:
+  app:
+    restart: unless-stopped
+    image: hub.aiursoft.cn/aiursoft/tracer:latest
+    volumes:
+      - tracer-data:/data
+    networks:
+      - net
+    ports:
+      - 48466:5000
+    deploy:
+      replicas: 3
+
+networks:
+  net:
+    driver: overlay
+
+volumes:
+  tracer-data:
+    driver: local
