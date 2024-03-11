@@ -12,6 +12,12 @@ services:
 
 volumes:
   tracer-data:
-    driver: nfs
+    driver: local
     driver_opts:
-      share: 172.16.1.1:/mnt/docker/tracer
+      type: "nfs"
+      o: "addr=172.16.1.1,rw"
+      device: ":/mnt/docker/tracer"
+  # nfsdata:
+  #   driver: local
+  #   driver_opts:
+  #       type: "nfs"
