@@ -14,8 +14,7 @@ services:
   prometheus:
     depends_on:
       - web # Prometheus needs to be monitoring the web service
-    build: ./prometheus
-    image: customized/prometheus
+    image: hub.aiursoft.cn/anduin/sleepagent/customized-prometheus
     volumes:
       - prometheus-config:/etc/prometheus
       - prometheus-data:/prometheus
@@ -27,8 +26,7 @@ services:
   grafana:
     depends_on:
       - prometheus # Grafana needs to be using Prometheus as a data source
-    build: ./grafana
-    image: customized/grafana
+    image: hub.aiursoft.cn/anduin/sleepagent/customized-grafana
     volumes:
       - grafana-config:/etc/grafana
       - grafana-data:/var/lib/grafana
