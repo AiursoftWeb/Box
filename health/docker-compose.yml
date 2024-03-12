@@ -1,0 +1,52 @@
+version: '3'
+
+
+services:
+  web:
+    image: hub.aiursoft.cn/anduin/sleepagent
+    volumes:
+      - web-data:/data
+    networks:
+      - internal
+    ports:
+      - "48470:5000"
+
+  prometheus:
+    depends_on:
+      - web # Prometheus needs to be monitoring the web service
+    build: prometheus
+    volumes:
+      - prometheus-config:/etc/prometheus
+      - prometheus-data:/prometheus
+    environment:
+      - TZ=UTC
+    networks:
+      - internal
+
+  grafana:
+    depends_on:
+      - prometheus # Grafana needs to be using Prometheus as a data source
+    build: grafana
+    volumes:
+      - grafana-config:/etc/grafana
+      - grafana-data:/var/lib/grafana
+    networks:
+      - internal
+    ports:
+      - "48471:3000"
+
+networks:
+  internal:
+    driver: overlay
+
+volumes:
+  prometheus-config:
+    driver: local
+  prometheus-data:
+    driver: local
+  grafana-config:
+    driver: local
+  grafana-data:
+    driver: local
+  web-data:
+    driver: local
