@@ -1,0 +1,17 @@
+version: '3.3'
+
+services:
+  app:
+    image: hub.aiursoft.cn/aiursoft/stathub:latest
+    volumes:
+      - stathub-data:/data
+    ports:
+      - 48469:5000
+
+volumes:
+  stathub-data:
+    driver: local
+    # driver_opts:
+    #   type: "nfs"
+    #   o: "addr=172.16.1.1,rw,bg,hard,vers=3,proto=tcp,timeo=600,rsize=65536,wsize=65536,nointr"
+    #   device: ":/mnt/docker/manhours"
