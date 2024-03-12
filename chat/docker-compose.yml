@@ -16,6 +16,8 @@ services:
       - PORT=5000
     ports:
       - "48472:5000"
+    deploy:
+      replicas: 3
 
   api:
     image: hub.aiursoft.cn/aiursoft/gptgateway
@@ -27,6 +29,8 @@ services:
       - OpenAI__Instance=<----YOUR KEY---->
     networks:
       - internal
+    deploy:
+      replicas: 2
 
 networks:
   internal:
