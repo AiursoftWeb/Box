@@ -1,0 +1,38 @@
+version: '3'
+
+
+services:
+  chat:
+    depends_on:
+      - api
+    image: hub.aiursoft.cn/aiursoft/aiursoftchat
+    networks:
+      - internal
+    environment:
+      - HIDE_USER_API_KEY=1
+      - DISABLE_GPT4=1
+      - PROTOCOL=http
+      - BASE_URL=api:5000
+      - OPENAI_API_KEY=dummy
+      - PORT=5000
+    ports:
+      - "48472:5000"
+
+  api:
+    image: hub.aiursoft.cn/aiursoft/gptgateway
+    volumes:
+      - api-config:/data
+    environment:
+      - BingSearchAPIKey=<----YOUR KEY---->
+      - OpenAI__Token=<----YOUR KEY---->
+      - OpenAI__Instance=<----YOUR KEY---->
+    networks:
+      - internal
+
+networks:
+  internal:
+    driver: overlay
+
+volumes:
+  api-config:
+    driver: local
