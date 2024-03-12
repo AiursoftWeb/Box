@@ -1,0 +1,7 @@
+version: '3.3'
+
+services:
+  app:
+    image: hub.aiursoft.cn/anduin/gameoflife
+    ports:
+      - 48474:5000
