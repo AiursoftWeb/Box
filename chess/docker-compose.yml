@@ -1,0 +1,13 @@
+version: '3.3'
+
+services:
+  app:
+    image: hub.aiursoft.cn/aiursoft/chessserver:latest
+    volumes:
+      - chess-data:/data
+    ports:
+      - 48468:5000
+
+volumes:
+  chess-data:
+    driver: local
