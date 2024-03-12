@@ -9,7 +9,6 @@ sudo docker volume prune -f
 sudo docker volume rm $(sudo docker volume ls -q)
 sudo systemctl stop docker-store
 sudo rm /var/lib/docker-volumes/netshare/nfs -rf
-sudo find /var/lib/docker/volumes/ -type d -exec rm -rf {} \;
 sudo systemctl start docker-store
 
 ssh anduin@sworker1 'sudo docker kill $(sudo docker ps -q)'
