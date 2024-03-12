@@ -2,7 +2,7 @@ version: '3.3'
 
 services:
   app:
-    image: swarmpit/swarmpit:latest
+    image: hub.aiursoft.cn/swarmpit/swarmpit:latest
     environment:
       - SWARMPIT_DB=http://db:5984
       - SWARMPIT_INFLUXDB=http://influxdb:8086
@@ -30,7 +30,7 @@ services:
           - node.role == manager
 
   db:
-    image: couchdb:2.3.0
+    image: hub.aiursoft.cn/couchdb:2.3.0
     volumes:
       - db-data:/opt/couchdb/data
     networks:
@@ -45,7 +45,7 @@ services:
           memory: 128M
 
   influxdb:
-    image: influxdb:1.8
+    image: hub.aiursoft.cn/influxdb:1.8
     volumes:
       - influx-data:/var/lib/influxdb
     networks:
@@ -60,7 +60,7 @@ services:
           memory: 128M
 
   agent:
-    image: swarmpit/agent:latest
+    image: hub.aiursoft.cn/swarmpit/agent:latest
     environment:
       - DOCKER_API_VERSION=1.35
     volumes:
@@ -88,4 +88,3 @@ volumes:
     driver: local
   influx-data:
     driver: local
-    
