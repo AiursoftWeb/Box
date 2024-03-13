@@ -9,6 +9,8 @@ services:
       - 48467:5000
     deploy:
       replicas: 3
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
 
 volumes:
   manhours-data:

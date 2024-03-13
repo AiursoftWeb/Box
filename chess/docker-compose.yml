@@ -7,6 +7,9 @@ services:
       - chess-data:/data
     ports:
       - 48468:5000
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
 
 volumes:
   chess-data:

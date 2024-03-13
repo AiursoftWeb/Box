@@ -5,3 +5,6 @@ services:
     image: hub.aiursoft.cn/anduin/gameoflife
     ports:
       - 48474:5000
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'

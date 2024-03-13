@@ -7,3 +7,5 @@ services:
       - 48475:5000
     deploy:
       replicas: 2
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'

@@ -9,6 +9,9 @@ services:
       - internal
     ports:
       - "48470:5000"
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
 
   prometheus:
     depends_on:
@@ -21,6 +24,9 @@ services:
       - TZ=UTC
     networks:
       - internal
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
 
   grafana:
     depends_on:
@@ -33,6 +39,9 @@ services:
       - internal
     ports:
       - "48471:3000"
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
 
 networks:
   internal:

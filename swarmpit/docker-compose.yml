@@ -28,6 +28,8 @@ services:
       placement:
         constraints:
           - node.role == manager
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
 
   db:
     image: hub.aiursoft.cn/couchdb:2.3.0
@@ -43,6 +45,8 @@ services:
         reservations:
           cpus: '0.15'
           memory: 128M
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
 
   influxdb:
     image: hub.aiursoft.cn/influxdb:1.8
@@ -58,6 +62,8 @@ services:
         reservations:
           cpus: '0.30'
           memory: 128M
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
 
   agent:
     image: hub.aiursoft.cn/swarmpit/agent:latest
@@ -71,6 +77,7 @@ services:
       mode: global
       labels:
         swarmpit.agent: 'true'
+        swarmpit.service.deployment.autoredeploy: 'true'
       resources:
         limits:
           cpus: '0.10'
