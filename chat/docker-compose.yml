@@ -29,16 +29,16 @@ services:
       - openai-key
       - openai-instance
       - bing-search-key
-    environment:
-      - BingSearchAPIKey=/run/secrets/bing-search-key
-      - OpenAI__Token=/run/secrets/openai-key
-      - OpenAI__Instance=/run/secrets/openai-instance
     networks:
       - internal
     deploy:
       replicas: 2
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
+    entrypoint: [ 
+      '/bin/sh', '-c', 
+      ' export BingSearchAPIKey=$$(cat /run/secrets/bing-search-key) ; export OpenAI__Token=$$(cat /run/secrets/openai-key) ; export OpenAI__Instance=$$(cat /run/secrets/openai-instance) ; source /entrypoint.sh'
+    ]
 
 networks:
   internal:
