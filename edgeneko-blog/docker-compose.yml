@@ -5,3 +5,5 @@ services:
     image: hub.aiursoft.cn/edgeneko/blogv2-src
     ports:
       - 48476:5000
+    deploy:
+      replicas: 2
