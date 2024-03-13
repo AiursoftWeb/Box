@@ -32,7 +32,7 @@ services:
     environment:
       - BingSearchAPIKey=/run/secrets/bing-search-key
       - OpenAI__Token=/run/secrets/openai-key
-      - OpenAI__Instance=openai-instance
+      - OpenAI__Instance=/run/secrets/openai-instance
     networks:
       - internal
     deploy:
