@@ -36,7 +36,7 @@ services:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
     entrypoint: [ 
-      '/bin/sh', '-c', 
+      '/bin/bash', '-c', 
       ' export BingSearchAPIKey=$$(cat /run/secrets/bing-search-key) ; export OpenAI__Token=$$(cat /run/secrets/openai-key) ; export OpenAI__Instance=$$(cat /run/secrets/openai-instance) ; source /entrypoint.sh'
     ]
 
