@@ -18,19 +18,25 @@ services:
       - "48472:5000"
     deploy:
       replicas: 3
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
 
   api:
     image: hub.aiursoft.cn/aiursoft/gptgateway
     volumes:
       - api-config:/data
+    secrets:
+      - openai-key
     environment:
       - BingSearchAPIKey=<----YOUR KEY---->
-      - OpenAI__Token=<----YOUR KEY---->
+      - OpenAI__Token=/run/secrets/openai-key
       - OpenAI__Instance=<----YOUR KEY---->
     networks:
       - internal
     deploy:
       replicas: 2
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
 
 networks:
   internal:
@@ -39,3 +45,7 @@ networks:
 volumes:
   api-config:
     driver: local
+
+secrets:
+  openai-key:
+    external: true
