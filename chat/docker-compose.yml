@@ -27,10 +27,12 @@ services:
       - api-config:/data
     secrets:
       - openai-key
+      - openai-instance
+      - bing-search-key
     environment:
-      - BingSearchAPIKey=<----YOUR KEY---->
+      - BingSearchAPIKey=/run/secrets/bing-search-key
       - OpenAI__Token=/run/secrets/openai-key
-      - OpenAI__Instance=<----YOUR KEY---->
+      - OpenAI__Instance=openai-instance
     networks:
       - internal
     deploy:
@@ -48,4 +50,8 @@ volumes:
 
 secrets:
   openai-key:
+    external: true
+  openai-instance:
+    external: true
+  bing-search-key:
     external: true
