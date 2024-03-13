@@ -26,19 +26,18 @@ services:
     volumes:
       - api-config:/data
     secrets:
-      - openai-key
-      - openai-instance
-      - bing-search-key
+      - source: openai-key
+        target: OpenAI-Token
+      - source: openai-instance
+        target: OpenAI-Instance
+      - source: bing-search-key
+        target: BingSearchAPIKey
     networks:
       - internal
     deploy:
       replicas: 2
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
-    entrypoint: [ 
-      '/bin/bash', '-c', 
-      ' export BingSearchAPIKey=$$(cat /run/secrets/bing-search-key) ; export OpenAI__Token=$$(cat /run/secrets/openai-key) ; export OpenAI__Instance=$$(cat /run/secrets/openai-instance) ; source /entrypoint.sh'
-    ]
 
 networks:
   internal:
