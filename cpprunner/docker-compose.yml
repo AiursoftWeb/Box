@@ -6,6 +6,7 @@ services:
     volumes:
       - cpprunner-data:/data
       - /var/run/docker.sock:/var/run/docker.sock
+      - /tmp/cpprunner/builds:/tmp/cpprunner/builds
     ports:
       - 48477:5000
     deploy:
