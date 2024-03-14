@@ -2,7 +2,7 @@ version: '3.3'
 
 services:
   app:
-    image: hub.aiursoft.cn/aiursoft/internalimages/ubuntu:latest
+    image: hub.aiursoft.cn/aiursoft/internalimages/lab:latest
     ports:
       - 48478:7681
     deploy:
