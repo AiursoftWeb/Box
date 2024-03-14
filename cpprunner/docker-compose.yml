@@ -1,0 +1,19 @@
+version: '3.3'
+
+services:
+  app:
+    image: hub.aiursoft.cn/aiursoft/cpprunner
+    volumes:
+      - cpprunner-data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 48477:5000
+    deploy:
+      replicas: 5
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+
+volumes:
+  cpprunner-data:
+    driver: local
