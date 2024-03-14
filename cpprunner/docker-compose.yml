@@ -13,7 +13,9 @@ services:
       replicas: 5
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
-
+      placement:
+        constraints:
+         - node.role != manager
 
 volumes:
   cpprunner-data:
