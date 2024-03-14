@@ -6,11 +6,7 @@ services:
     volumes:
       - cpprunner-data:/data
       - /var/run/docker.sock:/var/run/docker.sock
-      - type: bind
-        source: /tmp/cpprunner/builds
-        target: /tmp/cpprunner/builds
-        bind:
-          create_host_path: true
+      - /tmp:/tmp
     ports:
       - 48477:5000
     deploy:
