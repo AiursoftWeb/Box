@@ -12,3 +12,4 @@ sudo docker stack deploy -c gameoflife/docker-compose.yml gameoflife # Ports 484
 sudo docker stack deploy -c howtocook/docker-compose.yml  howtocook  # Ports 48475
 sudo docker stack deploy -c edgeneko-blog/docker-compose.yml  edgeneko-blog  # Ports 48476
 sudo docker stack deploy -c cpprunner/docker-compose.yml  cpprunner  # Ports 48477
+sudo docker stack deploy -c lab/docker-compose.yml        lab        # Ports 48478
