@@ -11,5 +11,12 @@ sleep 1
 sudo docker image rm $(sudo docker image ls -aq) -f
 sleep 1
 sudo docker volume prune -f
+sleep 1
+sudo docker network prune -f
+sleep 1
+sudo docker system prune -f
+sleep 1
 
 sudo rm /var/lib/docker/volumes/* -rf
+
+sudo rm /mnt/docker/* -rf
