@@ -34,7 +34,7 @@ services:
   db:
     image: hub.aiursoft.cn/couchdb:2.3.0
     volumes:
-      - db-data:/opt/couchdb/data
+      - /mnt/docker/swarmpit/db-data:/opt/couchdb/data
     networks:
       - net
     deploy:
@@ -51,7 +51,7 @@ services:
   influxdb:
     image: hub.aiursoft.cn/influxdb:1.8
     volumes:
-      - influx-data:/var/lib/influxdb
+      - /mnt/docker/swarmpit/influx-data:/var/lib/influxdb
     networks:
       - net
     deploy:
@@ -90,8 +90,11 @@ networks:
   net:
     driver: overlay
 
-volumes:
-  db-data:
-    driver: local
-  influx-data:
-    driver: local
+# volumes:
+#   db-data:
+#     driver: local
+#   influx-data:
+#     driver: local
+
+# /mnt/docker/swarmpit/db-data
+# /mnt/docker/swarmpit/influx-data
