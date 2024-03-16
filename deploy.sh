@@ -1,5 +1,6 @@
 # Swarmpit:
 sudo mkdir -p /mnt/docker/swarmpit/db-data
+sudo mkdir -p /mnt/docker/swarmpit/db-log
 sudo mkdir -p /mnt/docker/swarmpit/influx-data
 sudo docker stack deploy -c swarmpit/docker-compose.yml   swarmpit   # Ports 888
 

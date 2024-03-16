@@ -35,6 +35,7 @@ services:
     image: hub.aiursoft.cn/couchdb:2.3.0
     volumes:
       - db-data:/opt/couchdb/data
+      - db-log:/opt/couchdb/log
     networks:
       - net
     deploy:
@@ -97,11 +98,15 @@ volumes:
       type: none
       o: bind
       device: /mnt/docker/swarmpit/db-data
+  db-log:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /mnt/docker/swarmpit/db-log
   influx-data:
     driver: local
     driver_opts:
       type: none
       o: bind
       device: /mnt/docker/swarmpit/influx-data
-
-# /mnt/docker/swarmpit/influx-data
