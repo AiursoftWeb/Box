@@ -24,7 +24,7 @@ services:
   api:
     image: hub.aiursoft.cn/aiursoft/gptgateway
     volumes:
-      - api-config:/data
+      - chat-data:/data
     secrets:
       - source: openai-key
         target: OpenAI-Token
@@ -44,8 +44,12 @@ networks:
     driver: overlay
 
 volumes:
-  api-config:
+  chat-data:
     driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/chat-data
 
 secrets:
   openai-key:

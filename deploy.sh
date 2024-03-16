@@ -44,6 +44,7 @@ if [[ $known_secrets != *"bing-search-key"* ]]; then
   read bing_search_key
   echo $bing_search_key | sudo docker secret create bing-search-key -
 fi
+sudo mkdir -p /swarm-vol/chat-data
 sudo docker stack deploy -c chat/docker-compose.yml       chat       # Ports 48472
 
 # Stateless:
