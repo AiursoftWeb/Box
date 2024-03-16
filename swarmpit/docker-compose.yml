@@ -34,7 +34,12 @@ services:
   db:
     image: hub.aiursoft.cn/couchdb:2.3.0
     volumes:
-      - db-data:/opt/couchdb/data
+      #- db-data:/opt/couchdb/data
+      - type: volume
+        source: db-data
+        target: /opt/couchdb/data
+        volume:
+          nocopy: true
     networks:
       - net
     deploy:
