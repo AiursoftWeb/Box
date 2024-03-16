@@ -98,13 +98,13 @@ networks:
 volumes:
   db-data:
     driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /mnt/docker/swarmpit/db-data
+    # driver_opts:
+    #   type: none
+    #   o: bind
+    #   device: /mnt/docker/swarmpit/db-data
   influx-data:
     driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /mnt/docker/swarmpit/influx-data
+    # driver_opts:
+    #   type: none
+    #   o: bind
+    #   device: /mnt/docker/swarmpit/influx-data
