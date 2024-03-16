@@ -46,10 +46,15 @@ if [[ $known_secrets != *"bing-search-key"* ]]; then
 fi
 sudo docker stack deploy -c chat/docker-compose.yml       chat       # Ports 48472
 
-
+# Stateless:
 sudo docker stack deploy -c homepage/docker-compose.yml   homepage   # Ports 48473
 sudo docker stack deploy -c gameoflife/docker-compose.yml gameoflife # Ports 48474
 sudo docker stack deploy -c howtocook/docker-compose.yml  howtocook  # Ports 48475
 sudo docker stack deploy -c edgeneko-blog/docker-compose.yml  edgeneko-blog  # Ports 48476
+
+# Cpprunner:
+sudo mkdir -p /swarm-vol/cpprunner-data
 sudo docker stack deploy -c cpprunner/docker-compose.yml  cpprunner  # Ports 48477
+
+# Lab
 sudo docker stack deploy -c lab/docker-compose.yml        lab        # Ports 48478
