@@ -4,8 +4,7 @@ services:
   app:
     image: hub.aiursoft.cn/aiursoft/manhours:latest
     volumes:
-      - /mnt/docker/manhours:/data
-      # - manhours-data:/data
+      - manhours-data:/data
     ports:
       - 48467:5000
     deploy:
@@ -13,10 +12,10 @@ services:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
-# volumes:
-#   manhours-data:
-#     driver: local
-    # driver_opts:
-    #   type: "nfs"
-    #   o: "addr=172.16.1.1,rw,bg,hard,vers=3,proto=tcp,timeo=600,rsize=65536,wsize=65536,nointr"
-    #   device: ":/mnt/docker/manhours"
+volumes:
+  manhours-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/manhours-data
