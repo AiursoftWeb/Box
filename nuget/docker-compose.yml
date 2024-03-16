@@ -6,7 +6,7 @@ services:
     volumes:
       - nuget-data:/data
     secrets:
-      - source: nuget-key
+      - source: nuget-publish-key
         target: ApiKey
     ports:
       - 48479:5000
@@ -23,5 +23,5 @@ volumes:
       device: /swarm-vol/nuget-data
 
 secrets:
-  nuget-key:
+  nuget-publish-key:
     external: true
