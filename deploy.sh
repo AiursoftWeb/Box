@@ -60,5 +60,10 @@ sudo docker stack deploy -c cpprunner/docker-compose.yml  cpprunner  # Ports 484
 sudo docker stack deploy -c lab/docker-compose.yml        lab        # Ports 48478
 
 # Nuget
+if [[ $known_secrets != *"nuget-key"* ]]; then
+  echo "Please enter nuget_key secret"
+  read nuget_key
+  echo $nuget_key | sudo docker secret create nuget-key -
+fi
 sudo mkdir -p /swarm-vol/nuget-data
 sudo docker stack deploy -c nuget/docker-compose.yml    nuget    # Ports 48479
