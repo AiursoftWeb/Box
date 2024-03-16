@@ -14,3 +14,7 @@ services:
 volumes:
   stathub-data:
     driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/stathub-data

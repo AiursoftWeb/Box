@@ -14,3 +14,7 @@ services:
 volumes:
   chess-data:
     driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/chess-data

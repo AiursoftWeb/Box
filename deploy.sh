@@ -1,19 +1,52 @@
+known_secrets=$(sudo docker secret ls --format '{{.Name}}')
+
 # Swarmpit:
-sudo mkdir -p /mnt/docker/swarmpit/db-data
-sudo mkdir -p /mnt/docker/swarmpit/db-log
-sudo mkdir -p /mnt/docker/swarmpit/influx-data
+sudo mkdir -p /swarm-vol/swarmpit-db-data
+sudo mkdir -p /swarm-vol/swarmpit-influx-data
 sudo docker stack deploy -c swarmpit/docker-compose.yml   swarmpit   # Ports 888
 
+# Tracer
+sudo docker stack deploy -c tracer/docker-compose.yml     tracer     # Ports 48466
+
 # Manhours:
-sudo mkdir -p /mnt/docker/manhours
+sudo mkdir -p /swarm-vol/manhours-data
 sudo docker stack deploy -c manhours/docker-compose.yml   manhours   # Ports 48467
 
-# Stateless:
-sudo docker stack deploy -c tracer/docker-compose.yml     tracer     # Ports 48466
+# Chess:
+sudo mkdir -p /swarm-vol/chess-data
 sudo docker stack deploy -c chess/docker-compose.yml      chess      # Ports 48468
+
+# Stathub:
+sudo mkdir -p /swarm-vol/stathub-data
 sudo docker stack deploy -c stathub/docker-compose.yml    stathub    # Ports 48469
+
+# Health:
+sudo mkdir -p /swarm-vol/prometheus-config
+sudo mkdir -p /swarm-vol/prometheus-data
+sudo mkdir -p /swarm-vol/grafana-config
+sudo mkdir -p /swarm-vol/grafana-data
+sudo mkdir -p /swarm-vol/sleepagent-data
 sudo docker stack deploy -c health/docker-compose.yml     health     # Ports 48470 48471
+
+# Chat:
+if [[ $known_secrets != *"openai-key"* ]]; then
+  echo "Please enter openai-key secret"
+  read openai_key
+  echo $openai_key | sudo docker secret create openai-key -
+fi
+if [[ $known_secrets != *"openai-instance"* ]]; then
+  echo "Please enter openai-instance secret"
+  read openai_instance
+  echo $openai_instance | sudo docker secret create openai-instance -
+fi
+if [[ $known_secrets != *"bing-search-key"* ]]; then
+  echo "Please enter bing-search-key secret"
+  read bing_search_key
+  echo $bing_search_key | sudo docker secret create bing-search-key -
+fi
 sudo docker stack deploy -c chat/docker-compose.yml       chat       # Ports 48472
+
+
 sudo docker stack deploy -c homepage/docker-compose.yml   homepage   # Ports 48473
 sudo docker stack deploy -c gameoflife/docker-compose.yml gameoflife # Ports 48474
 sudo docker stack deploy -c howtocook/docker-compose.yml  howtocook  # Ports 48475

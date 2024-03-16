@@ -1,10 +1,10 @@
 version: '3.3'
 
 services:
-  web:
+  sleepagent:
     image: hub.aiursoft.cn/anduin/sleepagent
     volumes:
-      - web-data:/data
+      - sleepagent-data:/data
     networks:
       - internal
     ports:
@@ -15,7 +15,7 @@ services:
 
   prometheus:
     depends_on:
-      - web # Prometheus needs to be monitoring the web service
+      - sleepagent # Prometheus needs to be monitoring the web service
     image: hub.aiursoft.cn/anduin/sleepagent/customized-prometheus
     volumes:
       - prometheus-config:/etc/prometheus
@@ -50,11 +50,31 @@ networks:
 volumes:
   prometheus-config:
     driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/prometheus-config
   prometheus-data:
     driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/prometheus-data
   grafana-config:
     driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/grafana-config
   grafana-data:
     driver: local
-  web-data:
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/grafana-data
+  sleepagent-data:
     driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/sleepagent-data
