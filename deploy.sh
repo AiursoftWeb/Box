@@ -58,3 +58,7 @@ sudo docker stack deploy -c cpprunner/docker-compose.yml  cpprunner  # Ports 484
 
 # Lab
 sudo docker stack deploy -c lab/docker-compose.yml        lab        # Ports 48478
+
+# Nuget
+sudo mkdir -p /swarm-vol/nuget-data
+sudo docker stack deploy -c nuget/docker-compose.yml    nuget    # Ports 48479
