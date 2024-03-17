@@ -16,6 +16,10 @@ services:
       replicas: 5
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 1024M
 
 volumes:
   cpprunner-data:
