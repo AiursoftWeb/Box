@@ -73,3 +73,11 @@ sudo docker stack deploy -c nuget/docker-compose.yml    nuget    # Ports 48479
 sudo mkdir -p /swarm-vol/remotely-data
 sudo mkdir -p /swarm-vol/remotely-asp
 sudo docker stack deploy -c remotely/docker-compose.yml  remotely  # Ports 48480
+
+# Runner
+if [[ $known_secrets != *"gitlab-runner-token"* ]]; then
+  echo "Please enter gitlab-runner-token secret"
+  read gitlab_runner_token
+  echo $gitlab_runner_token | sudo docker secret create gitlab-runner-token -
+fi
+sudo docker stack deploy -c runner/docker-compose.yml    runner
