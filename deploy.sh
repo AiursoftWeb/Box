@@ -68,3 +68,7 @@ if [[ $known_secrets != *"nuget-publish-key"* ]]; then
 fi
 sudo mkdir -p /swarm-vol/nuget-data
 sudo docker stack deploy -c nuget/docker-compose.yml    nuget    # Ports 48479
+
+# Remotely
+sudo mkdir -p /swarm-vol/remotely-data
+sudo docker stack deploy -c remotely/docker-compose.yml  remotely  # Ports 48480

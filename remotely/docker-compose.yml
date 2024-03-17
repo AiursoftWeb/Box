@@ -1,0 +1,20 @@
+version: '3.3'
+
+services:
+  remotely:
+    image: hub.aiursoft.cn/immybot/remotely
+    volumes:
+      - remotely-data:/remotely-data
+    ports:
+      - 48480:5000
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+volumes:
+  remotely-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/remotely-data
