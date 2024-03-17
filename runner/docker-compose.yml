@@ -8,9 +8,7 @@ services:
     secrets:
       - gitlab-runner-token
     deploy:
-      replicas: 3
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
+      replicas: 6
 
 secrets:
   gitlab-runner-token:
