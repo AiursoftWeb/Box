@@ -71,4 +71,5 @@ sudo docker stack deploy -c nuget/docker-compose.yml    nuget    # Ports 48479
 
 # Remotely
 sudo mkdir -p /swarm-vol/remotely-data
+sudo mkdir -p /swarm-vol/remotely-asp
 sudo docker stack deploy -c remotely/docker-compose.yml  remotely  # Ports 48480
