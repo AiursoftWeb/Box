@@ -6,68 +6,152 @@
 
 This defines the data-center of Aiursoft.
 
-## How to start
+This is a distributed system, which is designed to be deployed on a Docker Swarm cluster, with Glusterfs as the storage backend.
 
-First, install Docker Swarm first.
+It is suggested to have at least 3 nodes to deploy this system.
 
-```bash
-sudo docker swarm init
+## Architecture
+
+```text
++------------------------+
+|                        |
+|        Request         | 
+|                        |
++------------------------+
+    ↓       ↓       ↓
++------------------------+
+|                        |
+|    Compute platform    | 
+|     Ingress Network    |
+|                        |
++------------------------+
+    ↓       ↓       ↓
++------+ +------+ +------+
+|      | |      | |      |
+| Node | | Node | | Node |
+|      | |      | |      |
++------+ +------+ +------+
+    ↓       ↓       ↓
++------------------------+
+|                        |
+|    Storage platform    | 
+|     Gluster  FS        |
+|                        |
++------------------------+
+    ↓       ↓       ↓
++------+ +------+ +------+
+|      | |      | |      |
+| Node | | Node | | Node |
+|      | |      | |      |
++------+ +------+ +------+
 ```
 
-If you have other nodes, you can join them to the swarm.
+## How to start
+
+### Hardware requirements
+
+You **need** to have at least 3 Linux machines. Each machine must connect to two subnets.
+
+* Public subnet: This subnet is for accessing Internet.
+* Private subnet: This subnet is for accessing other nodes.
+  * Docker Swarm will use this subnet to communicate between nodes.
+  * Glusterfs will use this subnet to replicate data.
+  * Subnet should be 10.64.50.0/12
+
+The private subnet should have at least 10Gbps bandwidth.
+
+Each node must be attached with a big disk (sdb). This disk will be used to store the glusterfs data.
+
+### Install Docker
+
+First, install Docker on every node.
+
+```bash
+curl -fsSL get.docker.com -o get-docker.sh
+CHANNEL=stable sh get-docker.sh
+rm get-docker.sh
+```
+
+Then , configure Docker Swarm on the first node.
+
+```bash
+sudo docker swarm init --advertise-addr=<manager-ip> --listen-addr=0.0.0.0 --data-path-port=7779 --force-new-cluster=true
+```
+
+### Join the swarm
+
+You can join other nodes to the swarm.
+
+Run this on the first node to get the join token:
+
+```bash
+sudo docker swarm join-token manager
+```
+
+Then, run this on other nodes to join the swarm:
 
 ```bash
 sudo docker swarm join --token <token> <manager-ip>:<port>
 ```
 
-Then, deploy the stack.
+### Prepare Glusterfs
+
+It's required to have a Glusterfs cluster to store the data.
+
+First, every node should be attached with a big disk (sdb). Then, install Glusterfs on every node.
+
+Run this on every node.
+
+```bash
+sudo apt-get install glusterfs-server -y
+sudo systemctl start glusterd
+sudo systemctl enable glusterd
+```
+
+Then, format the disk and mount it. Run this on every node.
+
+```bash
+sudo mkfs.xfs /dev/sdb
+sudo mkdir -p /var/no-direct-write-here/gluster-bricks
+echo '/dev/sdb /var/no-direct-write-here/gluster-bricks xfs defaults 0 0' | sudo tee -a /etc/fstab
+sudo mount /var/no-direct-write-here/gluster-bricks
+```
+
+Finally, add the peers and create the volume. Run this on the first node.
+
+```bash
+sudo gluster peer probe <node2>
+sudo gluster peer probe <node3>
+```
+
+Now start the volume.
+
+```bash
+sudo gluster volume create swarm-vol replica 3 \
+  <node1>:/var/no-direct-write-here/gluster-bricks/swarm-vol \
+  <node2>:/var/no-direct-write-here/gluster-bricks/swarm-vol \
+  <node3>:/var/no-direct-write-here/gluster-bricks/swarm-vol
+sudo gluster volume set swarm-vol auth.allow 10.*.*.*
+sudo gluster volume start swarm-vol
+```
+
+Then, mount the volume on every node.
+
+```bash
+echo 'localhost:/swarm-vol /swarm-vol glusterfs defaults,_netdev,noauto,x-systemd.automount 0 0' | sudo tee -a /etc/fstab
+sudo mkdir -p /swarm-vol
+sudo mount /swarm-vol
+sudo chown -R root:docker /swarm-vol
+```
+
+You can read more about how to configure Glusterfs [here](https://docs.gluster.org/en/v3/Administrator%20Guide/Managing%20Volumes/).
+
+### Deploy the stack
+
+Finally, deploy the stack.
 
 ```bash
 ./deploy.sh
 ```
 
-And it's required to configure glusterfs.
-
-```bash
-# Assuming using /dev/sdb is your new empty disk on EVERY NODE
-# Assuming 10.0.0.* is your private network
-
-# Install and configure GlusterFS. (Run on all nodes)
-apt-get install glusterfs-server -y
-systemctl start glusterd
-systemctl enable glusterd
-
-# Format the disk and mount it (Run on all nodes)
-mkfs.xfs /dev/sdb
-echo '/dev/sdb /var/no-direct-write-here/gluster-bricks xfs defaults 0 0' >> /etc/fstab
-mkdir -p /var/no-direct-write-here/gluster-bricks
-mount /var/no-direct-write-here/gluster-bricks
-
-# Add the peers (Run on node1)
-gluster peer probe node2
-gluster peer probe node3
-gluster peer status
-gluster pool list
-
-# Create the volume (Run on node1)
-gluster volume create swarm-vol replica 3 \
-  node1:/var/no-direct-write-here/gluster-bricks/swarm-vol \
-  node2:/var/no-direct-write-here/gluster-bricks/swarm-vol \
-  node3:/var/no-direct-write-here/gluster-bricks/swarm-vol
-gluster volume set swarm-vol auth.allow 10.64.50.*
-gluster volume start swarm-vol
-gluster volume status
-gluster volume info swarm-vol
-
-# Mount the volume (Run on all nodes)
-echo 'localhost:/swarm-vol /swarm-vol glusterfs defaults,_netdev,noauto,x-systemd.automount 0 0' >> /etc/fstab
-mkdir -p /swarm-vol
-mount /swarm-vol
-chown -R root:docker /swarm-vol
-
-# Final check (Run on all nodes)
-cd /swarm-vol/
-df -Th .
-
-# READ: https://docs.gluster.org/en/v3/Administrator%20Guide/Managing%20Volumes/
-```
+That's it! You can now access the system on port 888, from any node!
