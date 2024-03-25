@@ -1,0 +1,20 @@
+version: '3.3'
+
+services:
+  app:
+    image: hub.aiursoft.cn/anduin/flyclass:latest
+    volumes:
+      - flyclass-data:/data
+    ports:
+      - 48483:5000
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+volumes:
+  flyclass-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/flyclass-data
