@@ -13,6 +13,7 @@ services:
       - DB_USERNAME=koel
       - DB_PASSWORD=<koel_password>
       - DB_DATABASE=koel
+      - MEDIA_PATH=/music
     volumes:
       - music:/music
       - covers:/var/www/html/public/img/covers
