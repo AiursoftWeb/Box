@@ -17,7 +17,7 @@ services:
     ports:
       - "48472:5000"
     deploy:
-      replicas: 3
+      replicas: 2
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
