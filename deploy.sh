@@ -38,6 +38,7 @@ sudo mkdir -p /swarm-vol/koel/db
 sudo mkdir -p /swarm-vol/koel/music
 sudo mkdir -p /swarm-vol/koel/covers
 sudo mkdir -p /swarm-vol/koel/search_index
+sudo mkdir -p /swarm-vol/wiki-data
 sudo touch /swarm-vol/koel/config
 
 deploy swarmpit/docker-compose.yml       swarmpit #888
@@ -57,5 +58,6 @@ deploy nuget/docker-compose.yml          nuget #48479
 deploy remotely/docker-compose.yml       remotely #48480
 deploy runner/docker-compose.yml         runner
 deploy koel/docker-compose.yml           koel #48481
+deploy kiwix/docker-compose.yml           kiwix #48482
 
 

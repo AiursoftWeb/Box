@@ -1,0 +1,21 @@
+version: '3.3'
+
+services:
+  app:
+    image: hub.aiursoft.cn/aiursoft/internalimages/kiwix
+    ports:
+      - 48482:8080
+    volumes:
+      - kiwix-data:/data
+    deploy:
+      replicas: 2
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+volumes:
+  kiwix-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/wiki-data
