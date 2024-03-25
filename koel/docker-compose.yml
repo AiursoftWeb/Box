@@ -1,0 +1,63 @@
+version: '3.3'
+
+services:
+  koel:
+    image: hub.aiursoft.cn/phanan/koel
+    depends_on:
+      - database
+    ports:
+      - 48481:80
+    environment:
+      - DB_CONNECTION=mysql
+      - DB_HOST=database
+      - DB_USERNAME=koel
+      - DB_PASSWORD=<koel_password>
+      - DB_DATABASE=koel
+    volumes:
+      - music:/music
+      - covers:/var/www/html/public/img/covers
+      - search_index:/var/www/html/storage/search-indexes
+    networks:
+      - internal
+
+  database:
+    image: hub.aiursoft.cn/mariadb
+    volumes:
+      - db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=<root_password>
+      - MYSQL_DATABASE=koel
+      - MYSQL_USER=koel
+      - MYSQL_PASSWORD=<koel_password>
+    networks:
+      - internal
+
+networks:
+  internal:
+    driver: overlay
+
+volumes:
+  db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/koel/db
+  music:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/koel/music
+  covers:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/koel/covers
+  search_index:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/koel/search_index

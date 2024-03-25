@@ -34,6 +34,10 @@ sudo mkdir -p /swarm-vol/cpprunner-data
 sudo mkdir -p /swarm-vol/nuget-data
 sudo mkdir -p /swarm-vol/remotely-data
 sudo mkdir -p /swarm-vol/remotely-asp
+sudo mkdir -p /swarm-vol/koel/db
+sudo mkdir -p /swarm-vol/koel/music
+sudo mkdir -p /swarm-vol/koel/covers
+sudo mkdir -p /swarm-vol/koel/search_index
 
 deploy swarmpit/docker-compose.yml       swarmpit #888
 deploy tracer/docker-compose.yml         tracer #48466
@@ -51,3 +55,6 @@ deploy lab/docker-compose.yml            lab #48478
 deploy nuget/docker-compose.yml          nuget #48479
 deploy remotely/docker-compose.yml       remotely #48480
 deploy runner/docker-compose.yml         runner
+deploy koel/docker-compose.yml           koel #48481
+
+
