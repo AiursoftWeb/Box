@@ -19,7 +19,7 @@ services:
       - music:/music
       - covers:/var/www/html/public/img/covers
       - search_index:/var/www/html/storage/search-indexes
-      - config:/var/www/html/.env # This is a single file, not a directory
+      - /swarm-vol/koel/config:/var/www/html/.env # This is a single file, not a directory
     networks:
       - internal
   database:
@@ -63,10 +63,3 @@ volumes:
       type: none
       o: bind
       device: /swarm-vol/koel/search_index
-  config:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      # device is a file, not a directory
-      device: /swarm-vol/koel/config
