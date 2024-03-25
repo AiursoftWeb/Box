@@ -38,6 +38,7 @@ sudo mkdir -p /swarm-vol/koel/db
 sudo mkdir -p /swarm-vol/koel/music
 sudo mkdir -p /swarm-vol/koel/covers
 sudo mkdir -p /swarm-vol/koel/search_index
+sudo touch /swarm-vol/koel/config
 
 deploy swarmpit/docker-compose.yml       swarmpit #888
 deploy tracer/docker-compose.yml         tracer #48466
