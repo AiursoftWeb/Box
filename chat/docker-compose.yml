@@ -35,6 +35,7 @@ services:
     networks:
       - internal
     deploy:
+      replicas: 3
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
