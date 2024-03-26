@@ -40,6 +40,7 @@ sudo mkdir -p /swarm-vol/koel/covers
 sudo mkdir -p /swarm-vol/koel/search_index
 sudo mkdir -p /swarm-vol/wiki-data
 sudo mkdir -p /swarm-vol/flyclass-data
+sudo mkdir -p /swarm-vol/gist-data
 sudo touch /swarm-vol/koel/config
 
 deploy swarmpit/docker-compose.yml       swarmpit #888
@@ -61,3 +62,4 @@ deploy runner/docker-compose.yml         runner
 deploy koel/docker-compose.yml           koel #48481
 deploy kiwix/docker-compose.yml          kiwix #48482
 deploy flyclass/docker-compose.yml       flyclass #48483
+deploy gist/docker-compose.yml           gist #48484

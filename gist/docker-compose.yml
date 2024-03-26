@@ -1,0 +1,20 @@
+version: '3.3'
+
+services:
+  app:
+    image: hub.aiursoft.cn/ghcr.io/thomiceli/opengist
+    ports:
+      - 48484:6157
+    volumes:
+      - gist-data:/opengist
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+volumes:
+  gist-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/gist-data
