@@ -5,11 +5,21 @@ services:
     image: hub.aiursoft.cn/gitea/gitea
     ports:
       - 48485:3000
-      - 48486:22
+      - 48486:2201
     volumes:
       - gitea-data:/data
     environment:
+      - APP_NAME=Aiursoft Gitea
       - GITEA__database__DB_TYPE=sqlite3
+      - GITEA__database__CHARSET=utf8
+      - DOMAIN=git.aiursoft.cn
+      - SSH_DOMAIN=git.aiursoft.cn
+      - DISABLE_REGISTRATION=true
+      - REQUIRE_SIGNIN_VIEW=true
+      - ROOT_URL=https://git.aiursoft.cn/
+      - HTTP_PORT=3000
+      - SSH_PORT=2201
+      - LFS_START_SERVER=true
     deploy:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'

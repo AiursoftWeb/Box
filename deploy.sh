@@ -64,4 +64,4 @@ deploy koel/docker-compose.yml           koel #48481
 deploy kiwix/docker-compose.yml          kiwix #48482
 deploy flyclass/docker-compose.yml       flyclass #48483
 deploy gist/docker-compose.yml           gist #48484
-deploy gitea/docker-compose.yml          gitea #48485
+deploy gitea/docker-compose.yml          gitea #48485 48486
