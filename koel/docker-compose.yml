@@ -22,6 +22,10 @@ services:
       - /swarm-vol/koel/config:/var/www/html/.env # This is a single file, not a directory
     networks:
       - internal
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
   database:
     image: hub.aiursoft.cn/mariadb
     volumes:
@@ -33,6 +37,9 @@ services:
       - MYSQL_PASSWORD=<koel_password>
     networks:
       - internal
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
 
 networks:
   internal:
