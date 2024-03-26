@@ -2,15 +2,13 @@ version: '3.3'
 
 services:
   app:
-    image: hub.aiursoft.cn/ghcr.io/thomiceli/opengist
+    image: hub.aiursoft.cn/gitea/gitea
     ports:
       - 48485:3000
       - 48486:22
     volumes:
       - gitea-data:/data
     environment:
-      - USER_UID=1000
-      - USER_GID=1000
       - GITEA__database__DB_TYPE=sqlite3
     deploy:
       labels:
