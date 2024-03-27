@@ -20,6 +20,7 @@ services:
     deploy:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
+    entrypoint: ["sh", "-c", "/app/static --port 5000 --path /data/mirror/archive.ubuntu.com --allow-directory-browsing"]
 
 volumes:
   apt-mirror-data:
