@@ -9,7 +9,7 @@ services:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
-  web:
+  web_apt:
     depends_on:
       - app
     image: hub.aiursoft.cn/aiursoft/static
@@ -21,6 +21,19 @@ services:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
     entrypoint: ["sh", "-c", "/app/static --port 5000 --path /data/mirror/archive.ubuntu.com --allow-directory-browsing"]
+
+  web_ppa:
+    depends_on:
+      - app
+    image: hub.aiursoft.cn/aiursoft/static
+    volumes:
+      - apt-mirror-data:/data
+    ports:
+      - "48487:5000"
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+    entrypoint: ["sh", "-c", "/app/static --port 5000 --path /data/mirror/ppa.launchpad.net --allow-directory-browsing"]
 
 volumes:
   apt-mirror-data:
