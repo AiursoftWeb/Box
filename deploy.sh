@@ -44,7 +44,7 @@ sudo mkdir -p /swarm-vol/gist-data
 sudo mkdir -p /swarm-vol/gitea-data
 sudo touch /swarm-vol/koel/config
 
-deploy swarmpit/docker-compose.yml       swarmpit #888
+deploy swarmpit/docker-compose.yml       swarmpit #48465
 deploy tracer/docker-compose.yml         tracer #48466
 deploy manhours/docker-compose.yml       manhours #48467
 deploy chess/docker-compose.yml          chess #48468
