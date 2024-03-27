@@ -35,6 +35,17 @@ services:
         swarmpit.service.deployment.autoredeploy: 'true'
     entrypoint: ["sh", "-c", "/app/static --port 5000 --path /data/mirror/ppa.launchpad.net --allow-directory-browsing"]
 
+  web_immortal:
+    image: hub.aiursoft.cn/aiursoft/static
+    volumes:
+      - immortal-data:/data
+    ports:
+      - "48488:5000"
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+    entrypoint: ["sh", "-c", "/app/static --path /data -p 5000 --mirror https://downloads.immortalwrt.org/ --cache-mirror"]
+
 volumes:
   apt-mirror-data:
     driver: local
@@ -42,3 +53,9 @@ volumes:
       type: none
       o: bind
       device: /swarm-vol/apt-mirror-data
+  immortal-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/immortal-data

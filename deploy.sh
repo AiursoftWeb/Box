@@ -43,6 +43,7 @@ sudo mkdir -p /swarm-vol/flyclass-data
 sudo mkdir -p /swarm-vol/gist-data
 sudo mkdir -p /swarm-vol/gitea-data
 sudo mkdir -p /swarm-vol/apt-mirror-data
+sudo mkdir -p /swarm-vol/immortal-data
 sudo touch /swarm-vol/koel/config
 
 deploy swarmpit/docker-compose.yml       swarmpit #48465
@@ -66,4 +67,4 @@ deploy kiwix/docker-compose.yml          kiwix #48482
 deploy flyclass/docker-compose.yml       flyclass #48483
 deploy gist/docker-compose.yml           gist #48484
 deploy gitea/docker-compose.yml          gitea #48485 2201
-deploy apt-mirror/docker-compose.yml     apt-mirror #48486 48487
+deploy apt-mirror/docker-compose.yml     apt-mirror #48486 48487 48488
