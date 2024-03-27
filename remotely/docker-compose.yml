@@ -2,12 +2,12 @@ version: '3.3'
 
 services:
   remotely:
-    image: immybot/remotely:87
+    image: hub.aiursoft.cn/immybot/remotely
     volumes:
       - remotely-data:/remotely-data
       - remotely-asp:/root/.aspnet
     ports:
-      - 48480:5000
+      - 48480:8080
     deploy:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
