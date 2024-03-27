@@ -2,15 +2,15 @@ version: '3.3'
 
 services:
   remotely:
-    image: hub.aiursoft.cn/immybot/remotely:66
+    image: hub.aiursoft.cn/immybot/remotely:69
     volumes:
       - remotely-data:/remotely-data
       - remotely-asp:/root/.aspnet
     ports:
-      - 48480:8080
+      - 48480:5000
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
-      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTP_PORTS=5000
       - Remotely_ApplicationOptions__DbProvider=SQLite
     deploy:
       labels:
