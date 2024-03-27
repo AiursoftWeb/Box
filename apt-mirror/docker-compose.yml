@@ -1,7 +1,7 @@
 version: '3.3'
 
 services:
-  app:
+  downloader:
     image: hub.aiursoft.cn/aiursoft/internalimages/apt-mirror
     volumes:
       - apt-mirror-data:/var/spool/apt-mirror
@@ -44,7 +44,7 @@ services:
     deploy:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
-    entrypoint: ["sh", "-c", "/app/static --path /data -p 5000 --mirror https://downloads.immortalwrt.org/ --cache-mirror"]
+    entrypoint: ["sh", "-c", "/app/static --port 5000 --path /data --mirror https://downloads.immortalwrt.org/ --cache-mirror"]
 
 volumes:
   apt-mirror-data:
