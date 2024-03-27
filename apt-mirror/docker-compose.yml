@@ -1,0 +1,18 @@
+version: '3.3'
+
+services:
+  app:
+    image: hub.aiursoft.cn/aiursoft/internalimages/apt-mirror
+    volumes:
+      - apt-mirror-data:/var/spool/apt-mirror
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+volumes:
+  apt-mirror-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/apt-mirror-data
