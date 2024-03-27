@@ -9,6 +9,18 @@ services:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
+  web:
+    depends_on:
+      - app
+    image: hub.aiursoft.cn/aiursoft/static
+    volumes:
+      - apt-mirror-data:/data
+    ports:
+      - "48486:5000"
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
 volumes:
   apt-mirror-data:
     driver: local
