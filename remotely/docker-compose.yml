@@ -2,7 +2,7 @@ version: '3.3'
 
 services:
   remotely:
-    image: hub.aiursoft.cn/immybot/remotely
+    image: immybot/remotely:87
     volumes:
       - remotely-data:/remotely-data
       - remotely-asp:/root/.aspnet
