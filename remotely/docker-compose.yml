@@ -8,6 +8,10 @@ services:
       - remotely-asp:/root/.aspnet
     ports:
       - 48480:8080
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_HTTP_PORTS=8080
+      - Remotely_ApplicationOptions__DbProvider=SQLite
     deploy:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
