@@ -20,26 +20,7 @@ function ask_and_create_secret() {
     fi
 }
 
-#sudo mkdir -p /etc/docker/compose
-# sudo cp ./basic/docker-compose.yml /etc/docker/compose/docker-compose.yml
-# echo "[Unit]
-# Description=%i service with docker compose
-# PartOf=docker.service
-# After=docker.service
-
-# [Service]
-# Type=oneshot
-# RemainAfterExit=true
-# WorkingDirectory=/etc/docker/compose/%i
-# ExecStart=/usr/bin/docker-compose up -d --remove-orphans
-# ExecStop=/usr/bin/docker-compose down
-
-# [Install]
-# WantedBy=multi-user.target" | sudo tee /etc/systemd/system/docker-compose@.service
-# sudo systemctl daemon-reload
-# sudo systemctl enable docker-compose@docker-compose
-# sudo systemctl start docker-compose@docker-compose --no-block
-# sudo systemctl status docker-compose@docker-compose --no-block
+better_performance
 
 ask_and_create_secret openai-key
 ask_and_create_secret openai-instance
