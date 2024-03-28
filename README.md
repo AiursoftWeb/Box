@@ -70,6 +70,7 @@ First, install Docker on every node.
 curl -fsSL get.docker.com -o get-docker.sh
 CHANNEL=stable sh get-docker.sh
 rm get-docker.sh
+sudo apt install docker-compose -y
 ```
 
 Then , configure Docker Swarm on the first node.
