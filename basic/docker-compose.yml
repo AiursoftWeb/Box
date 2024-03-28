@@ -7,7 +7,7 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - basic-data:/var/lib/caddy/
+      - basic-data:/data
       - /etc/hostname:/etc/hostname
       - /etc/hosts:/etc/hosts
     deploy:
