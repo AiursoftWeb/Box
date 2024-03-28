@@ -28,7 +28,8 @@ ask_and_create_secret bing-search-key
 ask_and_create_secret nuget-publish-key
 ask_and_create_secret gitlab-runner-token
 
-sudo mkdir -p /swarm-vol/basic-data
+sudo mkdir -p /swarm-vol/sites-data
+sudo mkdir -p /swarm-vol/registry-data
 sudo mkdir -p /swarm-vol/swarmpit-db-data
 sudo mkdir -p /swarm-vol/swarmpit-influx-data
 sudo mkdir -p /swarm-vol/manhours-data
@@ -56,7 +57,7 @@ sudo mkdir -p /swarm-vol/apt-mirror-data
 sudo mkdir -p /swarm-vol/immortal-data
 sudo touch /swarm-vol/koel/config
 
-deploy basic/docker-compose.yml          basic #48464
+#deploy basic/docker-compose.yml          basic #48464
 deploy swarmpit/docker-compose.yml       swarmpit #48465
 deploy tracer/docker-compose.yml         tracer #48466
 deploy manhours/docker-compose.yml       manhours #48467

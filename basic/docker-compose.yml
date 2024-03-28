@@ -3,19 +3,65 @@ version: '3.3'
 services:
   sites:
     image: hub.aiursoft.cn/aiursoft/sites
-    network_mode: "host"
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - net
     volumes:
-      - basic-data:/data
+      - sites-data:/data
       - /etc/hostname:/etc/hostname
       - /etc/hosts:/etc/hosts
-    deploy:
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
+
+  registry-ui:
+    depends_on:
+      - registry-server
+    image: joxit/docker-registry-ui:main
+    ports:
+      - "8080:80"
+    networks:
+      - net
+    environment:
+      - SINGLE_REGISTRY=true
+      - REGISTRY_TITLE=hub.aiursoft.cn
+      - DELETE_IMAGES=true
+      - SHOW_CONTENT_DIGEST=true
+      - NGINX_PROXY_PASS_URL=http://registry-server:5000
+      - SHOW_CATALOG_NB_TAGS=true
+      - CATALOG_MIN_BRANCHES=1
+      - CATALOG_MAX_BRANCHES=1
+      - TAGLIST_PAGE_SIZE=100
+      - REGISTRY_SECURED=false
+      - CATALOG_ELEMENTS_LIMIT=1000
+
+  registry-server:
+    image: registry:2.8.2
+    volumes:
+      - registry-data:/var/lib/registry
+    networks:
+      - net
+    environment:
+      REGISTRY_HTTP_HEADERS_Access-Control-Allow-Origin: '[https://hub.aiursoft.cn]'
+      REGISTRY_HTTP_HEADERS_Access-Control-Allow-Methods: '[HEAD,GET,OPTIONS,DELETE]'
+      REGISTRY_HTTP_HEADERS_Access-Control-Allow-Credentials: '[true]'
+      REGISTRY_HTTP_HEADERS_Access-Control-Allow-Headers: '[Authorization,Accept,Cache-Control]'
+      REGISTRY_HTTP_HEADERS_Access-Control-Expose-Headers: '[Docker-Content-Digest]'
+      REGISTRY_STORAGE_DELETE_ENABLED: 'true'
 
 volumes:
-  basic-data:
+  sites-data:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /swarm-vol/basic-data
+      device: /swarm-vol/sites-data
+  registry-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/registry-data
+
+networks:
+  net:
+    driver: overlay
