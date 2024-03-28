@@ -8,6 +8,8 @@ services:
       - "443:443"
     volumes:
       - basic-data:/var/lib/caddy/
+      - /etc/hostname:/etc/hostname
+      - /etc/hosts:/etc/hosts
     deploy:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
