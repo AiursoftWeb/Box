@@ -59,6 +59,11 @@ sudo touch /swarm-vol/koel/config
 
 #deploy basic/docker-compose.yml          basic #48463
 deploy registry/docker-compose.yml       registry #48464
+sleep 5
+while ! curl -s http://localhost:48464/ > /dev/null; do
+    echo "Waiting for registry to start"
+    sleep 5
+done
 deploy swarmpit/docker-compose.yml       swarmpit #48465
 deploy tracer/docker-compose.yml         tracer #48466
 deploy manhours/docker-compose.yml       manhours #48467
