@@ -32,8 +32,8 @@ After=docker.service
 Type=oneshot
 RemainAfterExit=true
 WorkingDirectory=/etc/docker/compose/%i
-ExecStart=/usr/local/bin/docker-compose up -d --remove-orphans
-ExecStop=/usr/local/bin/docker-compose down
+ExecStart=/usr/bin/docker-compose up -d --remove-orphans
+ExecStop=/usr/bin/docker-compose down
 
 [Install]
 WantedBy=multi-user.target" | sudo tee /etc/systemd/system/docker-compose@.service
