@@ -1,4 +1,11 @@
 #!/bin/bash
+
+function better_performance() {
+    sudo sysctl -w net.core.rmem_max=2500000
+    sudo sysctl -w net.core.wmem_max=2500000
+    sudo sysctl -p
+}
+
 function deploy() {
     sudo docker stack deploy -c "$1" "$2" --detach
 }
@@ -12,6 +19,28 @@ function ask_and_create_secret() {
         echo $secret_value | sudo docker secret create $secret_name -
     fi
 }
+
+sudo mkdir -p /swarm-vol/basic-data
+sudo mkdir -p /etc/docker/compose
+sudo cp ./basic/docker-compose.yml /etc/docker/compose/docker-compose.yml
+echo "[Unit]
+Description=%i service with docker compose
+PartOf=docker.service
+After=docker.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+WorkingDirectory=/etc/docker/compose/%i
+ExecStart=/usr/local/bin/docker-compose up -d --remove-orphans
+ExecStop=/usr/local/bin/docker-compose down
+
+[Install]
+WantedBy=multi-user.target" | sudo tee /etc/systemd/system/docker-compose@.service
+sudo systemctl daemon-reload
+sudo systemctl enable docker-compose@docker-compose
+sudo systemctl start docker-compose@docker-compose --no-block
+sudo systemctl status docker-compose@docker-compose --no-block
 
 ask_and_create_secret openai-key
 ask_and_create_secret openai-instance

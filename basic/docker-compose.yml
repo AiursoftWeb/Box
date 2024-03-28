@@ -1,0 +1,21 @@
+version: '3.3'
+
+services:
+  sites:
+    image: hub.aiursoft.cn/aiursoft/sites
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - basic-data:/var/lib/caddy/
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+volumes:
+  basic-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/basic-data
