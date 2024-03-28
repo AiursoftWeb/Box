@@ -20,27 +20,26 @@ function ask_and_create_secret() {
     fi
 }
 
-sudo mkdir -p /swarm-vol/basic-data
-sudo mkdir -p /etc/docker/compose
-sudo cp ./basic/docker-compose.yml /etc/docker/compose/docker-compose.yml
-echo "[Unit]
-Description=%i service with docker compose
-PartOf=docker.service
-After=docker.service
+#sudo mkdir -p /etc/docker/compose
+# sudo cp ./basic/docker-compose.yml /etc/docker/compose/docker-compose.yml
+# echo "[Unit]
+# Description=%i service with docker compose
+# PartOf=docker.service
+# After=docker.service
 
-[Service]
-Type=oneshot
-RemainAfterExit=true
-WorkingDirectory=/etc/docker/compose/%i
-ExecStart=/usr/bin/docker-compose up -d --remove-orphans
-ExecStop=/usr/bin/docker-compose down
+# [Service]
+# Type=oneshot
+# RemainAfterExit=true
+# WorkingDirectory=/etc/docker/compose/%i
+# ExecStart=/usr/bin/docker-compose up -d --remove-orphans
+# ExecStop=/usr/bin/docker-compose down
 
-[Install]
-WantedBy=multi-user.target" | sudo tee /etc/systemd/system/docker-compose@.service
-sudo systemctl daemon-reload
-sudo systemctl enable docker-compose@docker-compose
-sudo systemctl start docker-compose@docker-compose --no-block
-sudo systemctl status docker-compose@docker-compose --no-block
+# [Install]
+# WantedBy=multi-user.target" | sudo tee /etc/systemd/system/docker-compose@.service
+# sudo systemctl daemon-reload
+# sudo systemctl enable docker-compose@docker-compose
+# sudo systemctl start docker-compose@docker-compose --no-block
+# sudo systemctl status docker-compose@docker-compose --no-block
 
 ask_and_create_secret openai-key
 ask_and_create_secret openai-instance
@@ -48,6 +47,7 @@ ask_and_create_secret bing-search-key
 ask_and_create_secret nuget-publish-key
 ask_and_create_secret gitlab-runner-token
 
+sudo mkdir -p /swarm-vol/basic-data
 sudo mkdir -p /swarm-vol/swarmpit-db-data
 sudo mkdir -p /swarm-vol/swarmpit-influx-data
 sudo mkdir -p /swarm-vol/manhours-data
@@ -75,6 +75,7 @@ sudo mkdir -p /swarm-vol/apt-mirror-data
 sudo mkdir -p /swarm-vol/immortal-data
 sudo touch /swarm-vol/koel/config
 
+deploy basic/docker-compose.yml          basic #48464
 deploy swarmpit/docker-compose.yml       swarmpit #48465
 deploy tracer/docker-compose.yml         tracer #48466
 deploy manhours/docker-compose.yml       manhours #48467
