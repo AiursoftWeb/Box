@@ -3,9 +3,7 @@ version: '3.3'
 services:
   sites:
     image: hub.aiursoft.cn/aiursoft/sites
-    ports:
-      - "80:80"
-      - "443:443"
+    network_mode: "host"
     volumes:
       - basic-data:/data
       - /etc/hostname:/etc/hostname
