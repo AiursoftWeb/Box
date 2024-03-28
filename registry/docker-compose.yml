@@ -1,24 +1,24 @@
 version: '3.3'
 
 services:
-  sites:
-    image: hub.aiursoft.cn/aiursoft/sites
-    ports:
-      - "80:80"
-      - "443:443"
-    networks:
-      - net
-    volumes:
-      - sites-data:/data
-      - /etc/hostname:/etc/hostname
-      - /etc/hosts:/etc/hosts
+  # sites:
+  #   image: hub.aiursoft.cn/aiursoft/sites
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   networks:
+  #     - net
+  #   volumes:
+  #     - sites-data:/data
+  #     - /etc/hostname:/etc/hostname
+  #     - /etc/hosts:/etc/hosts
 
   registry-ui:
     depends_on:
       - registry-server
     image: joxit/docker-registry-ui:main
     ports:
-      - "8080:80"
+      - "48464:80"
     networks:
       - net
     environment:

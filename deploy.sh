@@ -57,7 +57,8 @@ sudo mkdir -p /swarm-vol/apt-mirror-data
 sudo mkdir -p /swarm-vol/immortal-data
 sudo touch /swarm-vol/koel/config
 
-#deploy basic/docker-compose.yml          basic #48464
+#deploy basic/docker-compose.yml          basic #48463
+deploy registry/docker-compose.yml       registry #48464
 deploy swarmpit/docker-compose.yml       swarmpit #48465
 deploy tracer/docker-compose.yml         tracer #48466
 deploy manhours/docker-compose.yml       manhours #48467
