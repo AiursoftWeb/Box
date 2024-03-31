@@ -96,7 +96,7 @@ done
 
 # Business stacks
 deploy incoming/docker-compose.yml       incoming # 48463 80 443
-deploy swarmpit/docker-compose.yml       swarmpit #48465
+deploy swarmpit/docker-compose.yml       swarmpit
 deploy tracer/docker-compose.yml         tracer
 deploy manhours/docker-compose.yml       manhours #48467
 deploy chess/docker-compose.yml          chess #48468
