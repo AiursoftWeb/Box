@@ -66,7 +66,6 @@ sudo mkdir -p /swarm-vol/mc/log
 sudo touch /swarm-vol/koel/config
 
 # Special stacks for starting the cluster
-deploy incoming/docker-compose.yml       incoming # 48463 80 443
 deploy registry/docker-compose.yml       registry #48464
 sleep 5
 while ! curl -s http://localhost:48464/ > /dev/null; do
@@ -75,6 +74,7 @@ while ! curl -s http://localhost:48464/ > /dev/null; do
 done
 
 # Business stacks
+deploy incoming/docker-compose.yml       incoming # 48463 80 443
 deploy swarmpit/docker-compose.yml       swarmpit #48465
 deploy tracer/docker-compose.yml         tracer #48466
 deploy manhours/docker-compose.yml       manhours #48467
