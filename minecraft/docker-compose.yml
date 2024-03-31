@@ -1,0 +1,50 @@
+version: '3.3'
+
+services:
+  minecraft:
+    image: hub.aiursoft.cn/aiursoft/internalimages/minecraft
+    volumes:
+      - world:/app/world
+      - world-nether:/app/world_nether
+      - world-the-end:/app/world_the_end
+      - dynmap:/app/plugins/dynmap
+      - mc-log:/var/log/mc
+    ports:
+      - 25565:25565
+      - 19132:19132
+      - 48489:8123
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+volumes:
+  world:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/mc/world
+  world-nether:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/mc/world_nether
+  world-the-end:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/mc/world_the_end
+  dynmap:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/mc/dynmap
+  mc-log:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/mc/log

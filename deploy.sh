@@ -55,6 +55,11 @@ sudo mkdir -p /swarm-vol/gist-data
 sudo mkdir -p /swarm-vol/gitea-data
 sudo mkdir -p /swarm-vol/apt-mirror-data
 sudo mkdir -p /swarm-vol/immortal-data
+sudo mkdir -p /swarm-vol/mc/world
+sudo mkdir -p /swarm-vol/mc/world_nether
+sudo mkdir -p /swarm-vol/mc/world_the_end
+sudo mkdir -p /swarm-vol/mc/dynmap
+sudo mkdir -p /swarm-vol/mc/log
 sudo touch /swarm-vol/koel/config
 
 #deploy basic/docker-compose.yml          basic #48463
@@ -86,3 +91,4 @@ deploy flyclass/docker-compose.yml       flyclass #48483
 deploy gist/docker-compose.yml           gist #48484
 deploy gitea/docker-compose.yml          gitea #48485 2201
 deploy apt-mirror/docker-compose.yml     apt-mirror #48486 48487 48488
+deploy minecraft/docker-compose.yml      minecraft #25565 19132 48489
