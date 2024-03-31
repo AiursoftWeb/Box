@@ -12,7 +12,6 @@ services:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
-
 volumes:
   tracer-data:
     driver: local

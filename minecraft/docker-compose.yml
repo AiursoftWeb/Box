@@ -9,6 +9,8 @@ services:
       - world-the-end:/app/world_the_end
       - dynmap:/app/plugins/dynmap
       - mc-log:/var/log/mc
+    networks:
+      - default
     ports:
       - 25565:25565
       - 19132:19132/udp
@@ -48,3 +50,7 @@ volumes:
       type: none
       o: bind
       device: /swarm-vol/mc/log
+
+networks:
+  default:
+    external: true
