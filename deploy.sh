@@ -87,6 +87,7 @@ sudo touch /swarm-vol/koel/config
 
 # Images
 echo "Pulling images..."
+sudo docker pull caddy:latest
 sudo docker pull ubuntu:22.04
 sudo docker pull joxit/docker-registry-ui:main
 sudo docker pull registry:2.8.2
@@ -102,30 +103,16 @@ sudo docker image rm local_sites:latest
 sudo docker build ./incoming/sites    -t local_sites:latest
 
 echo "Deploying necessary stacks..."
-sudo docker stack rm incoming # Remove because swarm has no idea about the new images
-sleep 5
 deploy incoming/docker-compose.yml       incoming # 48463 80 443
-
-# Special stacks for starting the cluster
-echo "Deploying registry..."
 deploy registry/docker-compose.yml       registry #48464
-
-sleep 10
-while true; do
-    if curl localhost:48464; then
-        break
-    fi
-    echo "Waiting for registry to start..."
-    sleep 1
-done
 
 # Business stacks
 echo "Deploying business stacks..."
 deploy swarmpit/docker-compose.yml       swarmpit
 deploy tracer/docker-compose.yml         tracer
-deploy manhours/docker-compose.yml       manhours #48467
-deploy chess/docker-compose.yml          chess #48468
-deploy stathub/docker-compose.yml        stathub #48469
+deploy manhours/docker-compose.yml       manhours
+deploy chess/docker-compose.yml          chess
+deploy stathub/docker-compose.yml        stathub
 deploy health/docker-compose.yml         health #48470,48471
 deploy chat/docker-compose.yml           chat #48472
 deploy homepage/docker-compose.yml       homepage #48473

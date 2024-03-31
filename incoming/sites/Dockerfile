@@ -31,11 +31,9 @@ RUN /bin/bash /app/build.sh
 
 # ============================
 # Prepare Runtime Environment
-FROM local_ubuntu
+FROM caddy
 
 WORKDIR /app
 
 COPY --from=caddy-build-env /usr/bin/caddy /usr/bin/caddy
 COPY --from=config-build-env /app/Dist/Caddyfile /etc/caddy/Caddyfile
-
-ENTRYPOINT [ "sh", "-c", "caddy run --config /etc/caddy/Caddyfile & tail -f /var/log/caddy/caddy.log" ]
