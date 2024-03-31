@@ -10,7 +10,7 @@ services:
       - dynmap:/app/plugins/dynmap
       - mc-log:/var/log/mc
     networks:
-      - default
+      - minecraft_default
     ports:
       - 25565:25565
       - 19132:19132/udp
@@ -52,5 +52,5 @@ volumes:
       device: /swarm-vol/mc/log
 
 networks:
-  default:
+  minecraft_default:
     external: true
