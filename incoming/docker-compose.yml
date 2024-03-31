@@ -12,6 +12,9 @@ services:
     volumes:
       - sites-data:/data
       - /etc/hosts:/etc/hosts
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
 
   frpc:
     image: hub.aiursoft.cn/aiursoft/internalimages/frpc
