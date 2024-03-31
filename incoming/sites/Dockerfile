@@ -29,7 +29,7 @@ RUN /bin/bash /app/build.sh
 
 # ============================
 # Prepare Runtime Environment
-FROM caddy
+FROM caddy:2.7.6
 WORKDIR /app
 COPY --from=caddy-build-env /usr/bin/caddy /usr/bin/caddy
 COPY --from=config-build-env /app/Dist/Caddyfile /etc/caddy/Caddyfile
