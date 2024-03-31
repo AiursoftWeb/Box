@@ -99,9 +99,11 @@ sudo docker build ./incoming/ubuntu   -t local_ubuntu:latest
 sudo docker image rm local_frp:latest
 sudo docker build ./incoming/frp      -t local_frp:latest
 sudo docker image rm local_sites:latest
-sudo docker build ./incoming/sites    -t local_sites:latest --no-cache
+sudo docker build ./incoming/sites    -t local_sites:latest
 
 echo "Deploying necessary stacks..."
+sudo docker stack rm incoming # Remove because swarm has no idea about the new images
+sleep 5
 deploy incoming/docker-compose.yml       incoming # 48463 80 443
 
 # Special stacks for starting the cluster
