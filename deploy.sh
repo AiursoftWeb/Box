@@ -28,6 +28,7 @@ ask_and_create_secret bing-search-key
 ask_and_create_secret nuget-publish-key
 ask_and_create_secret gitlab-runner-token
 
+sudo mkdir -p /swarm-vol/frpc-data
 sudo mkdir -p /swarm-vol/sites-data
 sudo mkdir -p /swarm-vol/registry-data
 sudo mkdir -p /swarm-vol/swarmpit-db-data
@@ -69,6 +70,7 @@ while ! curl -s http://localhost:48464/ > /dev/null; do
     echo "Waiting for registry to start"
     sleep 5
 done
+deploy incoming/docker-compose.yml       incoming # 80 443
 deploy swarmpit/docker-compose.yml       swarmpit #48465
 deploy tracer/docker-compose.yml         tracer #48466
 deploy manhours/docker-compose.yml       manhours #48467

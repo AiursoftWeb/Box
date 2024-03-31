@@ -1,0 +1,46 @@
+version: '3.3'
+
+services:
+
+  sites:
+    image: hub.aiursoft.cn/aiursoft/sites
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - proxy
+    volumes:
+      - sites-data:/data
+      - /etc/hosts:/etc/hosts
+
+  frpc:
+    image: hub.aiursoft.cn/aiursoft/internalimages/frpc
+    volumes:
+      - frpc-data:/etc/frp
+    networks:
+      - proxy
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+volumes:
+  frpc-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/frpc-data
+  sites-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/sites-data
+
+networks:
+  proxy:
+    driver: overlay
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.233.0.0/16
