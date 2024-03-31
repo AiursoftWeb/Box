@@ -106,6 +106,15 @@ deploy incoming/docker-compose.yml       incoming # 48463 80 443
 echo "Deploying registry..."
 deploy registry/docker-compose.yml       registry #48464
 
+sleep 10
+while true; do
+    if curl localhost:48464; then
+        break
+    fi
+    echo "Waiting for registry to start..."
+    sleep 1
+done
+
 # Business stacks
 echo "Deploying business stacks..."
 deploy swarmpit/docker-compose.yml       swarmpit
