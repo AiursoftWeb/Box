@@ -15,6 +15,7 @@ services:
       retries: 3
     networks:
       - net
+      - proxy_app
     deploy:
       resources:
         limits:
