@@ -86,7 +86,11 @@ sudo touch /swarm-vol/koel/config
 deploy registry/docker-compose.yml       registry #48464
 sleep 5
 while ! curl -s http://localhost:48464/ > /dev/null; do
-    echo "Waiting for registry to start"
+    echo "Waiting for registry (local service) to start"
+    sleep 5
+done
+while ! curl -s https://hub.aiursoft.cn/ > /dev/null; do
+    echo "Waiting for registry (https) to start"
     sleep 5
 done
 
