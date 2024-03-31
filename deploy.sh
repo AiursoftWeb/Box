@@ -87,7 +87,6 @@ sudo touch /swarm-vol/koel/config
 
 # Images
 echo "Pulling images..."
-sudo docker pull caddy:2.7.6
 sudo docker pull ubuntu:22.04
 sudo docker pull joxit/docker-registry-ui:main
 sudo docker pull registry:2.8.2
