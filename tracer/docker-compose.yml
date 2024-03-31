@@ -7,6 +7,8 @@ services:
       - tracer-data:/data
     ports:
       - 48466:5000
+    networks:
+      - proxy_app
     deploy:
       replicas: 3
       labels:
@@ -15,3 +17,7 @@ services:
 volumes:
   tracer-data:
     driver: local
+
+networks:
+  proxy_app:
+    external: true
