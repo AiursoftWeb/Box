@@ -22,12 +22,14 @@ function ask_and_create_secret() {
 
 better_performance
 
+# Secrets
 ask_and_create_secret openai-key
 ask_and_create_secret openai-instance
 ask_and_create_secret bing-search-key
 ask_and_create_secret nuget-publish-key
 ask_and_create_secret gitlab-runner-token
 
+# Data folders
 sudo mkdir -p /swarm-vol/frpc-data
 sudo mkdir -p /swarm-vol/sites-data
 sudo mkdir -p /swarm-vol/registry-data
@@ -63,14 +65,16 @@ sudo mkdir -p /swarm-vol/mc/dynmap
 sudo mkdir -p /swarm-vol/mc/log
 sudo touch /swarm-vol/koel/config
 
-#deploy basic/docker-compose.yml          basic #48463
+# Special stacks for starting the cluster
+deploy incoming/docker-compose.yml       incoming # 80 443
 deploy registry/docker-compose.yml       registry #48464
 sleep 5
 while ! curl -s http://localhost:48464/ > /dev/null; do
     echo "Waiting for registry to start"
     sleep 5
 done
-deploy incoming/docker-compose.yml       incoming # 80 443
+
+# Business stacks
 deploy swarmpit/docker-compose.yml       swarmpit #48465
 deploy tracer/docker-compose.yml         tracer #48466
 deploy manhours/docker-compose.yml       manhours #48467
