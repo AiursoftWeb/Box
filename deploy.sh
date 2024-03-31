@@ -82,8 +82,12 @@ sudo mkdir -p /swarm-vol/mc/dynmap
 sudo mkdir -p /swarm-vol/mc/log
 sudo touch /swarm-vol/koel/config
 
+sudo docker build ./incoming/frp   -t local_frp
+sudo docker build ./incoming/sites -t local_sites
+
 # Special stacks for starting the cluster
 deploy registry/docker-compose.yml       registry #48464
+deploy incoming/docker-compose.yml       incoming # 48463 80 443
 sleep 5
 while ! curl -s http://localhost:48464/ > /dev/null; do
     echo "Waiting for registry (local service) to start"
@@ -95,7 +99,6 @@ while ! curl -s https://hub.aiursoft.cn/ > /dev/null; do
 done
 
 # Business stacks
-deploy incoming/docker-compose.yml       incoming # 48463 80 443
 deploy swarmpit/docker-compose.yml       swarmpit
 deploy tracer/docker-compose.yml         tracer
 deploy manhours/docker-compose.yml       manhours #48467
