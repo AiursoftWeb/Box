@@ -11,7 +11,7 @@ services:
       - mc-log:/var/log/mc
     ports:
       - 25565:25565
-      - 19132:19132
+      - 19132:19132/udp
       - 48489:8123
     deploy:
       labels:
