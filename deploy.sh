@@ -95,9 +95,9 @@ sudo docker pull registry:2.8.2
 # Necessary stacks (These stacks started before the registry, so can't use the registry)
 echo "Building necessary stacks..."
 sudo docker builder prune -f
-sudo docker build ./incoming/ubuntu   -t local_ubuntu
-sudo docker build ./incoming/frp      -t local_frp
-sudo docker build ./incoming/sites    -t local_sites
+sudo docker build ./incoming/ubuntu   -t local_ubuntu --no-cache
+sudo docker build ./incoming/frp      -t local_frp --no-cache
+sudo docker build ./incoming/sites    -t local_sites --no-cache
 
 echo "Deploying necessary stacks..."
 deploy incoming/docker-compose.yml       incoming # 48463 80 443
