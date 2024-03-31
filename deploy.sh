@@ -37,6 +37,7 @@ echo "Deploying the cluster"
 better_performance
 
 # Secrets
+echo "Creating secrets..."
 ask_and_create_secret openai-key
 ask_and_create_secret openai-instance
 ask_and_create_secret bing-search-key
@@ -44,9 +45,11 @@ ask_and_create_secret nuget-publish-key
 ask_and_create_secret gitlab-runner-token
 
 # Networks
+echo "Creating networks..."
 create_network proxy_app 10.234.0.0/16
 
 # Data folders
+echo "Creating data folders..."
 sudo mkdir -p /swarm-vol/frpc-data
 sudo mkdir -p /swarm-vol/sites-data
 sudo mkdir -p /swarm-vol/registry-data
@@ -82,23 +85,26 @@ sudo mkdir -p /swarm-vol/mc/dynmap
 sudo mkdir -p /swarm-vol/mc/log
 sudo touch /swarm-vol/koel/config
 
-sudo docker build ./incoming/frp   -t local_frp
-sudo docker build ./incoming/sites -t local_sites
+# Images
+echo "Pulling images..."
+sudo docker pull caddy:2.7.6
+sudo docker pull ubuntu:22.04
+sudo docker pull joxit/docker-registry-ui:main
+sudo docker pull registry:2.8.2
+
+# Necessary stacks (These stacks started before the registry, so can't use the registry)
+echo "Deploying necessary stacks..."
+sudo docker build ./incoming/ubuntu   -t local_ubuntu
+sudo docker build ./incoming/frp      -t local_frp
+sudo docker build ./incoming/sites    -t local_sites
+deploy incoming/docker-compose.yml       incoming # 48463 80 443
 
 # Special stacks for starting the cluster
+echo "Deploying registry..."
 deploy registry/docker-compose.yml       registry #48464
-deploy incoming/docker-compose.yml       incoming # 48463 80 443
-sleep 5
-while ! curl -s http://localhost:48464/ > /dev/null; do
-    echo "Waiting for registry (local service) to start"
-    sleep 5
-done
-while ! curl -s https://hub.aiursoft.cn/ > /dev/null; do
-    echo "Waiting for registry (https) to start"
-    sleep 5
-done
 
 # Business stacks
+echo "Deploying business stacks..."
 deploy swarmpit/docker-compose.yml       swarmpit
 deploy tracer/docker-compose.yml         tracer
 deploy manhours/docker-compose.yml       manhours #48467

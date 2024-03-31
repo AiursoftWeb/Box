@@ -1,7 +1,7 @@
 # =============================
 #          BUILD
 # =============================
-FROM hub.aiursoft.cn/aiursoft/internalimages/ubuntu as builder
+FROM local_ubuntu as builder
 
 WORKDIR /builder
 
@@ -20,7 +20,7 @@ RUN frpcPath=$(find /builder/temp/ -name "frpc") \
 #============================
 #        RUNTIME
 #============================
-FROM hub.aiursoft.cn/aiursoft/internalimages/ubuntu as runtime
+FROM local_ubuntu as runtime
 
 COPY --from=builder /builder/frpc /usr/bin/
 

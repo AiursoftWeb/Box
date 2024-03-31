@@ -1,6 +1,6 @@
 # ============================
 # Prepare caddy Environment
-FROM hub.aiursoft.cn/aiursoft/internalimages/ubuntu as caddy-build-env
+FROM local_ubuntu as caddy-build-env
 
 RUN apt update
 RUN apt install software-properties-common -y
@@ -16,7 +16,7 @@ RUN cp /tmp/caddy /usr/bin/
 
 # ============================
 # Prepare Caddyfile build Environment
-FROM hub.aiursoft.cn/aiursoft/internalimages/ubuntu as config-build-env
+FROM local_ubuntu as config-build-env
 WORKDIR /app
 COPY . .
 RUN apt update
@@ -29,7 +29,7 @@ RUN /bin/bash /app/build.sh
 
 # ============================
 # Prepare Runtime Environment
-FROM hub.aiursoft.cn/caddy
+FROM caddy
 WORKDIR /app
 COPY --from=caddy-build-env /usr/bin/caddy /usr/bin/caddy
 COPY --from=config-build-env /app/Dist/Caddyfile /etc/caddy/Caddyfile
