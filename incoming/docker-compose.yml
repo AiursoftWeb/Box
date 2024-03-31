@@ -21,9 +21,14 @@ services:
     volumes:
       - sites-data:/data
       - /etc/hosts:/etc/hosts
-    deploy:
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
+
+  port_forward:
+    image: local_ubuntu
+    networks:
+      - frp-net
+    ports:
+      - 2202:2202
+    command: /bin/bash -c "apt install -y netcat && /usr/bin/ncat --sh-exec "ncat gitlab 2202" -l 2202 --keep-open"
 
   frpc:
     image: local_frp
@@ -33,9 +38,6 @@ services:
       - "48463:7400"
     networks:
       - frp-net
-    deploy:
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
 volumes:
   frpc-data:
