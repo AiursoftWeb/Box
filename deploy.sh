@@ -3,6 +3,8 @@
 function better_performance() {
     sudo sysctl -w net.core.rmem_max=2500000
     sudo sysctl -w net.core.wmem_max=2500000
+    sudo sysctl -w net.ipv4.tcp_congestion_control=bbr
+    sudo sysctl -w net.core.default_qdisc=fq
     sudo sysctl -p
 }
 
@@ -20,6 +22,14 @@ function ask_and_create_secret() {
     fi
 }
 
+function create_network() {
+    network_name=$1
+    known_networks=$(sudo docker network ls --format '{{.Name}}')
+    if [[ $known_networks != *"$network_name"* ]]; then
+        sudo docker network create --driver overlay --scope swarm $network_name
+    fi
+}
+
 better_performance
 
 # Secrets
@@ -28,6 +38,9 @@ ask_and_create_secret openai-instance
 ask_and_create_secret bing-search-key
 ask_and_create_secret nuget-publish-key
 ask_and_create_secret gitlab-runner-token
+
+# Networks
+create_network proxy_app
 
 # Data folders
 sudo mkdir -p /swarm-vol/frpc-data
@@ -98,3 +111,10 @@ deploy gist/docker-compose.yml           gist #48484
 deploy gitea/docker-compose.yml          gitea #48485 2201
 deploy apt-mirror/docker-compose.yml     apt-mirror #48486 48487 48488
 deploy minecraft/docker-compose.yml      minecraft #25565 19132 48489
+
+# Ports:
+# 80,443
+# 48463,48464,48465,48466,48467,48468,48469,48470,48471,48472,48473,48474,48475,48476,48477,48478,48479,48480,48481,48482,48483,48484,48485,48486,48487,48488,48489
+# 25565 (minecraft)
+# 19132 (minecraft)
+# 2201 (gitea)
