@@ -11,7 +11,9 @@ RUN curl -1sLf 'https://dl.cloudsmith.io/public/caddy/xcaddy/gpg.key' | gpg --de
 RUN curl -1sLf 'https://dl.cloudsmith.io/public/caddy/xcaddy/debian.deb.txt' | tee /etc/apt/sources.list.d/caddy-xcaddy.list
 RUN apt update
 RUN apt install xcaddy -y
-RUN xcaddy build --with github.com/caddyserver/transform-encoder --with github.com/ueffel/caddy-brotli --output /tmp/caddy
+
+# --with github.com/caddyserver/transform-encoder
+RUN xcaddy build --with github.com/ueffel/caddy-brotli --output /tmp/caddy
 RUN cp /tmp/caddy /usr/bin/
 
 # ============================
