@@ -28,7 +28,9 @@ services:
       - frp-net
     ports:
       - 2202:2202
-    command: /bin/bash -c "apt install -y ncat && /usr/bin/ncat --sh-exec 'ncat gitlab.green 2202' -l 2202 --keep-open"
+    volumes:
+      - /etc/hosts:/etc/hosts
+    command: /bin/bash -c "apt install -y ncat && /usr/bin/ncat --sh-exec 'ncat gitlab 2202' -l 2202 --keep-open"
 
   frpc:
     image: local_frp
