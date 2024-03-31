@@ -8,8 +8,6 @@ services:
       - SWARMPIT_INFLUXDB=http://influxdb:8086
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-    ports:
-      - 48465:8080
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080"]
       interval: 60s
@@ -89,6 +87,8 @@ services:
 networks:
   net:
     driver: overlay
+  proxy_app:
+    external: true
 
 volumes:
   db-data:
