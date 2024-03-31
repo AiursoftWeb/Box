@@ -24,9 +24,10 @@ function ask_and_create_secret() {
 
 function create_network() {
     network_name=$1
+    subnet=$2
     known_networks=$(sudo docker network ls --format '{{.Name}}')
     if [[ $known_networks != *"$network_name"* ]]; then
-        sudo docker network create --driver overlay --scope swarm $network_name
+        sudo docker network create --driver overlay --subnet $subnet --scope swarm $network_name
     fi
 }
 
@@ -40,7 +41,7 @@ ask_and_create_secret nuget-publish-key
 ask_and_create_secret gitlab-runner-token
 
 # Networks
-create_network proxy_app
+create_network proxy_app 10.234.0.0/16
 
 # Data folders
 sudo mkdir -p /swarm-vol/frpc-data

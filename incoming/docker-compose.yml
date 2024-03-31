@@ -12,7 +12,7 @@ services:
       - proxy_app
     volumes:
       - sites-data:/data
-      # - /etc/hosts:/etc/hosts
+      - /etc/hosts:/etc/hosts
     deploy:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
@@ -51,9 +51,4 @@ networks:
       config:
         - subnet: 10.233.0.0/16
   proxy_app:
-    driver: overlay
     external: true
-    ipam:
-      driver: default
-      config:
-        - subnet: 10.234.0.0/16
