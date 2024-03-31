@@ -8,7 +8,8 @@ services:
       - "80:80"
       - "443:443"
     networks:
-      - proxy
+      - frp-net
+      - proxy_app
     volumes:
       - sites-data:/data
       - /etc/hosts:/etc/hosts
@@ -23,7 +24,7 @@ services:
     ports:
       - "48463:7400"
     networks:
-      - proxy
+      - frp-net
     deploy:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
@@ -43,9 +44,16 @@ volumes:
       device: /swarm-vol/sites-data
 
 networks:
-  proxy:
+  frp-net:
     driver: overlay
     ipam:
       driver: default
       config:
         - subnet: 10.233.0.0/16
+  proxy_app:
+    driver: overlay
+    external: true
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.234.0.0/16
