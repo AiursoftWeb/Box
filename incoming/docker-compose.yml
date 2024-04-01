@@ -40,7 +40,7 @@ services:
     networks:
       - frp_net
     ports:
-      - "48463:7400"
+      - "48463:7400" # TODO: Proxy with sites
 
 
 volumes:

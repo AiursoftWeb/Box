@@ -9,6 +9,7 @@ services:
       - "48464:80"
     networks:
       - net
+      - proxy_app
     environment:
       - SINGLE_REGISTRY=true
       - REGISTRY_TITLE=hub.aiursoft.cn
@@ -47,3 +48,5 @@ volumes:
 networks:
   net:
     driver: overlay
+  proxy_app:
+    external: true
