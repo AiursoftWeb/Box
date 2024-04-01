@@ -59,3 +59,7 @@ networks:
     external: true
   proxy_app:
     external: true
+
+secrets:
+  frp-token:
+    external: true
