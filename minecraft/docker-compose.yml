@@ -11,10 +11,9 @@ services:
       - mc-log:/var/log/mc
     networks:
       - proxy_app
-      - frp_net
+      - frp-net
     ports:
       # These ports are for internal use. For external, FRP will handle it.
-      # 8123 will by proxy by sites.
       - target: 25565
         published: 25565
         protocol: tcp
@@ -23,6 +22,7 @@ services:
         published: 19132
         protocol: udp
         mode: host
+      # 8123 will by proxy by FRP.
     deploy:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
@@ -60,7 +60,7 @@ volumes:
       device: /swarm-vol/mc/log
 
 networks:
-  frp_net:
+  frp-net:
     external: true
   proxy_app:
     external: true

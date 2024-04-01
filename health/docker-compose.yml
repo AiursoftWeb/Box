@@ -33,6 +33,7 @@ services:
       - prometheus # Grafana needs to be using Prometheus as a data source
     image: hub.aiursoft.cn/anduin/sleepagent/customized-grafana
     volumes:
+      # TODO: Investigate why everytime reboot, ask for new admin password
       - grafana-config:/etc/grafana
       - grafana-data:/var/lib/grafana
     networks:

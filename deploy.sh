@@ -130,9 +130,9 @@ deploy koel/docker-compose.yml           koel #48481
 deploy kiwix/docker-compose.yml          kiwix #48482
 deploy flyclass/docker-compose.yml       flyclass #48483
 deploy gist/docker-compose.yml           gist #48484
-deploy gitea/docker-compose.yml          gitea #48485 2201
+deploy gitea/docker-compose.yml          gitea #2201
 deploy apt-mirror/docker-compose.yml     apt-mirror #48486 48487 48488
-deploy minecraft/docker-compose.yml      minecraft #25565 19132 48489
+deploy minecraft/docker-compose.yml      minecraft #25565 19132
 
 # Ports:
 # 80,443
