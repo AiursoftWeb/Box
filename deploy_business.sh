@@ -138,3 +138,8 @@ deploy gist/docker-compose.yml           gist #48484
 deploy gitea/docker-compose.yml          gitea #2201
 deploy apt-mirror/docker-compose.yml     apt-mirror #48486 48487 48488
 deploy minecraft/docker-compose.yml      minecraft #25565 19132
+
+# registry: 8080
+# incoming: 80 443
+# gitea: 2201
+# minecraft: 25565 19132

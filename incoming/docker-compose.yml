@@ -47,8 +47,6 @@ services:
     secrets:
       - source: frp-token
         target: frp-token
-    ports:
-      - "48463:7400" # TODO: Proxy with sites
     deploy:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
