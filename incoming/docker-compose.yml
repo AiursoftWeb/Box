@@ -34,20 +34,12 @@ services:
 
   frpc:
     image: local_frp
-    volumes:
-      - frpc-data:/etc/frp
     ports:
       - "48463:7400"
     networks:
       - frp-net
 
 volumes:
-  frpc-data:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /swarm-vol/frpc-data
   sites-data:
     driver: local
     driver_opts:
@@ -57,10 +49,6 @@ volumes:
 
 networks:
   frp-net:
-    driver: overlay
-    ipam:
-      driver: default
-      config:
-        - subnet: 10.233.0.0/16 # Trusted by proxy protocol
+    external: true
   proxy_app:
     external: true

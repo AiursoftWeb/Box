@@ -1,0 +1,106 @@
+serverAddr = "1.116.101.33"
+serverPort = 7000
+auth.token = "aeig23ijr8gr9y7gh"
+transport.poolCount = 30
+#transport.useCompression = true
+webServer.addr = "0.0.0.0"
+webServer.port = 7400
+webServer.user = "admin"
+webServer.password = "admin"
+
+# Check on Caddy.
+[[proxies]]
+name = "http"
+type = "tcp"
+localIP = "incoming_sites"
+localPort = 80
+remotePort = 80
+
+# Check on Caddy.
+[[proxies]]
+name = "https"
+type = "tcp"
+localIP = "incoming_sites"
+localPort = 443
+remotePort = 443
+transport.proxyProtocolVersion = "v2"
+
+# Check on Caddy.
+# Disable QUIC. Because caddy don't know the real IP address
+#[[proxies]]
+#name = "quic"
+#type = "udp"
+#localIP = "127.0.0.1"
+#localPort = 443
+#remotePort = 443
+#transport.proxyProtocolVersion = "v2"
+
+# Regular update to ensure safe.
+[[proxies]]
+name = "mc_tcp"
+type = "tcp"
+localIP = "127.0.0.1"
+localPort = 25565
+remotePort = 25565
+
+# Regular update to ensure safe.
+[[proxies]]
+name = "MC_UDP"
+type = "udp"
+localIP = "127.0.0.1"
+localPort = 19132
+remotePort = 19132
+
+# Regular update to ensure safe.
+[[proxies]]
+name = "SSH_GITEA"
+type = "tcp"
+localIP = "127.0.0.1"
+localPort = 2201
+remotePort = 2201
+
+# Regular update to ensure safe.
+[[proxies]]
+name = "SSH_GITLAB"
+type = "tcp"
+localIP = "gitlab"
+localPort = 2202
+remotePort = 2202
+
+# gnome is an untrusted server.
+[[proxies]]
+name = "GNOMERDP"
+type = "tcp"
+localIP = "gnome"
+localPort = 33890
+remotePort = 33890
+
+# Regular update to ensure safe.
+[[proxies]]
+name = "TERRARIA"
+type = "tcp"
+localIP = "terraria"
+localPort = 7777
+remotePort = 7777
+
+# Regular update to ensure safe.
+[[proxies]]
+name = "css"
+type = "udp"
+localIP = "cssource"
+localPort = 27015
+remotePort = 27015
+
+[[proxies]]
+name = "factorio"
+type = "udp"
+localIP = "factorio"
+localPort = 34197
+remotePort = 34197
+
+[[proxies]]
+name = "dontstarve"
+type = "udp"
+localIP = "starve"
+localPort = 10889
+remotePort = 10889

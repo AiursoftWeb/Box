@@ -23,7 +23,7 @@ RUN frpcPath=$(find /builder/temp/ -name "frpc") \
 FROM local_ubuntu as runtime
 
 COPY --from=builder /builder/frpc /usr/bin/
+COPY ./frpc.toml /etc/frp/
+COPY ./entrypoint.sh /
 
-VOLUME /etc/frp
-
-ENTRYPOINT [ "sh", "-c", "touch /etc/frp/frpc.toml && /usr/bin/frpc -c /etc/frp/frpc.toml" ]
+ENTRYPOINT [ "sh", "-c", "/entrypoint.sh" ]

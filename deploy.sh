@@ -38,6 +38,7 @@ better_performance
 
 # Secrets
 echo "Creating secrets..."
+ask_and_create_secret frp-token
 ask_and_create_secret openai-key
 ask_and_create_secret openai-instance
 ask_and_create_secret bing-search-key
@@ -47,6 +48,7 @@ ask_and_create_secret gitlab-runner-token
 # Networks
 echo "Creating networks..."
 create_network proxy_app 10.234.0.0/16
+create_network frp_net 10.233.0.0/16
 
 # Data folders
 echo "Creating data folders..."

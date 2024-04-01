@@ -10,11 +10,16 @@ services:
       - dynmap:/app/plugins/dynmap
       - mc-log:/var/log/mc
     networks:
-      - minecraft_default
+      - proxy_app
     ports:
-      - 25565:25565
-      - 19132:19132/udp
-      - 48489:8123
+      - target: 25565
+        published: 25565
+        protocol: tcp
+        mode: host
+      - target: 19132
+        published: 19132
+        protocol: udp
+        mode: host
     deploy:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
@@ -52,5 +57,7 @@ volumes:
       device: /swarm-vol/mc/log
 
 networks:
-  minecraft_default:
+  frp-net:
+    external: true
+  proxy_app:
     external: true
