@@ -4,8 +4,6 @@ services:
 
   sites:
     image: localhost:8080/box_starting/local_sites
-
-    # Host 80 and 443
     ports:
       - target: 80
         published: 80
@@ -32,7 +30,10 @@ services:
     networks:
       - frp_net
     ports:
-      - 2202:2202
+      - target: 2202
+        published: 2202
+        protocol: tcp
+        mode: host
     command: /bin/bash -c "apt install -y ncat && /usr/bin/ncat --sh-exec 'ncat gitlab 2202' -l 2202 --keep-open"
     deploy:
       labels:
