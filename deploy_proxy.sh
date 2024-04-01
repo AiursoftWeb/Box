@@ -22,31 +22,34 @@ function create_network() {
     fi
 }
 
-echo "Cleaning up stacks..."
-sudo docker stack rm incoming || echo "incoming stack not found"
-sudo docker stack rm registry || echo "registry stack not found"
+deploy registry/docker-compose.yml       registry # 8080
 
-echo "Cleaning up networks..."
-sudo docker network rm proxy_app || echo "proxy_app network not found"
-sudo docker network rm frp_net || echo "frp_net network not found"
+while curl -s http://localhost:8080 > /dev/null; [ $? -ne 0 ]; do
+    echo "Waiting for registry to start..."
+    sleep 1
+done
 
 #sudo docker builder prune -f
-echo "Cleaning up images..."
-sudo docker image rm local_ubuntu:latest || echo "local_ubuntu image not found"
-sudo docker image rm local_frp:latest || echo "local_frp image not found"
-sudo docker image rm local_sites:latest || echo "local_sites image not found"
+# echo "Cleaning up images..."
+# sudo docker image rm local_ubuntu:latest || echo "local_ubuntu image not found"
+# sudo docker image rm local_frp:latest || echo "local_frp image not found"
+# sudo docker image rm local_sites:latest || echo "local_sites image not found"
 
-echo "Pulling images..."
-sudo docker pull caddy:latest
-sudo docker pull caddy:builder
-sudo docker pull ubuntu:22.04
-sudo docker pull joxit/docker-registry-ui:main
-sudo docker pull registry:2.8.2
+# echo "Pulling images..."
+# sudo docker pull caddy:latest
+# sudo docker pull caddy:builder
+# sudo docker pull ubuntu:22.04
+# sudo docker pull joxit/docker-registry-ui:main
+# sudo docker pull registry:2.8.2
 
 echo "Building images..."
-sudo docker build ./incoming/ubuntu   -t local_ubuntu:latest
-sudo docker build ./incoming/frp      -t local_frp:latest
-sudo docker build ./incoming/sites    -t local_sites:latest
+sudo docker build ./incoming/ubuntu   -t localhost:8080/local_ubuntu:latest
+sudo docker build ./incoming/frp      -t localhost:8080/local_frp:latest
+sudo docker build ./incoming/sites    -t localhost:8080/local_sites:latest
+
+sudo docker push localhost:8080/local_ubuntu:latest
+sudo docker push localhost:8080/local_frp:latest
+sudo docker push localhost:8080/local_sites:latest
 
 echo "Creating secrets..."
 ask_and_create_secret frp-token
@@ -61,4 +64,3 @@ sudo mkdir -p /swarm-vol/registry-data
 
 echo "Deploying necessary stacks..."
 deploy incoming/docker-compose.yml       incoming # 80 443
-deploy registry/docker-compose.yml       registry # 48464

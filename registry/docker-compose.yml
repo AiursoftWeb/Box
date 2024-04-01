@@ -6,7 +6,10 @@ services:
       - registry-server
     image: joxit/docker-registry-ui:main
     ports:
-      - "48464:80"
+      - target: 80
+        published: 8080
+        protocol: tcp
+        mode: host
     networks:
       - net
       - proxy_app
