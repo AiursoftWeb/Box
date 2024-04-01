@@ -29,3 +29,5 @@ EXPOSE 80 443
 
 COPY --from=caddy-build-env /usr/bin/caddy /usr/bin/caddy
 COPY --from=config-build-env /app/Dist/Caddyfile /etc/caddy/Caddyfile
+
+ENTRYPOINT ["sh", "-c", "caddy run --config /etc/caddy/Caddyfile --adapter caddyfile & tail -f /var/log/caddy/caddy.log & wait"]
