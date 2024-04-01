@@ -22,14 +22,16 @@ function create_network() {
     fi
 }
 
-echo "Cleaning up..."
-sudo docker network rm proxy_app || echo "proxy_app network not found"
-sudo docker network rm frp_net || echo "frp_net network not found"
-
+echo "Cleaning up stacks..."
 sudo docker stack rm incoming || echo "incoming stack not found"
 sudo docker stack rm registry || echo "registry stack not found"
 
+echo "Cleaning up networks..."
+sudo docker network rm proxy_app || echo "proxy_app network not found"
+sudo docker network rm frp_net || echo "frp_net network not found"
+
 #sudo docker builder prune -f
+echo "Cleaning up images..."
 sudo docker image rm local_ubuntu:latest || echo "local_ubuntu image not found"
 sudo docker image rm local_frp:latest || echo "local_frp image not found"
 sudo docker image rm local_sites:latest || echo "local_sites image not found"

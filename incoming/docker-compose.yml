@@ -39,6 +39,8 @@ services:
       - /etc/hosts:/etc/hosts # TODO: This is a temporary solution to resolve the hostname. After migrating all to docker, this will be removed.
     networks:
       - frp_net
+    secrets:
+      - frp-token
     ports:
       - "48463:7400" # TODO: Proxy with sites
 
