@@ -25,5 +25,6 @@ FROM local_ubuntu as runtime
 COPY --from=builder /builder/frpc /usr/bin/
 COPY ./frpc.toml /etc/frp/
 COPY ./entrypoint.sh /
+RUN chmod +x /entrypoint.sh
 
 ENTRYPOINT [ "sh", "-c", "/entrypoint.sh" ]
