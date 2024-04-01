@@ -128,7 +128,7 @@ deploy howtocook/docker-compose.yml      howtocook #48475
 deploy edgeneko-blog/docker-compose.yml  edgeneko-blog #48476
 deploy cpprunner/docker-compose.yml      cpprunner #48477
 deploy lab/docker-compose.yml            lab #48478
-deploy nuget/docker-compose.yml          nuget #48479
+deploy nuget/docker-compose.yml          nuget
 deploy remotely/docker-compose.yml       remotely #48480
 deploy runner/docker-compose.yml         runner
 deploy koel/docker-compose.yml           koel #48481

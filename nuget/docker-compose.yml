@@ -8,8 +8,8 @@ services:
     secrets:
       - source: nuget-publish-key
         target: ApiKey
-    ports:
-      - 48479:5000
+    networks:
+      - proxy_app
     deploy:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
@@ -24,4 +24,8 @@ volumes:
 
 secrets:
   nuget-publish-key:
+    external: true
+
+networks:
+  proxy_app:
     external: true
