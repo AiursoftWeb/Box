@@ -27,7 +27,7 @@ function create_network() {
     subnet=$2
     known_networks=$(sudo docker network ls --format '{{.Name}}')
     if [[ $known_networks != *"$network_name"* ]]; then
-        $networkdId = sudo docker network create --driver overlay --subnet $subnet --scope swarm $network_name
+        networkdId=$(sudo docker network create --driver overlay --subnet $subnet --scope swarm $network_name)
         echo "Network $network_name created with id $networkdId"
     fi
 }
