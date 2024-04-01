@@ -120,7 +120,7 @@ deploy tracer/docker-compose.yml         tracer
 deploy manhours/docker-compose.yml       manhours
 deploy chess/docker-compose.yml          chess
 deploy stathub/docker-compose.yml        stathub
-deploy health/docker-compose.yml         health #48470,48471
+deploy health/docker-compose.yml         health
 deploy chat/docker-compose.yml           chat #48472
 deploy homepage/docker-compose.yml       homepage #48473
 deploy gameoflife/docker-compose.yml     gameoflife #48474

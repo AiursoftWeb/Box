@@ -7,8 +7,7 @@ services:
       - sleepagent-data:/data
     networks:
       - internal
-    ports:
-      - "48470:5000"
+      - proxy_app
     deploy:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
@@ -38,8 +37,7 @@ services:
       - grafana-data:/var/lib/grafana
     networks:
       - internal
-    ports:
-      - "48471:3000"
+      - proxy_app
     deploy:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
@@ -47,6 +45,8 @@ services:
 networks:
   internal:
     driver: overlay
+  proxy_app:
+    external: true
 
 volumes:
   prometheus-config:
