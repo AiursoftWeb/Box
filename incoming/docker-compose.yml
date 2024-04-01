@@ -16,16 +16,16 @@ services:
         protocol: tcp
         mode: host
     networks:
-      - frp-net
+      - frp_net
       - proxy_app
     volumes:
       - sites-data:/data
-      - /etc/hosts:/etc/hosts
+      - /etc/hosts:/etc/hosts # TODO: This is a temporary solution to resolve the hostname. After migrating all to docker, this will be removed.
 
   port_forward:
     image: local_ubuntu
     networks:
-      - frp-net
+      - frp_net
     ports:
       - 2202:2202
     volumes:
@@ -34,10 +34,12 @@ services:
 
   frpc:
     image: local_frp
+    volumes:
+      - /etc/hosts:/etc/hosts # TODO: This is a temporary solution to resolve the hostname. After migrating all to docker, this will be removed.
     ports:
       - "48463:7400"
     networks:
-      - frp-net
+      - frp_net
 
 volumes:
   sites-data:
@@ -48,7 +50,7 @@ volumes:
       device: /swarm-vol/sites-data
 
 networks:
-  frp-net:
+  frp_net:
     external: true
   proxy_app:
     external: true

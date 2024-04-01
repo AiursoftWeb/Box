@@ -39,7 +39,7 @@ transport.proxyProtocolVersion = "v2"
 [[proxies]]
 name = "mc_tcp"
 type = "tcp"
-localIP = "127.0.0.1"
+localIP = "minecraft_server"
 localPort = 25565
 remotePort = 25565
 
@@ -47,7 +47,7 @@ remotePort = 25565
 [[proxies]]
 name = "MC_UDP"
 type = "udp"
-localIP = "127.0.0.1"
+localIP = "minecraft_server"
 localPort = 19132
 remotePort = 19132
 
