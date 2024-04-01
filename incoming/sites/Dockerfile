@@ -1,20 +1,8 @@
 # ============================
 # Prepare caddy Environment
-FROM local_ubuntu as caddy-build-env
+FROM caddy:builder as caddy-build-env
 
-RUN apt update
-RUN apt install software-properties-common -y
-RUN add-apt-repository ppa:longsleep/golang-backports -y
-RUN apt install golang-go curl -y
-RUN apt install -y debian-keyring debian-archive-keyring apt-transport-https
-RUN curl -1sLf 'https://dl.cloudsmith.io/public/caddy/xcaddy/gpg.key' | gpg --dearmor -o /usr/share/keyrings/caddy-xcaddy-archive-keyring.gpg
-RUN curl -1sLf 'https://dl.cloudsmith.io/public/caddy/xcaddy/debian.deb.txt' | tee /etc/apt/sources.list.d/caddy-xcaddy.list
-RUN apt update
-RUN apt install xcaddy -y
-
-# --with github.com/caddyserver/transform-encoder
-RUN xcaddy build --with github.com/ueffel/caddy-brotli --output /tmp/caddy
-RUN cp /tmp/caddy /usr/bin/
+RUN xcaddy build --with github.com/ueffel/caddy-brotli
 
 # ============================
 # Prepare Caddyfile build Environment
