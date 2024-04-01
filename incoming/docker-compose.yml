@@ -3,7 +3,7 @@ version: '3.3'
 services:
 
   sites:
-    image: local_sites
+    image: localhost:8080/box_starting/local_sites
 
     # Host 80 and 443
     ports:
@@ -21,20 +21,25 @@ services:
     volumes:
       - sites-data:/data
       - /etc/hosts:/etc/hosts # TODO: This is a temporary solution to resolve the hostname. After migrating all to docker, this will be removed.
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
 
   port_forward: # TODO: This is a temporary solution to resolve the gitlab ssh. After migrating all to docker, this will be removed.
-    image: local_ubuntu
+    image: localhost:8080/box_starting/local_ubuntu
     volumes:
       - /etc/hosts:/etc/hosts
     networks:
       - frp_net
     ports:
       - 2202:2202
-
     command: /bin/bash -c "apt install -y ncat && /usr/bin/ncat --sh-exec 'ncat gitlab 2202' -l 2202 --keep-open"
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
 
   frpc:
-    image: local_frp
+    image: localhost:8080/box_starting/local_frp
     volumes:
       - /etc/hosts:/etc/hosts # TODO: This is a temporary solution to resolve the hostname. After migrating all to docker, this will be removed.
     networks:
@@ -44,7 +49,9 @@ services:
         target: frp-token
     ports:
       - "48463:7400" # TODO: Proxy with sites
-
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
 
 volumes:
   sites-data:

@@ -1,7 +1,7 @@
 # =============================
 #          BUILD
 # =============================
-FROM local_ubuntu as builder
+FROM localhost:8080/box_starting/local_ubuntu as builder
 
 WORKDIR /builder
 
@@ -20,7 +20,7 @@ RUN frpcPath=$(find /builder/temp/ -name "frpc") \
 #============================
 #        RUNTIME
 #============================
-FROM local_ubuntu as runtime
+FROM localhost:8080/box_starting/local_ubuntu as runtime
 
 COPY --from=builder /builder/frpc /usr/bin/
 COPY ./frpc.toml /etc/frp/

@@ -22,45 +22,19 @@ function create_network() {
     fi
 }
 
-deploy registry/docker-compose.yml       registry # 8080
 
-while curl -s http://localhost:8080 > /dev/null; [ $? -ne 0 ]; do
-    echo "Waiting for registry to start..."
-    sleep 1
-done
 
-#sudo docker builder prune -f
-# echo "Cleaning up images..."
-# sudo docker image rm local_ubuntu:latest || echo "local_ubuntu image not found"
-# sudo docker image rm local_frp:latest || echo "local_frp image not found"
-# sudo docker image rm local_sites:latest || echo "local_sites image not found"
 
-# echo "Pulling images..."
-# sudo docker pull caddy:latest
-# sudo docker pull caddy:builder
-# sudo docker pull ubuntu:22.04
-# sudo docker pull joxit/docker-registry-ui:main
-# sudo docker pull registry:2.8.2
 
-echo "Building images..."
-sudo docker build ./incoming/ubuntu   -t localhost:8080/local_ubuntu:latest
-sudo docker build ./incoming/frp      -t localhost:8080/local_frp:latest
-sudo docker build ./incoming/sites    -t localhost:8080/local_sites:latest
+echo "Pulling images..."
 
-sudo docker push localhost:8080/local_ubuntu:latest
-sudo docker push localhost:8080/local_frp:latest
-sudo docker push localhost:8080/local_sites:latest
+
+
 
 echo "Creating secrets..."
-ask_and_create_secret frp-token
 
-echo "Creating networks..."
-create_network proxy_app 10.234.0.0/16
-create_network frp_net 10.233.0.0/16
 
-echo "Creating data folders..."
-sudo mkdir -p /swarm-vol/sites-data
-sudo mkdir -p /swarm-vol/registry-data
+
 
 echo "Deploying necessary stacks..."
-deploy incoming/docker-compose.yml       incoming # 80 443
+

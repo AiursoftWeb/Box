@@ -6,7 +6,7 @@ RUN xcaddy build --with github.com/ueffel/caddy-brotli
 
 # ============================
 # Prepare Caddyfile build Environment
-FROM local_ubuntu as config-build-env
+FROM localhost:8080/box_starting/local_ubuntu as config-build-env
 WORKDIR /app
 COPY . .
 RUN apt update
