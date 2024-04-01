@@ -40,7 +40,8 @@ services:
     networks:
       - frp_net
     secrets:
-      - frp-token
+      - source: frp-token
+        target: frp-token
     ports:
       - "48463:7400" # TODO: Proxy with sites
 
