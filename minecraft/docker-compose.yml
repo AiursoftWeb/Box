@@ -11,7 +11,7 @@ services:
       - mc-log:/var/log/mc
     networks:
       - proxy_app
-      - frp-net
+      - frp_net
     ports:
       # These ports are for internal use. For external, FRP will handle it.
       - target: 25565
@@ -60,7 +60,7 @@ volumes:
       device: /swarm-vol/mc/log
 
 networks:
-  frp-net:
+  frp_net:
     external: true
   proxy_app:
     external: true
