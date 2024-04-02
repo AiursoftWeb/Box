@@ -70,8 +70,8 @@ sudo mkdir -p /swarm-vol/sleepagent-data
 sudo mkdir -p /swarm-vol/chat-data
 sudo mkdir -p /swarm-vol/cpprunner-data
 sudo mkdir -p /swarm-vol/nuget-data
-sudo mkdir -p /swarm-vol/remotely-data
-sudo mkdir -p /swarm-vol/remotely-asp
+sudo mkdir -p /swarm-vol/remotely/data
+sudo mkdir -p /swarm-vol/remotely/asp
 sudo mkdir -p /swarm-vol/koel/db
 sudo mkdir -p /swarm-vol/koel/music
 sudo mkdir -p /swarm-vol/koel/covers
@@ -129,7 +129,7 @@ deploy edgeneko-blog/docker-compose.yml  edgeneko-blog
 deploy cpprunner/docker-compose.yml      cpprunner
 deploy lab/docker-compose.yml            lab
 deploy nuget/docker-compose.yml          nuget
-deploy remotely/docker-compose.yml       remotely #48480
+deploy remotely/docker-compose.yml       remotely
 deploy runner/docker-compose.yml         runner
 deploy koel/docker-compose.yml           koel #48481
 deploy kiwix/docker-compose.yml          kiwix #48482

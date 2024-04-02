@@ -1,17 +1,18 @@
 version: '3.3'
 
 services:
-  remotely:
-    image: hub.aiursoft.cn/immybot/remotely:69
+  app:
+    image: hub.aiursoft.cn/immybot/remotely:88
     volumes:
-      - remotely-data:/remotely-data
+      - remotely-data:/app/AppData
       - remotely-asp:/root/.aspnet
-    ports:
-      - 48480:5000
+    networks:
+      - proxy_app
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_HTTP_PORTS=5000
       - Remotely_ApplicationOptions__DbProvider=SQLite
+      - Remotely_ConnectionStrings__SQLite=Data Source=/app/AppData/Remotely.db
     deploy:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
@@ -22,10 +23,14 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /swarm-vol/remotely-data
+      device: /swarm-vol/remotely/data
   remotely-asp:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /swarm-vol/remotely-asp
+      device: /swarm-vol/remotely/asp
+
+networks:
+  proxy_app:
+    external: true
