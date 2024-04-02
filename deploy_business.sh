@@ -87,6 +87,7 @@ sudo mkdir -p /swarm-vol/mc/world_nether
 sudo mkdir -p /swarm-vol/mc/world_the_end
 sudo mkdir -p /swarm-vol/mc/dynmap
 sudo mkdir -p /swarm-vol/mc/log
+sudo mkdir -p /swarm-vol/vpn-data
 sudo touch /swarm-vol/koel/config
 
 echo "Starting registry..."
@@ -138,6 +139,7 @@ deploy gist/docker-compose.yml           gist #48484
 deploy gitea/docker-compose.yml          gitea #2201
 deploy apt-mirror/docker-compose.yml     apt-mirror #48486 48487 48488
 deploy minecraft/docker-compose.yml      minecraft #25565 19132
+deploy gateway/docker-compose.yml        gateway
 
 # registry: 8080
 # incoming: 80 443
