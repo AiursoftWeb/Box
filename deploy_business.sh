@@ -35,13 +35,6 @@ function create_network() {
 echo "Deploying the cluster"
 better_performance
 
-echo "Pulling images..."
-sudo docker pull caddy:latest
-sudo docker pull caddy:builder
-sudo docker pull ubuntu:22.04
-sudo docker pull joxit/docker-registry-ui:main
-sudo docker pull registry:2.8.2
-
 echo "Creating secrets..."
 create_secret frp-token
 create_secret xray-uuid
