@@ -137,3 +137,4 @@ deploy gitea/docker-compose.yml          gitea
 deploy apt_mirror/docker-compose.yml     apt_mirror
 deploy minecraft/docker-compose.yml      minecraft
 deploy gateway/docker-compose.yml        gateway
+deploy gitlab/docker-compose.yml         gitlab

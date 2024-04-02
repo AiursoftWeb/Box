@@ -23,21 +23,21 @@ services:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
-  port_forward: # TODO: This is a temporary solution to resolve the gitlab ssh. After migrating all to docker, this will be removed.
-    image: localhost:8080/box_starting/local_ubuntu
-    volumes:
-      - /etc/hosts:/etc/hosts
-    networks:
-      - frp_net
-    ports:
-      - target: 2202
-        published: 2202
-        protocol: tcp
-        mode: host
-    command: /bin/bash -c "apt install -y ncat && /usr/bin/ncat --sh-exec 'ncat gitlab 2202' -l 2202 --keep-open"
-    deploy:
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
+  # port_forward: # TODO: This is a temporary solution to resolve the gitlab ssh. After migrating all to docker, this will be removed.
+  #   image: localhost:8080/box_starting/local_ubuntu
+  #   volumes:
+  #     - /etc/hosts:/etc/hosts
+  #   networks:
+  #     - frp_net
+  #   ports:
+  #     - target: 2202
+  #       published: 2202
+  #       protocol: tcp
+  #       mode: host
+  #   command: /bin/bash -c "apt install -y ncat && /usr/bin/ncat --sh-exec 'ncat gitlab 2202' -l 2202 --keep-open"
+  #   deploy:
+  #     labels:
+  #       swarmpit.service.deployment.autoredeploy: 'true'
 
   frpc:
     image: localhost:8080/box_starting/local_frp
