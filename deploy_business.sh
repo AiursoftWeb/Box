@@ -12,7 +12,7 @@ function deploy() {
     sudo docker stack deploy -c "$1" "$2" --detach
 }
 
-function ask_and_create_secret() {
+function create_secret() {
     secret_name=$1
     known_secrets=$(sudo docker secret ls --format '{{.Name}}')
     if [[ $known_secrets != *"$secret_name"* ]]; then
@@ -43,12 +43,12 @@ sudo docker pull joxit/docker-registry-ui:main
 sudo docker pull registry:2.8.2
 
 echo "Creating secrets..."
-ask_and_create_secret frp-token
-ask_and_create_secret openai-key
-ask_and_create_secret openai-instance
-ask_and_create_secret bing-search-key
-ask_and_create_secret nuget-publish-key
-ask_and_create_secret gitlab-runner-token
+create_secret frp-token
+create_secret openai-key
+create_secret openai-instance
+create_secret bing-search-key
+create_secret nuget-publish-key
+create_secret gitlab-runner-token
 
 echo "Creating networks..."
 create_network proxy_app 10.234.0.0/16
