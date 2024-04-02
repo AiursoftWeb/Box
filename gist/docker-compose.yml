@@ -3,8 +3,8 @@ version: '3.3'
 services:
   app:
     image: hub.aiursoft.cn/ghcr.io/thomiceli/opengist
-    ports:
-      - 48484:6157
+    networks:
+      - proxy_app
     volumes:
       - gist-data:/opengist
     deploy:
@@ -18,3 +18,7 @@ volumes:
       type: none
       o: bind
       device: /swarm-vol/gist-data
+
+networks:
+  proxy_app:
+    external: true

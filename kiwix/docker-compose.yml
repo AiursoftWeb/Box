@@ -3,8 +3,8 @@ version: '3.3'
 services:
   app:
     image: hub.aiursoft.cn/aiursoft/internalimages/kiwix
-    ports:
-      - 48482:8080
+    networks:
+      - proxy_app
     volumes:
       - kiwix-data:/data
     deploy:
@@ -19,3 +19,7 @@ volumes:
       type: none
       o: bind
       device: /swarm-vol/wiki-data
+
+networks:
+  proxy_app:
+    external: true

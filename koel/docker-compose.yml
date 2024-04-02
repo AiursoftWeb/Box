@@ -5,8 +5,6 @@ services:
     image: hub.aiursoft.cn/phanan/koel
     depends_on:
       - database
-    ports:
-      - 48481:80
     environment:
       - DB_CONNECTION=mysql
       - DB_HOST=database
@@ -22,6 +20,7 @@ services:
       - /swarm-vol/koel/config:/var/www/html/.env # This is a single file, not a directory
     networks:
       - internal
+      - proxy_app
     deploy:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
@@ -44,6 +43,8 @@ services:
 networks:
   internal:
     driver: overlay
+  proxy_app:
+    external: true
 
 volumes:
   db:

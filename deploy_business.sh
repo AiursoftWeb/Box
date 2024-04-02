@@ -126,16 +126,11 @@ deploy lab/docker-compose.yml            lab
 deploy nuget/docker-compose.yml          nuget
 deploy remotely/docker-compose.yml       remotely
 deploy runner/docker-compose.yml         runner
-deploy koel/docker-compose.yml           koel #48481
-deploy kiwix/docker-compose.yml          kiwix #48482
-deploy flyclass/docker-compose.yml       flyclass #48483
-deploy gist/docker-compose.yml           gist #48484
-deploy gitea/docker-compose.yml          gitea #2201
-deploy apt-mirror/docker-compose.yml     apt-mirror #48486 48487 48488
-deploy minecraft/docker-compose.yml      minecraft #25565 19132
+deploy koel/docker-compose.yml           koel
+deploy kiwix/docker-compose.yml          kiwix
+deploy flyclass/docker-compose.yml       flyclass
+deploy gist/docker-compose.yml           gist
+deploy gitea/docker-compose.yml          gitea
+deploy apt_mirror/docker-compose.yml     apt_mirror
+deploy minecraft/docker-compose.yml      minecraft
 deploy gateway/docker-compose.yml        gateway
-
-# registry: 8080
-# incoming: 80 443
-# gitea: 2201
-# minecraft: 25565 19132

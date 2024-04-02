@@ -15,8 +15,8 @@ services:
     image: hub.aiursoft.cn/aiursoft/static
     volumes:
       - apt-mirror-data:/data
-    ports:
-      - "48486:5000"
+    networks:
+      - proxy_app
     deploy:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
@@ -28,8 +28,8 @@ services:
     image: hub.aiursoft.cn/aiursoft/static
     volumes:
       - apt-mirror-data:/data
-    ports:
-      - "48487:5000"
+    networks:
+      - proxy_app
     deploy:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
@@ -39,8 +39,8 @@ services:
     image: hub.aiursoft.cn/aiursoft/static
     volumes:
       - immortal-data:/data
-    ports:
-      - "48488:5000"
+    networks:
+      - proxy_app
     deploy:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
@@ -59,3 +59,7 @@ volumes:
       type: none
       o: bind
       device: /swarm-vol/immortal-data
+
+networks:
+  proxy_app:
+    external: true
