@@ -7,6 +7,7 @@ services:
       - proxy_app
     volumes:
       - vpn-data:/var/log/xray
+      - /etc/hosts:/etc/hosts
     secrets:
       - source: xray-uuid
         target: user_id
