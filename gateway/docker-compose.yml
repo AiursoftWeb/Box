@@ -7,6 +7,9 @@ services:
       - proxy_app
     volumes:
       - vpn-data:/var/log/xray
+    secrets:
+      - source: xray-uuid
+        target: user_id
     deploy:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
@@ -22,3 +25,7 @@ volumes:
       type: none
       o: bind
       device: /swarm-vol/vpn-data
+
+secrets:
+  xray-uuid:
+    external: true

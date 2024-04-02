@@ -44,6 +44,7 @@ sudo docker pull registry:2.8.2
 
 echo "Creating secrets..."
 create_secret frp-token
+create_secret xray-uuid
 create_secret openai-key
 create_secret openai-instance
 create_secret bing-search-key
