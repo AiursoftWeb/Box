@@ -17,9 +17,14 @@ services:
       - gitlab-log:/var/log/gitlab
       - gitlab-config:/etc/gitlab
     environment:
+      # Listen on HTTP and will be reverse proxy by caddy
       GITLAB_OMNIBUS_CONFIG: |
-        external_url 'http://gitlab.aiursoft.cn'
+        external_url 'https://gitlab.aiursoft.cn'
         gitlab_rails['gitlab_shell_ssh_port'] = 2202
+        letsencrypt['enabled'] = false
+        nginx['listen_port'] = 80
+        nginx['listen_https'] = false
+        nginx['redirect_http_to_https'] = false
 
 volumes:
   gitlab-data:
