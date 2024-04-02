@@ -138,4 +138,3 @@ deploy gitea/docker-compose.yml          gitea
 deploy apt_mirror/docker-compose.yml     apt_mirror
 deploy minecraft/docker-compose.yml      minecraft
 deploy gateway/docker-compose.yml        gateway
-deploy mastodon/docker-compose.yml       mastodon
