@@ -1,0 +1,47 @@
+version: "3.6"
+
+services:
+  gitlab:
+    image: hub.aiursoft.cn/gitlab/gitlab-ce
+    hostname: 'gitlab.aiursoft.cn'
+    ports:
+      - target: 2202
+        published: 2202
+        protocol: tcp
+        mode: host
+    networks:
+      - frp_net
+      - proxy_app
+    volumes:
+      - gitlab-data:/var/opt/gitlab
+      - gitlab-log:/var/log/gitlab
+      - gitlab-config:/etc/gitlab
+    shm_size: '256m'
+    environment:
+      GITLAB_OMNIBUS_CONFIG: "external_url 'https://gitlab.aiursoft.cn'; gitlab_rails['gitlab_shell_ssh_port'] = 2202"
+
+volumes:
+  gitlab-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/gitlab/data
+  gitlab-log:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/gitlab/log
+  gitlab-config:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/gitlab/config
+
+networks:
+  frp_net:
+    external: true
+  proxy_app:
+    external: true

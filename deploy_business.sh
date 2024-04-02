@@ -82,10 +82,9 @@ sudo mkdir -p /swarm-vol/mc/world_the_end
 sudo mkdir -p /swarm-vol/mc/dynmap
 sudo mkdir -p /swarm-vol/mc/log
 sudo mkdir -p /swarm-vol/vpn-data
-sudo mkdir -p /swarm-vol/mastodon/postgres
-sudo mkdir -p /swarm-vol/mastodon/web
-sudo mkdir -p /swarm-vol/mastodon/sidekiq
-sudo mkdir -p /swarm-vol/mastodon/redis
+sudo mkdir -p /swarm-vol/gitlab/data
+sudo mkdir -p /swarm-vol/gitlab/log
+sudo mkdir -p /swarm-vol/gitlab/config
 sudo touch /swarm-vol/koel/config
 
 echo "Starting registry..."
