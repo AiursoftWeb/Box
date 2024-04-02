@@ -7,6 +7,7 @@ services:
     image: hub.aiursoft.cn/aiursoft/aiursoftchat
     networks:
       - internal
+      - proxy_app
     environment:
       - HIDE_USER_API_KEY=1
       - DISABLE_GPT4=1
@@ -14,8 +15,6 @@ services:
       - BASE_URL=api:5000
       - OPENAI_API_KEY=dummy
       - PORT=5000
-    ports:
-      - "48472:5000"
     deploy:
       replicas: 2
       labels:
@@ -42,6 +41,8 @@ services:
 networks:
   internal:
     driver: overlay
+  proxy_app:
+    external: true
 
 volumes:
   chat-data:

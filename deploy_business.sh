@@ -121,13 +121,13 @@ deploy manhours/docker-compose.yml       manhours
 deploy chess/docker-compose.yml          chess
 deploy stathub/docker-compose.yml        stathub
 deploy health/docker-compose.yml         health
-deploy chat/docker-compose.yml           chat #48472
-deploy homepage/docker-compose.yml       homepage #48473
-deploy gameoflife/docker-compose.yml     gameoflife #48474
-deploy howtocook/docker-compose.yml      howtocook #48475
-deploy edgeneko-blog/docker-compose.yml  edgeneko-blog #48476
-deploy cpprunner/docker-compose.yml      cpprunner #48477
-deploy lab/docker-compose.yml            lab #48478
+deploy chat/docker-compose.yml           chat
+deploy homepage/docker-compose.yml       homepage
+deploy gameoflife/docker-compose.yml     gameoflife
+deploy howtocook/docker-compose.yml      howtocook
+deploy edgeneko-blog/docker-compose.yml  edgeneko-blog
+deploy cpprunner/docker-compose.yml      cpprunner
+deploy lab/docker-compose.yml            lab
 deploy nuget/docker-compose.yml          nuget
 deploy remotely/docker-compose.yml       remotely #48480
 deploy runner/docker-compose.yml         runner

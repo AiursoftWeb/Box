@@ -3,9 +3,13 @@ version: '3.3'
 services:
   app:
     image: hub.aiursoft.cn/aiursoft/homepage
-    ports:
-      - 48473:5000
+    networks:
+      - proxy_app
     deploy:
       replicas: 2
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
+
+networks:
+  proxy_app:
+    external: true
