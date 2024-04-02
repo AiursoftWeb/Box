@@ -19,7 +19,7 @@ services:
     environment:
       GITLAB_OMNIBUS_CONFIG: |
         external_url 'http://gitlab.aiursoft.cn'
-        gitlab_rails['gitlab_shell_ssh_port'] = 2202"
+        gitlab_rails['gitlab_shell_ssh_port'] = 2202
 
 volumes:
   gitlab-data:
