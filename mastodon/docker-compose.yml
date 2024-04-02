@@ -1,0 +1,101 @@
+version: '3'
+services:
+  db:
+    image: postgres:14-alpine
+    shm_size: 256mb
+    networks:
+      - internal_network
+    healthcheck:
+      test: ['CMD', 'pg_isready', '-U', 'postgres']
+    volumes:
+      - postgre-data:/var/lib/postgresql/data
+    environment:
+      - 'POSTGRES_HOST_AUTH_METHOD=trust'
+
+  redis:
+    image: redis:7-alpine
+    networks:
+      - internal_network
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+    volumes:
+      - redis-data:/data
+
+  web:
+    image: ghcr.io/mastodon/mastodon:v4.2.7
+    env_file: .env.production
+    command: bundle exec puma -C config/puma.rb
+    networks:
+      - proxy_app
+      - internal_network
+    healthcheck:
+      test: ['CMD-SHELL', 'wget -q --spider --proxy=off localhost:3000/health || exit 1']
+    ports:
+      - '127.0.0.1:3000:3000'
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - web-data:/mastodon/public/system
+
+  streaming:
+    image: ghcr.io/mastodon/mastodon:v4.2.7
+    env_file: .env.production
+    command: node ./streaming
+    networks:
+      - proxy_app
+      - internal_network
+    healthcheck:
+      test: ['CMD-SHELL', 'wget -q --spider --proxy=off localhost:4000/api/v1/streaming/health || exit 1']
+    ports:
+      - '127.0.0.1:4000:4000'
+    depends_on:
+      - db
+      - redis
+
+  sidekiq:
+    image: ghcr.io/mastodon/mastodon:v4.2.7
+    env_file: .env.production
+    command: bundle exec sidekiq
+    depends_on:
+      - db
+      - redis
+    networks:
+      - proxy_app
+      - internal_network
+    volumes:
+      - sidekiq-data:/mastodon/public/system
+    healthcheck:
+      test: ['CMD-SHELL', "ps aux | grep '[s]idekiq\ 6' || false"]
+
+networks:
+  internal_network:
+    internal: true
+  proxy_app:
+    external: true
+
+volumes:
+  postgre-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/mastodon/postgres
+  web-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/mastodon/web
+  sidekiq-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/mastodon/sidekiq
+  redis-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/mastodon/redis

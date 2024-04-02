@@ -82,6 +82,10 @@ sudo mkdir -p /swarm-vol/mc/world_the_end
 sudo mkdir -p /swarm-vol/mc/dynmap
 sudo mkdir -p /swarm-vol/mc/log
 sudo mkdir -p /swarm-vol/vpn-data
+sudo mkdir -p /swarm-vol/mastodon/postgres
+sudo mkdir -p /swarm-vol/mastodon/web
+sudo mkdir -p /swarm-vol/mastodon/sidekiq
+sudo mkdir -p /swarm-vol/mastodon/redis
 sudo touch /swarm-vol/koel/config
 
 echo "Starting registry..."
@@ -134,3 +138,4 @@ deploy gitea/docker-compose.yml          gitea
 deploy apt_mirror/docker-compose.yml     apt_mirror
 deploy minecraft/docker-compose.yml      minecraft
 deploy gateway/docker-compose.yml        gateway
+deploy mastodon/docker-compose.yml       mastodon
