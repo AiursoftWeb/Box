@@ -75,6 +75,8 @@ sudo mkdir -p /swarm-vol/flyclass-data
 sudo mkdir -p /swarm-vol/gist-data
 sudo mkdir -p /swarm-vol/gitea-data
 sudo mkdir -p /swarm-vol/apt-mirror-data
+sudo mkdir -p /swarm-vol/apt-mirror-data/mirror/archive.ubuntu.com
+sudo mkdir -p /swarm-vol/apt-mirror-data/mirror/ppa.launchpad.net
 sudo mkdir -p /swarm-vol/immortal-data
 sudo mkdir -p /swarm-vol/mc/world
 sudo mkdir -p /swarm-vol/mc/world_nether
