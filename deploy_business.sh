@@ -140,3 +140,5 @@ deploy apt_mirror/docker-compose.yml     apt_mirror
 deploy minecraft/docker-compose.yml      minecraft
 deploy gateway/docker-compose.yml        gateway
 deploy gitlab/docker-compose.yml         gitlab
+deploy fissssssh/docker-compose.yml      fissssssh
+deploy aimer/docker-compose.yml          aimer
