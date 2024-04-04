@@ -16,10 +16,8 @@ Currently this project is still working in progress and migrating existing servi
 
 * When I connect to tracer.aiursoft.cn: Through the router's DNS, it tricks me into connecting to Docker's 443, then Docker's Caddy acts as a reverse proxy.
 * When I connect to Minecraft: Through the router's DNS, it tricks me into connecting to Docker's 25565, then it goes straight to the Minecraft container.
-* When I connect to GitLab: Through the router's DNS, it tricks me into connecting to Docker's 2202, then it goes straight to the port forwarding container, which forwards the port to the real GitLab.
 * When connecting to tracer.aiursoft.cn from outside: Through FRPS to FRP, it goes through frp_net, the traffic is sent to Caddy, and then Caddy acts as a reverse proxy.
 * When connecting to Minecraft from outside: Through FRPS to FRP, it goes through frp_net, the traffic goes straight to the Minecraft container.
-* When connecting to GitLab from outside: Through FRPS to FRP, it goes through the home network, forwarding to the real GitLab.
 
 ## Architecture
 
