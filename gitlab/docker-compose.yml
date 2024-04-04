@@ -3,7 +3,7 @@ version: "3.6"
 services:
   gitlab:
     image: hub.aiursoft.cn/gitlab/gitlab-ee:16.10.1-ee.0
-    hostname: 'gitlabnew.aiursoft.cn'
+    hostname: 'gitlab.aiursoft.cn'
     ports:
       - target: 2202
         published: 2202
@@ -23,14 +23,14 @@ services:
       - /tmp:size=2G
     environment:
       # Listen on HTTP and will be reverse proxy by caddy
-      external_url: 'http://gitlabnew.aiursoft.cn'
+      external_url: 'http://gitlab.aiursoft.cn'
       gitlab_rails['gitlab_shell_ssh_port']: 2202
       letsencrypt['enabled']: 'false'
       nginx['listen_port']: 80
       nginx['listen_https']: 'false'
       nginx['redirect_http_to_https']: 'false'
       GITLAB_OMNIBUS_CONFIG: |
-        external_url 'https://gitlabnew.aiursoft.cn'
+        external_url 'https://gitlab.aiursoft.cn'
         gitlab_rails['gitlab_shell_ssh_port'] = 2202
         letsencrypt['enabled'] = false
         nginx['listen_port'] = 80
