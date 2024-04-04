@@ -42,7 +42,6 @@ create_secret openai-key
 create_secret openai-instance
 create_secret bing-search-key
 create_secret nuget-publish-key
-create_secret gitlab-runner-token
 
 echo "Creating networks..."
 create_network proxy_app 10.234.0.0/16
@@ -116,6 +115,7 @@ done
 
 echo "Deploying business stacks..."
 deploy swarmpit/docker-compose.yml       swarmpit
+deploy gitlab/docker-compose.yml         gitlab
 deploy tracer/docker-compose.yml         tracer
 deploy manhours/docker-compose.yml       manhours
 deploy chess/docker-compose.yml          chess
@@ -130,7 +130,6 @@ deploy cpprunner/docker-compose.yml      cpprunner
 deploy lab/docker-compose.yml            lab
 deploy nuget/docker-compose.yml          nuget
 deploy remotely/docker-compose.yml       remotely
-deploy runner/docker-compose.yml         runner
 deploy koel/docker-compose.yml           koel
 deploy kiwix/docker-compose.yml          kiwix
 deploy flyclass/docker-compose.yml       flyclass
@@ -139,6 +138,8 @@ deploy gitea/docker-compose.yml          gitea
 deploy apt_mirror/docker-compose.yml     apt_mirror
 deploy minecraft/docker-compose.yml      minecraft
 deploy gateway/docker-compose.yml        gateway
-deploy gitlab/docker-compose.yml         gitlab
 deploy fissssssh/docker-compose.yml      fissssssh
 deploy aimer/docker-compose.yml          aimer
+
+create_secret gitlab-runner-token
+deploy runner/docker-compose.yml         runner
