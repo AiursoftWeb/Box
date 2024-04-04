@@ -16,6 +16,11 @@ services:
       - gitlab-data:/var/opt/gitlab
       - gitlab-log:/var/log/gitlab
       - gitlab-config:/etc/gitlab
+      - /etc/localtime:/etc/localtime:ro
+      - type: tmpfs
+        target: /dev/shm
+    tmpfs:
+      - /tmp:size=2G
     environment:
       # Listen on HTTP and will be reverse proxy by caddy
       external_url: 'http://gitlab.aiursoft.cn'
