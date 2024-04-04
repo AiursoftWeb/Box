@@ -22,20 +22,21 @@ services:
     tmpfs:
       - /tmp:size=2G
     environment:
-      # Listen on HTTP and will be reverse proxy by caddy
-      external_url: 'http://gitlab.aiursoft.cn'
-      gitlab_rails['gitlab_shell_ssh_port']: 2202
-      letsencrypt['enabled']: 'false'
-      nginx['listen_port']: 80
-      nginx['listen_https']: 'false'
-      nginx['redirect_http_to_https']: 'false'
       GITLAB_OMNIBUS_CONFIG: |
         external_url 'https://gitlab.aiursoft.cn'
         gitlab_rails['gitlab_shell_ssh_port'] = 2202
+        gitlab_sshd['enable'] = true
+        gitlab_sshd['listen_address'] = '[::]:2202'
+        gitlab_rails['gitlab_default_theme'] = 2
         letsencrypt['enabled'] = false
         nginx['listen_port'] = 80
         nginx['listen_https'] = false
         nginx['redirect_http_to_https'] = false
+        nginx['proxy_protocol'] = false
+        nginx['http2_enabled'] = true
+        nginx['real_ip_trusted_addresses'] = ['172.18.0.0/16']
+        nginx['real_ip_header'] = 'X-Forwarded-For'
+        nginx['real_ip_recursive'] = 'on'
 
 volumes:
   gitlab-data:
