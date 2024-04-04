@@ -64,6 +64,6 @@ remotePort = 2201
 [[proxies]]
 name = "SSH_GITLAB"
 type = "tcp"
-localIP = "gitlab"
+localIP = "gitlab_gitlab"
 localPort = 2202
 remotePort = 2202
