@@ -5,6 +5,7 @@ function better_performance() {
     sudo sysctl -w net.core.wmem_max=2500000
     sudo sysctl -w net.ipv4.tcp_congestion_control=bbr
     sudo sysctl -w net.core.default_qdisc=fq
+    sudo sysctl -w fs.inotify.max_user_instances=524288
     sudo sysctl -p
 }
 
