@@ -90,6 +90,9 @@ sudo mkdir -p /swarm-vol/gitlab/config
 sudo mkdir -p /swarm-vol/moongladepure/anduin/db
 sudo mkdir -p /swarm-vol/moongladepure/anduin/files
 sudo mkdir -p /swarm-vol/moongladepure/anduin/aspnet
+sudo mkdir -p /swarm-vol/moongladepure/jimmoen/db
+sudo mkdir -p /swarm-vol/moongladepure/jimmoen/files
+sudo mkdir -p /swarm-vol/moongladepure/jimmoen/aspnet
 sudo touch /swarm-vol/koel/config
 
 echo "Starting registry..."

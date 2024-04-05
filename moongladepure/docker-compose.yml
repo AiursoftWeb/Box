@@ -1,3 +1,20 @@
+# Anduin
+# JimMoen
+# Rest
+# Cody
+# Gxhao
+# Anois
+# Dvorak
+# Kitlau
+# Xinboo
+# Gbiner
+# Rdf
+# Lyx
+# Shubuzuo
+# Lily
+# Carson
+# ZoneBlog
+
 version: '3.3'
 
 services:
@@ -40,6 +57,41 @@ services:
     deploy:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
+      
+  jimmoen:
+    depends_on:
+      - jimmoen-db
+    image: hub.aiursoft.cn/aiursoft/jimmoen
+    volumes:
+      - jimmoen-files:/data/files
+      - jimmoen-aspnet:/root/.aspnet/
+    environment:
+        ConnectionStrings__AllowCache: 'False'
+        ConnectionStrings__DefaultConnection: Server=jimmoen-db;Database=jimmoen;Uid=jimmoen;Pwd=<jimmoen_password>;
+        ConnectionStrings__DbType: MySql
+        Storage__Path: /data/files
+    networks:
+      - jimmoen_app
+      - proxy_app
+    deploy:
+      replicas: 2
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+  jimmoen-db:
+    image: hub.aiursoft.cn/mysql
+    volumes:
+      - jimmoen-db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=<root_password>
+      - MYSQL_DATABASE=jimmoen
+      - MYSQL_USER=jimmoen
+      - MYSQL_PASSWORD=<jimmoen_password>
+    networks:
+      - jimmoen_app
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
 
 secrets:
   openai-key:
@@ -51,6 +103,8 @@ networks:
   proxy_app:
     external: true
   anduin_app:
+    driver: overlay
+  jimmoen_app:
     driver: overlay
 
 volumes:
@@ -72,3 +126,22 @@ volumes:
       type: none
       o: bind
       device: /swarm-vol/moongladepure/anduin/files
+
+  jimmoen-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/jimmoen/db
+  jimmoen-aspnet:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/jimmoen/aspnet
+  jimmoen-files:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/jimmoen/files

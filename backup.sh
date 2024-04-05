@@ -1,6 +1,6 @@
-if [ -e /dev/sda ]; then
+if [ -e /dev/sda2 ]; then
     sudo mkdir -p /mnt/backup
-    sudo mount /dev/sda /mnt/backup
+    sudo mount /dev/sda2 /mnt/backup
     sudo rsync -Aavx --delete --update /swarm-vol/ /mnt/backup/swarm-vol/
     sudo umount /mnt/backup
 else
