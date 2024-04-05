@@ -12,6 +12,7 @@ services:
     networks:
       - frp_net
       - proxy_app
+      - runner_net
     volumes:
       - gitlab-data:/var/opt/gitlab
       - gitlab-log:/var/log/gitlab
@@ -39,16 +40,23 @@ services:
         nginx['real_ip_trusted_addresses'] = ['172.18.0.0/16']
         nginx['real_ip_header'] = 'X-Forwarded-For'
         nginx['real_ip_recursive'] = 'on'
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
   runner:
     depends_on:
       - gitlab
     image: hub.aiursoft.cn/aiursoft/internalimages/runner
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - runner_net
     secrets:
       - gitlab-runner-token
     deploy:
       replicas: 6
+      # Disable auto-redeploy, because runner may stop when CI is running.
 
 volumes:
   gitlab-data:
@@ -75,6 +83,8 @@ networks:
     external: true
   proxy_app:
     external: true
+  runner_net:
+    driver: overlay
 
 secrets:
   gitlab-runner-token:
