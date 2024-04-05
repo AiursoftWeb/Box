@@ -27,7 +27,7 @@ services:
         swarmpit.service.deployment.autoredeploy: 'true'
   
   anduin-db:
-    image: hub.aiursoft.cn/mariadb
+    image: hub.aiursoft.cn/mysql
     volumes:
       - anduin-db:/var/lib/mysql
     environment:
