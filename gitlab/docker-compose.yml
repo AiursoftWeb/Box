@@ -3,7 +3,6 @@ version: "3.6"
 services:
   gitlab:
     image: hub.aiursoft.cn/gitlab/gitlab-ee:16.10.1-ee.0
-    hostname: 'gitlab.aiursoft.cn'
     ports:
       - target: 2202
         published: 2202
