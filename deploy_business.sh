@@ -86,6 +86,8 @@ sudo mkdir -p /swarm-vol/vpn-data
 sudo mkdir -p /swarm-vol/gitlab/data
 sudo mkdir -p /swarm-vol/gitlab/log
 sudo mkdir -p /swarm-vol/gitlab/config
+sudo mkdir -p /swarm-vol/moongladepure/anduin/db
+sudo mkdir -p /swarm-vol/moongladepure/anduin/files
 sudo touch /swarm-vol/koel/config
 
 echo "Starting registry..."
@@ -143,3 +145,4 @@ deploy aimer/docker-compose.yml          aimer
 
 create_secret gitlab-runner-token
 deploy runner/docker-compose.yml         runner
+deploy moongladepure/docker-compose.yml  moongladepure

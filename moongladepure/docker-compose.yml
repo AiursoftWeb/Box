@@ -1,0 +1,59 @@
+version: '3.3'
+
+services:
+  anduin:
+    depends_on:
+      - anduin-db
+    image: hub.aiursoft.cn/aiursoft/moongladepure
+    volumes:
+      - anduin-files:/data/files
+    environment:
+        ConnectionStrings__DefaultConnection: Server=anduin-db;Database=anduin;Uid=anduin;Pwd=<anduin_password>;
+        ConnectionStrings__DbType: MySql
+        Storage__Path: /data/files
+    secrets:
+      - source: openai-key
+        target: OpenAI-Token
+      - source: openai-instance
+        target: OpenAI-Instance
+    networks:
+      - anduin_app
+      - proxy_app
+  
+  anduin-db:
+    image: hub.aiursoft.cn/mariadb
+    volumes:
+      - anduin-db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=<root_password>
+      - MYSQL_DATABASE=anduin
+      - MYSQL_USER=anduin
+      - MYSQL_PASSWORD=<anduin_password>
+    networks:
+      - anduin_app
+
+secrets:
+  openai-key:
+    external: true
+  openai-instance:
+    external: true
+
+networks:
+  proxy_app:
+    external: true
+  anduin_app:
+    driver: overlay
+
+volumes:
+  anduin-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/anduin/db
+  anduin-files:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/anduin/files
