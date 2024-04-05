@@ -42,6 +42,7 @@ create_secret openai-key
 create_secret openai-instance
 create_secret bing-search-key
 create_secret nuget-publish-key
+create_secret gitlab-runner-token
 
 echo "Creating networks..."
 create_network proxy_app 10.234.0.0/16
@@ -143,7 +144,4 @@ deploy minecraft/docker-compose.yml      minecraft
 deploy gateway/docker-compose.yml        gateway
 deploy fissssssh/docker-compose.yml      fissssssh
 deploy aimer/docker-compose.yml          aimer
-
-create_secret gitlab-runner-token
-deploy runner/docker-compose.yml         runner
 deploy moongladepure/docker-compose.yml  moongladepure
