@@ -93,6 +93,496 @@ services:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
+  rest:
+    depends_on:
+      - rest-db
+    image: hub.aiursoft.cn/aiursoft/rest
+    volumes:
+      - rest-files:/data/files
+      - rest-aspnet:/root/.aspnet/
+    environment:
+        ConnectionStrings__AllowCache: 'False'
+        ConnectionStrings__DefaultConnection: Server=rest-db;Database=rest;Uid=rest;Pwd=<rest_password>;
+        ConnectionStrings__DbType: MySql
+        Storage__Path: /data/files
+    networks:
+      - rest_app
+      - proxy_app
+    deploy:
+      replicas: 2
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+  rest-db:
+    image: hub.aiursoft.cn/mysql
+    volumes:
+      - rest-db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=<root_password>
+      - MYSQL_DATABASE=rest
+      - MYSQL_USER=rest
+      - MYSQL_PASSWORD=<rest_password>
+    networks:
+      - rest_app
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+        
+  cody:
+    depends_on:
+      - cody-db
+    image: hub.aiursoft.cn/aiursoft/cody
+    volumes:
+      - cody-files:/data/files
+      - cody-aspnet:/root/.aspnet/
+    environment:
+        ConnectionStrings__AllowCache: 'False'
+        ConnectionStrings__DefaultConnection: Server=cody-db;Database=cody;Uid=cody;Pwd=<cody_password>;
+        ConnectionStrings__DbType: MySql
+        Storage__Path: /data/files
+    networks:
+      - cody_app
+      - proxy_app
+    deploy:
+      replicas: 2
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+  cody-db:
+    image: hub.aiursoft.cn/mysql
+    volumes:
+      - cody-db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=<root_password>
+      - MYSQL_DATABASE=cody
+      - MYSQL_USER=cody
+      - MYSQL_PASSWORD=<cody_password>
+    networks:
+      - cody_app
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+  gxhao:
+    depends_on:
+      - gxhao-db
+    image: hub.aiursoft.cn/aiursoft/gxhao
+    volumes:
+      - gxhao-files:/data/files
+      - gxhao-aspnet:/root/.aspnet/
+    environment:
+        ConnectionStrings__AllowCache: 'False'
+        ConnectionStrings__DefaultConnection: Server=gxhao-db;Database=gxhao;Uid=gxhao;Pwd=<gxhao_password>;
+        ConnectionStrings__DbType: MySql
+        Storage__Path: /data/files
+    networks:
+      - gxhao_app
+      - proxy_app
+    deploy:
+      replicas: 2
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+  gxhao-db:
+    image: hub.aiursoft.cn/mysql
+    volumes:
+      - gxhao-db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=<root_password>
+      - MYSQL_DATABASE=gxhao
+      - MYSQL_USER=gxhao
+      - MYSQL_PASSWORD=<gxhao_password>
+    networks:
+      - gxhao_app
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+  anois:
+    depends_on:
+      - anois-db
+    image: hub.aiursoft.cn/aiursoft/anois
+    volumes:
+      - anois-files:/data/files
+      - anois-aspnet:/root/.aspnet/
+    environment:
+        ConnectionStrings__AllowCache: 'False'
+        ConnectionStrings__DefaultConnection: Server=anois-db;Database=anois;Uid=anois;Pwd=<anois_password>;
+        ConnectionStrings__DbType: MySql
+        Storage__Path: /data/files
+    networks:
+      - anois_app
+      - proxy_app
+    deploy:
+      replicas: 2
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+  anois-db:
+    image: hub.aiursoft.cn/mysql
+    volumes:
+      - anois-db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=<root_password>
+      - MYSQL_DATABASE=anois
+      - MYSQL_USER=anois
+      - MYSQL_PASSWORD=<anois_password>
+    networks:
+      - anois_app
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+  dvorak:
+    depends_on:
+      - dvorak-db
+    image: hub.aiursoft.cn/aiursoft/dvorak
+    volumes:
+      - dvorak-files:/data/files
+      - dvorak-aspnet:/root/.aspnet/
+    environment:
+        ConnectionStrings__AllowCache: 'False'
+        ConnectionStrings__DefaultConnection: Server=dvorak-db;Database=dvorak;Uid=dvorak;Pwd=<dvorak_password>;
+        ConnectionStrings__DbType: MySql
+        Storage__Path: /data/files
+    networks:
+      - dvorak_app
+      - proxy_app
+    deploy:
+      replicas: 2
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+  dvorak-db:
+    image: hub.aiursoft.cn/mysql
+    volumes:
+      - dvorak-db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=<root_password>
+      - MYSQL_DATABASE=dvorak
+      - MYSQL_USER=dvorak
+      - MYSQL_PASSWORD=<dvorak_password>
+    networks:
+      - dvorak_app
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+  kitlau:
+    depends_on:
+      - kitlau-db
+    image: hub.aiursoft.cn/aiursoft/kitlau
+    volumes:
+      - kitlau-files:/data/files
+      - kitlau-aspnet:/root/.aspnet/
+    environment:
+        ConnectionStrings__AllowCache: 'False'
+        ConnectionStrings__DefaultConnection: Server=kitlau-db;Database=kitlau;Uid=kitlau;Pwd=<kitlau_password>;
+        ConnectionStrings__DbType: MySql
+        Storage__Path: /data/files
+    networks:
+      - kitlau_app
+      - proxy_app
+    deploy:
+      replicas: 2
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+  kitlau-db:
+    image: hub.aiursoft.cn/mysql
+    volumes:
+      - kitlau-db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=<root_password>
+      - MYSQL_DATABASE=kitlau
+      - MYSQL_USER=kitlau
+      - MYSQL_PASSWORD=<kitlau_password>
+    networks:
+      - kitlau_app
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+  xinboo:
+    depends_on:
+      - xinboo-db
+    image: hub.aiursoft.cn/aiursoft/xinboo
+    volumes:
+      - xinboo-files:/data/files
+      - xinboo-aspnet:/root/.aspnet/
+    environment:
+        ConnectionStrings__AllowCache: 'False'
+        ConnectionStrings__DefaultConnection: Server=xinboo-db;Database=xinboo;Uid=xinboo;Pwd=<xinboo_password>;
+        ConnectionStrings__DbType: MySql
+        Storage__Path: /data/files
+    networks:
+      - xinboo_app
+      - proxy_app
+    deploy:
+      replicas: 2
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+  xinboo-db:
+    image: hub.aiursoft.cn/mysql
+    volumes:
+      - xinboo-db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=<root_password>
+      - MYSQL_DATABASE=xinboo
+      - MYSQL_USER=xinboo
+      - MYSQL_PASSWORD=<xinboo_password>
+    networks:
+      - xinboo_app
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+  gbiner:
+    depends_on:
+      - gbiner-db
+    image: hub.aiursoft.cn/aiursoft/gbiner
+    volumes:
+      - gbiner-files:/data/files
+      - gbiner-aspnet:/root/.aspnet/
+    environment:
+        ConnectionStrings__AllowCache: 'False'
+        ConnectionStrings__DefaultConnection: Server=gbiner-db;Database=gbiner;Uid=gbiner;Pwd=<gbiner_password>;
+        ConnectionStrings__DbType: MySql
+        Storage__Path: /data/files
+    networks:
+      - gbiner_app
+      - proxy_app
+    deploy:
+      replicas: 2
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+  gbiner-db:
+    image: hub.aiursoft.cn/mysql
+    volumes:
+      - gbiner-db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=<root_password>
+      - MYSQL_DATABASE=gbiner
+      - MYSQL_USER=gbiner
+      - MYSQL_PASSWORD=<gbiner_password>
+    networks:
+      - gbiner_app
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+  rdf:
+    depends_on:
+      - rdf-db
+    image: hub.aiursoft.cn/aiursoft/rdf
+    volumes:
+      - rdf-files:/data/files
+      - rdf-aspnet:/root/.aspnet/
+    environment:
+        ConnectionStrings__AllowCache: 'False'
+        ConnectionStrings__DefaultConnection: Server=rdf-db;Database=rdf;Uid=rdf;Pwd=<rdf_password>;
+        ConnectionStrings__DbType: MySql
+        Storage__Path: /data/files
+    networks:
+      - rdf_app
+      - proxy_app
+    deploy:
+      replicas: 2
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+  rdf-db:
+    image: hub.aiursoft.cn/mysql
+    volumes:
+      - rdf-db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=<root_password>
+      - MYSQL_DATABASE=rdf
+      - MYSQL_USER=rdf
+      - MYSQL_PASSWORD=<rdf_password>
+    networks:
+      - rdf_app
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+  lyx:
+    depends_on:
+      - lyx-db
+    image: hub.aiursoft.cn/aiursoft/lyx
+    volumes:
+      - lyx-files:/data/files
+      - lyx-aspnet:/root/.aspnet/
+    environment:
+        ConnectionStrings__AllowCache: 'False'
+        ConnectionStrings__DefaultConnection: Server=lyx-db;Database=lyx;Uid=lyx;Pwd=<lyx_password>;
+        ConnectionStrings__DbType: MySql
+        Storage__Path: /data/files
+    networks:
+      - lyx_app
+      - proxy_app
+    deploy:
+      replicas: 2
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+  lyx-db:
+    image: hub.aiursoft.cn/mysql
+    volumes:
+      - lyx-db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=<root_password>
+      - MYSQL_DATABASE=lyx
+      - MYSQL_USER=lyx
+      - MYSQL_PASSWORD=<lyx_password>
+    networks:
+      - lyx_app
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+  shubuzuo:
+    depends_on:
+      - shubuzuo-db
+    image: hub.aiursoft.cn/aiursoft/shubuzuo
+    volumes:
+      - shubuzuo-files:/data/files
+      - shubuzuo-aspnet:/root/.aspnet/
+    environment:
+        ConnectionStrings__AllowCache: 'False'
+        ConnectionStrings__DefaultConnection: Server=shubuzuo-db;Database=shubuzuo;Uid=shubuzuo;Pwd=<shubuzuo_password>;
+        ConnectionStrings__DbType: MySql
+        Storage__Path: /data/files
+    networks:
+      - shubuzuo_app
+      - proxy_app
+    deploy:
+      replicas: 2
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+  shubuzuo-db:
+    image: hub.aiursoft.cn/mysql
+    volumes:
+      - shubuzuo-db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=<root_password>
+      - MYSQL_DATABASE=shubuzuo
+      - MYSQL_USER=shubuzuo
+      - MYSQL_PASSWORD=<shubuzuo_password>
+    networks:
+      - shubuzuo_app
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+  lily:
+    depends_on:
+      - lily-db
+    image: hub.aiursoft.cn/aiursoft/lily
+    volumes:
+      - lily-files:/data/files
+      - lily-aspnet:/root/.aspnet/
+    environment:
+        ConnectionStrings__AllowCache: 'False'
+        ConnectionStrings__DefaultConnection: Server=lily-db;Database=lily;Uid=lily;Pwd=<lily_password>;
+        ConnectionStrings__DbType: MySql
+        Storage__Path: /data/files
+    networks:
+      - lily_app
+      - proxy_app
+    deploy:
+      replicas: 2
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+  lily-db:
+    image: hub.aiursoft.cn/mysql
+    volumes:
+      - lily-db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=<root_password>
+      - MYSQL_DATABASE=lily
+      - MYSQL_USER=lily
+      - MYSQL_PASSWORD=<lily_password>
+    networks:
+      - lily_app
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+  carson:
+    depends_on:
+      - carson-db
+    image: hub.aiursoft.cn/aiursoft/carson
+    volumes:
+      - carson-files:/data/files
+      - carson-aspnet:/root/.aspnet/
+    environment:
+        ConnectionStrings__AllowCache: 'False'
+        ConnectionStrings__DefaultConnection: Server=carson-db;Database=carson;Uid=carson;Pwd=<carson_password>;
+        ConnectionStrings__DbType: MySql
+        Storage__Path: /data/files
+    networks:
+      - carson_app
+      - proxy_app
+    deploy:
+      replicas: 2
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+  carson-db:
+    image: hub.aiursoft.cn/mysql
+    volumes:
+      - carson-db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=<root_password>
+      - MYSQL_DATABASE=carson
+      - MYSQL_USER=carson
+      - MYSQL_PASSWORD=<carson_password>
+    networks:
+      - carson_app
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+  zoneblog:
+    depends_on:
+      - zoneblog-db
+    image: hub.aiursoft.cn/aiursoft/zoneblog
+    volumes:
+      - zoneblog-files:/data/files
+      - zoneblog-aspnet:/root/.aspnet/
+    environment:
+        ConnectionStrings__AllowCache: 'False'
+        ConnectionStrings__DefaultConnection: Server=zoneblog-db;Database=zoneblog;Uid=zoneblog;Pwd=<zoneblog_password>;
+        ConnectionStrings__DbType: MySql
+        Storage__Path: /data/files
+    networks:
+      - zoneblog_app
+      - proxy_app
+    deploy:
+      replicas: 2
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+  zoneblog-db:
+    image: hub.aiursoft.cn/mysql
+    volumes:
+      - zoneblog-db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=<root_password>
+      - MYSQL_DATABASE=zoneblog
+      - MYSQL_USER=zoneblog
+      - MYSQL_PASSWORD=<zoneblog_password>
+    networks:
+      - zoneblog_app
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
 secrets:
   openai-key:
     external: true
@@ -105,6 +595,34 @@ networks:
   anduin_app:
     driver: overlay
   jimmoen_app:
+    driver: overlay
+  rest_app:
+    driver: overlay
+  cody_app:
+    driver: overlay
+  gxhao_app:
+    driver: overlay
+  anois_app:
+    driver: overlay
+  dvorak_app:
+    driver: overlay
+  kitlau_app:
+    driver: overlay
+  xinboo_app:
+    driver: overlay
+  gbiner_app:
+    driver: overlay
+  rdf_app:
+    driver: overlay
+  lyx_app:
+    driver: overlay
+  shubuzuo_app:
+    driver: overlay
+  lily_app:
+    driver: overlay
+  carson_app:
+    driver: overlay
+  zoneblog_app:
     driver: overlay
 
 volumes:
@@ -145,3 +663,269 @@ volumes:
       type: none
       o: bind
       device: /swarm-vol/moongladepure/jimmoen/files
+
+  rest-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/rest/db
+  rest-aspnet:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/rest/aspnet
+  rest-files:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/rest/files
+
+  cody-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/cody/db
+  cody-aspnet:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/cody/aspnet
+  cody-files:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/cody/files
+
+  gxhao-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/gxhao/db
+  gxhao-aspnet:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/gxhao/aspnet
+  gxhao-files:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/gxhao/files
+
+  anois-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/anois/db
+  anois-aspnet:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/anois/aspnet
+  anois-files:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/anois/files
+
+  dvorak-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/dvorak/db
+  dvorak-aspnet:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/dvorak/aspnet
+  dvorak-files:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/dvorak/files
+
+  kitlau-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/kitlau/db
+  kitlau-aspnet:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/kitlau/aspnet
+  kitlau-files:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/kitlau/files
+
+  xinboo-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/xinboo/db
+  xinboo-aspnet:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/xinboo/aspnet
+  xinboo-files:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/xinboo/files
+
+  gbiner-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/gbiner/db
+  gbiner-aspnet:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/gbiner/aspnet
+  gbiner-files:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/gbiner/files
+
+  rdf-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/rdf/db
+  rdf-aspnet:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/rdf/aspnet
+  rdf-files:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/rdf/files
+
+  lyx-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/lyx/db
+  lyx-aspnet:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/lyx/aspnet
+  lyx-files:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/lyx/files  
+
+  shubuzuo-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/shubuzuo/db
+  shubuzuo-aspnet:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/shubuzuo/aspnet
+  shubuzuo-files:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/shubuzuo/files
+
+  lily-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/lily/db
+  lily-aspnet:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/lily/aspnet
+  lily-files:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/lily/files
+
+  carson-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/carson/db
+  carson-aspnet:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/carson/aspnet
+  carson-files:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/carson/files
+
+  zoneblog-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/zoneblog/db
+  zoneblog-aspnet:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/zoneblog/aspnet
+  zoneblog-files:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/zoneblog/files
