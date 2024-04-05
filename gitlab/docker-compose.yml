@@ -19,6 +19,8 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - type: tmpfs
         target: /dev/shm
+        tmpfs:
+          size: 2G
     tmpfs:
       - /tmp:size=2G
     environment:

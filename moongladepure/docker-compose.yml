@@ -9,6 +9,7 @@ services:
       - anduin-files:/data/files
       - anduin-aspnet:/root/.aspnet/
     environment:
+        ConnectionStrings__AllowCache: false
         ConnectionStrings__DefaultConnection: Server=anduin-db;Database=anduin;Uid=anduin;Pwd=<anduin_password>;
         ConnectionStrings__DbType: MySql
         Storage__Path: /data/files
