@@ -7,6 +7,7 @@ services:
     image: hub.aiursoft.cn/aiursoft/moongladepure
     volumes:
       - anduin-files:/data/files
+      - anduin-aspnet:/root/.aspnet/
     environment:
         ConnectionStrings__DefaultConnection: Server=anduin-db;Database=anduin;Uid=anduin;Pwd=<anduin_password>;
         ConnectionStrings__DbType: MySql
@@ -19,6 +20,10 @@ services:
     networks:
       - anduin_app
       - proxy_app
+    deploy:
+      replicas: 2
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
   
   anduin-db:
     image: hub.aiursoft.cn/mariadb
@@ -31,6 +36,9 @@ services:
       - MYSQL_PASSWORD=<anduin_password>
     networks:
       - anduin_app
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
 
 secrets:
   openai-key:
@@ -45,6 +53,12 @@ networks:
     driver: overlay
 
 volumes:
+  anduin-aspnet:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/anduin/aspnet
   anduin-db:
     driver: local
     driver_opts:
