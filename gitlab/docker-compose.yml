@@ -20,7 +20,7 @@ services:
       - type: tmpfs
         target: /dev/shm
         tmpfs:
-          size: 2G
+          size: 2147483648 # 2GB
     tmpfs:
       - /tmp:size=2G
     environment:
