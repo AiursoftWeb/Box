@@ -14,6 +14,12 @@ services:
     deploy:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
+    healthcheck:
+      test: ["CMD", "true"]
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+
 
 networks:
   proxy_app:
