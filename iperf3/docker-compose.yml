@@ -1,0 +1,18 @@
+version: '3.3'
+
+services:
+  app:
+    image: hub.aiursoft.cn/aiursoft/internalimages/iperf3:latest
+    ports:
+      # These ports are for internal use.
+      - target: 5201
+        published: 5201
+        protocol: tcp
+        mode: host
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 256M
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
