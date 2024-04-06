@@ -1,7 +1,7 @@
 {
     "port": 80,
-    "baseURL": "https://files.aiursoft.cn",
-    "address": "https://222222222.aiursoft.cn",
+    "baseURL": "/wwwwwwwwwwww",
+    "address": "0.0.0.0",
     "log": "stdout",
     "database": "/database/filebrowser.db",
     "root": "/srv"
