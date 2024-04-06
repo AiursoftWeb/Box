@@ -194,3 +194,4 @@ deploy fissssssh/docker-compose.yml      fissssssh
 deploy aimer/docker-compose.yml          aimer
 deploy moongladepure/docker-compose.yml  moongladepure
 deploy aiurui/docker-compose.yml         aiurui
+deploy image_puller/docker-compose.yml   image_puller
