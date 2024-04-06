@@ -40,6 +40,9 @@ services:
         nginx['real_ip_header'] = 'X-Forwarded-For'
         nginx['real_ip_recursive'] = 'on'
     deploy:
+      resources:
+        limits:
+          memory: 22G
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
