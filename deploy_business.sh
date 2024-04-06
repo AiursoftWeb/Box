@@ -143,7 +143,7 @@ sudo mkdir -p /swarm-vol/moongladepure/zoneblog/aspnet
 sudo mkdir -p /swarm-vol/filebrowser/data
 sudo mkdir -p /swarm-vol/filebrowser/database
 sudo touch /swarm-vol/koel/config
-sudo touch /swarm-vol/filebrowser/database
+sudo touch /swarm-vol/filebrowser/database/database.db
 
 echo "Starting registry..."
 deploy registry/docker-compose.yml       registry # 8080

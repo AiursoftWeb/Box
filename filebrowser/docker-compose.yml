@@ -7,7 +7,7 @@ services:
       - proxy_app
     volumes:
       - files-data:/srv
-      - /swarm-vol/filebrowser/database:/database.db
+      - /swarm-vol/filebrowser/database/database.db:/database.db
     environment:
       - FB_AUTHMETHOD=noauth
       - FB_NOAUTH=true
