@@ -193,3 +193,4 @@ deploy gateway/docker-compose.yml        gateway
 deploy fissssssh/docker-compose.yml      fissssssh
 deploy aimer/docker-compose.yml          aimer
 deploy moongladepure/docker-compose.yml  moongladepure
+deploy aiurui/docker-compose.yml         aiurui

@@ -2,7 +2,7 @@ version: '3.3'
 
 services:
   baget:
-    image: hub.aiursoft.cn/aiursoft/baget:latest
+    image: hub.aiursoft.cn/aiursoft/baget
     volumes:
       - nuget-data:/data
     secrets:
