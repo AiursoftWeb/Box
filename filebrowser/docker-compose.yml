@@ -7,8 +7,7 @@ services:
       - proxy_app
     volumes:
       - files-data:/srv
-      - database-data:/database
-      - /swarm-vol/filebrowser/config.json:/.filebrowser.json
+      - /swarm-vol/filebrowser/database:/database.db
     environment:
       - FB_AUTHMETHOD=noauth
       - FB_NOAUTH=true
@@ -27,9 +26,3 @@ volumes:
       type: none
       o: bind
       device: /swarm-vol/filebrowser/data
-  database-data:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /swarm-vol/filebrowser/database
