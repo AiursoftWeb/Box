@@ -10,7 +10,6 @@ services:
       - database-data:/database
       - /swarm-vol/filebrowser/config.json:/.filebrowser.json
     environment:
-      - FB_BASEURL=/filebrowser3333333
       - FB_AUTHMETHOD=noauth
       - FB_NOAUTH=true
     deploy:
