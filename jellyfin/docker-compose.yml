@@ -6,7 +6,7 @@ services:
     volumes:
       - config-data:/config
       - cache-data:/cache
-      - media-data:/media
+      - media-data:/mnt
     environment:
       - TZ=UTC
     networks:
