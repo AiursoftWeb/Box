@@ -39,6 +39,9 @@ services:
         nginx['real_ip_trusted_addresses'] = ['172.18.0.0/16']
         nginx['real_ip_header'] = 'X-Forwarded-For'
         nginx['real_ip_recursive'] = 'on'
+        prometheus_monitoring['enable'] = false
+        sidekiq['metrics_enabled'] = false
+        puma['exporter_enabled'] = false
     deploy:
       resources:
         limits:
