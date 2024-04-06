@@ -177,7 +177,7 @@ deploy chat/docker-compose.yml           chat
 deploy homepage/docker-compose.yml       homepage
 deploy gameoflife/docker-compose.yml     gameoflife
 deploy howtocook/docker-compose.yml      howtocook
-deploy edgeneko-blog/docker-compose.yml  edgeneko-blog
+deploy edgeneko_blog/docker-compose.yml  edgeneko_blog
 deploy cpprunner/docker-compose.yml      cpprunner
 deploy lab/docker-compose.yml            lab
 deploy nuget/docker-compose.yml          nuget
