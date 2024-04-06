@@ -13,7 +13,7 @@ services:
         swarmpit.service.deployment.autoredeploy: 'true'
     healthcheck:
       test: ["CMD", "true"]
-      interval: 1m30s
+      interval: 10s
       timeout: 10s
       retries: 3
 
