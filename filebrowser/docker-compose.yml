@@ -1,0 +1,37 @@
+version: '3.3'
+
+services:
+  web:
+    image: hub.aiursoft.cn/filebrowser/filebrowser
+    networks:
+      - proxy_app
+    volumes:
+      - files-data:/srv
+      - database-data:/database
+      - /swarm-vol/filebrowser/config.json:/.filebrowser.json
+    environment:
+      - FB_BASEURL=/filebrowser3333333
+      - FB_AUTHMETHOD=noauth
+      - FB_NOAUTH=true
+    deploy:
+      replicas: 2
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+networks:
+  proxy_app:
+    external: true
+
+volumes:
+  files-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/filebrowser/data
+  database-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/filebrowser/database

@@ -140,7 +140,10 @@ sudo mkdir -p /swarm-vol/moongladepure/carson/aspnet
 sudo mkdir -p /swarm-vol/moongladepure/zoneblog/db
 sudo mkdir -p /swarm-vol/moongladepure/zoneblog/files
 sudo mkdir -p /swarm-vol/moongladepure/zoneblog/aspnet
+sudo mkdir -p /swarm-vol/filebrowser/data
+sudo mkdir -p /swarm-vol/filebrowser/database
 sudo touch /swarm-vol/koel/config
+sudo cp ./filebrowser/config.json /swarm-vol/filebrowser/config.json
 
 echo "Starting registry..."
 deploy registry/docker-compose.yml       registry # 8080
@@ -198,3 +201,4 @@ deploy moongladepure/docker-compose.yml  moongladepure
 deploy aiurui/docker-compose.yml         aiurui
 deploy image_puller/docker-compose.yml   image_puller
 deploy iperf3/docker-compose.yml         iperf3
+deploy filebrowser/docker-compose.yml    filebrowser
