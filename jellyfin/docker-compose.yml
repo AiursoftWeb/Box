@@ -20,7 +20,7 @@ services:
       - media-data:/data
     networks:
       - proxy_app
-    entrypoint: ["sh", "-c", "/app/static --port 5000 --path /data --allow-directory-browsing --allow-webdav"]
+    entrypoint: ["sh", "-c", "/app/static --port 5000 --path /data --allow-directory-browsing --enable-webdav"]
     deploy:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
