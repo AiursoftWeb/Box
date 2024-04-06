@@ -1,0 +1,50 @@
+version: '3.3' 
+
+services:
+  web:
+    image: hub.aiursoft.cn/jellyfin/jellyfin
+    volumes:
+      - config-data:/config
+      - cache-data:/cache
+      - media-data:/media
+    environment:
+      - TZ=UTC
+    networks:
+      - proxy_app
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+  webdav:
+    image: hub.aiursoft.cn/aiursoft/static
+    volumes:
+      - media-data:/data
+    networks:
+      - proxy_app
+    entrypoint: ["sh", "-c", "/app/static --port 5000 --path /data --allow-directory-browsing --allow-webdav"]
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+networks:
+  proxy_app:
+    external: true
+
+volumes:
+  config-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/jellyfin/config
+  cache-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/jellyfin/cache
+  media-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/jellyfin/media

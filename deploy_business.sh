@@ -142,6 +142,9 @@ sudo mkdir -p /swarm-vol/moongladepure/zoneblog/files
 sudo mkdir -p /swarm-vol/moongladepure/zoneblog/aspnet
 sudo mkdir -p /swarm-vol/filebrowser/data
 sudo mkdir -p /swarm-vol/filebrowser/database
+sudo mkdir -p /swarm-vol/jellyfin/config
+sudo mkdir -p /swarm-vol/jellyfin/cache
+sudo mkdir -p /swarm-vol/jellyfin/media
 sudo touch /swarm-vol/koel/config
 sudo touch /swarm-vol/filebrowser/database/database.db
 
@@ -202,3 +205,4 @@ deploy aiurui/docker-compose.yml         aiurui
 deploy image_puller/docker-compose.yml   image_puller
 deploy iperf3/docker-compose.yml         iperf3
 deploy filebrowser/docker-compose.yml    filebrowser
+deploy jellyfin/docker-compose.yml       jellyfin
