@@ -24,6 +24,9 @@ services:
         mode: host
       # 8123 will by proxy by FRP.
     deploy:
+      resources:
+        limits:
+          memory: 8192M
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 

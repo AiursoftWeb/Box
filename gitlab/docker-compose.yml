@@ -54,6 +54,10 @@ services:
     secrets:
       - gitlab-runner-token
     deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 4096M
       replicas: 6
       # Disable auto-redeploy, because runner may stop when CI is running.
 
