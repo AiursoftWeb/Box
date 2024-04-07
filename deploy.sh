@@ -9,9 +9,9 @@ function install_docker() {
 }
 
 function disable_snap() {
-    sudo systemctl disable --now snapd
-    sudo apt purge -y snapd
-    sudo rm -rf /snap /var/snap /var/lib/snapd /var/cache/snapd /usr/lib/snapd ~/snap
+    sudo systemctl disable --now snapd || true
+    sudo apt purge -y snapd || true
+    sudo rm -rf /snap /var/snap /var/lib/snapd /var/cache/snapd /usr/lib/snapd ~/snap || true
     cat << EOF | sudo tee -a /etc/apt/preferences.d/no-snap.pref
 Package: snapd
 Pin: release a=*
