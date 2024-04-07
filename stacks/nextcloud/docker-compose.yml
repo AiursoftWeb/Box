@@ -19,6 +19,16 @@ services:
       - MYSQL_HOST=nextclouddb
       - REDIS_HOST=redis
 
+  nextcloud-cron:
+    image: hub.aiursoft.cn/nextcloud
+    networks: 
+      - internal
+    depends_on:
+      - nextcloud
+    volumes:
+      - nextcloud-data:/var/www/html
+    entrypoint: /cron.sh
+
   nextclouddb:
     image: hub.aiursoft.cn/mariadb
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
