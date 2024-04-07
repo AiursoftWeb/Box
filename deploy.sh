@@ -199,18 +199,17 @@ sudo touch /swarm-vol/filebrowser/database/database.db
 sudo touch /swarm-vol/jellyfin/filebrowser/database.db
 
 echo "Starting registry..."
-deploy registry/docker-compose.yml       registry # 8080
+deploy stacks/registry/docker-compose.yml       registry # 8080
+
+echo "Prebuild images..."
+echo "{ \"insecure-registries\":[\"localhost:8080\"] }" | sudo tee /etc/docker/daemon.json
+mkdir -p ./images/sites/discovered && cp ./stacks/**/*.conf ./images/sites/discovered
 
 echo "Building images..."
-echo "{ \"insecure-registries\":[\"localhost:8080\"] }" | sudo tee /etc/docker/daemon.json
 sudo docker build ./images/ubuntu   -t localhost:8080/box_starting/local_ubuntu:latest
 sudo docker push localhost:8080/box_starting/local_ubuntu:latest
 sudo docker build ./images/frp      -t localhost:8080/box_starting/local_frp:latest
 sudo docker push localhost:8080/box_starting/local_frp:latest
-
-mkdir -p ./images/sites/discovered && cp ./stacks/**/*.conf ./images/sites/discovered
-total_sites=$(find ./images/sites/discovered -type f -name "*.conf" | wc -l)
-echo "Totally discovered $total_sites sites."
 sudo docker build ./images/sites    -t localhost:8080/box_starting/local_sites:latest
 sudo docker push localhost:8080/box_starting/local_sites:latest
 
