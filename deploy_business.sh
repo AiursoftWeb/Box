@@ -1,6 +1,32 @@
 #!/bin/bash
+function install_docker() {
+    curl -fsSL get.docker.com -o get-docker.sh
+    CHANNEL=stable sh get-docker.sh
+    rm get-docker.sh
+}
+
+function disable_snap() {
+    sudo systemctl disable --now snapd
+    sudo apt purge -y snapd
+    sudo rm -rf /snap /var/snap /var/lib/snapd /var/cache/snapd /usr/lib/snapd ~/snap
+    cat << EOF | sudo tee -a /etc/apt/preferences.d/no-snap.pref
+Package: snapd
+Pin: release a=*
+Pin-Priority: -10
+EOF
+    sudo chown root:root /etc/apt/preferences.d/no-snap.pref
+}
 
 function better_performance() {
+    # Add user to sudoers
+    if ! sudo grep -q "$USER ALL=(ALL) NOPASSWD:ALL" /etc/sudoers.d/$USER; then
+        echo "Adding $USER to sudoers..."
+        sudo mkdir -p /etc/sudoers.d
+        sudo touch /etc/sudoers.d/$USER
+        echo "$USER ALL=(ALL) NOPASSWD:ALL" | sudo tee -a /etc/sudoers.d/$USER
+    fi
+
+    # Tuning for better performance
     sudo sysctl -w net.core.rmem_max=2500000
     sudo sysctl -w net.core.wmem_max=2500000
     sudo sysctl -w net.ipv4.tcp_congestion_control=bbr
@@ -10,11 +36,26 @@ function better_performance() {
     sudo sysctl -w fs.inotify.max_queued_events=524288
     sudo sysctl -p
 
+    # Disable swap
     sudo sudo swapoff -a
 
+    # Disable snapd
+    disable_snap
+
+    # Set timezone to UTC
+    sudo timedatectl set-timezone UTC
+
+    # Install latest kernel and intel-media-va-driver
     DEBIAN_FRONTEND=noninteractive sudo apt update
-    sudo apt list --installed | grep -q linux-generic-hwe-22.04 || sudo apt install linux-generic-hwe-22.04
-    sudo apt list --installed | grep -q intel-media-va-driver || sudo apt install intel-media-va-driver
+    apt list --installed | grep -q linux-generic-hwe-22.04 || sudo apt install linux-generic-hwe-22.04
+
+    # Install docker
+    apt list --installed | grep -q docker-ce || install_docker
+
+    # Install some basic tools
+    sudo DEBIAN_FRONTEND=noninteractive apt install -y \
+        apt-transport-https ca-certificates curl lsb-release \
+        software-properties-common wget git tree zip unzip vim net-tools traceroute dnsutils htop iotop pcp
 }
 
 function deploy() {
