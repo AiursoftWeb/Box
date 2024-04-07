@@ -10,7 +10,8 @@ services:
       - nextclouddb
       - redis
     volumes:
-      - nextcloud-data:/var/www/html
+      - nextcloud-app:/var/www/html
+      - nextcloud-data:/mnt/data
     environment:
       - TZ=UTC
       - MYSQL_DATABASE=nextcloud
@@ -18,6 +19,10 @@ services:
       - MYSQL_PASSWORD=dbpassword
       - MYSQL_HOST=nextclouddb
       - REDIS_HOST=redis
+      - NEXTCLOUD_DATA_DIR=/mnt/data
+      - NEXTCLOUD_TRUSTED_DOMAINS=nextcloud2.aiursoft.cn
+      - PHP_MEMORY_LIMIT=1G
+      - PHP_UPLOAD_LIMIT=1G
 
   nextcloud-cron:
     image: hub.aiursoft.cn/nextcloud
@@ -26,7 +31,8 @@ services:
     depends_on:
       - nextcloud
     volumes:
-      - nextcloud-data:/var/www/html
+      - nextcloud-app:/var/www/html
+      - nextcloud-data:/mnt/data
     entrypoint: /cron.sh
 
   nextclouddb:
@@ -68,6 +74,12 @@ volumes:
       type: none
       o: bind
       device: /swarm-vol/nextcloud/redis
+  nextcloud-app:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/nextcloud/app
   nextcloud-data:
     driver: local
     driver_opts:
