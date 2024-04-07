@@ -219,5 +219,10 @@ done
 
 echo "Deploying business stacks..."
 find . -name 'docker-compose.yml' -print0 | while IFS= read -r -d '' file; do
+    # Skip the registry
+    if [[ $file == *"registry"* ]]; then
+        continue
+    fi
+    
     deploy "$file" "$(basename "$(dirname "$file")")"
 done
