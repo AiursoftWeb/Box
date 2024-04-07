@@ -8,7 +8,8 @@ services:
       - cache-data:/cache
       - media-data:/mnt
     devices:
-      - /dev/dri:/dev/dri
+      - /dev/dri/renderD128:/dev/dri/renderD128
+      - /dev/dri/card0:/dev/dri/card0
     environment:
       - TZ=UTC
     networks:
