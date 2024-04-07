@@ -35,6 +35,17 @@ services:
       - nextcloud-config:/var/www/html/config
       - nextcloud-apps:/var/www/html/apps
       - nextcloud-data:/mnt/data
+    environment:
+      - TZ=UTC
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+      - MYSQL_PASSWORD=dbpassword
+      - MYSQL_HOST=nextclouddb
+      - REDIS_HOST=redis
+      - NEXTCLOUD_DATA_DIR=/mnt/data
+      - NEXTCLOUD_TRUSTED_DOMAINS=nextcloud2.aiursoft.cn
+      - PHP_MEMORY_LIMIT=1G
+      - PHP_UPLOAD_LIMIT=1G
     entrypoint: /cron.sh
 
   nextclouddb:
