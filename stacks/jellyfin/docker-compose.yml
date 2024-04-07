@@ -1,6 +1,14 @@
 version: '3.3' 
 
 services:
+  downloader:
+    image: hub.aiursoft.cn/aiursoft/internalimages/youtubedl
+    volumes:
+      - media-data:/mnt/data
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
   web:
     image: hub.aiursoft.cn/jellyfin/jellyfin
     volumes:
