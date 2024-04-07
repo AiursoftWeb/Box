@@ -13,8 +13,8 @@ WORKDIR /app
 COPY . .
 
 # Outputs to /app/Dist/Caddyfile
-RUN chmod +x /app/sites/build_proxy.sh
-RUN /bin/bash /app/sites/build_proxy.sh
+RUN chmod +x /app/build_proxy.sh
+RUN /bin/bash /app/build_proxy.sh
 
 # ============================
 # Prepare Runtime Environment
