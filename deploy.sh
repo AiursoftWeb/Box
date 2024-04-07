@@ -200,11 +200,6 @@ sudo touch /swarm-vol/jellyfin/filebrowser/database.db
 
 echo "Starting registry..."
 deploy registry/docker-compose.yml       registry # 8080
-sleep 20 # Could not trust result in the first few seconds, because the old registry might still be running
-while curl -s http://localhost:8080 > /dev/null; [ $? -ne 0 ]; do
-    echo "Waiting for registry(localhost:8080) to start..."
-    sleep 1
-done
 
 echo "Building images..."
 echo "{ \"insecure-registries\":[\"localhost:8080\"] }" | sudo tee /etc/docker/daemon.json
@@ -214,6 +209,13 @@ sudo docker build ./incoming/frp      -t localhost:8080/box_starting/local_frp:l
 sudo docker push localhost:8080/box_starting/local_frp:latest
 sudo docker build .                   -t localhost:8080/box_starting/local_sites:latest
 sudo docker push localhost:8080/box_starting/local_sites:latest
+
+echo "Make sure the registry is ready..."
+sleep 5 # Could not trust result in the first few seconds, because the old registry might still be running
+while curl -s https://hub.aiursoft.cn > /dev/null; [ $? -ne 0 ]; do
+    echo "Waiting for registry(https://hub.aiursoft.cn) to start..."
+    sleep 1
+done
 
 echo "Deploying business stacks..."
 find . -name 'docker-compose.yml' -print0 | while IFS= read -r -d '' file; do
