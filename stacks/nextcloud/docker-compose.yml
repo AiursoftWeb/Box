@@ -10,7 +10,8 @@ services:
       - nextclouddb
       - redis
     volumes:
-      - nextcloud-app:/var/www/html
+      - nextcloud-config:/var/www/html/config
+      - nextcloud-apps:/var/www/html/apps
       - nextcloud-data:/mnt/data
     environment:
       - TZ=UTC
@@ -31,7 +32,8 @@ services:
     depends_on:
       - nextcloud
     volumes:
-      - nextcloud-app:/var/www/html
+      - nextcloud-config:/var/www/html/config
+      - nextcloud-apps:/var/www/html/apps
       - nextcloud-data:/mnt/data
     entrypoint: /cron.sh
 
@@ -74,12 +76,18 @@ volumes:
       type: none
       o: bind
       device: /swarm-vol/nextcloud/redis
-  nextcloud-app:
+  nextcloud-config:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /swarm-vol/nextcloud/app
+      device: /swarm-vol/nextcloud/config
+  nextcloud-apps:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/nextcloud/apps
   nextcloud-data:
     driver: local
     driver_opts:
