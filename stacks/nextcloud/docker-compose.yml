@@ -2,7 +2,7 @@ version: '3'
 
 services:
   web:
-    image: hub.aiursoft.cn/nextcloud
+    image: hub.aiursoft.cn/nextcloud:27.0.1
     networks: 
       - internal
       - proxy_app
@@ -26,7 +26,7 @@ services:
       - PHP_UPLOAD_LIMIT=1G
 
   nextcloud-cron:
-    image: hub.aiursoft.cn/nextcloud
+    image: hub.aiursoft.cn/nextcloud:27.0.1
     networks: 
       - internal
     depends_on:
