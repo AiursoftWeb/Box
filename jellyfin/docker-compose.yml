@@ -14,13 +14,22 @@ services:
     deploy:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
-  webdav:
-    image: hub.aiursoft.cn/aiursoft/static
-    volumes:
-      - media-data:/data
+
+  mediabrowser:
+    image: hub.aiursoft.cn/filebrowser/filebrowser
     networks:
       - proxy_app
-    entrypoint: ["sh", "-c", "/app/static --port 5000 --path /data --allow-directory-browsing --enable-webdav"]
+    volumes:
+      - media-data:/srv
+      - /swarm-vol/jellyfin/filebrowser/database.db:/database.db
+    environment:
+      - FB_AUTHMETHOD=noauth
+      - FB_NOAUTH=true
+    healthcheck:
+      test: ["CMD", "true"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
     deploy:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'

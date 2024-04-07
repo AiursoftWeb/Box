@@ -147,6 +147,7 @@ sudo mkdir -p /swarm-vol/jellyfin/cache
 sudo mkdir -p /swarm-vol/jellyfin/media
 sudo touch /swarm-vol/koel/config
 sudo touch /swarm-vol/filebrowser/database/database.db
+sudo touch /swarm-vol/jellyfin/filebrowser/database.db
 
 echo "Starting registry..."
 deploy registry/docker-compose.yml       registry # 8080
