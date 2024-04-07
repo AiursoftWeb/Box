@@ -215,44 +215,7 @@ sudo docker push localhost:8080/box_starting/local_frp:latest
 sudo docker build .                   -t localhost:8080/box_starting/local_sites:latest
 sudo docker push localhost:8080/box_starting/local_sites:latest
 
-echo "Deploying incoming stacks..."
-deploy incoming/docker-compose.yml       incoming # 80 443
-sleep 20 # Could not trust result in the first few seconds, because the old registry might still be running
-while curl -s https://hub.aiursoft.cn > /dev/null; [ $? -ne 0 ]; do
-    echo "Waiting for registry(public endpoint) to start..."
-    sleep 1
-done
-
 echo "Deploying business stacks..."
-deploy swarmpit/docker-compose.yml       swarmpit
-deploy gitlab/docker-compose.yml         gitlab
-deploy tracer/docker-compose.yml         tracer
-deploy manhours/docker-compose.yml       manhours
-deploy chess/docker-compose.yml          chess
-deploy stathub/docker-compose.yml        stathub
-deploy health/docker-compose.yml         health
-deploy chat/docker-compose.yml           chat
-deploy homepage/docker-compose.yml       homepage
-deploy gameoflife/docker-compose.yml     gameoflife
-deploy howtocook/docker-compose.yml      howtocook
-deploy edgeneko_blog/docker-compose.yml  edgeneko_blog
-deploy cpprunner/docker-compose.yml      cpprunner
-deploy lab/docker-compose.yml            lab
-deploy nuget/docker-compose.yml          nuget
-deploy remotely/docker-compose.yml       remotely
-deploy koel/docker-compose.yml           koel
-deploy kiwix/docker-compose.yml          kiwix
-deploy flyclass/docker-compose.yml       flyclass
-deploy gist/docker-compose.yml           gist
-deploy gitea/docker-compose.yml          gitea
-deploy apt_mirror/docker-compose.yml     apt_mirror
-deploy minecraft/docker-compose.yml      minecraft
-deploy gateway/docker-compose.yml        gateway
-deploy fissssssh/docker-compose.yml      fissssssh
-deploy aimer/docker-compose.yml          aimer
-deploy moongladepure/docker-compose.yml  moongladepure
-deploy aiurui/docker-compose.yml         aiurui
-deploy image_puller/docker-compose.yml   image_puller
-deploy iperf3/docker-compose.yml         iperf3
-deploy filebrowser/docker-compose.yml    filebrowser
-deploy jellyfin/docker-compose.yml       jellyfin
+find . -name 'docker-compose.yml' -print0 | while IFS= read -r -d '' file; do
+    deploy "$file" "$(basename "$(dirname "$file")")"
+done
