@@ -14,7 +14,7 @@ services:
     volumes:
       - config-data:/config
       - cache-data:/cache
-      - media-data:/mnt
+      - media-data:/mnt/data
     # Docker swarm doesn't support devices yet. So we can't use hardware acceleration. Shit!
     # devices:
     #   - /dev/dri/renderD128:/dev/dri/renderD128
