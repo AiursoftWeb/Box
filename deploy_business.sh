@@ -145,6 +145,7 @@ sudo mkdir -p /swarm-vol/filebrowser/database
 sudo mkdir -p /swarm-vol/jellyfin/config
 sudo mkdir -p /swarm-vol/jellyfin/cache
 sudo mkdir -p /swarm-vol/jellyfin/media
+sudo mkdir -p /swarm-vol/jellyfin/filebrowser/
 sudo touch /swarm-vol/koel/config
 sudo touch /swarm-vol/filebrowser/database/database.db
 sudo touch /swarm-vol/jellyfin/filebrowser/database.db
