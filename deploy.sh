@@ -1,4 +1,7 @@
 #!/bin/bash
+
+set -e
+
 function install_docker() {
     curl -fsSL get.docker.com -o get-docker.sh
     CHANNEL=stable sh get-docker.sh
@@ -209,7 +212,7 @@ sudo docker build ./incoming/ubuntu   -t localhost:8080/box_starting/local_ubunt
 sudo docker push localhost:8080/box_starting/local_ubuntu:latest
 sudo docker build ./incoming/frp      -t localhost:8080/box_starting/local_frp:latest
 sudo docker push localhost:8080/box_starting/local_frp:latest
-sudo docker build ./incoming/sites    -t localhost:8080/box_starting/local_sites:latest
+sudo docker build .                   -t localhost:8080/box_starting/local_sites:latest
 sudo docker push localhost:8080/box_starting/local_sites:latest
 
 echo "Deploying incoming stacks..."
