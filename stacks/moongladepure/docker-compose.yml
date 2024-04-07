@@ -31,7 +31,7 @@ services:
     volumes:
       - anduin-db:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=<root_password>
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
       - MYSQL_DATABASE=anduin
       - MYSQL_USER=anduin
       - MYSQL_PASSWORD=<anduin_password>
@@ -71,7 +71,7 @@ services:
     volumes:
       - jimmoen-db:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=<root_password>
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
       - MYSQL_DATABASE=jimmoen
       - MYSQL_USER=jimmoen
       - MYSQL_PASSWORD=<jimmoen_password>
@@ -111,7 +111,7 @@ services:
     volumes:
       - rest-db:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=<root_password>
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
       - MYSQL_DATABASE=rest
       - MYSQL_USER=rest
       - MYSQL_PASSWORD=<rest_password>
@@ -151,7 +151,7 @@ services:
     volumes:
       - cody-db:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=<root_password>
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
       - MYSQL_DATABASE=cody
       - MYSQL_USER=cody
       - MYSQL_PASSWORD=<cody_password>
@@ -191,7 +191,7 @@ services:
     volumes:
       - gxhao-db:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=<root_password>
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
       - MYSQL_DATABASE=gxhao
       - MYSQL_USER=gxhao
       - MYSQL_PASSWORD=<gxhao_password>
@@ -231,7 +231,7 @@ services:
     volumes:
       - anois-db:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=<root_password>
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
       - MYSQL_DATABASE=anois
       - MYSQL_USER=anois
       - MYSQL_PASSWORD=<anois_password>
@@ -271,7 +271,7 @@ services:
     volumes:
       - dvorak-db:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=<root_password>
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
       - MYSQL_DATABASE=dvorak
       - MYSQL_USER=dvorak
       - MYSQL_PASSWORD=<dvorak_password>
@@ -311,7 +311,7 @@ services:
     volumes:
       - kitlau-db:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=<root_password>
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
       - MYSQL_DATABASE=kitlau
       - MYSQL_USER=kitlau
       - MYSQL_PASSWORD=<kitlau_password>
@@ -351,7 +351,7 @@ services:
     volumes:
       - xinboo-db:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=<root_password>
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
       - MYSQL_DATABASE=xinboo
       - MYSQL_USER=xinboo
       - MYSQL_PASSWORD=<xinboo_password>
@@ -391,7 +391,7 @@ services:
     volumes:
       - gbiner-db:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=<root_password>
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
       - MYSQL_DATABASE=gbiner
       - MYSQL_USER=gbiner
       - MYSQL_PASSWORD=<gbiner_password>
@@ -431,7 +431,7 @@ services:
     volumes:
       - rdf-db:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=<root_password>
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
       - MYSQL_DATABASE=rdf
       - MYSQL_USER=rdf
       - MYSQL_PASSWORD=<rdf_password>
@@ -471,7 +471,7 @@ services:
     volumes:
       - lyx-db:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=<root_password>
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
       - MYSQL_DATABASE=lyx
       - MYSQL_USER=lyx
       - MYSQL_PASSWORD=<lyx_password>
@@ -511,7 +511,7 @@ services:
     volumes:
       - shubuzuo-db:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=<root_password>
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
       - MYSQL_DATABASE=shubuzuo
       - MYSQL_USER=shubuzuo
       - MYSQL_PASSWORD=<shubuzuo_password>
@@ -551,7 +551,7 @@ services:
     volumes:
       - lily-db:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=<root_password>
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
       - MYSQL_DATABASE=lily
       - MYSQL_USER=lily
       - MYSQL_PASSWORD=<lily_password>
@@ -591,7 +591,7 @@ services:
     volumes:
       - carson-db:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=<root_password>
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
       - MYSQL_DATABASE=carson
       - MYSQL_USER=carson
       - MYSQL_PASSWORD=<carson_password>
@@ -631,7 +631,7 @@ services:
     volumes:
       - zoneblog-db:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=<root_password>
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
       - MYSQL_DATABASE=zoneblog
       - MYSQL_USER=zoneblog
       - MYSQL_PASSWORD=<zoneblog_password>

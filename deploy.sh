@@ -194,6 +194,9 @@ sudo mkdir -p /swarm-vol/jellyfin/config
 sudo mkdir -p /swarm-vol/jellyfin/cache
 sudo mkdir -p /swarm-vol/jellyfin/media
 sudo mkdir -p /swarm-vol/jellyfin/filebrowser/
+sudo mkdir -p /swarm-vol/nextcloud/db
+sudo mkdir -p /swarm-vol/nextcloud/redis
+sudo mkdir -p /swarm-vol/nextcloud/data
 sudo touch /swarm-vol/koel/config
 sudo touch /swarm-vol/filebrowser/database/database.db
 sudo touch /swarm-vol/jellyfin/filebrowser/database.db

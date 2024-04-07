@@ -1,0 +1,66 @@
+version: '3'
+
+services:
+  web:
+    image: hub.aiursoft.cn/nextcloud
+    networks: 
+      - internal
+      - proxy_app
+    depends_on:
+      - nextclouddb
+      - redis
+    volumes:
+      - nextcloud-data:/var/www/html
+    environment:
+      - TZ=UTC
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+      - MYSQL_PASSWORD=dbpassword
+      - MYSQL_HOST=nextclouddb
+      - REDIS_HOST=redis
+
+  nextclouddb:
+    image: hub.aiursoft.cn/mariadb
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    networks: 
+      - internal
+    volumes:
+      - nextcloud-db:/var/lib/mysql
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
+      - MYSQL_PASSWORD=dbpassword
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+      
+  redis:
+    image: hub.aiursoft.cn/redis:alpine
+    volumes:
+      - nextcloud-redis:/data
+    networks: 
+      - internal
+  
+networks:
+  internal:
+    driver: overlay
+  proxy_app:
+    external: true
+
+volumes:
+  nextcloud-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/nextcloud/db
+  nextcloud-redis:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/nextcloud/redis
+  nextcloud-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/nextcloud/data
