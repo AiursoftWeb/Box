@@ -14,6 +14,10 @@ rsync -Aavx --update --delete root@nextcloud:/mnt/datastorage/data/* .
 cd /swarm-vol/nextcloud/apps
 rsync -Aavx --update --delete root@nextcloud:/var/www/html/nextcloud/apps/ .
 
+## Backup DB
+
+sudo mysqldump --single-transaction -h localhost -u root --password=gu********_nextcloud nextcloud > /home/anduin/temp.bak
+
 ## Restore DB
 
 cd ~
