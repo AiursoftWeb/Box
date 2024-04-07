@@ -36,14 +36,14 @@ services:
     entrypoint: /cron.sh
 
   nextclouddb:
-    image: hub.aiursoft.cn/mariadb
+    image: hub.aiursoft.cn/mysql
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
     networks: 
       - internal
     volumes:
       - nextcloud-db:/var/lib/mysql
     environment:
-      - MYSQL_RANDOM_ROOT_PASSWORD=true
+      - MYSQL_ROOT_PASSWORD=root_dbpassword
       - MYSQL_PASSWORD=dbpassword
       - MYSQL_DATABASE=nextcloud
       - MYSQL_USER=nextcloud
