@@ -201,6 +201,13 @@ sudo touch /swarm-vol/jellyfin/filebrowser/database.db
 echo "Starting registry..."
 deploy stacks/registry/docker-compose.yml       registry # 8080
 
+echo "Make sure the registry is ready..."
+sleep 5 # Could not trust result in the first few seconds, because the old registry might still be running
+while curl -s http://localhost:8080/ > /dev/null; [ $? -ne 0 ]; do
+    echo "Waiting for registry(http://localhost:8080) to start..."
+    sleep 1
+done
+
 echo "Prebuild images..."
 echo "{ \"insecure-registries\":[\"localhost:8080\"] }" | sudo tee /etc/docker/daemon.json
 mkdir -p ./images/sites/discovered && cp ./stacks/**/*.conf ./images/sites/discovered
