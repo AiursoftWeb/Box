@@ -11,6 +11,10 @@ function better_performance() {
     sudo sysctl -p
 
     sudo sudo swapoff -a
+
+    DEBIAN_FRONTEND=noninteractive sudo apt update
+    sudo apt list --installed | grep -q linux-generic-hwe-22.04 || sudo apt install linux-generic-hwe-22.04
+    sudo apt list --installed | grep -q intel-media-va-driver || sudo apt install intel-media-va-driver
 }
 
 function deploy() {

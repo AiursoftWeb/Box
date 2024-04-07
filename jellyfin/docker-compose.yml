@@ -7,6 +7,8 @@ services:
       - config-data:/config
       - cache-data:/cache
       - media-data:/mnt
+    devices:
+      - /dev/dri:/dev/dri
     environment:
       - TZ=UTC
     networks:
