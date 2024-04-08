@@ -11,7 +11,7 @@ services:
       - redis
     volumes:
       - nextcloud-config:/var/www/html/config
-      - nextcloud-apps:/var/www/html/apps
+      - nextcloud-custom-apps:/var/www/html/custom_apps
       - nextcloud-data:/mnt/data
     environment:
       - TZ=UTC
@@ -41,7 +41,7 @@ services:
       - redis
     volumes:
       - nextcloud-config:/var/www/html/config
-      - nextcloud-apps:/var/www/html/apps
+      - nextcloud-custom-apps:/var/www/html/custom_apps
       - nextcloud-data:/mnt/data
     environment:
       - TZ=UTC
@@ -119,12 +119,12 @@ volumes:
       type: none
       o: bind
       device: /swarm-vol/nextcloud/config
-  nextcloud-apps:
+  nextcloud-custom-apps:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /swarm-vol/nextcloud/apps
+      device: /swarm-vol/nextcloud/custom_apps
   nextcloud-data:
     driver: local
     driver_opts:
