@@ -59,6 +59,9 @@ function better_performance() {
     sudo DEBIAN_FRONTEND=noninteractive apt install -y \
         apt-transport-https ca-certificates curl lsb-release \
         software-properties-common wget git tree zip unzip vim net-tools traceroute dnsutils htop iotop pcp
+
+    # Clean docker cache
+    sudo docker system prune -a --volumes -f
 }
 
 function deploy() {
