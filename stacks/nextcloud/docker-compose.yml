@@ -37,8 +37,11 @@ services:
       - internal
     depends_on:
       - nextcloud
-    entrypoint: ["/bin/sh", "-c", "sleep 20 && apk add curl && while true; do sleep 300; wget -q -O - http://web/cron.php; done"]
+    entrypoint: ["/bin/sh", "-c", "apk add curl && sleep 20 && while true; do sleep 300; curl -s http://web/cron.php; done"]
     deploy:
+      resources:
+        limits:
+          memory: 128M
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
