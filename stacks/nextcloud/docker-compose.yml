@@ -21,7 +21,7 @@ services:
       - MYSQL_HOST=nextclouddb
       - REDIS_HOST=redis
       - NEXTCLOUD_DATA_DIR=/mnt/data
-      - NEXTCLOUD_TRUSTED_DOMAINS=nextcloud2.aiursoft.cn
+      - NEXTCLOUD_TRUSTED_DOMAINS=nextcloud.aiursoft.cn
       - PHP_MEMORY_LIMIT=1G
       - PHP_UPLOAD_LIMIT=1G
 
@@ -43,7 +43,7 @@ services:
       - MYSQL_HOST=nextclouddb
       - REDIS_HOST=redis
       - NEXTCLOUD_DATA_DIR=/mnt/data
-      - NEXTCLOUD_TRUSTED_DOMAINS=nextcloud2.aiursoft.cn
+      - NEXTCLOUD_TRUSTED_DOMAINS=nextcloud.aiursoft.cn
       - PHP_MEMORY_LIMIT=1G
       - PHP_UPLOAD_LIMIT=1G
     entrypoint: /cron.sh
