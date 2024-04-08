@@ -31,34 +31,14 @@ services:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
-  nextcloud-cron:
-    image: hub.aiursoft.cn/nextcloud:27.1.0
+  cron:
+    image: hub.aiursoft.cn/alpine
     networks: 
       - internal
     depends_on:
       - nextcloud
-      - nextclouddb
-      - redis
-    volumes:
-      - nextcloud-config:/var/www/html/config
-      - nextcloud-custom-apps:/var/www/html/custom_apps
-      - nextcloud-data:/mnt/data
-    environment:
-      - TZ=UTC
-      - MYSQL_DATABASE=nextcloud
-      - MYSQL_USER=nextcloud
-      - MYSQL_PASSWORD=dbpassword
-      - MYSQL_HOST=nextclouddb
-      - REDIS_HOST=redis
-      - NEXTCLOUD_DATA_DIR=/mnt/data
-      - NEXTCLOUD_TRUSTED_DOMAINS=nextcloud.aiursoft.cn
-      - PHP_MEMORY_LIMIT=1G
-      - PHP_UPLOAD_LIMIT=1G
-    entrypoint: /cron.sh
+    entrypoint: ["/bin/sh", "-c", "sleep 20 && apk add curl && while true; do sleep 300; wget -q -O - http://web/cron.php; done"]
     deploy:
-      resources:
-        limits:
-          memory: 8192M
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
