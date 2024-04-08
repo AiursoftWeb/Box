@@ -24,6 +24,12 @@ services:
       - NEXTCLOUD_TRUSTED_DOMAINS=nextcloud.aiursoft.cn
       - PHP_MEMORY_LIMIT=1G
       - PHP_UPLOAD_LIMIT=1G
+    deploy:
+      resources:
+        limits:
+          memory: 16384M
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
 
   nextcloud-cron:
     image: hub.aiursoft.cn/nextcloud:27.1.0
@@ -31,6 +37,8 @@ services:
       - internal
     depends_on:
       - nextcloud
+      - nextclouddb
+      - redis
     volumes:
       - nextcloud-config:/var/www/html/config
       - nextcloud-apps:/var/www/html/apps
@@ -47,6 +55,12 @@ services:
       - PHP_MEMORY_LIMIT=1G
       - PHP_UPLOAD_LIMIT=1G
     entrypoint: /cron.sh
+    deploy:
+      resources:
+        limits:
+          memory: 8192M
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
 
   nextclouddb:
     image: hub.aiursoft.cn/mysql
@@ -60,14 +74,26 @@ services:
       - MYSQL_PASSWORD=dbpassword
       - MYSQL_DATABASE=nextcloud
       - MYSQL_USER=nextcloud
-      
+    deploy:
+      resources:
+        limits:
+          memory: 8192M
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
   redis:
     image: hub.aiursoft.cn/redis:alpine
     volumes:
       - nextcloud-redis:/data
     networks: 
       - internal
-  
+    deploy:
+      resources:
+        limits:
+          memory: 8192M
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
 networks:
   internal:
     driver: overlay
