@@ -34,3 +34,20 @@ function deploy() {
     sudo docker stack deploy -c "$1" "$2" --detach
 }
 deploy ./box/stacks/nextcloud/docker-compose.yml nextcloud
+
+## MM
+
+```bash
+sudo -u www-data php -f /var/www/html/nextcloud/occ maintenance:update:htaccess
+sudo -u www-data php -f /var/www/html/nextcloud/occ db:add-missing-indices
+sudo -u www-data php -f /var/www/html/nextcloud/occ files:scan --all
+sudo -u www-data php -f /var/www/html/nextcloud/occ files:scan-app-data
+sudo -u www-data php -f /var/www/html/nextcloud/occ files:repair-tree
+sudo -u www-data php -f /var/www/html/nextcloud/occ app:update --all
+sudo -u www-data php -f /var/www/html/nextcloud/occ update:check
+sudo -u www-data php -f /var/www/html/nextcloud/occ upgrade
+sudo -u www-data php -f /var/www/html/nextcloud/occ db:convert-filecache-bigint -n
+sudo -u www-data php -f /var/www/html/nextcloud/occ maintenance:mode --off
+sudo -u www-data php -f /var/www/html/nextcloud/occ versions:expire
+sudo -u www-data php -f /var/www/html/nextcloud/occ trashbin:expire
+```
