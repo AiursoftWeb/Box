@@ -60,8 +60,8 @@ function better_performance() {
         apt-transport-https ca-certificates curl lsb-release \
         software-properties-common wget git tree zip unzip vim net-tools traceroute dnsutils htop iotop pcp
 
-    # Clean docker cache
-    sudo docker system prune -a --volumes -f
+    # Clean docker cache (optional)
+    # sudo docker system prune -a --volumes -f
 }
 
 function deploy() {
