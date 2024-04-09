@@ -16,7 +16,6 @@ services:
       ADMIN_USER: 'admin'
       ADMIN_EMAIL: 'admin@localhost'
       ADMIN_PASSWORD: 'uncomment_and_set_password_here'
-    restart: none
     # Migrate, and never quit
     command: "./deploy/docker/prestart.sh"
     depends_on:
@@ -25,6 +24,8 @@ services:
     deploy:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
+      restart_policy:
+        condition: none
 
   web:
     image: hub.aiursoft.cn/mediacms/mediacms
