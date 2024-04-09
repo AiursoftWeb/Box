@@ -16,8 +16,9 @@ services:
       ADMIN_USER: 'admin'
       ADMIN_EMAIL: 'admin@localhost'
       ADMIN_PASSWORD: 'uncomment_and_set_password_here'
+    restart: none
     # Migrate, and never quit
-    command: "./deploy/docker/prestart.sh && sleep infinity"
+    command: "./deploy/docker/prestart.sh"
     depends_on:
       - redis
       - db
