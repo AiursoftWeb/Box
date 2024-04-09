@@ -202,7 +202,7 @@ sudo mkdir -p /swarm-vol/nextcloud/redis
 sudo mkdir -p /swarm-vol/nextcloud/config
 sudo mkdir -p /swarm-vol/nextcloud/custom_apps
 sudo mkdir -p /swarm-vol/nextcloud/data
-sudo mkdir -p /swarm-vol/media-cms/root
+sudo mkdir -p /swarm-vol/media-cms/root/media_files/
 sudo mkdir -p /swarm-vol/media-cms/postgres
 sudo mkdir -p /swarm-vol/media-cms/redis
 sudo touch /swarm-vol/koel/config

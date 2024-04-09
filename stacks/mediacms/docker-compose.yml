@@ -4,7 +4,7 @@ services:
   migrations:
     image: hub.aiursoft.cn/mediacms/mediacms
     volumes:
-      - mediacms-root:/home/mediacms.io/mediacms/
+      - mediacms-root:/home/mediacms.io/mediacms/media_files/
     networks:
       - internal
     environment:
@@ -30,7 +30,7 @@ services:
       - proxy_app # Port 80
       - internal
     volumes:
-      - mediacms-root:/home/mediacms.io/mediacms/
+      - mediacms-root:/home/mediacms.io/mediacms/media_files/
     environment:
       ENABLE_CELERY_BEAT: 'no'
       ENABLE_CELERY_SHORT: 'no'
@@ -47,7 +47,7 @@ services:
     networks:
       - internal
     volumes:
-      - mediacms-root:/home/mediacms.io/mediacms/
+      - mediacms-root:/home/mediacms.io/mediacms/media_files/
     environment:
       ENABLE_UWSGI: 'no'
       ENABLE_NGINX: 'no'
@@ -65,7 +65,7 @@ services:
     networks:
       - internal
     volumes:
-      - mediacms-root:/home/mediacms.io/mediacms/
+      - mediacms-root:/home/mediacms.io/mediacms/media_files/
     environment:
       ENABLE_UWSGI: 'no'
       ENABLE_NGINX: 'no'
@@ -124,7 +124,7 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /swarm-vol/media-cms/root
+      device: /swarm-vol/media-cms/root/media_files/
   postgres_data:
     driver: local
     driver_opts:
