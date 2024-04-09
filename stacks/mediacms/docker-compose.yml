@@ -18,10 +18,8 @@ services:
       ADMIN_PASSWORD: 'uncomment_and_set_password_here'
     command: "./deploy/docker/prestart.sh"
     depends_on:
-      redis:
-        condition: service_healthy
-      db:
-        condition: service_healthy
+      - redis
+      - db
     deploy:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
