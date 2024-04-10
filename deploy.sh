@@ -50,7 +50,7 @@ function better_performance() {
 
     # Install latest kernel and intel-media-va-driver
     DEBIAN_FRONTEND=noninteractive sudo apt update
-    apt list --installed | grep -q linux-generic-hwe-22.04 || sudo apt install linux-generic-hwe-22.04
+    apt list --installed | grep -q linux-generic-hwe-22.04 || sudo apt install -y linux-generic-hwe-22.04
 
     # Install docker
     apt list --installed | grep -q docker-ce || install_docker
