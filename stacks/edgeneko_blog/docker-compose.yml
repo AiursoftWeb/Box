@@ -20,6 +20,7 @@ services:
     depends_on:
       - db
     deploy:
+      replicas: 2
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
