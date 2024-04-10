@@ -10,6 +10,48 @@ services:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
+  comments:
+    image: artalk/artalk-go
+    networks:
+      - proxy_app
+      - internal
+    volumes:
+      - artalk-data:/data
+    depends_on:
+      - db
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+  db:
+    image: hub.aiursoft.cn/mysql
+    networks: 
+      - internal
+    volumes:
+      - edgeneko-blog-db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=Password1234
+      - MYSQL_DATABASE=artalk
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+volumes:
+  edgeneko-blog-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/edgeneko-blog-comment/db
+  artalk-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/edgeneko-blog-comment/data/
+
 networks:
   proxy_app:
     external: true
+  internal:
+    driver: overlay
