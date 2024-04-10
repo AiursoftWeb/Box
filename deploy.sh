@@ -105,106 +105,14 @@ create_network proxy_app 10.234.0.0/16
 create_network frp_net 10.233.0.0/16
 
 echo "Creating data folders..."
-sudo mkdir -p /swarm-vol/registry-data
-sudo mkdir -p /swarm-vol/sites-data
-sudo mkdir -p /swarm-vol/swarmpit-db-data
-sudo mkdir -p /swarm-vol/swarmpit-influx-data
-sudo mkdir -p /swarm-vol/manhours-data
-sudo mkdir -p /swarm-vol/chess-data
-sudo mkdir -p /swarm-vol/stathub-data
-sudo mkdir -p /swarm-vol/prometheus-config
-sudo mkdir -p /swarm-vol/prometheus-data
-sudo mkdir -p /swarm-vol/grafana-config
-sudo mkdir -p /swarm-vol/grafana-data
-sudo mkdir -p /swarm-vol/sleepagent-data
-sudo mkdir -p /swarm-vol/chat-data
-sudo mkdir -p /swarm-vol/cpprunner-data
-sudo mkdir -p /swarm-vol/nuget-data
-sudo mkdir -p /swarm-vol/remotely/data
-sudo mkdir -p /swarm-vol/remotely/asp
-sudo mkdir -p /swarm-vol/koel/db
-sudo mkdir -p /swarm-vol/koel/music
-sudo mkdir -p /swarm-vol/koel/covers
-sudo mkdir -p /swarm-vol/koel/search_index
-sudo mkdir -p /swarm-vol/wiki-data
-sudo mkdir -p /swarm-vol/flyclass-data
-sudo mkdir -p /swarm-vol/gist-data
-sudo mkdir -p /swarm-vol/gitea-data
-sudo mkdir -p /swarm-vol/apt-mirror-data
-sudo mkdir -p /swarm-vol/apt-mirror-data/mirror/archive.ubuntu.com
-sudo mkdir -p /swarm-vol/apt-mirror-data/mirror/ppa.launchpad.net
-sudo mkdir -p /swarm-vol/immortal-data
-sudo mkdir -p /swarm-vol/mc/world
-sudo mkdir -p /swarm-vol/mc/world_nether
-sudo mkdir -p /swarm-vol/mc/world_the_end
-sudo mkdir -p /swarm-vol/mc/dynmap
-sudo mkdir -p /swarm-vol/mc/log
-sudo mkdir -p /swarm-vol/vpn-data
-sudo mkdir -p /swarm-vol/gitlab/data
-sudo mkdir -p /swarm-vol/gitlab/log
-sudo mkdir -p /swarm-vol/gitlab/config
-sudo mkdir -p /swarm-vol/moongladepure/anduin/db
-sudo mkdir -p /swarm-vol/moongladepure/anduin/files
-sudo mkdir -p /swarm-vol/moongladepure/anduin/aspnet
-sudo mkdir -p /swarm-vol/moongladepure/jimmoen/db
-sudo mkdir -p /swarm-vol/moongladepure/jimmoen/files
-sudo mkdir -p /swarm-vol/moongladepure/jimmoen/aspnet
-sudo mkdir -p /swarm-vol/moongladepure/rest/db
-sudo mkdir -p /swarm-vol/moongladepure/rest/files
-sudo mkdir -p /swarm-vol/moongladepure/rest/aspnet
-sudo mkdir -p /swarm-vol/moongladepure/cody/db
-sudo mkdir -p /swarm-vol/moongladepure/cody/files
-sudo mkdir -p /swarm-vol/moongladepure/cody/aspnet
-sudo mkdir -p /swarm-vol/moongladepure/gxhao/db
-sudo mkdir -p /swarm-vol/moongladepure/gxhao/files
-sudo mkdir -p /swarm-vol/moongladepure/gxhao/aspnet
-sudo mkdir -p /swarm-vol/moongladepure/anois/db
-sudo mkdir -p /swarm-vol/moongladepure/anois/files
-sudo mkdir -p /swarm-vol/moongladepure/anois/aspnet
-sudo mkdir -p /swarm-vol/moongladepure/dvorak/db
-sudo mkdir -p /swarm-vol/moongladepure/dvorak/files
-sudo mkdir -p /swarm-vol/moongladepure/dvorak/aspnet
-sudo mkdir -p /swarm-vol/moongladepure/kitlau/db
-sudo mkdir -p /swarm-vol/moongladepure/kitlau/files
-sudo mkdir -p /swarm-vol/moongladepure/kitlau/aspnet
-sudo mkdir -p /swarm-vol/moongladepure/xinboo/db
-sudo mkdir -p /swarm-vol/moongladepure/xinboo/files
-sudo mkdir -p /swarm-vol/moongladepure/xinboo/aspnet
-sudo mkdir -p /swarm-vol/moongladepure/gbiner/db
-sudo mkdir -p /swarm-vol/moongladepure/gbiner/files
-sudo mkdir -p /swarm-vol/moongladepure/gbiner/aspnet
-sudo mkdir -p /swarm-vol/moongladepure/rdf/db
-sudo mkdir -p /swarm-vol/moongladepure/rdf/files
-sudo mkdir -p /swarm-vol/moongladepure/rdf/aspnet
-sudo mkdir -p /swarm-vol/moongladepure/lyx/db
-sudo mkdir -p /swarm-vol/moongladepure/lyx/files
-sudo mkdir -p /swarm-vol/moongladepure/lyx/aspnet
-sudo mkdir -p /swarm-vol/moongladepure/shubuzuo/db
-sudo mkdir -p /swarm-vol/moongladepure/shubuzuo/files
-sudo mkdir -p /swarm-vol/moongladepure/shubuzuo/aspnet
-sudo mkdir -p /swarm-vol/moongladepure/lily/db
-sudo mkdir -p /swarm-vol/moongladepure/lily/files
-sudo mkdir -p /swarm-vol/moongladepure/lily/aspnet
-sudo mkdir -p /swarm-vol/moongladepure/carson/db
-sudo mkdir -p /swarm-vol/moongladepure/carson/files
-sudo mkdir -p /swarm-vol/moongladepure/carson/aspnet
-sudo mkdir -p /swarm-vol/moongladepure/zoneblog/db
-sudo mkdir -p /swarm-vol/moongladepure/zoneblog/files
-sudo mkdir -p /swarm-vol/moongladepure/zoneblog/aspnet
-sudo mkdir -p /swarm-vol/filebrowser/data
-sudo mkdir -p /swarm-vol/filebrowser/database
-sudo mkdir -p /swarm-vol/jellyfin/config
-sudo mkdir -p /swarm-vol/jellyfin/cache
-sudo mkdir -p /swarm-vol/jellyfin/media
-sudo mkdir -p /swarm-vol/jellyfin/filebrowser/
-sudo mkdir -p /swarm-vol/nextcloud/db
-sudo mkdir -p /swarm-vol/nextcloud/redis
-sudo mkdir -p /swarm-vol/nextcloud/config
-sudo mkdir -p /swarm-vol/nextcloud/custom_apps
-sudo mkdir -p /swarm-vol/nextcloud/data
-sudo mkdir -p /swarm-vol/media-cms/root/media_files/
-sudo mkdir -p /swarm-vol/media-cms/postgres
-sudo mkdir -p /swarm-vol/media-cms/redis
+find . -name 'docker-compose.yml' | while read file; do
+  awk '/volumes:/ {if(/device:/) print $2}' "$file" | while read -r path; do
+    echo "sudo mkdir -p \"$path\""
+    sudo mkdir -p "$path"
+  done
+done
+
+echo "Creating empty files for volumes..."
 sudo touch /swarm-vol/koel/config
 sudo touch /swarm-vol/filebrowser/database/database.db
 sudo touch /swarm-vol/jellyfin/filebrowser/database.db
