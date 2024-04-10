@@ -1,0 +1,48 @@
+version: '3.7'
+
+services:
+  web:
+    image: hub.aiursoft.cn/jvmilazz0/kavita
+    volumes:
+      - manga-data:/manga
+      - comics-data:/comics
+      - books-data:/books
+      - config-data:/kavita/config
+    networks:
+      - proxy_app
+    environment:
+      - TZ=UTC
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+networks:
+  proxy_app:
+    external: true
+
+volumes:
+  manga-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/kavita/manga
+  comics-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/kavita/comics
+  books-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/kavita/books
+  config-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/kavita/config
+
