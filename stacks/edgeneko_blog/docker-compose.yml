@@ -11,7 +11,7 @@ services:
         swarmpit.service.deployment.autoredeploy: 'true'
 
   comments:
-    image: artalk/artalk-go
+    image: hub.aiursoft.cn/artalk/artalk-go
     networks:
       - proxy_app
       - internal
