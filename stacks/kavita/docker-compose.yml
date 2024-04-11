@@ -6,7 +6,7 @@ services:
     volumes:
       - manga-data:/manga
       - comics-data:/comics
-      - books-data:/books
+      - books-data:/mnt/data
       - config-data:/kavita/config
     networks:
       - proxy_app
