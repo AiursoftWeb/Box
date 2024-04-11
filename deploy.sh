@@ -118,7 +118,7 @@ sudo touch /swarm-vol/filebrowser/database/database.db
 sudo cp ./assets/database.db /swarm-vol/jellyfin/filebrowser/database.db
 
 echo "Starting registry..."
-deploy stacks/registry/docker-compose.yml       registry # 8080
+deploy stacks/registry/docker-compose.yml registry # 8080
 
 echo "Make sure the registry is ready..."
 sleep 5 # Could not trust result in the first few seconds, because the old registry might still be running
@@ -139,17 +139,23 @@ sudo docker push localhost:8080/box_starting/local_frp:latest
 sudo docker build ./images/sites    -t localhost:8080/box_starting/local_sites:latest
 sudo docker push localhost:8080/box_starting/local_sites:latest
 
+echo "Starting incoming proxy..."
+deploy stacks/incoming/docker-compose.yml incoming # 8080
+
 echo "Make sure the registry is ready..."
 sleep 5 # Could not trust result in the first few seconds, because the old registry might still be running
 while curl -s https://hub.aiursoft.cn > /dev/null; [ $? -ne 0 ]; do
-    echo "Waiting for registry(https://hub.aiursoft.cn) to start..."
+    echo "Waiting for registry (https://hub.aiursoft.cn) to start... ETA: 25s"
     sleep 1
 done
 
 echo "Deploying business stacks..."
 find ./stacks -name 'docker-compose.yml' -print0 | while IFS= read -r -d '' file; do
-    # Skip the registry
+    # Skip the registry and incoming stacks
     if [[ $file == *"registry"* ]]; then
+        continue
+    fi
+    if [[ $file == *"incoming"* ]]; then
         continue
     fi
     
