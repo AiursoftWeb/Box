@@ -112,10 +112,10 @@ find . -name 'docker-compose.yml' | while read file; do
   done
 done
 
-echo "Creating empty files for volumes..."
+echo "Creating files for volumes..."
 sudo touch /swarm-vol/koel/config
 sudo touch /swarm-vol/filebrowser/database/database.db
-sudo touch /swarm-vol/jellyfin/filebrowser/database.db
+sudo cp ./assets/database.db /swarm-vol/jellyfin/filebrowser/database.db
 
 echo "Starting registry..."
 deploy stacks/registry/docker-compose.yml       registry # 8080
