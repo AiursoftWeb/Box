@@ -1,8 +1,16 @@
 version: '3.3'
 
 services:
-  app:
+  gameoflife:
     image: hub.aiursoft.cn/anduin/gameoflife
+    networks:
+      - proxy_app
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+  game2048:
+    image: hub.aiursoft.cn/anduin/2048
     networks:
       - proxy_app
     deploy:
