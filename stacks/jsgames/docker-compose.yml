@@ -17,6 +17,14 @@ services:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
+  hextris:
+    image: hub.aiursoft.cn/anduin/hextris
+    networks:
+      - proxy_app
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
 networks:
   proxy_app:
     external: true
