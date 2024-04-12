@@ -81,7 +81,7 @@ services:
         swarmpit.service.deployment.autoredeploy: 'true'
 
   db:
-    image: postgres:15.2-alpine
+    image: hub.aiursoft.cn/postgres:15.2-alpine
     networks:
       - internal
     volumes:
