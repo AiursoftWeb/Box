@@ -25,6 +25,14 @@ services:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
+  cat:
+    image: hub.aiursoft.cn/anduin/phaser-catch-the-cat
+    networks:
+      - proxy_app
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
 networks:
   proxy_app:
     external: true
