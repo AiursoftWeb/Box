@@ -1,0 +1,15 @@
+version: '3.3'
+
+services:
+  web:
+    image: hub.aiursoft.cn/thedaviddelta/lingva-translate:latest
+    environment:
+      - site_domain=translate.aiursoft.cn
+      - default_source_lang=auto
+      - default_target_lang=zh
+    networks:
+      - proxy_app
+
+networks:
+  proxy_app:
+    external: true
