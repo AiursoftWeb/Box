@@ -24,6 +24,8 @@ services:
       - NEXTCLOUD_TRUSTED_DOMAINS=nextcloud.aiursoft.cn
       - PHP_MEMORY_LIMIT=1G
       - PHP_UPLOAD_LIMIT=1G
+      - PHP_OPCACHE_ENABLE=1
+      - PHP_OPCACHE_MEMORY_CONSUMPTION=1024
     deploy:
       resources:
         limits:
