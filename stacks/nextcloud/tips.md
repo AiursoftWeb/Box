@@ -25,7 +25,11 @@ sudo docker exec -i DB_CONTAINER_ID sh -c 'exec mysql   -u root -p"root_dbpasswo
 
 ## Test OCC
 
-sudo docker exec --user www-data WEB_CONTAINER_ID php occ
+sudo docker exec --user www-data $WEB_CONTAINER_ID php occ
+
+## Upgrade
+
+sudo docker exec --user www-data $WEB_CONTAINER_ID php occ upgrade
 
 ## Deploy
 
@@ -38,16 +42,16 @@ deploy ./box/stacks/nextcloud/docker-compose.yml nextcloud
 ## MM
 
 ```bash
-sudo -u www-data php -f /var/www/html/nextcloud/occ maintenance:update:htaccess
-sudo -u www-data php -f /var/www/html/nextcloud/occ db:add-missing-indices
-sudo -u www-data php -f /var/www/html/nextcloud/occ files:scan --all
-sudo -u www-data php -f /var/www/html/nextcloud/occ files:scan-app-data
-sudo -u www-data php -f /var/www/html/nextcloud/occ files:repair-tree
-sudo -u www-data php -f /var/www/html/nextcloud/occ app:update --all
-sudo -u www-data php -f /var/www/html/nextcloud/occ update:check
-sudo -u www-data php -f /var/www/html/nextcloud/occ upgrade
-sudo -u www-data php -f /var/www/html/nextcloud/occ db:convert-filecache-bigint -n
-sudo -u www-data php -f /var/www/html/nextcloud/occ maintenance:mode --off
-sudo -u www-data php -f /var/www/html/nextcloud/occ versions:expire
-sudo -u www-data php -f /var/www/html/nextcloud/occ trashbin:expire
+sudo docker exec --user www-data $WEB_CONTAINER_ID php occ maintenance:update:htaccess
+sudo docker exec --user www-data $WEB_CONTAINER_ID php occ db:add-missing-indices
+sudo docker exec --user www-data $WEB_CONTAINER_ID php occ files:scan --all
+sudo docker exec --user www-data $WEB_CONTAINER_ID php occ files:scan-app-data
+sudo docker exec --user www-data $WEB_CONTAINER_ID php occ files:repair-tree
+sudo docker exec --user www-data $WEB_CONTAINER_ID php occ app:update --all
+sudo docker exec --user www-data $WEB_CONTAINER_ID php occ update:check
+sudo docker exec --user www-data $WEB_CONTAINER_ID php occ upgrade
+sudo docker exec --user www-data $WEB_CONTAINER_ID php occ db:convert-filecache-bigint -n
+sudo docker exec --user www-data $WEB_CONTAINER_ID php occ maintenance:mode --off
+sudo docker exec --user www-data $WEB_CONTAINER_ID php occ versions:expire
+sudo docker exec --user www-data $WEB_CONTAINER_ID php occ trashbin:expire
 ```
