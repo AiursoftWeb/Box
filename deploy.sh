@@ -114,7 +114,6 @@ done
 
 echo "Creating files for volumes..."
 sudo touch /swarm-vol/koel/config
-sudo touch /swarm-vol/filebrowser/database/database.db
 sudo cp ./assets/database.db /swarm-vol/jellyfin/filebrowser/database.db
 
 echo "Starting registry..."
