@@ -21,11 +21,11 @@ services:
       - qdrant-database
     environment:
       - APP_ACCESS_PROTECTED=True
-      - APP_QDRANT__COLL="NekoImg-v4"
-      - APP_QDRANT__HOST="qdrant_database"
+      - APP_QDRANT__COLL=NekoImg-v4
+      - APP_QDRANT__HOST=qdrant_database
       - APP_OCR_SEARCH__OCR_MIN_CONFIDENCE=0.05
       - APP_ADMIN_API_ENABLE=True
-      - APP_DEVICE="cpu"
+      - APP_DEVICE=cpu
     secrets:
       - source: neko-image-gallery-access-token
         target: APP_ACCESS_TOKEN
