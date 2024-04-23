@@ -19,9 +19,11 @@ services:
       - proxy_app
     volumes:
       - sites-data:/data
-    deploy:
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
+
+    # Do NOT auto redeploy this. Because this is built locally.
+    # deploy:
+    #   labels:
+    #     swarmpit.service.deployment.autoredeploy: 'true'
 
   frpc:
     image: localhost:8080/box_starting/local_frp
