@@ -63,3 +63,9 @@ networks:
     external: true
   internal:
     driver: overlay
+
+secrets:
+  neko-image-gallery-access-token:
+    external: true
+  neko-image-gallery-admin-token:
+    external: true
