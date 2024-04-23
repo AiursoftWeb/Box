@@ -42,7 +42,7 @@ services:
         swarmpit.service.deployment.autoredeploy: 'true'
 
   life:
-    image: hub.aiursoft.cn/anduin/liferestart:latest
+    image: hub.aiursoft.cn/anduin/liferestart
     networks:
       - proxy_app
     deploy:

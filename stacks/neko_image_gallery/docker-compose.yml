@@ -37,7 +37,7 @@ services:
     command: ["--root-path", "/api"]
 
   qdrant_database:
-    image: hub.aiursoft.cn/qdrant/qdrant:latest
+    image: hub.aiursoft.cn/qdrant/qdrant
     networks:
       - internal
       - proxy_app

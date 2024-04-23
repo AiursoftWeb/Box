@@ -2,7 +2,7 @@ version: '3.3'
 
 services:
   web:
-    image: hub.aiursoft.cn/thedaviddelta/lingva-translate:latest
+    image: hub.aiursoft.cn/thedaviddelta/lingva-translate
     environment:
       - site_domain=translate.aiursoft.cn
       - default_source_lang=auto
