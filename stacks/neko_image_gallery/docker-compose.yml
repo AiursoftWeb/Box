@@ -28,9 +28,9 @@ services:
       - APP_DEVICE=cpu
     secrets:
       - source: neko-image-gallery-access-token
-        target: access_token
+        target: app_access_token
       - source: neko-image-gallery-admin-token
-        target: admin_token
+        target: app_admin_token
     deploy:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
