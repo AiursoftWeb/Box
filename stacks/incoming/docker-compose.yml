@@ -5,6 +5,7 @@ services:
   sites:
     image: localhost:8080/box_starting/local_sites
     ports:
+      # These ports are for internal use. For external, FRP will handle it.
       - target: 80
         published: 80
         protocol: tcp
@@ -18,15 +19,12 @@ services:
       - proxy_app
     volumes:
       - sites-data:/data
-      - /etc/hosts:/etc/hosts # TODO: This is a temporary solution to resolve the hostname. After migrating all to docker, this will be removed.
     deploy:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
   frpc:
     image: localhost:8080/box_starting/local_frp
-    volumes:
-      - /etc/hosts:/etc/hosts # TODO: This is a temporary solution to resolve the hostname. After migrating all to docker, this will be removed.
     networks:
       - frp_net
     secrets:

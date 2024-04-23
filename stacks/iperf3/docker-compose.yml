@@ -4,7 +4,7 @@ services:
   app:
     image: hub.aiursoft.cn/aiursoft/internalimages/iperf3:latest
     ports:
-      # These ports are for internal use.
+      # These ports are for internal use. For external, FRP will handle it.
       - target: 5201
         published: 5201
         protocol: tcp

@@ -4,6 +4,7 @@ services:
   gitlab:
     image: hub.aiursoft.cn/gitlab/gitlab-ee
     ports:
+      # These ports are for internal use. For external, FRP will handle it.
       - target: 2202
         published: 2202
         protocol: tcp
