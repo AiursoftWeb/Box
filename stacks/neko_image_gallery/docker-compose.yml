@@ -10,7 +10,7 @@ services:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
-  neko-image-gallery:
+  server:
     image: hub.aiursoft.cn/edgeneko/neko-image-gallery:latest-cpu
     networks:
       - proxy_app
@@ -22,6 +22,7 @@ services:
     environment:
       - APP_ACCESS_PROTECTED=True
       - APP_QDRANT__COLL="NekoImg-v4"
+      - APP_QDRANT__HOST="qdrant_database"
       - APP_OCR_SEARCH__OCR_MIN_CONFIDENCE=0.05
       - APP_ADMIN_API_ENABLE=True
       - APP_DEVICE="cpu"
@@ -35,13 +36,11 @@ services:
         swarmpit.service.deployment.autoredeploy: 'true'
     command: ["--root-path", "/api"]
 
-  qdrant-database:
+  qdrant_database:
     image: hub.aiursoft.cn/qdrant/qdrant:latest
     networks:
       - internal
-    ports:
-      - "127.0.0.1:6333:6333"
-      - "127.0.0.1:6334:6334"
+      - proxy_app
     volumes:
       - neko-image-gallery-vector-db:/qdrant/storage:z
 
