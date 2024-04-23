@@ -19,11 +19,9 @@ services:
       - proxy_app
     volumes:
       - sites-data:/data
-
     # Do NOT auto redeploy this. Because this is built locally.
-    # deploy:
-    #   labels:
-    #     swarmpit.service.deployment.autoredeploy: 'true'
+    # Evertime we run the deploy.sh will update the image.
+    # During incidents, we may need to manually ssh into the server and restart the service.
 
   frpc:
     image: localhost:8080/box_starting/local_frp
@@ -32,9 +30,9 @@ services:
     secrets:
       - source: frp-token
         target: frp-token
-    deploy:
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
+    # Do NOT auto redeploy this. Because this is built locally.
+    # Evertime we run the deploy.sh will update the image.
+    # During incidents, we may need to manually ssh into the server and restart the service.
 
 volumes:
   sites-data:
