@@ -99,6 +99,8 @@ create_secret openai-instance
 create_secret bing-search-key
 create_secret nuget-publish-key
 create_secret gitlab-runner-token
+create_secret neko-image-gallery-access-token
+create_secret neko-image-gallery-admin-token
 
 echo "Creating networks..."
 create_network proxy_app 10.234.0.0/16

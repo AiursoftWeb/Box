@@ -1,0 +1,66 @@
+version: '3.3'
+
+services:
+  webapp:
+    image: hub.aiursoft.cn/edgeneko/nekoimagegallery.app
+    networks:
+      - proxy_app
+    deploy:
+      replicas: 2
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+  neko-image-gallery:
+    image: hub.aiursoft.cn/edgeneko/neko-image-gallery:latest-cpu
+    networks:
+      - proxy_app
+      - internal
+    volumes:
+      - neko-image-gallery-local:/opt/NekoImageGallery/static
+    depends_on:
+      - qdrant-database
+    environment:
+      - APP_ACCESS_PROTECTED=True
+      - APP_QDRANT__COLL="NekoImg-v4"
+      - APP_OCR_SEARCH__OCR_MIN_CONFIDENCE=0.05
+      - APP_ADMIN_API_ENABLE=True
+      - APP_DEVICE="cpu"
+    secrets:
+      - source: neko-image-gallery-access-token
+        target: APP_ACCESS_TOKEN
+      - source: neko-image-gallery-admin-token
+        target: APP_ADMIN_TOKEN
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+    command: ["--root-path", "/api"]
+
+  qdrant-database:
+    image: hub.aiursoft.cn/qdrant/qdrant:latest
+    networks:
+      - internal
+    ports:
+      - "127.0.0.1:6333:6333"
+      - "127.0.0.1:6334:6334"
+    volumes:
+      - neko-image-gallery-vector-db:/qdrant/storage:z
+
+volumes:
+  neko-image-gallery-vector-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/neko-image-gallery/vector_db
+  neko-image-gallery-local:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/neko-image-gallery/local_images/
+
+networks:
+  proxy_app:
+    external: true
+  internal:
+    driver: overlay
