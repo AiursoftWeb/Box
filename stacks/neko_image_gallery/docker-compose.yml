@@ -26,6 +26,7 @@ services:
       - APP_OCR_SEARCH__OCR_MIN_CONFIDENCE=0.05
       - APP_ADMIN_API_ENABLE=True
       - APP_DEVICE=cpu
+      - APP_STORAGE__METHOD=local
     secrets:
       - source: neko-image-gallery-access-token
         target: app_access_token
