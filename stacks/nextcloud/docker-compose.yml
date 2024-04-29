@@ -26,23 +26,23 @@ services:
       - PHP_UPLOAD_LIMIT=1G
       - PHP_OPCACHE_ENABLE=1
       - PHP_OPCACHE_MEMORY_CONSUMPTION=1024
-    # command: ["/bin/bash", "-c", "
-    #   apt update; 
-    #   apt install sudo; 
-    #   sudo -u www-data /bin/bash -c '
-    #     cd /var/www/html/;
-    #     ls;
-    #     php occ upgrade;
-    #     php occ db:add-missing-indices;
-    #     php occ db:convert-filecache-bigint;
-    #     php occ maintenance:mode --off;
+    entrypoint: ["/bin/bash", "-c", "
+      apt update; 
+      apt install sudo; 
+      sudo -u www-data /bin/bash -c '
+        cd /var/www/html/;
+        ls;
+        php occ upgrade;
+        php occ db:add-missing-indices;
+        php occ db:convert-filecache-bigint;
+        php occ maintenance:mode --off;
 
-    #     # Setup cron
-    #     echo '*/5 * * * * /usr/local/bin/php -f /var/www/html/cron.php' > /var/spool/cron/crontabs/www-data;
-    #     crond -b -l 8;
+        # Setup cron
+        echo '*/5 * * * * /usr/local/bin/php -f /var/www/html/cron.php' > /var/spool/cron/crontabs/www-data;
+        crond -b -l 8;
 
-    #     /entrypoint.sh
-    #   '"]
+        /entrypoint.sh
+      '"]
     deploy:
       resources:
         limits:
