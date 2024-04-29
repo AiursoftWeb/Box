@@ -67,6 +67,7 @@ services:
         published: 2049
         protocol: tcp
         mode: host
+    privileged: true
 
 networks:
   proxy_app:
