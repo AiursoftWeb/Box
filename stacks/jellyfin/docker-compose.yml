@@ -68,6 +68,8 @@ services:
         protocol: tcp
         mode: host
     privileged: true
+    cap_add:
+      - SYS_ADMIN
 
 networks:
   proxy_app:
