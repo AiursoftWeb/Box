@@ -26,44 +26,29 @@ services:
       - PHP_UPLOAD_LIMIT=1G
       - PHP_OPCACHE_ENABLE=1
       - PHP_OPCACHE_MEMORY_CONSUMPTION=1024
+    command: ["/bin/bash", "-c", "
+      apt update; 
+      apt install sudo; 
+      sudo -u www-data /bin/bash -c '
+        cd /var/www/html/;
+        ls;
+        php occ upgrade;
+        php occ db:add-missing-indices;
+        php occ db:convert-filecache-bigint;
+        php occ maintenance:mode --off;
+
+        # Setup cron
+        echo '*/5 * * * * /usr/local/bin/php -f /var/www/html/cron.php' > /var/spool/cron/crontabs/www-data;
+        crond -b -l 8;
+
+        /entrypoint.sh
+      '"]
     deploy:
       resources:
         limits:
           memory: 16384M
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
-    
-  migrate:
-    image: hub.aiursoft.cn/nextcloud:stable
-    networks: 
-      - internal
-      - proxy_app
-    depends_on:
-      - nextclouddb
-      - redis
-    volumes:
-      - nextcloud-config:/var/www/html/config
-      - nextcloud-custom-apps:/var/www/html/custom_apps
-      - nextcloud-data:/mnt/data
-    environment:
-      - TZ=UTC
-      - MYSQL_DATABASE=nextcloud
-      - MYSQL_USER=nextcloud
-      - MYSQL_PASSWORD=dbpassword
-      - MYSQL_HOST=nextclouddb
-      - REDIS_HOST=redis
-      - NEXTCLOUD_DATA_DIR=/mnt/data
-      - NEXTCLOUD_TRUSTED_DOMAINS=nextcloud.aiursoft.cn
-      - PHP_MEMORY_LIMIT=1G
-      - PHP_UPLOAD_LIMIT=1G
-      - PHP_OPCACHE_ENABLE=1
-      - PHP_OPCACHE_MEMORY_CONSUMPTION=1024
-    command: ["/bin/bash", "-c", "apt update; apt install sudo; sudo -u www-data /bin/bash -c 'cd /var/www/html/; pwd && ls && /usr/local/bin/php ./occ upgrade;'"]
-    deploy:
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
-      restart_policy:
-        condition: none
 
   cron:
     image: hub.aiursoft.cn/alpine
