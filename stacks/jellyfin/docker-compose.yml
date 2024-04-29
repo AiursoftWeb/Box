@@ -52,6 +52,22 @@ services:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
+  nfs:
+    image: erichough/nfs-server
+    volumes:
+      - media-data:/data
+    environment:
+      - NFS_EXPORT_0='/data'
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+    ports:
+      # These ports are for internal use. External request is not allowed.
+      - target: 2049
+        published: 2049
+        protocol: tcp
+        mode: host
+
 networks:
   proxy_app:
     external: true
