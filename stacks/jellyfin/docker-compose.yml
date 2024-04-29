@@ -52,24 +52,45 @@ services:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
-  nfs:
-    image: erichough/nfs-server
+#sudo docker run -it --name samba -p 139:139 -p 445:445 \
+#            -v /path/to/directory:/mount \
+#            -d dperson/samba -p
+  smb:
+    image: dperson/samba
     volumes:
-      - media-data:/data
-    environment:
-      - NFS_EXPORT_0='/data *(ro,no_subtree_check)'
+      - media-data:/mount
     deploy:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
     ports:
       # These ports are for internal use. External request is not allowed.
-      - target: 2049
-        published: 2049
+      - target: 139
+        published: 139
         protocol: tcp
         mode: host
-    privileged: true
-    cap_add:
-      - SYS_ADMIN
+      - target: 445
+        published: 445
+        protocol: tcp
+        mode: host
+
+  # nfs:
+  #   image: erichough/nfs-server
+  #   volumes:
+  #     - media-data:/data
+  #   environment:
+  #     - NFS_EXPORT_0='/data *(ro,no_subtree_check)'
+  #   deploy:
+  #     labels:
+  #       swarmpit.service.deployment.autoredeploy: 'true'
+  #   ports:
+  #     # These ports are for internal use. External request is not allowed.
+  #     - target: 2049
+  #       published: 2049
+  #       protocol: tcp
+  #       mode: host
+  #   privileged: true
+  #   cap_add:
+  #     - SYS_ADMIN
 
 networks:
   proxy_app:
