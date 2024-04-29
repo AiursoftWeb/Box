@@ -58,7 +58,7 @@ services:
       - PHP_UPLOAD_LIMIT=1G
       - PHP_OPCACHE_ENABLE=1
       - PHP_OPCACHE_MEMORY_CONSUMPTION=1024
-    command: bash -c "exec su -s /bin/sh www-data -c 'php /var/www/html/occ upgrade' && echo 'Upgrade done' && sleep infinity"
+    command: ["/bin/sh", "-c", "apt update; apt install sudo; sudo -u www-data php occ upgrade;"]
     deploy:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
