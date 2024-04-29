@@ -57,7 +57,7 @@ services:
     volumes:
       - media-data:/data
     environment:
-      - NFS_EXPORT_0='/data'
+      - NFS_EXPORT_0='/data *(ro,no_subtree_check)'
     deploy:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
