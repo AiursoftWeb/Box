@@ -52,9 +52,6 @@ services:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
-#sudo docker run -it --name samba -p 139:139 -p 445:445 \
-#            -v /path/to/directory:/mount \
-#            -d dperson/samba -p
   smb:
     image: dperson/samba
     volumes:
@@ -73,25 +70,8 @@ services:
         protocol: tcp
         mode: host
     command: "-p -n -s 'public;/mount'"
-
-  # nfs:
-  #   image: erichough/nfs-server
-  #   volumes:
-  #     - media-data:/data
-  #   environment:
-  #     - NFS_EXPORT_0='/data *(ro,no_subtree_check)'
-  #   deploy:
-  #     labels:
-  #       swarmpit.service.deployment.autoredeploy: 'true'
-  #   ports:
-  #     # These ports are for internal use. External request is not allowed.
-  #     - target: 2049
-  #       published: 2049
-  #       protocol: tcp
-  #       mode: host
-  #   privileged: true
-  #   cap_add:
-  #     - SYS_ADMIN
+    # To mount the share, use the following command:
+    # sudo mkdir -p /mnt/jellyfin && sudo mount -t cifs -o username=u,password=p //ms/public /mnt/jellyfin/
 
 networks:
   proxy_app:
