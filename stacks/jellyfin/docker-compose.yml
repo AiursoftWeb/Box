@@ -72,6 +72,7 @@ services:
         published: 445
         protocol: tcp
         mode: host
+    command: "-p -n -s 'public;/mount'"
 
   # nfs:
   #   image: erichough/nfs-server
