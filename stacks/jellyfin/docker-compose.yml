@@ -53,7 +53,7 @@ services:
         swarmpit.service.deployment.autoredeploy: 'true'
 
   smb:
-    image: dperson/samba
+    image: hub.aiursoft.cn/dperson/samba
     volumes:
       - media-data:/mount
     deploy:
