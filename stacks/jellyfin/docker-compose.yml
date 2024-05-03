@@ -74,6 +74,22 @@ services:
     command: "-p -n -s 'public;/mount'"
     # To mount the share, use the following command:
     # sudo mkdir -p /mnt/jellyfin && sudo mount -t cifs -o username=u,password=p //ms/public /mnt/jellyfin/
+  wsdd:
+    image: "jonasped/wsdd"
+    environment:
+      - HOSTNAME=ms
+    ports:
+      - target: 3702
+        published: 3702
+        protocol: udp
+        mode: host
+      - target: 5357
+        published: 5357
+        protocol: udp
+        mode: host
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
 
 networks:
   proxy_app:
