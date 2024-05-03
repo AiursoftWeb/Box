@@ -83,9 +83,17 @@ services:
         published: 3702
         protocol: udp
         mode: host
+      - target: 3702
+        published: 3702
+        protocol: tcp
+        mode: host
       - target: 5357
         published: 5357
         protocol: udp
+        mode: host
+      - target: 5357
+        published: 5357
+        protocol: tcp
         mode: host
     deploy:
       labels:
