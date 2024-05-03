@@ -59,6 +59,8 @@ services:
     deploy:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
+    environment:
+      - WORKGROUP=WORKGROUP
     ports:
       # These ports are for internal use. External request is not allowed.
       - target: 139
