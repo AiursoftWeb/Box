@@ -1,0 +1,23 @@
+version: '3.3'
+
+services:
+  prbot:
+    image: hub.aiursoft.cn/aiursoft/nugetninja
+    volumes:
+      - ninja-data:/config
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+volumes:
+  ninja-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/ninja-data
+
