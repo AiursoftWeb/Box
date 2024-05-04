@@ -4,7 +4,8 @@ services:
   prbot:
     image: hub.aiursoft.cn/aiursoft/nugetninja
     volumes:
-      - ninja-data:/config
+      - ninja-config:/config
+      - ninja-cache:/root/.local/share/NugetNinjaWorkspace/
     deploy:
       resources:
         limits:
@@ -14,10 +15,16 @@ services:
         swarmpit.service.deployment.autoredeploy: 'true'
 
 volumes:
-  ninja-data:
+  ninja-config:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /swarm-vol/ninja-data
+      device: /swarm-vol/ninja-data/config
+  ninja-cache:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/ninja-data/cache
 
