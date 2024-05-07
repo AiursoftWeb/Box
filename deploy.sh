@@ -40,6 +40,7 @@ function better_performance() {
     sudo sysctl -w fs.inotify.max_user_instances=524288
     sudo sysctl -w fs.inotify.max_user_watches=524288
     sudo sysctl -w fs.inotify.max_queued_events=524288
+    sudo sysctl -w fs.aio-max-nr=524288
     sudo sysctl -p
 
     # Disable swap
