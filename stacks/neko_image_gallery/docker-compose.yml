@@ -12,8 +12,8 @@ services:
         swarmpit.service.deployment.autoredeploy: 'true'
 
   server:
-    #image: hub.aiursoft.cn/edgeneko/neko-image-gallery:latest-cpu
-    image: edgeneko/neko-image-gallery:latest-cpu # Avoid using mirror because this app updates very frequently
+    image: hub.aiursoft.cn/edgeneko/neko-image-gallery:latest-cpu
+    #image: edgeneko/neko-image-gallery:latest-cpu # Avoid using mirror because this app updates very frequently
     networks:
       - proxy_app
       - internal
