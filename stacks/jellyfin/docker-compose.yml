@@ -71,6 +71,9 @@ services:
         swarmpit.service.deployment.autoredeploy: 'true'
     environment:
       - WORKGROUP=WORKGROUP
+      # User name should be 'USER' and password should be 'PASSWORD'
+      - USER=USER
+      - PASSWORD=PASSWORD
     ports:
       # These ports are for internal use. External request is not allowed.
       - target: 139
