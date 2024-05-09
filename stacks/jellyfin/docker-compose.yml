@@ -71,9 +71,6 @@ services:
         swarmpit.service.deployment.autoredeploy: 'true'
     environment:
       - WORKGROUP=WORKGROUP
-      # User name should be 'USER' and password should be 'PASSWORD'
-      - USER=USER
-      - PASSWORD=PASSWORD
     ports:
       # These ports are for internal use. External request is not allowed.
       - target: 139
@@ -84,7 +81,8 @@ services:
         published: 445
         protocol: tcp
         mode: host
-    command: "-p -n -s 'public;/mount'"
+    # User name should be 'USER' and password should be 'PASSWORD'
+    command: "-p -n -s 'public;/mount' -u 'USER;PASSWORD'"
     # To mount the share, use the following command:
     # sudo mkdir -p /mnt/jellyfin && sudo mount -t cifs -o username=u,password=p //ms/public /mnt/jellyfin/
 
