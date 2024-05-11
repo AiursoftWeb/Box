@@ -165,4 +165,6 @@ find ./stacks -name 'docker-compose.yml' -print0 | while IFS= read -r -d '' file
     fi
     
     deploy "$file" "$(basename "$(dirname "$file")")"
+
+    sleep 10
 done
