@@ -82,8 +82,20 @@ services:
         protocol: tcp
         mode: host
     # User name should be 'USER' and password should be 'PASSWORD'. The user can write to the share.
-    #command: "-p -n -s 'public;/mount' -u 'USER;PASSWORD' -w 'WORKGROUP' -S"
-    command: "-p -n -s 'public;/mount' -u 'USER;PASSWORD' -w 'WORKGROUP' -S"
+    #  -s "<name;/path>[;browse;readonly;guest;users;admins;writelist;comment]"
+                # Configure a share
+                # required arg: "<name>;</path>"
+                # <name> is how it's called for clients
+                # <path> path to share
+                # NOTE: for the default values, just leave blank
+                # [browsable] default:'yes' or 'no'
+                # [readonly] default:'yes' or 'no'
+                # [guest] allowed default:'yes' or 'no'
+                # [users] allowed default:'all' or list of allowed users
+                # [admins] allowed default:'none' or list of admin users
+                # [writelist] list of users that can write to a RO share
+                # [comment] description of share
+    command: "-p -n -u 'USER;PASSWORD' -w 'WORKGROUP' -S -s 'media;/mount;yes;no;no;all;none;none;Media Share'"
 
 networks:
   proxy_app:
