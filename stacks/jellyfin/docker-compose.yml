@@ -81,20 +81,7 @@ services:
         published: 445
         protocol: tcp
         mode: host
-    # User name should be 'USER' and password should be 'PASSWORD'. The user can write to the share.
-    #  -s "<name;/path>[;browse;readonly;guest;users;admins;writelist;comment]"
-                # Configure a share
-                # required arg: "<name>;</path>"
-                # <name> is how it's called for clients
-                # <path> path to share
-                # NOTE: for the default values, just leave blank
-                # [browsable] default:'yes' or 'no'
-                # [readonly] default:'yes' or 'no'
-                # [guest] allowed default:'yes' or 'no'
-                # [users] allowed default:'all' or list of allowed users
-                # [admins] allowed default:'none' or list of admin users
-                # [writelist] list of users that can write to a RO share
-                # [comment] description of share
+    # -s <name;/path>;browsable(yes);readonly(yes);guestok(yes);users(all);admins(none);writelist(none);comment(string)
     command: "-p -n -u 'USER;PASSWORD' -w 'WORKGROUP' -S -s 'media;/mount;yes;no;no;all;none;none;Media Share'"
 
 networks:
