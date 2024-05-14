@@ -83,6 +83,11 @@ services:
         mode: host
     # -s <name;/path>;browsable(yes);readonly(yes);guestok(yes);users(all);admins(none);writelist(none);comment(string)
     command: "-p -n -u 'USER;PASSWORD' -w 'WORKGROUP' -S -s 'media;/mount;yes;no;no;all;none;none;Media Share'"
+    healthcheck:
+      test: ["CMD", "smbclient", "-L", "//localhost", "-U", "USER%PASSWORD"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
 networks:
   proxy_app:
