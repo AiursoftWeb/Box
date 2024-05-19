@@ -3,6 +3,7 @@
 ## Before
 
 sudo docker ps | grep nextcloud
+WEB_CONTAINER_ID=$(sudo docker ps | grep nextcloud_web | awk '{print $1}')
 
 ## Sync data
 
@@ -52,6 +53,7 @@ sudo docker exec --user www-data $WEB_CONTAINER_ID php occ update:check
 sudo docker exec --user www-data $WEB_CONTAINER_ID php occ upgrade
 sudo docker exec --user www-data $WEB_CONTAINER_ID php occ db:convert-filecache-bigint -n
 sudo docker exec --user www-data $WEB_CONTAINER_ID php occ maintenance:mode --off
-sudo docker exec --user www-data $WEB_CONTAINER_ID php occ versions:expire
+sudo docker exec --user www-data $WEB_CONTAINER_ID php occ versions:cleanup
 sudo docker exec --user www-data $WEB_CONTAINER_ID php occ trashbin:expire
+sudo docker exec --user www-data $WEB_CONTAINER_ID php occ trashbin:clean --all-users
 ```
