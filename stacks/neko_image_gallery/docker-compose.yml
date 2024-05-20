@@ -20,7 +20,7 @@ services:
     volumes:
       - neko-image-gallery-local:/opt/NekoImageGallery/static
     depends_on:
-      - qdrant-database
+      - qdrant_database
     environment:
       - APP_ACCESS_PROTECTED=True
       - APP_QDRANT__COLL=NekoImg-v4
