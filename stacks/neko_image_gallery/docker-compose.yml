@@ -33,6 +33,7 @@ services:
         target: app_access_token
       - source: neko-image-gallery-admin-token
         target: app_admin_token
+    runtime: nvidia
     deploy:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
@@ -43,8 +44,6 @@ services:
               count: all
               capabilities: [gpu]
     command: ["--root-path", "/api"]
-    depends_on:
-      - qdrant_database
 
   qdrant_database:
     image: hub.aiursoft.cn/qdrant/qdrant
