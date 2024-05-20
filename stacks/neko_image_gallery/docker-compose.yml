@@ -12,7 +12,7 @@ services:
         swarmpit.service.deployment.autoredeploy: 'true'
 
   server:
-    image: hub.aiursoft.cn/edgeneko/neko-image-gallery:latest-cpu
+    image: hub.aiursoft.cn/edgeneko/neko-image-gallery:edge-cuda11.8
     #image: edgeneko/neko-image-gallery:latest-cpu # Avoid using mirror because this app updates very frequently
     networks:
       - proxy_app
@@ -27,7 +27,6 @@ services:
       - APP_QDRANT__HOST=qdrant_database
       - APP_OCR_SEARCH__OCR_MIN_CONFIDENCE=0.05
       - APP_ADMIN_API_ENABLE=True
-      - APP_DEVICE=cpu
       - APP_STORAGE__METHOD=local
     secrets:
       - source: neko-image-gallery-access-token
@@ -37,7 +36,15 @@ services:
     deploy:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
     command: ["--root-path", "/api"]
+    depends_on:
+      - qdrant_database
 
   qdrant_database:
     image: hub.aiursoft.cn/qdrant/qdrant
