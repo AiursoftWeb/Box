@@ -2,7 +2,7 @@ version: '3.3'
 
 services:
   app:
-    image: hub.aiursoft.cn/anduin/howtocook
+    image: hub.aiursoft.cn/anduin2019/howtocook
     networks:
       - proxy_app
     deploy:
