@@ -172,3 +172,4 @@ That's it! You can now access the system on port 888, from any node!
 * Every day at 4:00 AM, the system will build the new images in GitLab CI.
 * Every day at 5:00 AM, the system will pull the latest apt mirrors.
 * Every day at 6:00 AM, the system will download new youtube videos.
+* Every day at 7:00 AM, the system will mirror git operations.
