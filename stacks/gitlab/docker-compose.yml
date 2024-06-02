@@ -70,6 +70,23 @@ services:
       replicas: 6
       # Disable auto-redeploy, because runner may stop when CI is running.
 
+  mirror:
+    depends_on:
+      - gitlab
+    image: hub.aiursoft.cn/aiursoft/internalimages/gitmirror
+    volumes:
+      - gitlab-gitmirror:/opt/Source/Repos/
+    secrets:
+      - github-token
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8G
+      replicas: 1
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
 volumes:
   gitlab-data:
     driver: local
@@ -89,6 +106,12 @@ volumes:
       type: none
       o: bind
       device: /swarm-vol/gitlab/config
+  gitlab-gitmirror:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/gitlab/gitmirror
 
 networks:
   frp_net:
@@ -100,4 +123,6 @@ networks:
 
 secrets:
   gitlab-runner-token:
+    external: true
+  github-token:
     external: true

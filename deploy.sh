@@ -103,6 +103,7 @@ create_secret openai-instance
 create_secret bing-search-key
 create_secret nuget-publish-key
 create_secret gitlab-runner-token
+create_secret github-token
 create_secret neko-image-gallery-access-token
 create_secret neko-image-gallery-admin-token
 
