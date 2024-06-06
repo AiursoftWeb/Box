@@ -7,27 +7,7 @@ services:
       - stathub-data:/data
     networks:
       - proxy_app
-      - internal
     deploy:
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
-
-  client:
-    image: hub.aiursoft.cn/aiursoft/stathub-client
-    network_mode: host
-    pid: host
-    privileged: true
-    volumes:
-      - /etc/lsb-release:/etc/lsb-release:ro
-      - /etc/os-release:/etc/os-release:ro
-      - /etc/motd:/etc/motd:ro
-      - /etc/hostname:/etc/hostname:ro
-    networks:
-      - internal
-    environment:
-      - SERVER_ENDPOINT=http://app:5000
-    deploy:
-      mode: global
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
@@ -42,5 +22,3 @@ volumes:
 networks:
   proxy_app:
     external: true
-  internal:
-    driver: overlay
