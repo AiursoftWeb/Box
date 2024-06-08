@@ -5,6 +5,7 @@ services:
     image: hub.aiursoft.cn/aiursoft/nugetninja
     volumes:
       - ninja-config:/config
+      - ninja-mergebot-config:/config-merge
       - ninja-cache:/root/.local/share/NugetNinjaWorkspace/
     deploy:
       resources:
@@ -21,6 +22,12 @@ volumes:
       type: none
       o: bind
       device: /swarm-vol/ninja-data/config
+  ninja-mergebot-config:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/ninja-data/config-merge
   ninja-cache:
     driver: local
     driver_opts:
