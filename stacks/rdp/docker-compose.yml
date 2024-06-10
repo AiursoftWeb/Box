@@ -1,0 +1,10 @@
+version: '3.3'
+
+services:
+  gnome:
+    image: hub.aiursoft.cn/aiursoft/internalimages/remote-desktop
+    ports:
+      - target: 3389
+        published: 3389
+        protocol: tcp
+        mode: host
