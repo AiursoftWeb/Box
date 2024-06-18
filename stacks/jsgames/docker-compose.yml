@@ -58,7 +58,15 @@ services:
         swarmpit.service.deployment.autoredeploy: 'true'
 
   minesweeper:
-    image: hub.aiursoft.cn/anduin/minesweeper:latest
+    image: hub.aiursoft.cn/anduin/minesweeper
+    networks:
+      - proxy_app
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+  oi:
+    image: hub.aiursoft.cn/anduin/oi-wiki
     networks:
       - proxy_app
     deploy:
