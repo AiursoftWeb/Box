@@ -5,6 +5,11 @@ services:
     image: hub.aiursoft.cn/aiursoft/aiurdrive
     volumes:
       - aiurdrive-data:/data
+
+      # Double hack here:
+      # AiurDrive will write the code to /tmp on the HOST, and then call docker on the HOST to compile the code.
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /tmp:/tmp
     networks:
       - proxy_app
     deploy:
