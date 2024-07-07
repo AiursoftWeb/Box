@@ -82,7 +82,7 @@ services:
         protocol: tcp
         mode: host
     # -s <name;/path>;browsable(yes);readonly(yes);guestok(yes);users(all);admins(none);writelist(none);comment(string)
-    command: "-p -n -u 'USER;PASSWORD' -w 'WORKGROUP' -S -s 'media;/mount;yes;no;no;all;none;none;Media Share'"
+    command: "-p -n -u 'USER;PASSWORD' -w 'WORKGROUP' -S -s 'media;/mount;yes;no;no;all;none;none;Media Share;force user = nobody;force group = nogroup;force create mode = 0666;force directory mode = 0777'"
     healthcheck:
       test: ["CMD", "smbclient", "-L", "//localhost", "-U", "USER%PASSWORD"]
       interval: 30s
