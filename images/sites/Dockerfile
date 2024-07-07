@@ -1,6 +1,6 @@
 # ============================
 # Prepare caddy Environment
-FROM caddy:builder as caddy-build-env
+FROM caddy:builder AS caddy-build-env
 
 RUN xcaddy build \
     --with github.com/ueffel/caddy-brotli \
@@ -8,13 +8,13 @@ RUN xcaddy build \
 
 # ============================
 # Prepare Caddyfile build Environment
-FROM localhost:8080/box_starting/local_ubuntu as config-build-env
+FROM localhost:8080/box_starting/local_ubuntu AS config-build-env
 WORKDIR /app
 COPY . .
 
 # Outputs to /app/Dist/Caddyfile
 RUN chmod +x /app/build_proxy.sh
-RUN /bin/bash /app/build_proxy.sh
+RUN /bin/bASh /app/build_proxy.sh
 
 # ============================
 # Prepare Runtime Environment
