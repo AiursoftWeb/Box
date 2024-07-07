@@ -14,7 +14,7 @@ COPY . .
 
 # Outputs to /app/Dist/Caddyfile
 RUN chmod +x /app/build_proxy.sh
-RUN /bin/bASh /app/build_proxy.sh
+RUN /bin/bash /app/build_proxy.sh
 
 # ============================
 # Prepare Runtime Environment
