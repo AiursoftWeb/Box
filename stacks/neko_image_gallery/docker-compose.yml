@@ -4,6 +4,8 @@ services:
   webapp:
     image: hub.aiursoft.cn/edgeneko/nekoimagegallery.app
     #image: edgeneko/nekoimagegallery.app # Avoid using mirror because this app updates very frequently
+    environment:
+      - OVERRIDE_API_URL=https://sakuratrak.aiursoft.cn/api
     networks:
       - proxy_app
     deploy:
