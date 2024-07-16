@@ -22,13 +22,13 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /swarm-vol/npm-data
+      device: /swarm-vol/npm/data
   npm-config:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /swarm-vol/npm-config
+      device: /swarm-vol/npm/config
 
 networks:
   proxy_app:
