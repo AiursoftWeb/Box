@@ -10,6 +10,15 @@ services:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
+  stack:
+    image: hub.aiursoft.cn/aiursoft/uistack
+    networks:
+      - proxy_app
+    deploy:
+      replicas: 2
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
 networks:
   proxy_app:
     external: true
