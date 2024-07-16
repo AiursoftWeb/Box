@@ -1,0 +1,35 @@
+version: '3.3'
+
+services:
+  npm:
+    image: hub.aiursoft.cn/verdaccio/verdaccio
+    volumes:
+      - npm-data:/verdaccio/storage
+      - npm-config:/verdaccio/conf
+    networks:
+      - proxy_app
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+volumes:
+  npm-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/npm-data
+  npm-config:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/npm-config
+
+networks:
+  proxy_app:
+    external: true
