@@ -11,7 +11,7 @@ services:
         swarmpit.service.deployment.autoredeploy: 'true'
 
   app-compliant:
-    image: hub.aiursoft.cn/aiursoft/homepage:compliant
+    image: hub.aiursoft.cn/aiursoft/homepage:latest # Or: compliant
     networks:
       - proxy_app
     deploy:
