@@ -35,7 +35,7 @@ services:
       - MYSQL_USER=koel
       - MYSQL_PASSWORD=<koel_password>
     networks:
-      - anduin_app
+      - internal
     deploy:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
