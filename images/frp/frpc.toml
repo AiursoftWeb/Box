@@ -1,4 +1,4 @@
-serverAddr = "45.77.178.215"
+serverAddr = "111.229.16.249"
 serverPort = 7000
 auth.token = "FRP_TOKEN"
 transport.poolCount = 30
