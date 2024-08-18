@@ -49,6 +49,19 @@ services:
     # Evertime we run the deploy.sh will update the image.
     # During incidents, we may need to manually ssh into the server and restart the service.
 
+  frpc_azure:
+    image: localhost:8080/box_starting/local_frp
+    networks:
+      - frp_net
+    environment:
+      - FRP_SERVER=20.194.196.94
+    secrets:
+      - source: frp-token
+        target: frp-token
+    # Do NOT auto redeploy this. Because this is built locally.
+    # Evertime we run the deploy.sh will update the image.
+    # During incidents, we may need to manually ssh into the server and restart the service.
+
 volumes:
   sites-data:
     driver: local
