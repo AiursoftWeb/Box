@@ -10,7 +10,9 @@ services:
     deploy:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
-
+      resources:
+        limits:
+          memory: 8G
 networks:
   proxy_app:
     external: true
