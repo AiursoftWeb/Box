@@ -62,6 +62,14 @@ services:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
+  webdav:
+    image: hub.aiursoft.cn/aiursoft/static
+    networks:
+      - proxy_app
+    volumes:
+      - media-data:/data
+    entrypoint: ["sh", "-c", "/app/static --port 5000 --path /data --enable-webdav"]
+
   smb:
     image: hub.aiursoft.cn/andyzhangx/samba:win-fix
     volumes:
