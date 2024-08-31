@@ -71,7 +71,7 @@ services:
       USERNAME: USER
       PASSWORD: PASSWORD
     volumes:
-      - media-data:/var/lib/dav
+      - media-data:/var/lib/dav/data
 
   smb:
     image: hub.aiursoft.cn/andyzhangx/samba:win-fix
