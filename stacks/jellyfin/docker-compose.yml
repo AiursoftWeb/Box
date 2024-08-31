@@ -68,7 +68,7 @@ services:
       - proxy_app
     volumes:
       - media-data:/data
-    entrypoint: ["sh", "-c", "/app/static --port 5000 --path /data --enable-webdav"]
+    entrypoint: ["sh", "-c", "/app/static --port 5000 --path /data --enable-webdav --allow-directory-browsing"]
 
   smb:
     image: hub.aiursoft.cn/andyzhangx/samba:win-fix
