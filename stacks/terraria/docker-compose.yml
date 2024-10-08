@@ -1,0 +1,35 @@
+# docker pull hub.aiursoft.cn/passivelemon/terraria-docker:latest
+
+version: '3.3'
+
+services:
+  server:
+    image: hub.aiursoft.cn/passivelemon/terraria-docker:latest
+    volumes:
+      - terraria:/opt/terraria/config
+    networks:
+      - frp_net
+    ports:
+      # These ports are for internal use. For external, FRP will handle it.
+      - target: 7777
+        published: 7777
+        protocol: tcp
+        mode: host
+    deploy:
+      resources:
+        limits:
+          memory: 14336M
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+volumes:
+  terraria:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/terraria
+
+networks:
+  frp_net:
+    external: true
