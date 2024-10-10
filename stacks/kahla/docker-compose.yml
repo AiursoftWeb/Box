@@ -15,6 +15,22 @@ services:
       - kahla-data:/data
     networks:
       - proxy_app
+      - kahla_app
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+  db:
+    image: hub.aiursoft.cn/mysql
+    volumes:
+      - kahla-db:/var/lib/mysql
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
+      - MYSQL_DATABASE=anduin
+      - MYSQL_USER=anduin
+      - MYSQL_PASSWORD=<anduin_password>
+    networks:
+      - kahla_app
     deploy:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
@@ -26,7 +42,15 @@ volumes:
       type: none
       o: bind
       device: /swarm-vol/kahla-data
+  kahla-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/kahla-db
 
 networks:
   proxy_app:
     external: true
+  kahla_app:
+    driver: overlay
