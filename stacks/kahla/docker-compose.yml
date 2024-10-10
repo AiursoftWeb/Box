@@ -13,6 +13,8 @@ services:
     image: hub.aiursoft.cn/aiursoft/kahla
     volumes:
       - kahla-data:/data
+    environment:
+        ConnectionStrings__DefaultConnection: Server=db;Database=kahla;Uid=kahla;Pwd=<kahla_password>;
     networks:
       - proxy_app
       - kahla_app
@@ -26,9 +28,9 @@ services:
       - kahla-db:/var/lib/mysql
     environment:
       - MYSQL_RANDOM_ROOT_PASSWORD=true
-      - MYSQL_DATABASE=anduin
-      - MYSQL_USER=anduin
-      - MYSQL_PASSWORD=<anduin_password>
+      - MYSQL_DATABASE=kahla
+      - MYSQL_USER=kahla
+      - MYSQL_PASSWORD=<kahla_password>
     networks:
       - kahla_app
     deploy:
