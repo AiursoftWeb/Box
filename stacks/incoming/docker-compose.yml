@@ -23,7 +23,7 @@ services:
     # Evertime we run the deploy.sh will update the image.
     # During incidents, we may need to manually ssh into the server and restart the service.
 
-  frpc:
+  frpc_ningbo:
     image: localhost:8080/box_starting/local_frp
     networks:
       - frp_net
@@ -36,12 +36,12 @@ services:
     # Evertime we run the deploy.sh will update the image.
     # During incidents, we may need to manually ssh into the server and restart the service.
 
-  frpc_azure:
+  frpc_hongkong:
     image: localhost:8080/box_starting/local_frp
     networks:
       - frp_net
     environment:
-      - FRP_SERVER=20.194.196.94
+      - FRP_SERVER=154.64.254.152
     secrets:
       - source: frp-token
         target: frp-token

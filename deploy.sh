@@ -127,7 +127,7 @@ echo "Starting registry..."
 deploy stacks/registry/docker-compose.yml registry # 8080
 
 echo "Make sure the registry is ready..."
-sleep 5 # Could not trust result in the first few seconds, because the old registry might still be running
+sleep 15 # Could not trust result in the first few seconds, because the old registry might still be running
 while curl -s http://localhost:8080/ > /dev/null; [ $? -ne 0 ]; do
     echo "Waiting for registry(http://localhost:8080) to start..."
     sleep 1
