@@ -15,6 +15,7 @@ services:
       - kahla-data:/data
     environment:
         ConnectionStrings__DefaultConnection: Server=db;Database=kahla;Uid=kahla;Pwd=<kahla_password>;
+        ConnectionStrings__InfluxDB: http://influx:8086;Token=<influx_token>;Org=kahla;Bucket=messages;
     networks:
       - proxy_app
       - kahla_app
@@ -37,6 +38,21 @@ services:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
+  influx:
+    image: influxdb
+    volumes:
+      - influx-data:/var/lib/influxdb
+    environment:
+      - INFLUXDB_INIT_PWD=<influx_password>
+      - INFLUXDB_INIT_USERNAME=<influx_user>
+      - INFLUXDB_INIT_ORG=kahla
+      - INFLUXDB_INIT_BUCKET=messages
+    networks:
+      - kahla_app
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
 volumes:
   kahla-data:
     driver: local
@@ -50,6 +66,12 @@ volumes:
       type: none
       o: bind
       device: /swarm-vol/kahla-db
+  influx-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/influx-data
 
 networks:
   proxy_app:
