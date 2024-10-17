@@ -14,13 +14,13 @@ services:
   server:
     depends_on:
       - db
-      - influx
+      - clickhouse
     image: hub.aiursoft.cn/aiursoft/kahla
     volumes:
       - kahla-data:/data
     environment:
-        ConnectionStrings__DefaultConnection: Server=db;Database=kahla;Uid=kahla;Pwd=<kahla_password>;
-        ConnectionStrings__InfluxDB: http://influx:8086;influx_user;influx_password;kahla;messages
+      ConnectionStrings__DefaultConnection: Server=db;Database=kahla;Uid=kahla;Pwd=<kahla_password>;
+      ConnectionStrings__ClickHouse: Server=clickhouse;Port=9000;Database=kahla;Uid=clickhouse_user;Pwd=clickhouse_password;
     networks:
       - proxy_app
       - kahla_app
@@ -29,7 +29,7 @@ services:
         swarmpit.service.deployment.autoredeploy: 'true'
 
   # For local development, you can use the following command to start a mysql container.
-  #sudo docker run -d --name db -e MYSQL_RANDOM_ROOT_PASSWORD=true -e MYSQL_DATABASE=kahla -e MYSQL_USER=kahla -e MYSQL_PASSWORD=kahla_password -p 3306:3306 hub.aiursoft.cn/mysql
+  # sudo docker run -d --name db -e MYSQL_RANDOM_ROOT_PASSWORD=true -e MYSQL_DATABASE=kahla -e MYSQL_USER=kahla -e MYSQL_PASSWORD=kahla_password -p 3306:3306 hub.aiursoft.cn/mysql
   db:
     image: hub.aiursoft.cn/mysql
     volumes:
@@ -45,18 +45,16 @@ services:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
-  # For local development, you can use the following command to start a influx container. 
-  #sudo docker run -d --name influx -e DOCKER_INFLUXDB_INIT_MODE=setup -e DOCKER_INFLUXDB_INIT_USERNAME=influx_user -e DOCKER_INFLUXDB_INIT_PASSWORD=influx_password -e DOCKER_INFLUXDB_INIT_ORG=kahla -e DOCKER_INFLUXDB_INIT_BUCKET=messages -p 8086:8086 hub.aiursoft.cn/influxdb
-  influx:
-    image: hub.aiursoft.cn/influxdb
+  # For local development, you can use the following command to start a clickhouse container.
+  # sudo docker run -d --name clickhouse --ulimit nofile=262144:262144 -p 8123:8123 -p 9000:9000 yandex/clickhouse-server
+  clickhouse:
+    image: yandex/clickhouse-server:latest
     volumes:
-      - influx-data:/var/lib/influxdb2
+      - clickhouse-data:/var/lib/clickhouse
     environment:
-      - DOCKER_INFLUXDB_INIT_MODE=setup
-      - DOCKER_INFLUXDB_INIT_USERNAME=influx_user
-      - DOCKER_INFLUXDB_INIT_PASSWORD=influx_password
-      - DOCKER_INFLUXDB_INIT_ORG=kahla
-      - DOCKER_INFLUXDB_INIT_BUCKET=messages
+      - CLICKHOUSE_USER=clickhouse_user
+      - CLICKHOUSE_PASSWORD=clickhouse_password
+      - CLICKHOUSE_DB=kahla
     networks:
       - kahla_app
     deploy:
@@ -76,12 +74,12 @@ volumes:
       type: none
       o: bind
       device: /swarm-vol/kahla-db
-  influx-data:
+  clickhouse-data:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /swarm-vol/influx-data
+      device: /swarm-vol/clickhouse-data
 
 networks:
   proxy_app:
