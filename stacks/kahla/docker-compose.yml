@@ -2,6 +2,8 @@ version: '3.3'
 
 services:
   app:
+    depends_on:
+      - server
     image: hub.aiursoft.cn/aiursoft/kahla.app
     networks:
       - proxy_app
@@ -10,6 +12,9 @@ services:
         swarmpit.service.deployment.autoredeploy: 'true'
 
   server:
+    depends_on:
+      - db
+      - influx
     image: hub.aiursoft.cn/aiursoft/kahla
     volumes:
       - kahla-data:/data
