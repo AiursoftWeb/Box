@@ -15,7 +15,7 @@ services:
       - kahla-data:/data
     environment:
         ConnectionStrings__DefaultConnection: Server=db;Database=kahla;Uid=kahla;Pwd=<kahla_password>;
-        ConnectionStrings__InfluxDB: http://influx:8086;Token=<influx_token>;Org=kahla;Bucket=messages;
+        ConnectionStrings__InfluxDB: http://influx:8086;influx_user;influx_password;kahla;messages
     networks:
       - proxy_app
       - kahla_app
@@ -23,6 +23,8 @@ services:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
+  # For local development, you can use the following command to start a mysql container.
+  #sudo docker run -d --name db -e MYSQL_RANDOM_ROOT_PASSWORD=true -e MYSQL_DATABASE=kahla -e MYSQL_USER=kahla -e MYSQL_PASSWORD=kahla_password -p 3306:3306 hub.aiursoft.cn/mysql
   db:
     image: hub.aiursoft.cn/mysql
     volumes:
@@ -38,16 +40,18 @@ services:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
-  #sudo docker run -d   --name influx   -e INFLUXDB_INIT_PWD="<influx_password>"   -e INFLUXDB_INIT_USERNAME="<influx_user>"   -e INFLUXDB_INIT_ORG=kahla   -e INFLUXDB_INIT_BUCKET=messages   influxdb
+  # For local development, you can use the following command to start a influx container. 
+  #sudo docker run -d --name influx -e DOCKER_INFLUXDB_INIT_MODE=setup -e DOCKER_INFLUXDB_INIT_USERNAME=influx_user -e DOCKER_INFLUXDB_INIT_PASSWORD=influx_password -e DOCKER_INFLUXDB_INIT_ORG=kahla -e DOCKER_INFLUXDB_INIT_BUCKET=messages -p 8086:8086 hub.aiursoft.cn/influxdb
   influx:
-    image: influxdb
+    image: hub.aiursoft.cn/influxdb
     volumes:
       - influx-data:/var/lib/influxdb
     environment:
-      - INFLUXDB_INIT_PWD=<influx_password>
-      - INFLUXDB_INIT_USERNAME=<influx_user>
-      - INFLUXDB_INIT_ORG=kahla
-      - INFLUXDB_INIT_BUCKET=messages
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=influx_user
+      - DOCKER_INFLUXDB_INIT_PASSWORD=influx_password
+      - DOCKER_INFLUXDB_INIT_ORG=kahla
+      - DOCKER_INFLUXDB_INIT_BUCKET=messages
     networks:
       - kahla_app
     deploy:
