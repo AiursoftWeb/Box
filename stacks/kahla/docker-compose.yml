@@ -38,6 +38,7 @@ services:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
+  #sudo docker run -d   --name influx   -e INFLUXDB_INIT_PWD="<influx_password>"   -e INFLUXDB_INIT_USERNAME="<influx_user>"   -e INFLUXDB_INIT_ORG=kahla   -e INFLUXDB_INIT_BUCKET=messages   influxdb
   influx:
     image: influxdb
     volumes:
