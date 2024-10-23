@@ -36,12 +36,12 @@ services:
     # Evertime we run the deploy.sh will update the image.
     # During incidents, we may need to manually ssh into the server and restart the service.
 
-  frpc_hongkong:
+  frpc_jp:
     image: localhost:8080/box_starting/local_frp
     networks:
       - frp_net
     environment:
-      - FRP_SERVER=154.64.254.152
+      - FRP_SERVER=45.77.178.215
     secrets:
       - source: frp-token
         target: frp-token
