@@ -63,7 +63,7 @@ services:
         swarmpit.service.deployment.autoredeploy: 'true'
 
   webdav:
-    image: bytemark/webdav
+    image: hub.aiursoft.cn/bytemark/webdav
     networks:
       - proxy_app
     environment:
