@@ -18,7 +18,7 @@ services:
     volumes:
       - kahla-data:/data
     environment:
-      ConnectionStrings__DefaultConnection: Server=db;Database=kahla;Uid=kahla;Pwd=<kahla_password>;
+      ConnectionStrings__DefaultConnection: Server=db;Database=kahla;Uid=kahla;Pwd=kahla_password;
     networks:
       - proxy_app
       - kahla_app
@@ -36,7 +36,7 @@ services:
       - MYSQL_RANDOM_ROOT_PASSWORD=true
       - MYSQL_DATABASE=kahla
       - MYSQL_USER=kahla
-      - MYSQL_PASSWORD=<kahla_password>
+      - MYSQL_PASSWORD=kahla_password
     networks:
       - kahla_app
     deploy:
@@ -49,13 +49,13 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /swarm-vol/kahla-data
+      device: /swarm-vol/kahla/kahla-data
   kahla-db:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /swarm-vol/kahla-db
+      device: /swarm-vol/kahla/kahla-db
 
 networks:
   proxy_app:
