@@ -14,13 +14,11 @@ services:
   server:
     depends_on:
       - db
-      - clickhouse
     image: hub.aiursoft.cn/aiursoft/kahla
     volumes:
       - kahla-data:/data
     environment:
       ConnectionStrings__DefaultConnection: Server=db;Database=kahla;Uid=kahla;Pwd=<kahla_password>;
-      ConnectionStrings__ClickHouse: Server=clickhouse;Port=9000;Database=kahla;Uid=clickhouse_user;Pwd=clickhouse_password;
     networks:
       - proxy_app
       - kahla_app
@@ -45,22 +43,6 @@ services:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
-  # For local development, you can use the following command to start a clickhouse container.
-  # sudo docker run -d --name clickhouse --ulimit nofile=262144:262144 -p 8123:8123 -p 9000:9000 yandex/clickhouse-server
-  clickhouse:
-    image: yandex/clickhouse-server:latest
-    volumes:
-      - clickhouse-data:/var/lib/clickhouse
-    environment:
-      - CLICKHOUSE_USER=clickhouse_user
-      - CLICKHOUSE_PASSWORD=clickhouse_password
-      - CLICKHOUSE_DB=kahla
-    networks:
-      - kahla_app
-    deploy:
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
-
 volumes:
   kahla-data:
     driver: local
@@ -74,12 +56,6 @@ volumes:
       type: none
       o: bind
       device: /swarm-vol/kahla-db
-  clickhouse-data:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /swarm-vol/clickhouse-data
 
 networks:
   proxy_app:
