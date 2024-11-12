@@ -67,7 +67,7 @@ services:
         limits:
           cpus: '4.0'
           memory: 8G
-      replicas: 6
+      # replicas: 6
       # Disable auto-redeploy, because runner may stop when CI is running.
 
   mirror:
