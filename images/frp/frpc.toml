@@ -54,7 +54,7 @@ remotePort = 25565
 
 # Regular update to ensure safe.
 [[proxies]]
-name = "MC_UDP"
+name = "mc_udp"
 type = "udp"
 localIP = "minecraft_server"
 localPort = 19132
@@ -62,7 +62,7 @@ remotePort = 19132
 
 # Regular update to ensure safe.
 [[proxies]]
-name = "SSH_GITEA"
+name = "ssh_gitea"
 type = "tcp"
 localIP = "gitea_app"
 localPort = 2201
@@ -70,7 +70,7 @@ remotePort = 2201
 
 # Regular update to ensure safe.
 [[proxies]]
-name = "SSH_GITLAB"
+name = "ssh_gitlab"
 type = "tcp"
 localIP = "gitlab_gitlab"
 localPort = 2202
