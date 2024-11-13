@@ -66,6 +66,7 @@ function better_performance() {
 
     # Clean docker cache (optional)
     # sudo docker system prune -a --volumes -f
+    # sudo docker builder prune -f
 }
 
 function deploy() {
