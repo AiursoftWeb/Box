@@ -81,6 +81,14 @@ services:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
+  ipcalc:
+    image: hub.aiursoft.cn/anduin/ipcalc:latest
+    networks:
+      - proxy_app
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
 networks:
   proxy_app:
     external: true
