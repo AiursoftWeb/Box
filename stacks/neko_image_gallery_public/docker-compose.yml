@@ -1,0 +1,78 @@
+version: '3.3'
+
+services:
+  webapp:
+    image: hub.aiursoft.cn/edgeneko/nekoimagegallery.app
+    #image: edgeneko/nekoimagegallery.app # Avoid using mirror because this app updates very frequently
+    environment:
+      # - OVERRIDE_API_URL=https://sakuratrak.aiursoft.cn/api
+    networks:
+      - proxy_app
+    deploy:
+      replicas: 2
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+  server:
+    image: hub.aiursoft.cn/edgeneko/neko-image-gallery:edge-cpu
+    #image: edgeneko/neko-image-gallery:latest-cpu # Avoid using mirror because this app updates very frequently
+    networks:
+      - proxy_app
+      - internal
+    volumes:
+      - neko-image-gallery-public-local:/opt/NekoImageGallery/static
+    depends_on:
+      - qdrant_database
+    environment:
+      - APP_ACCESS_PROTECTED=False
+      - APP_QDRANT__COLL=NekoImg-v4
+      - APP_QDRANT__HOST=qdrant_database
+      - APP_OCR_SEARCH__OCR_MIN_CONFIDENCE=0.05
+      - APP_ADMIN_API_ENABLE=True
+      - APP_STORAGE__METHOD=local
+    secrets:
+      - source: neko-image-gallery-admin-token
+        target: app_admin_token
+    # runtime: nvidia
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+      # resources:
+      #   reservations:
+      #     devices:
+      #       - driver: nvidia
+      #         count: all
+      #         capabilities: [gpu]
+    command: ["--root-path", "/api"]
+
+  qdrant_database:
+    image: hub.aiursoft.cn/qdrant/qdrant
+    networks:
+      - internal
+      - proxy_app
+    volumes:
+      - neko-image-gallery-public-vector-db:/qdrant/storage:z
+
+volumes:
+  neko-image-gallery-public-vector-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/neko-image-gallery-public/vector_db
+  neko-image-gallery-public-local:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/neko-image-gallery-public/local_images/
+
+networks:
+  proxy_app:
+    external: true
+  internal:
+    driver: overlay
+
+secrets:
+  neko-image-gallery-admin-token:
+    external: true
