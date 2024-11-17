@@ -22,7 +22,7 @@ services:
       - anduin_app
       - proxy_app
     deploy:
-      replicas: 2
+      replicas: 1
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
   
@@ -62,7 +62,7 @@ services:
       - jimmoen_app
       - proxy_app
     deploy:
-      replicas: 2
+      replicas: 1
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
@@ -102,7 +102,7 @@ services:
       - rest_app
       - proxy_app
     deploy:
-      replicas: 2
+      replicas: 1
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
@@ -142,7 +142,7 @@ services:
       - cody_app
       - proxy_app
     deploy:
-      replicas: 2
+      replicas: 1
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
@@ -182,7 +182,7 @@ services:
       - gxhao_app
       - proxy_app
     deploy:
-      replicas: 2
+      replicas: 1
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
@@ -222,7 +222,7 @@ services:
       - anois_app
       - proxy_app
     deploy:
-      replicas: 2
+      replicas: 1
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
@@ -262,7 +262,7 @@ services:
       - dvorak_app
       - proxy_app
     deploy:
-      replicas: 2
+      replicas: 1
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
@@ -302,7 +302,7 @@ services:
       - kitlau_app
       - proxy_app
     deploy:
-      replicas: 2
+      replicas: 1
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
@@ -342,7 +342,7 @@ services:
       - xinboo_app
       - proxy_app
     deploy:
-      replicas: 2
+      replicas: 1
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
@@ -382,7 +382,7 @@ services:
       - gbiner_app
       - proxy_app
     deploy:
-      replicas: 2
+      replicas: 1
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
@@ -422,7 +422,7 @@ services:
       - rdf_app
       - proxy_app
     deploy:
-      replicas: 2
+      replicas: 1
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
@@ -462,7 +462,7 @@ services:
       - lyx_app
       - proxy_app
     deploy:
-      replicas: 2
+      replicas: 1
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
@@ -502,7 +502,7 @@ services:
       - shubuzuo_app
       - proxy_app
     deploy:
-      replicas: 2
+      replicas: 1
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
@@ -542,7 +542,7 @@ services:
       - lily_app
       - proxy_app
     deploy:
-      replicas: 2
+      replicas: 1
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
@@ -582,7 +582,7 @@ services:
       - carson_app
       - proxy_app
     deploy:
-      replicas: 2
+      replicas: 1
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
@@ -622,7 +622,7 @@ services:
       - zoneblog_app
       - proxy_app
     deploy:
-      replicas: 2
+      replicas: 1
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
