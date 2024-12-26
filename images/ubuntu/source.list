@@ -1,4 +1,4 @@
-deb http://mirror.aiursoft.cn/ubuntu/ jammy main restricted universe multiverse
-deb http://mirror.aiursoft.cn/ubuntu/ jammy-updates main restricted universe multiverse
-deb http://mirror.aiursoft.cn/ubuntu/ jammy-backports main restricted universe multiverse
-deb http://mirror.aiursoft.cn/ubuntu/ jammy-security main restricted universe multiverse
+deb http://mirror.aiursoft.cn/ubuntu/ oracular main restricted universe multiverse
+deb http://mirror.aiursoft.cn/ubuntu/ oracular-updates main restricted universe multiverse
+deb http://mirror.aiursoft.cn/ubuntu/ oracular-backports main restricted universe multiverse
+deb http://mirror.aiursoft.cn/ubuntu/ oracular-security main restricted universe multiverse
