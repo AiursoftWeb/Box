@@ -38,6 +38,24 @@ services:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
+#docker run -d -p 3000:8080 -e OLLAMA_BASE_URL=https://example.com -v open-webui:/app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:main
+  open-web:
+    image: hub.aiursoft.cn/ghcr.io/open-webui/open-webui:main
+    environment:
+      # Temp endpoint.
+      - OLLAMA_BASE_URL=http://192.168.50.145:11434
+      - SAFE_MODE=True
+      - ENABLE_OPENAI_API=False
+      - WEBUI_AUTH=False
+    volumes:
+      - open-webui-data:/app/backend/data
+    networks:
+      - proxy_app
+    deploy:
+      replicas: 1
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
 networks:
   internal:
     driver: overlay
@@ -58,4 +76,6 @@ secrets:
   openai-completion-api-url:
     external: true
   bing-search-key:
+    external: true
+  open-webui-data:
     external: true
