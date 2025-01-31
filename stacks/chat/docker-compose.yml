@@ -27,8 +27,8 @@ services:
     secrets:
       - source: openai-key
         target: OpenAI-Token
-      - source: openai-instance
-        target: OpenAI-Instance
+      - source: openai-completion-api-url
+        target: OpenAI-CompletionApiUrl
       - source: bing-search-key
         target: BingSearchAPIKey
     networks:
@@ -55,7 +55,7 @@ volumes:
 secrets:
   openai-key:
     external: true
-  openai-instance:
+  openai-completion-api-url:
     external: true
   bing-search-key:
     external: true

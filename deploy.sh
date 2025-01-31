@@ -100,7 +100,7 @@ echo "Creating secrets..."
 create_secret frp-token
 create_secret xray-uuid
 create_secret openai-key
-create_secret openai-instance
+create_secret openai-completion-api-url
 create_secret bing-search-key
 create_secret nuget-publish-key
 create_secret gitlab-runner-token
