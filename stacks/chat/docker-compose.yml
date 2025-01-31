@@ -46,6 +46,12 @@ services:
       - SAFE_MODE=True
       - ENABLE_OPENAI_API=False
       - WEBUI_AUTH=True
+      - ENABLE_SIGNUP=True
+      - DEFAULT_USER_ROLE=user
+      - SHOW_ADMIN_DETAILS=False
+      - ENABLE_COMMUNITY_SHARING=False
+      - ENABLE_MESSAGE_RATING=False
+      - ENABLE_TAGS_GENERATION=False
       - ENABLE_EVALUATION_ARENA_MODELS=False
     volumes:
       - open-webui-data:/app/backend/data
