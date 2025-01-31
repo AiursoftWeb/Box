@@ -45,7 +45,7 @@ services:
       - OLLAMA_BASE_URL=http://192.168.50.145:11434
       - SAFE_MODE=True
       - ENABLE_OPENAI_API=False
-      - WEBUI_AUTH=False
+      - WEBUI_AUTH=True
       - ENABLE_EVALUATION_ARENA_MODELS=False
     volumes:
       - open-webui-data:/app/backend/data
