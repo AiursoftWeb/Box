@@ -69,6 +69,12 @@ volumes:
       type: none
       o: bind
       device: /swarm-vol/chat-data
+  open-webui-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/open-webui-data
 
 secrets:
   openai-key:
@@ -76,6 +82,4 @@ secrets:
   openai-completion-api-url:
     external: true
   bing-search-key:
-    external: true
-  open-webui-data:
     external: true
