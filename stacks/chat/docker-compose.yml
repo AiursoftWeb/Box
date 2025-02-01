@@ -1,42 +1,21 @@
 version: '3.3'
 
 services:
-  # chat:
-  #   depends_on:
-  #     - api
-  #   image: hub.aiursoft.cn/aiursoft/aiursoftchat
-  #   networks:
-  #     - internal
-  #     - proxy_app
-  #   environment:
-  #     - HIDE_USER_API_KEY=1
-  #     - DISABLE_GPT4=1
-  #     - PROTOCOL=http
-  #     - BASE_URL=api:5000
-  #     - OPENAI_API_KEY=dummy
-  #     - PORT=5000
-  #   deploy:
-  #     replicas: 2
-  #     labels:
-  #       swarmpit.service.deployment.autoredeploy: 'true'
-
-  # api:
-  #   image: hub.aiursoft.cn/aiursoft/gptgateway
-  #   volumes:
-  #     - chat-data:/data
-  #   secrets:
-  #     - source: openai-key
-  #       target: OpenAI-Token
-  #     - source: openai-completion-api-url
-  #       target: OpenAI-CompletionApiUrl
-  #     - source: bing-search-key
-  #       target: BingSearchAPIKey
-  #   networks:
-  #     - internal
-  #   deploy:
-  #     replicas: 3
-  #     labels:
-  #       swarmpit.service.deployment.autoredeploy: 'true'
+  chat:
+    image: hub.aiursoft.cn/aiursoft/gptgateway
+    volumes:
+      - chat-data:/data
+    secrets:
+      - source: openai-completion-api-url
+        target: OpenAI-CompletionApiUrl
+      - source: bing-search-key
+        target: BingSearchAPIKey
+    networks:
+      - proxy_app
+    deploy:
+      replicas: 1
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
 
   open-web:
     image: hub.aiursoft.cn/ghcr.io/open-webui/open-webui:main
@@ -68,12 +47,12 @@ networks:
     external: true
 
 volumes:
-  # chat-data:
-  #   driver: local
-  #   driver_opts:
-  #     type: none
-  #     o: bind
-  #     device: /swarm-vol/chat-data
+  chat-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/chat-data
   open-webui-data:
     driver: local
     driver_opts:
