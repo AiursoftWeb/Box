@@ -13,10 +13,8 @@ services:
         ConnectionStrings__DbType: MySql
         Storage__Path: /data/files
     secrets:
-      - source: openai-key
-        target: OpenAI-Token
-      - source: openai-instance
-        target: OpenAI-Instance
+      - source: openai-completion-api-url
+        target: OpenAI-CompletionApiUrl
     networks:
       - anduin_app
       - proxy_app
@@ -52,10 +50,8 @@ services:
         ConnectionStrings__DbType: MySql
         Storage__Path: /data/files
     secrets:
-      - source: openai-key
-        target: OpenAI-Token
-      - source: openai-instance
-        target: OpenAI-Instance
+      - source: openai-completion-api-url
+        target: OpenAI-CompletionApiUrl
     networks:
       - jimmoen_app
       - proxy_app
@@ -91,10 +87,8 @@ services:
         ConnectionStrings__DbType: MySql
         Storage__Path: /data/files
     secrets:
-      - source: openai-key
-        target: OpenAI-Token
-      - source: openai-instance
-        target: OpenAI-Instance
+      - source: openai-completion-api-url
+        target: OpenAI-CompletionApiUrl
     networks:
       - rest_app
       - proxy_app
@@ -130,10 +124,8 @@ services:
         ConnectionStrings__DbType: MySql
         Storage__Path: /data/files
     secrets:
-      - source: openai-key
-        target: OpenAI-Token
-      - source: openai-instance
-        target: OpenAI-Instance
+      - source: openai-completion-api-url
+        target: OpenAI-CompletionApiUrl
     networks:
       - cody_app
       - proxy_app
@@ -169,10 +161,8 @@ services:
         ConnectionStrings__DbType: MySql
         Storage__Path: /data/files
     secrets:
-      - source: openai-key
-        target: OpenAI-Token
-      - source: openai-instance
-        target: OpenAI-Instance
+      - source: openai-completion-api-url
+        target: OpenAI-CompletionApiUrl
     networks:
       - gxhao_app
       - proxy_app
@@ -208,10 +198,8 @@ services:
         ConnectionStrings__DbType: MySql
         Storage__Path: /data/files
     secrets:
-      - source: openai-key
-        target: OpenAI-Token
-      - source: openai-instance
-        target: OpenAI-Instance
+      - source: openai-completion-api-url
+        target: OpenAI-CompletionApiUrl
     networks:
       - anois_app
       - proxy_app
@@ -247,10 +235,8 @@ services:
         ConnectionStrings__DbType: MySql
         Storage__Path: /data/files
     secrets:
-      - source: openai-key
-        target: OpenAI-Token
-      - source: openai-instance
-        target: OpenAI-Instance
+      - source: openai-completion-api-url
+        target: OpenAI-CompletionApiUrl
     networks:
       - dvorak_app
       - proxy_app
@@ -286,10 +272,8 @@ services:
         ConnectionStrings__DbType: MySql
         Storage__Path: /data/files
     secrets:
-      - source: openai-key
-        target: OpenAI-Token
-      - source: openai-instance
-        target: OpenAI-Instance
+      - source: openai-completion-api-url
+        target: OpenAI-CompletionApiUrl
     networks:
       - kitlau_app
       - proxy_app
@@ -325,10 +309,8 @@ services:
         ConnectionStrings__DbType: MySql
         Storage__Path: /data/files
     secrets:
-      - source: openai-key
-        target: OpenAI-Token
-      - source: openai-instance
-        target: OpenAI-Instance
+      - source: openai-completion-api-url
+        target: OpenAI-CompletionApiUrl
     networks:
       - xinboo_app
       - proxy_app
@@ -364,10 +346,8 @@ services:
         ConnectionStrings__DbType: MySql
         Storage__Path: /data/files
     secrets:
-      - source: openai-key
-        target: OpenAI-Token
-      - source: openai-instance
-        target: OpenAI-Instance
+      - source: openai-completion-api-url
+        target: OpenAI-CompletionApiUrl
     networks:
       - gbiner_app
       - proxy_app
@@ -403,10 +383,8 @@ services:
         ConnectionStrings__DbType: MySql
         Storage__Path: /data/files
     secrets:
-      - source: openai-key
-        target: OpenAI-Token
-      - source: openai-instance
-        target: OpenAI-Instance
+      - source: openai-completion-api-url
+        target: OpenAI-CompletionApiUrl
     networks:
       - rdf_app
       - proxy_app
@@ -442,10 +420,8 @@ services:
         ConnectionStrings__DbType: MySql
         Storage__Path: /data/files
     secrets:
-      - source: openai-key
-        target: OpenAI-Token
-      - source: openai-instance
-        target: OpenAI-Instance
+      - source: openai-completion-api-url
+        target: OpenAI-CompletionApiUrl
     networks:
       - lyx_app
       - proxy_app
@@ -481,10 +457,8 @@ services:
         ConnectionStrings__DbType: MySql
         Storage__Path: /data/files
     secrets:
-      - source: openai-key
-        target: OpenAI-Token
-      - source: openai-instance
-        target: OpenAI-Instance
+      - source: openai-completion-api-url
+        target: OpenAI-CompletionApiUrl
     networks:
       - shubuzuo_app
       - proxy_app
@@ -520,10 +494,8 @@ services:
         ConnectionStrings__DbType: MySql
         Storage__Path: /data/files
     secrets:
-      - source: openai-key
-        target: OpenAI-Token
-      - source: openai-instance
-        target: OpenAI-Instance
+      - source: openai-completion-api-url
+        target: OpenAI-CompletionApiUrl
     networks:
       - lily_app
       - proxy_app
@@ -559,10 +531,8 @@ services:
         ConnectionStrings__DbType: MySql
         Storage__Path: /data/files
     secrets:
-      - source: openai-key
-        target: OpenAI-Token
-      - source: openai-instance 
-        target: OpenAI-Instance
+      - source: openai-completion-api-url
+        target: OpenAI-CompletionApiUrl
     networks:
       - carson_app
       - proxy_app
@@ -598,10 +568,8 @@ services:
         ConnectionStrings__DbType: MySql
         Storage__Path: /data/files
     secrets:
-      - source: openai-key
-        target: OpenAI-Token
-      - source: openai-instance
-        target: OpenAI-Instance
+      - source: openai-completion-api-url
+        target: OpenAI-CompletionApiUrl
     networks:
       - zoneblog_app
       - proxy_app
@@ -626,9 +594,7 @@ services:
         swarmpit.service.deployment.autoredeploy: 'true'
 
 secrets:
-  openai-key:
-    external: true
-  openai-instance:
+  openai-completion-api-url:
     external: true
 
 networks:
