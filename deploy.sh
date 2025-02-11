@@ -106,16 +106,15 @@ echo "Deploying the cluster"
 better_performance
 
 echo "Creating secrets..."
-create_secret frp-token
-create_secret xray-uuid
-create_secret openai-key
-create_secret openai-completion-api-url
 create_secret bing-search-key
-create_secret nuget-publish-key
-create_secret gitlab-runner-token
+create_secret frp-token
 create_secret github-token
+create_secret gitlab-runner-token
 create_secret neko-image-gallery-access-token
 create_secret neko-image-gallery-admin-token
+create_secret nuget-publish-key
+create_secret openai-completion-api-url
+create_secret xray-uuid
 
 echo "Creating networks..."
 create_network proxy_app 10.234.0.0/16
