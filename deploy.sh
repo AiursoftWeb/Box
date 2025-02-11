@@ -8,7 +8,13 @@ function install_docker() {
     rm get-docker.sh
 
     # Also install wsdd because it's required by some services
-    sudo apt install wsdd yq -y
+    sudo apt install wsdd -y
+}
+
+function install_yq() {
+    download_link=https://github.com/mikefarah/yq/releases/download/v4.45.1/yq_linux_amd64
+    sudo wget -O /usr/bin/yq $download_link
+    sudo chmod +x /usr/bin/yq
 }
 
 function disable_snap() {
@@ -58,6 +64,9 @@ function better_performance() {
 
     # Install docker
     apt list --installed | grep -q docker-ce || install_docker
+
+    # Install yq. (Run install_yq only if the /usr/bin/yq does not exist.)
+    [ -f /usr/bin/yq ] || install_yq
 
     # Install some basic tools
     sudo DEBIAN_FRONTEND=noninteractive apt install -y \
