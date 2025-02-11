@@ -8,7 +8,7 @@ function install_docker() {
     rm get-docker.sh
 
     # Also install wsdd because it's required by some services
-    sudo apt install wsdd -y
+    sudo apt install wsdd yq -y
 }
 
 function disable_snap() {
@@ -117,6 +117,20 @@ find . -name 'docker-compose.yml' | while read file; do
   awk '{if(/device:/) print $2}' "$file" | while read -r path; do
     echo "sudo mkdir -p \"$path\""
     sudo mkdir -p "$path"
+  done
+done
+
+echo "Opening firewall ports..."
+find . -name 'docker-compose.yml' | while read -r file; do
+  echo "Processing $file..."
+  yq eval -r '.services[].ports[]? | select(has("published")) | "\(.published) \(.protocol)"' "$file" | while read -r published protocol; do
+    # If the protocol is not defined, skip this rule
+    if [ -z "$protocol" ]; then
+      echo "[Warning] In file $file, Protocol is not defined for $published, skipping..."
+    else
+      echo "sudo ufw allow ${published}/${protocol}"
+      sudo ufw allow "${published}/${protocol}"
+    fi
   done
 done
 
