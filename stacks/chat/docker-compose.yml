@@ -21,7 +21,7 @@ services:
     image: hub.aiursoft.cn/ghcr.io/open-webui/open-webui:main
     environment:
       # Temp endpoint. Migrate to container ASAP.
-      - OLLAMA_BASE_URL=http://192.168.50.83:11434
+      - OLLAMA_BASE_URL=http://192.168.50.145:11434
       - ENABLE_OPENAI_API=False
       - WEBUI_AUTH=True
       - ENABLE_SIGNUP=True
