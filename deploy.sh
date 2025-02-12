@@ -6,9 +6,6 @@ function install_docker() {
     curl -fsSL get.docker.com -o get-docker.sh
     CHANNEL=stable sh get-docker.sh
     rm get-docker.sh
-
-    # Also install wsdd because it's required by some services
-    sudo apt install wsdd -y
 }
 
 function install_yq() {
@@ -17,27 +14,7 @@ function install_yq() {
     sudo chmod +x /usr/bin/yq
 }
 
-function disable_snap() {
-    sudo systemctl disable --now snapd || true
-    sudo apt purge -y snapd || true
-    sudo rm -rf /snap /var/snap /var/lib/snapd /var/cache/snapd /usr/lib/snapd ~/snap || true
-    cat << EOF | sudo tee -a /etc/apt/preferences.d/no-snap.pref
-Package: snapd
-Pin: release a=*
-Pin-Priority: -10
-EOF
-    sudo chown root:root /etc/apt/preferences.d/no-snap.pref
-}
-
 function better_performance() {
-    # Add user to sudoers
-    if ! sudo grep -q "$USER ALL=(ALL) NOPASSWD:ALL" /etc/sudoers.d/$USER; then
-        echo "Adding $USER to sudoers..."
-        sudo mkdir -p /etc/sudoers.d
-        sudo touch /etc/sudoers.d/$USER
-        echo "$USER ALL=(ALL) NOPASSWD:ALL" | sudo tee -a /etc/sudoers.d/$USER
-    fi
-
     # Tuning for better performance
     sudo sysctl -w net.core.rmem_max=2500000
     sudo sysctl -w net.core.wmem_max=2500000
@@ -49,31 +26,21 @@ function better_performance() {
     sudo sysctl -w fs.aio-max-nr=524288
     sudo sysctl -p
 
-    # Disable swap
-    sudo sudo swapoff -a
-
-    # Disable snapd
-    disable_snap
-
     # Set timezone to UTC
     sudo timedatectl set-timezone UTC
 
-    # Install latest kernel and intel-media-va-driver
-    DEBIAN_FRONTEND=noninteractive sudo apt update
-    apt list --installed | grep -q linux-generic-hwe-22.04 || sudo apt install -y linux-generic-hwe-22.04
-
     # Install docker
     apt list --installed | grep -q docker-ce || install_docker
+
+    # Add user to docker group
+    sudo usermod -aG docker $USER
 
     # Install yq. (Run install_yq only if the /usr/bin/yq does not exist.)
     [ -f /usr/bin/yq ] || install_yq
 
     # Install some basic tools
-    sudo DEBIAN_FRONTEND=noninteractive apt install -y \
-        apt-transport-https ca-certificates curl lsb-release \
-        software-properties-common wget git tree zip unzip vim net-tools traceroute dnsutils htop iotop pcp
+    sudo DEBIAN_FRONTEND=noninteractive apt install -y wsdd
 
-    # Clean docker cache (optional)
     # sudo docker system prune -a --volumes -f
     # sudo docker builder prune -f
 }
@@ -134,7 +101,7 @@ find . -name 'docker-compose.yml' | while read -r file; do
   yq eval -r '.services[].ports[]? | select(has("published")) | "\(.published) \(.protocol)"' "$file" | while read -r published protocol; do
     # If the protocol is not defined, skip this rule
     if [ -z "$protocol" ]; then
-      echo "[Warning] In file $file, Protocol is not defined for $published, skipping..."
+        echo "Skipping $published/$protocol"
     else
       echo "sudo ufw allow ${published}/${protocol}"
       sudo ufw allow "${published}/${protocol}"
