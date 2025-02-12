@@ -46,7 +46,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 22G
+          memory: 32G
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
@@ -65,8 +65,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '4.0'
-          memory: 8G
+          cpus: '10.0'
+          memory: 16G
       replicas: 6
       # Disable auto-redeploy, because runner may stop when CI is running.
 
