@@ -99,7 +99,6 @@ create_secret gitlab-runner-token
 create_secret neko-image-gallery-access-token
 create_secret neko-image-gallery-admin-token
 create_secret nuget-publish-key
-create_secret openai-completion-api-url
 create_secret xray-uuid
 
 echo "Creating networks..."
