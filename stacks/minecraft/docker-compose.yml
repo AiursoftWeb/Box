@@ -22,7 +22,7 @@ services:
         published: 19132
         protocol: udp
         mode: host
-      # 8123 will by proxy by FRP.
+      # 8123 will by proxy by Caddy.
     deploy:
       resources:
         limits:
