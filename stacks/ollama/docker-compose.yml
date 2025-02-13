@@ -37,7 +37,7 @@ services:
       - "-c"
       - |
           apk add curl && \
-          sleep 20 && \
+          sleep 40 && \
           while true; do \
             curl -v http://ollama_server:11434/api/generate -d '{"model": "deepseek-r1:32b"}'; \
             sleep 900; \
