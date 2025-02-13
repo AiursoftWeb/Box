@@ -12,13 +12,19 @@ services:
     depends_on:
       - ollama_starter
     image: hub.aiursoft.cn/alpine
-    entrypoint: ["/bin/sh", "-c", "apk add curl && sleep 20 && while true; do sleep 900; curl -s http://ollama_server:11434/api/generate -d '{\"model\": \"deepseek-r1:32b\"}'; done"]
+    networks: 
+      - proxy_app
+    entrypoint: ["/bin/sh", "-c", "apk add curl && sleep 20 && while true; do sleep 900; curl -v http://ollama_server:11434/api/generate -d '{\"model\": \"deepseek-r1:32b\"}'; done"]
     deploy:
       resources:
         limits:
           memory: 128M
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
+
+networks:
+  proxy_app:
+    external: true
 
 volumes:
   ollama-data:
