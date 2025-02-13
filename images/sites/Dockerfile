@@ -30,6 +30,6 @@ COPY --from=config-build-env /app/Dist/Caddyfile /etc/caddy/Caddyfile
 # Check if any fatal errors in caddyfile
 RUN caddy validate --config /etc/caddy/Caddyfile --adapter caddyfile && \
     mkdir -p /var/log/caddy && \
-    touch /var/log/caddy/caddy.log
+    touch /data/caddy/logs/web.log
 
-ENTRYPOINT ["sh", "-c", "caddy run --config /etc/caddy/Caddyfile --adapter caddyfile & tail -f /var/log/caddy/caddy.log & wait"]
+ENTRYPOINT ["sh", "-c", "caddy run --config /etc/caddy/Caddyfile --adapter caddyfile & tail -f /data/caddy/logs/web.log & wait"]
