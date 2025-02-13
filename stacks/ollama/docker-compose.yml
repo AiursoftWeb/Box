@@ -12,15 +12,18 @@ services:
       - |
           echo 'Starter is starting ollama...' && \
           (docker kill ollama_server || true) && \
-          docker run --tty --rm --gpus=all \
-          -v /swarm-vol/ollama/data:/root/.ollama \
-          --network proxy_app \
-          --name ollama_server \
-          -e OLLAMA_HOST=0.0.0.0 \
-          -e OLLAMA_KEEP_ALIVE=200m \
-          -e OLLAMA_FLASH_ATTENTION=1 \
-          -e OLLAMA_KV_CACHE_TYPE=q8_0 \
-          -e GIN_MODE=release \
+          docker run 
+            --tty \
+            --rm \
+            --gpus=all \
+            --network proxy_app \
+            --name ollama_server \
+            -v /swarm-vol/ollama/data:/root/.ollama \
+            -e OLLAMA_HOST=0.0.0.0 \
+            -e OLLAMA_KEEP_ALIVE=200m \
+            -e OLLAMA_FLASH_ATTENTION=1 \
+            -e OLLAMA_KV_CACHE_TYPE=q8_0 \
+            -e GIN_MODE=release \
           hub.aiursoft.cn/ollama/ollama:latest
 
   ollama_warmup:
@@ -36,7 +39,7 @@ services:
           apk add curl && \
           sleep 20 && \
           while true; do \
-            curl -v http://ollama_server:11434/api/generate -d '{\"model\": \"deepseek-r1:32b\"}'; \
+            curl -v http://ollama_server:11434/api/generate -d '{"model": "deepseek-r1:32b"}'; \
             sleep 900; \
           done
     deploy:
