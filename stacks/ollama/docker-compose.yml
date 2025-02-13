@@ -6,7 +6,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       # Kill existing ollama and then start a new ollama
-    entrypoint: ["/bin/sh", "-c", "echo 'Starter is starting ollama...' && docker kill ollama && docker run --tty --rm --gpus=all -v /swarm-vol/ollama/data:/root/.ollama --network proxy_app --name ollama_server hub.aiursoft.cn/ollama/ollama:latest"]
+    entrypoint: ["/bin/sh", "-c", "echo 'Starter is starting ollama...' && docker kill ollama && docker run --tty --rm --gpus=all -v /swarm-vol/ollama/data:/root/.ollama --network proxy_app --name ollama_server -e OLLAMA_HOST=0.0.0.0 -e OLLAMA_KEEP_ALIVE=200m -e OLLAMA_FLASH_ATTENTION=1 -e OLLAMA_KV_CACHE_TYPE=q8_0 hub.aiursoft.cn/ollama/ollama:latest"]
 
 volumes:
   ollama-data:
