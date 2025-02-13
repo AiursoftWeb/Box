@@ -1,0 +1,17 @@
+version: "3.6"
+
+services:
+  ollama_starter:
+    image: hub.aiursoft.cn/aiursoft/internalimages/ubuntu-with-docker:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      # Kill existing ollama and then start a new ollama
+    entrypoint: ["/bin/sh", "-c", "echo 'Starter is starting ollama...' && docker kill ollama && docker run --tty --rm --gpus=all -v /swarm-vol/ollama/data:/root/.ollama --network proxy_app --name ollama_server hub.aiursoft.cn/ollama/ollama:latest"]
+
+volumes:
+  ollama-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/ollama/data
