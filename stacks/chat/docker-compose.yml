@@ -6,10 +6,10 @@ services:
     volumes:
       - chat-data:/data
     secrets:
-      - source: openai-completion-api-url
-        target: OpenAI-CompletionApiUrl
       - source: bing-search-key
         target: BingSearchAPIKey
+    environment:
+      OpenAI__CompletionApiUrl: http://ollama_server:11434/api/chat
     networks:
       - proxy_app
     deploy:
@@ -61,9 +61,5 @@ volumes:
       device: /swarm-vol/open-webui-data
 
 secrets:
-  # openai-key:
-  #   external: true
-  openai-completion-api-url:
-    external: true
   bing-search-key:
     external: true
