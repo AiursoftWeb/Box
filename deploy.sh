@@ -20,7 +20,7 @@ function install_yq() {
 
 function ensure_nvidia_gpu() {
     # ensure package: nvidia-container-toolkit and nvidia-docker2
-    apt list --installed | grep -q nvidia-container-toolkit2 || {
+    apt list --installed | grep -q nvidia-container-toolkit || {
         doc_link=https://docs.anduinos.com/Applications/Development/Docker/Docker.html
         echo "Please install nvidia-container-toolkit and nvidia-docker2. See $doc_link for more information."
         exit 1
