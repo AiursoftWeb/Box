@@ -12,7 +12,7 @@ services:
       - |
           echo 'Starter is starting ollama...' && \
           (docker kill ollama_server || true) && \
-          docker run 
+          docker run \
             --tty \
             --rm \
             --gpus=all \
