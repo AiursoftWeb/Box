@@ -37,6 +37,10 @@ services:
         target: app_admin_token
     # runtime: nvidia
     deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 16G
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
       # resources:

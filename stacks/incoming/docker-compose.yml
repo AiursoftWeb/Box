@@ -20,7 +20,7 @@ services:
     volumes:
       - sites-data:/data
     # Do NOT auto redeploy this. Because this is built locally.
-    # Evertime we run the deploy.sh will update the image.
+    # Every time we run the deploy.sh will update the image.
     # During incidents, we may need to manually ssh into the server and restart the service.
 
   frpc_ningbo:
@@ -33,7 +33,7 @@ services:
       - source: frp-token
         target: frp-token
     # Do NOT auto redeploy this. Because this is built locally.
-    # Evertime we run the deploy.sh will update the image.
+    # Every time we run the deploy.sh will update the image.
     # During incidents, we may need to manually ssh into the server and restart the service.
 
   frpc_jp:
@@ -46,7 +46,7 @@ services:
       - source: frp-token
         target: frp-token
     # Do NOT auto redeploy this. Because this is built locally.
-    # Evertime we run the deploy.sh will update the image.
+    # Every time we run the deploy.sh will update the image.
     # During incidents, we may need to manually ssh into the server and restart the service.
 
 volumes:

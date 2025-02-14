@@ -17,16 +17,6 @@ services:
       - net
       - proxy_app
     deploy:
-      resources:
-        limits:
-          cpus: '0.50'
-          memory: 1024M
-        reservations:
-          cpus: '0.25'
-          memory: 512M
-      placement:
-        constraints:
-          - node.role == manager
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
@@ -37,13 +27,6 @@ services:
     networks:
       - net
     deploy:
-      resources:
-        limits:
-          cpus: '0.30'
-          memory: 256M
-        reservations:
-          cpus: '0.15'
-          memory: 128M
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
@@ -54,13 +37,6 @@ services:
     networks:
       - net
     deploy:
-      resources:
-        limits:
-          cpus: '0.60'
-          memory: 512M
-        reservations:
-          cpus: '0.30'
-          memory: 128M
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
@@ -80,10 +56,10 @@ services:
       resources:
         limits:
           cpus: '0.10'
-          memory: 64M
+          memory: 256M
         reservations:
           cpus: '0.05'
-          memory: 32M
+          memory: 64M
 
 networks:
   net:

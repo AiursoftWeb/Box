@@ -6,32 +6,28 @@ function install_docker() {
     curl -fsSL get.docker.com -o get-docker.sh
     CHANNEL=stable sh get-docker.sh
     rm get-docker.sh
-
-    # Also install wsdd because it's required by some services
-    sudo apt install wsdd -y
 }
 
-function disable_snap() {
-    sudo systemctl disable --now snapd || true
-    sudo apt purge -y snapd || true
-    sudo rm -rf /snap /var/snap /var/lib/snapd /var/cache/snapd /usr/lib/snapd ~/snap || true
-    cat << EOF | sudo tee -a /etc/apt/preferences.d/no-snap.pref
-Package: snapd
-Pin: release a=*
-Pin-Priority: -10
-EOF
-    sudo chown root:root /etc/apt/preferences.d/no-snap.pref
+function init_docker_swarm() {
+    sudo docker swarm init  --advertise-addr $(hostname -I | awk '{print $1}')
+}
+
+function install_yq() {
+    download_link=https://github.com/mikefarah/yq/releases/download/v4.45.1/yq_linux_amd64
+    sudo wget -O /usr/bin/yq $download_link
+    sudo chmod +x /usr/bin/yq
+}
+
+function ensure_nvidia_gpu() {
+    # ensure package: nvidia-container-toolkit and nvidia-docker2
+    apt list --installed | grep -q nvidia-container-toolkit || {
+        doc_link=https://docs.anduinos.com/Applications/Development/Docker/Docker.html
+        echo "Please install nvidia-container-toolkit and nvidia-docker2. See $doc_link for more information."
+        exit 1
+    }
 }
 
 function better_performance() {
-    # Add user to sudoers
-    if ! sudo grep -q "$USER ALL=(ALL) NOPASSWD:ALL" /etc/sudoers.d/$USER; then
-        echo "Adding $USER to sudoers..."
-        sudo mkdir -p /etc/sudoers.d
-        sudo touch /etc/sudoers.d/$USER
-        echo "$USER ALL=(ALL) NOPASSWD:ALL" | sudo tee -a /etc/sudoers.d/$USER
-    fi
-
     # Tuning for better performance
     sudo sysctl -w net.core.rmem_max=2500000
     sudo sysctl -w net.core.wmem_max=2500000
@@ -43,28 +39,27 @@ function better_performance() {
     sudo sysctl -w fs.aio-max-nr=524288
     sudo sysctl -p
 
-    # Disable swap
-    sudo sudo swapoff -a
-
-    # Disable snapd
-    disable_snap
-
     # Set timezone to UTC
     sudo timedatectl set-timezone UTC
 
-    # Install latest kernel and intel-media-va-driver
-    DEBIAN_FRONTEND=noninteractive sudo apt update
-    apt list --installed | grep -q linux-generic-hwe-22.04 || sudo apt install -y linux-generic-hwe-22.04
-
-    # Install docker
+    # Install docker if not installed
     apt list --installed | grep -q docker-ce || install_docker
 
-    # Install some basic tools
-    sudo DEBIAN_FRONTEND=noninteractive apt install -y \
-        apt-transport-https ca-certificates curl lsb-release \
-        software-properties-common wget git tree zip unzip vim net-tools traceroute dnsutils htop iotop pcp
+    # Ensure has Nvidia GPU and have installed nvidia-container-toolkit and nvidia-docker2
+    ensure_nvidia_gpu
 
-    # Clean docker cache (optional)
+    # Init docker swarm if not initialized
+    sudo docker info | grep -q "Swarm: active" || init_docker_swarm
+
+    # Add user to docker group
+    sudo usermod -aG docker $USER
+
+    # Install yq. (Run install_yq only if the /usr/bin/yq does not exist.)
+    [ -f /usr/bin/yq ] || install_yq
+
+    # Install some basic tools
+    sudo DEBIAN_FRONTEND=noninteractive apt install -y wsdd
+
     # sudo docker system prune -a --volumes -f
     # sudo docker builder prune -f
 }
@@ -88,8 +83,8 @@ function create_network() {
     subnet=$2
     known_networks=$(sudo docker network ls --format '{{.Name}}')
     if [[ $known_networks != *"$network_name"* ]]; then
-        networkdId=$(sudo docker network create --driver overlay --subnet $subnet --scope swarm $network_name)
-        echo "Network $network_name created with id $networkdId"
+        networkId=$(sudo docker network create --driver overlay --attachable --subnet $subnet --scope swarm $network_name)
+        echo "Network $network_name created with id $networkId"
     fi
 }
 
@@ -97,16 +92,14 @@ echo "Deploying the cluster"
 better_performance
 
 echo "Creating secrets..."
-create_secret frp-token
-create_secret xray-uuid
-create_secret openai-key
-create_secret openai-instance
 create_secret bing-search-key
-create_secret nuget-publish-key
-create_secret gitlab-runner-token
+create_secret frp-token
 create_secret github-token
+create_secret gitlab-runner-token
 create_secret neko-image-gallery-access-token
 create_secret neko-image-gallery-admin-token
+create_secret nuget-publish-key
+create_secret xray-uuid
 
 echo "Creating networks..."
 create_network proxy_app 10.234.0.0/16
@@ -117,6 +110,20 @@ find . -name 'docker-compose.yml' | while read file; do
   awk '{if(/device:/) print $2}' "$file" | while read -r path; do
     echo "sudo mkdir -p \"$path\""
     sudo mkdir -p "$path"
+  done
+done
+
+echo "Opening firewall ports..."
+find . -name 'docker-compose.yml' | while read -r file; do
+  echo "Processing $file..."
+  yq eval -r '.services[].ports[]? | select(has("published")) | "\(.published) \(.protocol)"' "$file" | while read -r published protocol; do
+    # If the protocol is not defined, skip this rule
+    if [ -z "$protocol" ]; then
+        echo "Skipping $published/$protocol"
+    else
+      echo "sudo ufw allow ${published}/${protocol}"
+      sudo ufw allow "${published}/${protocol}"
+    fi
   done
 done
 

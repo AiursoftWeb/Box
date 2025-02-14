@@ -2,39 +2,41 @@ version: '3.3'
 
 services:
   chat:
-    depends_on:
-      - api
-    image: hub.aiursoft.cn/aiursoft/aiursoftchat
-    networks:
-      - internal
-      - proxy_app
-    environment:
-      - HIDE_USER_API_KEY=1
-      - DISABLE_GPT4=1
-      - PROTOCOL=http
-      - BASE_URL=api:5000
-      - OPENAI_API_KEY=dummy
-      - PORT=5000
-    deploy:
-      replicas: 2
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
-
-  api:
     image: hub.aiursoft.cn/aiursoft/gptgateway
     volumes:
       - chat-data:/data
     secrets:
-      - source: openai-key
-        target: OpenAI-Token
-      - source: openai-instance
-        target: OpenAI-Instance
       - source: bing-search-key
         target: BingSearchAPIKey
+    environment:
+      OpenAI__CompletionApiUrl: http://ollama_server:11434/api/chat
     networks:
-      - internal
+      - proxy_app
     deploy:
-      replicas: 3
+      replicas: 1
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+  open-web:
+    image: hub.aiursoft.cn/ghcr.io/open-webui/open-webui:main
+    environment:
+      # Temp endpoint. Migrate to container ASAP.
+      - OLLAMA_BASE_URL=http://ollama_server:11434/
+      - ENABLE_OPENAI_API=False
+      - WEBUI_AUTH=True
+      - ENABLE_SIGNUP=True
+      - DEFAULT_USER_ROLE=user
+      - SHOW_ADMIN_DETAILS=False
+      - ENABLE_COMMUNITY_SHARING=False
+      - ENABLE_MESSAGE_RATING=False
+      - ENABLE_TAGS_GENERATION=False
+      - ENABLE_EVALUATION_ARENA_MODELS=False
+    volumes:
+      - open-webui-data:/app/backend/data
+    networks:
+      - proxy_app
+    deploy:
+      replicas: 1
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
@@ -51,11 +53,13 @@ volumes:
       type: none
       o: bind
       device: /swarm-vol/chat-data
+  open-webui-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/open-webui-data
 
 secrets:
-  openai-key:
-    external: true
-  openai-instance:
-    external: true
   bing-search-key:
     external: true
