@@ -8,3 +8,10 @@ services:
         published: 3389
         protocol: tcp
         mode: host
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 4G
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'

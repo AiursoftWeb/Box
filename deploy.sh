@@ -8,10 +8,23 @@ function install_docker() {
     rm get-docker.sh
 }
 
+function init_docker_swarm() {
+    sudo docker swarm init  --advertise-addr $(hostname -I | awk '{print $1}')
+}
+
 function install_yq() {
     download_link=https://github.com/mikefarah/yq/releases/download/v4.45.1/yq_linux_amd64
     sudo wget -O /usr/bin/yq $download_link
     sudo chmod +x /usr/bin/yq
+}
+
+function ensure_nvidia_gpu() {
+    # ensure package: nvidia-container-toolkit and nvidia-docker2
+    apt list --installed | grep -q nvidia-container-toolkit || {
+        doc_link=https://docs.anduinos.com/Applications/Development/Docker/Docker.html
+        echo "Please install nvidia-container-toolkit and nvidia-docker2. See $doc_link for more information."
+        exit 1
+    }
 }
 
 function better_performance() {
@@ -33,8 +46,14 @@ function better_performance() {
     # Set timezone to UTC
     sudo timedatectl set-timezone UTC
 
-    # Install docker
+    # Install docker if not installed
     apt list --installed | grep -q docker-ce || install_docker
+
+    # Ensure has Nvidia GPU and have installed nvidia-container-toolkit and nvidia-docker2
+    ensure_nvidia_gpu
+
+    # Init docker swarm if not initialized
+    sudo docker info | grep -q "Swarm: active" || init_docker_swarm
 
     # Add user to docker group
     sudo usermod -aG docker $USER
@@ -68,8 +87,8 @@ function create_network() {
     subnet=$2
     known_networks=$(sudo docker network ls --format '{{.Name}}')
     if [[ $known_networks != *"$network_name"* ]]; then
-        networkdId=$(sudo docker network create --driver overlay --subnet $subnet --scope swarm $network_name)
-        echo "Network $network_name created with id $networkdId"
+        networkId=$(sudo docker network create --driver overlay --attachable --subnet $subnet --scope swarm $network_name)
+        echo "Network $network_name created with id $networkId"
     fi
 }
 
@@ -84,7 +103,6 @@ create_secret gitlab-runner-token
 create_secret neko-image-gallery-access-token
 create_secret neko-image-gallery-admin-token
 create_secret nuget-publish-key
-create_secret openai-completion-api-url
 create_secret xray-uuid
 
 echo "Creating networks..."

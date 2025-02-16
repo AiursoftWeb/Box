@@ -43,6 +43,11 @@ services:
         prometheus_monitoring['enable'] = false
         sidekiq['metrics_enabled'] = false
         puma['exporter_enabled'] = false
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80"]
+      interval: 60s
+      timeout: 10s
+      retries: 3
     deploy:
       resources:
         limits:
