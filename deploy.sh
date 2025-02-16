@@ -39,7 +39,7 @@ function better_performance() {
     sudo sysctl -w fs.aio-max-nr=524288
     
     # Patch /proc/sys/fs/aio-max-nr
-    echo 1048576 | sudo tee /proc/sys/fs/aio-max-nr
+    echo 2097152 | sudo tee /proc/sys/fs/aio-max-nr
     
     sudo sysctl -p
 
