@@ -38,11 +38,11 @@ services:
     # runtime: nvidia
     deploy:
       resources:
-        reservations:
-          generic_resources:
-            - discrete_resource_spec:
-                kind: "NVIDIA-GPU"
-                value: 0
+        # reservations:
+        #   generic_resources:
+        #     - discrete_resource_spec:
+        #         kind: "NVIDIA-GPU"
+        #         value: 0
         limits:
           cpus: '8.0'
           memory: 24G
