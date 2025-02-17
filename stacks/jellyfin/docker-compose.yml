@@ -38,6 +38,11 @@ services:
         mode: host
     deploy:
       resources:
+        reservations:
+          generic_resources:
+            - discrete_resource_spec:
+                kind: "NVIDIA-GPU"
+                value: 0
         limits:
           memory: 16G
       labels:
