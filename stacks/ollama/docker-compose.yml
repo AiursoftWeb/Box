@@ -1,30 +1,53 @@
 version: "3.6"
 
 services:
-  ollama_starter:
-    image: hub.aiursoft.cn/aiursoft/internalimages/ubuntu-with-docker:latest
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      # Kill existing ollama and then start a new ollama
-    entrypoint:
-      - "/bin/sh"
-      - "-c"
-      - |
-          echo 'Starter is starting ollama...' && \
-          (docker kill ollama_server || true) && \
-          docker run \
-            --tty \
-            --rm \
-            --gpus=all \
-            --network proxy_app \
-            --name ollama_server \
-            -v /swarm-vol/ollama/data:/root/.ollama \
-            -e OLLAMA_HOST=0.0.0.0 \
-            -e OLLAMA_KEEP_ALIVE=200m \
-            -e OLLAMA_FLASH_ATTENTION=1 \
-            -e OLLAMA_KV_CACHE_TYPE=q8_0 \
-            -e GIN_MODE=release \
-          hub.aiursoft.cn/ollama/ollama:latest
+  # ollama_starter:
+  #   image: hub.aiursoft.cn/aiursoft/internalimages/ubuntu-with-docker:latest
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #     # Kill existing ollama and then start a new ollama
+  #   entrypoint:
+  #     - "/bin/sh"
+  #     - "-c"
+  #     - |
+  #         echo 'Starter is starting ollama...' && \
+  #         (docker kill ollama_server || true) && \
+  #         docker run \
+  #           --tty \
+  #           --rm \
+  #           --gpus=all \
+  #           --network proxy_app \
+  #           --name ollama_server \
+  #           -v /swarm-vol/ollama/data:/root/.ollama \
+  #           -e OLLAMA_HOST=0.0.0.0 \
+  #           -e OLLAMA_KEEP_ALIVE=200m \
+  #           -e OLLAMA_FLASH_ATTENTION=1 \
+  #           -e OLLAMA_KV_CACHE_TYPE=q8_0 \
+  #           -e GIN_MODE=release \
+  #         hub.aiursoft.cn/ollama/ollama:latest
+
+  ollama_server:
+    image: hub.aiursoft.cn/ollama/ollama:latest
+    networks:
+      - proxy_app
+    environment:
+      - OLLAMA_HOST=0.0.0.0
+      - OLLAMA_KEEP_ALIVE=200m
+      - OLLAMA_FLASH_ATTENTION=1
+      - OLLAMA_KV_CACHE_TYPE=q8_0
+      - GIN_MODE=release
+    deploy:
+      resources:
+        reservations:
+          generic_resources:
+            - discrete_resource_spec:
+                kind: "NVIDIA-GPU"
+                value: 0
+      replicas: 1
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 3
 
   ollama_warmup:
     depends_on:

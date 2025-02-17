@@ -58,14 +58,14 @@ function better_performance() {
     [ -f /usr/bin/yq ] || install_yq
 
     # Install some basic tools
-    sudo DEBIAN_FRONTEND=noninteractive apt install -y wsdd
+    sudo DEBIAN_FRONTEND=noninteractive apt install -y wsdd valgrind
 
     # sudo docker system prune -a --volumes -f
     # sudo docker builder prune -f
 }
 
 function deploy() {
-    sudo docker stack deploy -c "$1" "$2" --detach
+    sudo docker stack deploy -c "$1" "$2" --detach --prune
 }
 
 function create_secret() {
@@ -141,8 +141,30 @@ while curl -s http://localhost:8080/ > /dev/null; [ $? -ne 0 ]; do
     sleep 1
 done
 
+echo "Configuring docker daemon for Nvidia GPU..."
+GPU_ID=$(valgrind nvidia-smi -a 2> /dev/null | grep UUID | awk '{print substr($4,0,12)}') # FUCKING NVIDIA, WHY DO YOU MAKE IT SO HARD TO GET THE GPU ID?!
+echo "GPU_ID: $GPU_ID"
+sudo tee /etc/docker/daemon.json <<EOF
+{
+  "runtimes": {
+    "nvidia": {
+      "path": "/usr/bin/nvidia-container-runtime",
+      "runtimeArgs": []
+    }
+  },
+  "default-runtime": "nvidia",
+  "node-generic-resources": [
+    "NVIDIA-GPU=$GPU_ID"
+  ],
+  "insecure-registries": [
+    "localhost:8080"
+  ]
+}
+EOF
+sudo sed -i 's/#swarm-resource = "DOCKER_RESOURCE_GPU"/swarm-resource = "DOCKER_RESOURCE_GPU"/' /etc/nvidia-container-runtime/config.toml
+echo "[OPTIONAL] Please restart the docker daemon to apply the changes."
+
 echo "Prebuild images..."
-echo "{ \"insecure-registries\":[\"localhost:8080\"] }" | sudo tee /etc/docker/daemon.json
 mkdir -p ./images/sites/discovered && cp ./stacks/**/*.conf ./images/sites/discovered
 
 echo "Building images..."

@@ -1,6 +1,6 @@
 # docker pull hub.aiursoft.cn/passivelemon/terraria-docker:latest
 
-version: '3.3'
+version: '3.9'
 
 services:
   server:
