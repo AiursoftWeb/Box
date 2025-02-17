@@ -108,8 +108,7 @@ create_network frp_net 10.233.0.0/16
 echo "Creating data folders..."
 find . -name 'docker-compose.yml' | while read file; do
   awk '{if(/device:/) print $2}' "$file" | while read -r path; do
-    echo "sudo mkdir -p \"$path\""
-    sudo mkdir -p "$path"
+    sudo mkdir -p "$path" && echo "Created $path"
   done
 done
 
