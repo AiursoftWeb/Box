@@ -119,8 +119,7 @@ find . -name 'docker-compose.yml' | while read -r file; do
     if [ -z "$protocol" ]; then
       continue
     else
-      sudo ufw allow "${published}/${protocol}"; then
-      echo "Allowed ${published}/${protocol}"
+      sudo ufw allow "${published}/${protocol}" && echo "Allowed ${published}/${protocol}"
     fi
   done
 done
