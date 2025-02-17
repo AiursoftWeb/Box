@@ -186,6 +186,7 @@ while curl -s https://hub.aiursoft.cn > /dev/null; [ $? -ne 0 ]; do
 done
 
 echo "Deploying business stacks..."
+serviceCount=$(sudo docker service ls --format '{{.Name}}' | wc -l | awk '{print $1}')
 find ./stacks -name 'docker-compose.yml' -print0 | while IFS= read -r -d '' file; do
     # Skip the registry and incoming stacks
     if [[ $file == *"registry"* ]]; then
@@ -197,5 +198,8 @@ find ./stacks -name 'docker-compose.yml' -print0 | while IFS= read -r -d '' file
     
     deploy "$file" "$(basename "$(dirname "$file")")"
 
-    sleep 10
+    # If serviceCount < 10, which means this is a new cluster. Sleep 10 to slow down the deployment.
+    if [ $serviceCount -lt 10 ]; then
+        sleep 10
+    fi
 done
