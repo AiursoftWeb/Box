@@ -3,6 +3,8 @@ version: "3.6"
 services:
   ollama_server:
     image: hub.aiursoft.cn/ollama/ollama:latest
+    volumes:
+      - ollama-data:/root/.ollama
     networks:
       - ollama_net
     environment:
