@@ -104,7 +104,7 @@ create_secret xray-uuid
 echo "Creating networks..."
 create_network proxy_app 10.234.0.0/16
 create_network frp_net 10.233.0.0/16
-craete_network ollama_net 20.232.0.0/16
+create_network ollama_net 20.232.0.0/16
 
 echo "Creating data folders..."
 find . -name 'docker-compose.yml' | while read file; do
