@@ -115,14 +115,12 @@ done
 
 echo "Opening firewall ports..."
 find . -name 'docker-compose.yml' | while read -r file; do
-  echo "Processing $file..."
   yq eval -r '.services[].ports[]? | select(has("published")) | "\(.published) \(.protocol)"' "$file" | while read -r published protocol; do
-    # If the protocol is not defined, skip this rule
     if [ -z "$protocol" ]; then
-        echo "Skipping $published/$protocol"
+      continue
     else
-      echo "sudo ufw allow ${published}/${protocol}"
-      sudo ufw allow "${published}/${protocol}"
+      sudo ufw allow "${published}/${protocol}"; then
+      echo "Allowed ${published}/${protocol}"
     fi
   done
 done
