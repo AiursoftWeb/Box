@@ -12,6 +12,7 @@ services:
       OpenAI__CompletionApiUrl: http://ollama_server:11434/api/chat
     networks:
       - proxy_app
+      - ollama_net
     deploy:
       replicas: 1
       labels:
@@ -35,15 +36,16 @@ services:
       - open-webui-data:/app/backend/data
     networks:
       - proxy_app
+      - ollama_net
     deploy:
       replicas: 1
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
 networks:
-  internal:
-    driver: overlay
   proxy_app:
+    external: true
+  ollama_net:
     external: true
 
 volumes:

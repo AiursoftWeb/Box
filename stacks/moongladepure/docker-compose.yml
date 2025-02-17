@@ -16,6 +16,7 @@ services:
     networks:
       - anduin_app
       - proxy_app
+      - ollama_net
     deploy:
       replicas: 1
       labels:
@@ -51,6 +52,7 @@ services:
     networks:
       - jimmoen_app
       - proxy_app
+      - ollama_net
     deploy:
       replicas: 1
       labels:
@@ -86,6 +88,7 @@ services:
     networks:
       - rest_app
       - proxy_app
+      - ollama_net
     deploy:
       replicas: 1
       labels:
@@ -121,6 +124,7 @@ services:
     networks:
       - cody_app
       - proxy_app
+      - ollama_net
     deploy:
       replicas: 1
       labels:
@@ -156,6 +160,7 @@ services:
     networks:
       - gxhao_app
       - proxy_app
+      - ollama_net
     deploy:
       replicas: 1
       labels:
@@ -191,6 +196,7 @@ services:
     networks:
       - anois_app
       - proxy_app
+      - ollama_net
     deploy:
       replicas: 1
       labels:
@@ -226,6 +232,7 @@ services:
     networks:
       - dvorak_app
       - proxy_app
+      - ollama_net
     deploy:
       replicas: 1
       labels:
@@ -261,6 +268,7 @@ services:
     networks:
       - kitlau_app
       - proxy_app
+      - ollama_net
     deploy:
       replicas: 1
       labels:
@@ -296,6 +304,7 @@ services:
     networks:
       - xinboo_app
       - proxy_app
+      - ollama_net
     deploy:
       replicas: 1
       labels:
@@ -331,6 +340,7 @@ services:
     networks:
       - gbiner_app
       - proxy_app
+      - ollama_net
     deploy:
       replicas: 1
       labels:
@@ -366,6 +376,7 @@ services:
     networks:
       - rdf_app
       - proxy_app
+      - ollama_net
     deploy:
       replicas: 1
       labels:
@@ -401,6 +412,7 @@ services:
     networks:
       - lyx_app
       - proxy_app
+      - ollama_net
     deploy:
       replicas: 1
       labels:
@@ -436,6 +448,7 @@ services:
     networks:
       - shubuzuo_app
       - proxy_app
+      - ollama_net
     deploy:
       replicas: 1
       labels:
@@ -471,6 +484,7 @@ services:
     networks:
       - lily_app
       - proxy_app
+      - ollama_net
     deploy:
       replicas: 1
       labels:
@@ -506,6 +520,7 @@ services:
     networks:
       - carson_app
       - proxy_app
+      - ollama_net
     deploy:
       replicas: 1
       labels:
@@ -541,6 +556,7 @@ services:
     networks:
       - zoneblog_app
       - proxy_app
+      - ollama_net
     deploy:
       replicas: 1
       labels:
@@ -562,6 +578,8 @@ services:
         swarmpit.service.deployment.autoredeploy: 'true'
 
 networks:
+  ollama_net:
+    external: true
   proxy_app:
     external: true
   anduin_app:
