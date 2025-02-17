@@ -14,7 +14,7 @@ services:
         swarmpit.service.deployment.autoredeploy: 'true'
 
   server:
-    image: hub.aiursoft.cn/edgeneko/neko-image-gallery:edge-cpu
+    image: hub.aiursoft.cn/edgeneko/neko-image-gallery:edge-cuda
     #image: edgeneko/neko-image-gallery:latest-cpu # Avoid using mirror because this app updates very frequently
     networks:
       - proxy_app
@@ -38,17 +38,16 @@ services:
     # runtime: nvidia
     deploy:
       resources:
+        reservations:
+          generic_resources:
+            - discrete_resource_spec:
+                kind: "NVIDIA-GPU"
+                value: 0
         limits:
-          cpus: '4.0'
-          memory: 16G
+          cpus: '8.0'
+          memory: 24G
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
-      # resources:
-      #   reservations:
-      #     devices:
-      #       - driver: nvidia
-      #         count: all
-      #         capabilities: [gpu]
     command: ["--root-path", "/api"]
 
   qdrant_database:
