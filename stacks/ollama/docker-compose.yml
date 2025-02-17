@@ -25,6 +25,8 @@ services:
         condition: any
         delay: 5s
         max_attempts: 3
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
 
   ollama_warmup:
     depends_on:
