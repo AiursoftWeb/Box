@@ -45,7 +45,7 @@ services:
         #         value: 0
         limits:
           cpus: '8.0'
-          memory: 24G
+          memory: 8G
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
     command: ["--root-path", "/api"]
