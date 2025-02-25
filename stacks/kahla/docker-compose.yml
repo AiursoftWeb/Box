@@ -1,16 +1,6 @@
 version: '3.9'
 
 services:
-  app:
-    depends_on:
-      - server
-    image: hub.aiursoft.cn/aiursoft/kahla.app
-    networks:
-      - proxy_app
-    deploy:
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
-
   server:
     depends_on:
       - db
