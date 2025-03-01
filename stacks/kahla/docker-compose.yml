@@ -8,9 +8,9 @@ services:
     volumes:
       - kahla-data:/data
     environment:
-      ConnectionStrings__DbType: MySql
-      ConnectionStrings__AllowCache: True
-      ConnectionStrings__DefaultConnection: Server=db;Database=kahla;Uid=kahla;Pwd=kahla_password;
+        ConnectionStrings__DbType: MySql
+        ConnectionStrings__AllowCache: True
+        ConnectionStrings__DefaultConnection: Server=db;Database=kahla;Uid=kahla;Pwd=kahla_password;
     networks:
       - proxy_app
       - kahla_app
