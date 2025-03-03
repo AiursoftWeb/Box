@@ -44,7 +44,7 @@ services:
           apk add curl && \
           sleep 40 && \
           while true; do \
-            curl -v http://ollama_server:11434/api/generate -d '{"model": "deepseek-r1:32b"}'; \
+            curl -v http://ollama_server:11434/api/generate -d '{"model": "deepseek-r1:70b"}'; \
             sleep 900; \
           done
     deploy:
