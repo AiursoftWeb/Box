@@ -139,8 +139,15 @@ while curl -s http://localhost:8080/ > /dev/null; [ $? -ne 0 ]; do
 done
 
 echo "Configuring docker daemon for Nvidia GPU..."
-GPU_ID=$(valgrind nvidia-smi -a 2> /dev/null | grep UUID | awk '{print substr($4,0,12)}') # FUCKING NVIDIA, WHY DO YOU MAKE IT SO HARD TO GET THE GPU ID?!
-echo "GPU_ID: $GPU_ID"
+GPU_IDS=$(valgrind nvidia-smi -a 2> /dev/null | grep "GPU UUID" | awk '{print substr($4,5,36)}')
+echo "Detected GPU UUIDs:"
+echo "$GPU_IDS"
+JSON_GPU_RESOURCES=""
+for ID in $GPU_IDS; do
+    JSON_GPU_RESOURCES+="\"NVIDIA-GPU=$ID\","
+done
+JSON_GPU_RESOURCES=${JSON_GPU_RESOURCES%,}  # 去掉最后一个逗号
+
 sudo tee /etc/docker/daemon.json <<EOF
 {
   "runtimes": {
@@ -151,13 +158,14 @@ sudo tee /etc/docker/daemon.json <<EOF
   },
   "default-runtime": "nvidia",
   "node-generic-resources": [
-    "NVIDIA-GPU=$GPU_ID"
+    $JSON_GPU_RESOURCES
   ],
   "insecure-registries": [
     "localhost:8080"
   ]
 }
 EOF
+
 sudo sed -i 's/#swarm-resource = "DOCKER_RESOURCE_GPU"/swarm-resource = "DOCKER_RESOURCE_GPU"/' /etc/nvidia-container-runtime/config.toml
 echo "[OPTIONAL] Please restart the docker daemon to apply the changes."
 
