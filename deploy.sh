@@ -9,7 +9,7 @@ function install_docker() {
 }
 
 function init_docker_swarm() {
-    sudo docker swarm init  --advertise-addr $(hostname -I | awk '{print $1}')
+    sudo docker swarm init --advertise-addr $(hostname -I | awk '{print $1}')
 }
 
 function install_yq() {
@@ -148,7 +148,19 @@ for ID in $GPU_IDS; do
 done
 JSON_GPU_RESOURCES=${JSON_GPU_RESOURCES%,}  # 去掉最后一个逗号
 
-sudo tee /etc/docker/daemon.json <<EOF
+if [ -f /etc/docker/daemon.json ]; then
+    old_hash_daemon=$(sha256sum /etc/docker/daemon.json | awk '{print $1}')
+else
+    old_hash_daemon=""
+fi
+
+if [ -f /etc/nvidia-container-runtime/config.toml ]; then
+    old_hash_nvidia=$(sha256sum /etc/nvidia-container-runtime/config.toml | awk '{print $1}')
+else
+    old_hash_nvidia=""
+fi
+
+sudo tee /etc/docker/daemon.json > /dev/null <<EOF
 {
   "runtimes": {
     "nvidia": {
@@ -165,9 +177,14 @@ sudo tee /etc/docker/daemon.json <<EOF
   ]
 }
 EOF
-
 sudo sed -i 's/#swarm-resource = "DOCKER_RESOURCE_GPU"/swarm-resource = "DOCKER_RESOURCE_GPU"/' /etc/nvidia-container-runtime/config.toml
-echo "[OPTIONAL] Please restart the docker daemon to apply the changes."
+
+new_hash_daemon=$(sha256sum /etc/docker/daemon.json | awk '{print $1}')
+new_hash_nvidia=$(sha256sum /etc/nvidia-container-runtime/config.toml | awk '{print $1}')
+if [ "$old_hash_daemon" != "$new_hash_daemon" ] || [ "$old_hash_nvidia" != "$new_hash_nvidia" ]; then
+    echo "Configuration files changed. Restarting docker service..."
+    sudo systemctl restart docker.service
+fi
 
 echo "Prebuild images..."
 mkdir -p ./images/sites/discovered && cp ./stacks/**/*.conf ./images/sites/discovered

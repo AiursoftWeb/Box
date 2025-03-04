@@ -20,9 +20,6 @@ services:
             - discrete_resource_spec:
                 kind: "NVIDIA-GPU"
                 value: 0
-            - discrete_resource_spec:
-                kind: "NVIDIA-GPU"
-                value: 1
       replicas: 1
       restart_policy:
         condition: any
@@ -44,7 +41,7 @@ services:
           apk add curl && \
           sleep 40 && \
           while true; do \
-            curl -v http://ollama_server:11434/api/generate -d '{"model": "deepseek-r1:70b"}'; \
+            curl -v http://ollama_server:11434/api/generate -d '{"model": "deepseek-r1:32b"}'; \
             sleep 900; \
           done
     deploy:
