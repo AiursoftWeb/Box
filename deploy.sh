@@ -184,6 +184,8 @@ new_hash_nvidia=$(sha256sum /etc/nvidia-container-runtime/config.toml | awk '{pr
 if [ "$old_hash_daemon" != "$new_hash_daemon" ] || [ "$old_hash_nvidia" != "$new_hash_nvidia" ]; then
     echo "Configuration files changed. Restarting docker service..."
     sudo systemctl restart docker.service
+else
+    echo "Configuration files not changed."
 fi
 
 echo "Prebuild images..."
