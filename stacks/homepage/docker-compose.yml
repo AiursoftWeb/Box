@@ -10,15 +10,6 @@ services:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
-  app-compliant:
-    image: hub.aiursoft.cn/aiursoft/homepage:latest # Or: compliant
-    networks:
-      - proxy_app
-    deploy:
-      replicas: 2
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
-
 networks:
   proxy_app:
     external: true
