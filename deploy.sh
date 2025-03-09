@@ -48,6 +48,9 @@ function ensure_nvidia_gpu() {
 }
 
 function better_performance() {
+    # Avoid system sleep
+    sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
+
     # Tuning for better performance
     sudo sysctl -w net.core.rmem_max=2500000
     sudo sysctl -w net.core.wmem_max=2500000
