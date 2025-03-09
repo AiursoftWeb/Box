@@ -32,6 +32,8 @@ services:
       - ENABLE_MESSAGE_RATING=False
       - ENABLE_TAGS_GENERATION=False
       - ENABLE_EVALUATION_ARENA_MODELS=False
+      - USER_PERMISSIONS_CHAT_FILE_UPLOAD=False
+      - USER_PERMISSIONS_CHAT_TEMPORARY=False
     volumes:
       - open-webui-data:/app/backend/data
     networks:

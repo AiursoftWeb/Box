@@ -19,6 +19,13 @@ function install_yq() {
 }
 
 function ensure_nvidia_gpu() {
+    # ensure Nvidia GPU exists
+    nvidia-smi > /dev/null || {
+        doc_link=https://docs.anduinos.com/Applications/Development/Docker/Docker.html
+        echo "Please ensure Nvidia GPU exists. See $doc_link for more information."
+        exit 1
+    }
+
     # ensure package: nvidia-container-toolkit and nvidia-docker2
     apt list --installed | grep -q nvidia-container-toolkit || {
         doc_link=https://docs.anduinos.com/Applications/Development/Docker/Docker.html
@@ -41,12 +48,11 @@ function better_performance() {
 
     # Set timezone to UTC
     sudo timedatectl set-timezone UTC
+}
 
+function ensure_docker_ready() {
     # Install docker if not installed
     apt list --installed | grep -q docker-ce || install_docker
-
-    # Ensure has Nvidia GPU and have installed nvidia-container-toolkit and nvidia-docker2
-    ensure_nvidia_gpu
 
     # Init docker swarm if not initialized
     sudo docker info | grep -q "Swarm: active" || init_docker_swarm
@@ -59,9 +65,18 @@ function better_performance() {
 
     # Install some basic tools
     sudo DEBIAN_FRONTEND=noninteractive apt install -y wsdd valgrind
+}
 
-    # sudo docker system prune -a --volumes -f
-    # sudo docker builder prune -f
+function clean_up_docker() {
+    # if there is no stack deployed, run the system prune command
+    # else, log and skip cleaning.
+    if [ $(sudo docker stack ls --format '{{.Name}}' | wc -l) -eq 0 ]; then
+        echo "Seems running on a new cluster. Cleaning up docker..."
+        sudo docker system prune -a --volumes -f
+        sudo docker builder prune -f
+    else
+        echo "There are stacks already deployed and running. Skip cleaning."
+    fi
 }
 
 function deploy() {
@@ -88,8 +103,19 @@ function create_network() {
     fi
 }
 
-echo "Deploying the cluster"
+
+# Ensure has Nvidia GPU and have installed nvidia-container-toolkit and nvidia-docker2
+echo "Ensure has Nvidia GPU and have installed..."
+ensure_nvidia_gpu
+
+echo "Tuning for better performance..."
 better_performance
+
+echo "Ensure docker is ready and in Swarm manager mode..."
+ensure_docker_ready
+
+echo "Cleaning up docker (if no stack deployed)..."
+clean_up_docker
 
 echo "Creating secrets..."
 create_secret bing-search-key
@@ -128,16 +154,9 @@ echo "Creating files for volumes..."
 sudo touch /swarm-vol/koel/config
 sudo cp ./assets/database.db /swarm-vol/jellyfin/filebrowser/database.db
 
-echo "Starting registry..."
-deploy stacks/registry/docker-compose.yml registry # 8080
-
-echo "Make sure the registry is ready..."
-sleep 15 # Could not trust result in the first few seconds, because the old registry might still be running
-while curl -s http://localhost:8080/ > /dev/null; [ $? -ne 0 ]; do
-    echo "Waiting for registry(http://localhost:8080) to start..."
-    sleep 1
-done
-
+#=============================
+# Nvidia GPU Part
+#=============================
 echo "Configuring docker daemon for Nvidia GPU..."
 GPU_IDS=$(valgrind nvidia-smi -a 2> /dev/null | grep "GPU UUID" | awk '{print substr($4,5,36)}')
 echo "Detected GPU UUIDs:"
@@ -187,6 +206,19 @@ if [ "$old_hash_daemon" != "$new_hash_daemon" ] || [ "$old_hash_nvidia" != "$new
 else
     echo "Configuration files not changed."
 fi
+#=============================
+# Nvidia GPU Part end
+#=============================
+
+echo "Starting registry..."
+deploy stacks/registry/docker-compose.yml registry # 8080
+
+echo "Make sure the registry is ready..."
+sleep 15 # Could not trust result in the first few seconds, because the old registry might still be running
+while curl -s http://localhost:8080/ > /dev/null; [ $? -ne 0 ]; do
+    echo "Waiting for registry(http://localhost:8080) to start..."
+    sleep 1
+done
 
 echo "Prebuild images..."
 mkdir -p ./images/sites/discovered && cp ./stacks/**/*.conf ./images/sites/discovered
