@@ -19,13 +19,6 @@ function install_yq() {
 }
 
 function ensure_nvidia_gpu() {
-    # ensure Nvidia GPU exists
-    valgrind nvidia-smi > /dev/null || {
-        doc_link=https://docs.anduinos.com/Applications/Development/Docker/Docker.html
-        echo "Please ensure Nvidia GPU exists. See $doc_link for more information."
-        exit 1
-    }
-
     # ensure package: nvidia-container-toolkit and nvidia-docker2
     apt list --installed | grep -q nvidia-container-toolkit || {
         doc_link=https://docs.anduinos.com/Applications/Development/Docker/Docker.html
