@@ -2,6 +2,19 @@
 
 set -e
 
+function install_yq() {
+    download_link=https://github.com/mikefarah/yq/releases/download/v4.45.1/yq_linux_amd64
+    sudo wget -O /usr/bin/yq $download_link
+    sudo chmod +x /usr/bin/yq
+}
+
+function ensure_packages_needed_ready() {
+    sudo DEBIAN_FRONTEND=noninteractive apt install -y wsdd valgrind curl wget apt-transport-https ca-certificates software-properties-common
+
+    # Install yq. (Run install_yq only if the /usr/bin/yq does not exist.)
+    [ -f /usr/bin/yq ] || install_yq
+}
+
 function install_docker() {
     curl -fsSL get.docker.com -o get-docker.sh
     CHANNEL=stable sh get-docker.sh
@@ -12,13 +25,20 @@ function init_docker_swarm() {
     sudo docker swarm init --advertise-addr $(hostname -I | awk '{print $1}')
 }
 
-function install_yq() {
-    download_link=https://github.com/mikefarah/yq/releases/download/v4.45.1/yq_linux_amd64
-    sudo wget -O /usr/bin/yq $download_link
-    sudo chmod +x /usr/bin/yq
-}
-
 function ensure_nvidia_gpu() {
+    # ensure /usr/bin/nvidia-smi exists
+    if [ ! -f /usr/bin/nvidia-smi ]; then
+        doc_link=https://docs.anduinos.com/Applications/Development/Docker/Docker.html
+        echo "Please install Nvidia driver. See $doc_link for more information."
+        exit 1
+    fi
+
+    valgrind /usr/bin/nvidia-smi -L 2> /dev/null | grep -q "GPU 0" || {
+        doc_link=https://docs.anduinos.com/Applications/Development/Docker/Docker.html
+        echo "Please ensure you have Nvidia GPU. See $doc_link for more information."
+        exit 1
+    }
+
     # ensure package: nvidia-container-toolkit and nvidia-docker2
     apt list --installed | grep -q nvidia-container-toolkit || {
         doc_link=https://docs.anduinos.com/Applications/Development/Docker/Docker.html
@@ -52,12 +72,6 @@ function ensure_docker_ready() {
 
     # Add user to docker group
     sudo usermod -aG docker $USER
-
-    # Install yq. (Run install_yq only if the /usr/bin/yq does not exist.)
-    [ -f /usr/bin/yq ] || install_yq
-
-    # Install some basic tools
-    sudo DEBIAN_FRONTEND=noninteractive apt install -y wsdd valgrind
 }
 
 function clean_up_docker() {
@@ -66,7 +80,7 @@ function clean_up_docker() {
     if [ $(sudo docker stack ls --format '{{.Name}}' | wc -l) -eq 0 ]; then
         echo "Seems running on a new cluster. Cleaning up docker..."
         sudo docker system prune -a --volumes -f
-        sudo docker builder prune -f
+        #sudo docker builder prune -f
     else
         echo "There are stacks already deployed and running. Skip cleaning."
     fi
@@ -96,6 +110,9 @@ function create_network() {
     fi
 }
 
+# Ensure packages needed are ready
+echo "Ensure packages needed are ready..."
+ensure_packages_needed_ready
 
 # Ensure has Nvidia GPU and have installed nvidia-container-toolkit and nvidia-docker2
 echo "Ensure has Nvidia GPU and have installed..."
@@ -151,7 +168,7 @@ sudo cp ./assets/database.db /swarm-vol/jellyfin/filebrowser/database.db
 # Nvidia GPU Part
 #=============================
 echo "Configuring docker daemon for Nvidia GPU..."
-GPU_IDS=$(valgrind nvidia-smi -a 2> /dev/null | grep "GPU UUID" | awk '{print substr($4,5,36)}')
+GPU_IDS=$(valgrind /usr/bin/nvidia-smi -a 2> /dev/null | grep "GPU UUID" | awk '{print substr($4,5,36)}')
 echo "Detected GPU UUIDs:"
 echo "$GPU_IDS"
 JSON_GPU_RESOURCES=""
