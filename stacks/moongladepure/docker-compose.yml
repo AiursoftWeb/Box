@@ -10,6 +10,7 @@ services:
       - anduin-aspnet:/root/.aspnet/
     environment:
       OpenAI__CompletionApiUrl: http://ollama_server:11434/api/chat
+      OpenAI__Model: DeepseekR132B
       ConnectionStrings__DefaultConnection: Server=anduin-db;Database=anduin;Uid=anduin;Pwd=<anduin_password>;
       ConnectionStrings__DbType: MySql
       Storage__Path: /data/files
@@ -46,6 +47,7 @@ services:
       - jimmoen-aspnet:/root/.aspnet/
     environment:
         OpenAI__CompletionApiUrl: http://ollama_server:11434/api/chat
+        OpenAI__Model: DeepseekR132B
         ConnectionStrings__DefaultConnection: Server=jimmoen-db;Database=jimmoen;Uid=jimmoen;Pwd=<jimmoen_password>;
         ConnectionStrings__DbType: MySql
         Storage__Path: /data/files
@@ -82,6 +84,7 @@ services:
       - rest-aspnet:/root/.aspnet/
     environment:
         OpenAI__CompletionApiUrl: http://ollama_server:11434/api/chat
+        OpenAI__Model: DeepseekR132B
         ConnectionStrings__DefaultConnection: Server=rest-db;Database=rest;Uid=rest;Pwd=<rest_password>;
         ConnectionStrings__DbType: MySql
         Storage__Path: /data/files
@@ -118,6 +121,7 @@ services:
       - cody-aspnet:/root/.aspnet/
     environment:
         OpenAI__CompletionApiUrl: http://ollama_server:11434/api/chat
+        OpenAI__Model: DeepseekR132B
         ConnectionStrings__DefaultConnection: Server=cody-db;Database=cody;Uid=cody;Pwd=<cody_password>;
         ConnectionStrings__DbType: MySql
         Storage__Path: /data/files
@@ -154,6 +158,7 @@ services:
       - gxhao-aspnet:/root/.aspnet/
     environment:
         OpenAI__CompletionApiUrl: http://ollama_server:11434/api/chat
+        OpenAI__Model: DeepseekR132B
         ConnectionStrings__DefaultConnection: Server=gxhao-db;Database=gxhao;Uid=gxhao;Pwd=<gxhao_password>;
         ConnectionStrings__DbType: MySql
         Storage__Path: /data/files
@@ -190,6 +195,7 @@ services:
       - anois-aspnet:/root/.aspnet/
     environment:
         OpenAI__CompletionApiUrl: http://ollama_server:11434/api/chat
+        OpenAI__Model: DeepseekR132B
         ConnectionStrings__DefaultConnection: Server=anois-db;Database=anois;Uid=anois;Pwd=<anois_password>;
         ConnectionStrings__DbType: MySql
         Storage__Path: /data/files
@@ -226,6 +232,7 @@ services:
       - dvorak-aspnet:/root/.aspnet/
     environment:
         OpenAI__CompletionApiUrl: http://ollama_server:11434/api/chat
+        OpenAI__Model: DeepseekR132B
         ConnectionStrings__DefaultConnection: Server=dvorak-db;Database=dvorak;Uid=dvorak;Pwd=<dvorak_password>;
         ConnectionStrings__DbType: MySql
         Storage__Path: /data/files
@@ -262,6 +269,7 @@ services:
       - kitlau-aspnet:/root/.aspnet/
     environment:
         OpenAI__CompletionApiUrl: http://ollama_server:11434/api/chat
+        OpenAI__Model: DeepseekR132B
         ConnectionStrings__DefaultConnection: Server=kitlau-db;Database=kitlau;Uid=kitlau;Pwd=<kitlau_password>;
         ConnectionStrings__DbType: MySql
         Storage__Path: /data/files
@@ -298,6 +306,7 @@ services:
       - xinboo-aspnet:/root/.aspnet/
     environment:
         OpenAI__CompletionApiUrl: http://ollama_server:11434/api/chat
+        OpenAI__Model: DeepseekR132B
         ConnectionStrings__DefaultConnection: Server=xinboo-db;Database=xinboo;Uid=xinboo;Pwd=<xinboo_password>;
         ConnectionStrings__DbType: MySql
         Storage__Path: /data/files
@@ -334,6 +343,7 @@ services:
       - gbiner-aspnet:/root/.aspnet/
     environment:
         OpenAI__CompletionApiUrl: http://ollama_server:11434/api/chat
+        OpenAI__Model: DeepseekR132B
         ConnectionStrings__DefaultConnection: Server=gbiner-db;Database=gbiner;Uid=gbiner;Pwd=<gbiner_password>;
         ConnectionStrings__DbType: MySql
         Storage__Path: /data/files
@@ -370,6 +380,7 @@ services:
       - rdf-aspnet:/root/.aspnet/
     environment:
         OpenAI__CompletionApiUrl: http://ollama_server:11434/api/chat
+        OpenAI__Model: DeepseekR132B
         ConnectionStrings__DefaultConnection: Server=rdf-db;Database=rdf;Uid=rdf;Pwd=<rdf_password>;
         ConnectionStrings__DbType: MySql
         Storage__Path: /data/files
@@ -406,6 +417,7 @@ services:
       - lyx-aspnet:/root/.aspnet/
     environment:
         OpenAI__CompletionApiUrl: http://ollama_server:11434/api/chat
+        OpenAI__Model: DeepseekR132B
         ConnectionStrings__DefaultConnection: Server=lyx-db;Database=lyx;Uid=lyx;Pwd=<lyx_password>;
         ConnectionStrings__DbType: MySql
         Storage__Path: /data/files
@@ -442,6 +454,7 @@ services:
       - shubuzuo-aspnet:/root/.aspnet/
     environment:
         OpenAI__CompletionApiUrl: http://ollama_server:11434/api/chat
+        OpenAI__Model: DeepseekR132B
         ConnectionStrings__DefaultConnection: Server=shubuzuo-db;Database=shubuzuo;Uid=shubuzuo;Pwd=<shubuzuo_password>;
         ConnectionStrings__DbType: MySql
         Storage__Path: /data/files
@@ -478,6 +491,7 @@ services:
       - lily-aspnet:/root/.aspnet/
     environment:
         OpenAI__CompletionApiUrl: http://ollama_server:11434/api/chat
+        OpenAI__Model: DeepseekR132B
         ConnectionStrings__DefaultConnection: Server=lily-db;Database=lily;Uid=lily;Pwd=<lily_password>;
         ConnectionStrings__DbType: MySql
         Storage__Path: /data/files
@@ -514,6 +528,7 @@ services:
       - carson-aspnet:/root/.aspnet/
     environment:
         OpenAI__CompletionApiUrl: http://ollama_server:11434/api/chat
+        OpenAI__Model: DeepseekR132B
         ConnectionStrings__DefaultConnection: Server=carson-db;Database=carson;Uid=carson;Pwd=<carson_password>;
         ConnectionStrings__DbType: MySql
         Storage__Path: /data/files
@@ -550,6 +565,7 @@ services:
       - zoneblog-aspnet:/root/.aspnet/
     environment:
         OpenAI__CompletionApiUrl: http://ollama_server:11434/api/chat
+        OpenAI__Model: DeepseekR132B
         ConnectionStrings__DefaultConnection: Server=zoneblog-db;Database=zoneblog;Uid=zoneblog;Pwd=<zoneblog_password>;
         ConnectionStrings__DbType: MySql
         Storage__Path: /data/files
