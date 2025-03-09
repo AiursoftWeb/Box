@@ -20,7 +20,7 @@ function install_yq() {
 
 function ensure_nvidia_gpu() {
     # ensure Nvidia GPU exists
-    nvidia-smi > /dev/null || {
+    valgrind nvidia-smi > /dev/null || {
         doc_link=https://docs.anduinos.com/Applications/Development/Docker/Docker.html
         echo "Please ensure Nvidia GPU exists. See $doc_link for more information."
         exit 1
