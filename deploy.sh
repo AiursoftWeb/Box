@@ -64,6 +64,9 @@ function ensure_nvidia_gpu() {
 
 function better_performance() {
     # Avoid system sleep
+    gsettings set org.gnome.desktop.session idle-delay 0
+    gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-type 'nothing'
+    gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-battery-type 'nothing'
     sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
 
     # Tuning for better performance
