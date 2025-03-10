@@ -47,6 +47,7 @@ function ensure_nvidia_gpu() {
         exit 1
     fi
 
+    ulimit -n 65535
     valgrind /usr/bin/nvidia-smi -L 2> /dev/null | grep -q "GPU 0" || {
         doc_link=https://docs.anduinos.com/Applications/Development/Docker/Docker.html
         echo "Please ensure you have Nvidia GPU. See $doc_link for more information."
