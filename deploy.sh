@@ -3,8 +3,8 @@
 set -e
 
 function install_yq() {
-    download_link=https://github.com/mikefarah/yq/releases/download/v4.45.1/yq_linux_amd64
-    sudo wget -O /usr/bin/yq $download_link
+    local download_link="https://github.com/mikefarah/yq/releases/download/v4.45.1/yq_linux_amd64"
+    sudo wget -O /usr/bin/yq "$download_link"
     sudo chmod +x /usr/bin/yq
 }
 
@@ -42,31 +42,34 @@ function ensure_packages_needed_ready() {
 function ensure_nvidia_gpu() {
     # ensure /usr/bin/nvidia-smi exists
     if [ ! -f /usr/bin/nvidia-smi ]; then
-        doc_link=https://docs.anduinos.com/Applications/Development/Docker/Docker.html
+        local doc_link=https://docs.anduinos.com/Applications/Development/Docker/Docker.html
         echo "Please install Nvidia driver. See $doc_link for more information."
         exit 1
     fi
 
     ulimit -n 65535
     valgrind /usr/bin/nvidia-smi -L 2> /dev/null | grep -q "GPU 0" || {
-        doc_link=https://docs.anduinos.com/Applications/Development/Docker/Docker.html
+        local doc_link=https://docs.anduinos.com/Applications/Development/Docker/Docker.html
         echo "Please ensure you have Nvidia GPU. See $doc_link for more information."
         exit 1
     }
 
     # ensure package: nvidia-container-toolkit and nvidia-docker2
     apt list --installed | grep -q nvidia-container-toolkit || {
-        doc_link=https://docs.anduinos.com/Applications/Development/Docker/Docker.html
+        local doc_link=https://docs.anduinos.com/Applications/Development/Docker/Docker.html
         echo "Please install nvidia-container-toolkit and nvidia-docker2. See $doc_link for more information."
         exit 1
     }
 }
 
 function better_performance() {
-    # Avoid system sleep
-    gsettings set org.gnome.desktop.session idle-delay 0
-    gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-type 'nothing'
-    gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-battery-type 'nothing'
+    # Avoid system sleep (If gsettings command exists)
+    if command -v gsettings &> /dev/null; then
+        echo "Avoid system sleep..."
+        gsettings set org.gnome.desktop.session idle-delay 0
+        gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-type 'nothing'
+        gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-battery-type 'nothing'
+    fi
     sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
 
     # Tuning for better performance
@@ -97,11 +100,11 @@ function clean_up_docker() {
 }
 
 function create_secret() {
-    secret_name=$1
-    known_secrets=$(sudo docker secret ls --format '{{.Name}}')
+    local secret_name=$1
+    local known_secrets=$(sudo docker secret ls --format '{{.Name}}')
     if [[ $known_secrets != *"$secret_name"* ]]; then
         echo "Please enter $secret_name secret"
-        read secret_value
+        read -s secret_value
         echo $secret_value | sudo docker secret create $secret_name -
     fi
 }
