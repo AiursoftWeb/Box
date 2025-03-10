@@ -8,13 +8,6 @@ function install_yq() {
     sudo chmod +x /usr/bin/yq
 }
 
-function ensure_packages_needed_ready() {
-    sudo DEBIAN_FRONTEND=noninteractive apt install -y wsdd valgrind curl wget apt-transport-https ca-certificates software-properties-common
-
-    # Install yq. (Run install_yq only if the /usr/bin/yq does not exist.)
-    [ -f /usr/bin/yq ] || install_yq
-}
-
 function install_docker() {
     curl -fsSL get.docker.com -o get-docker.sh
     CHANNEL=stable sh get-docker.sh
@@ -23,6 +16,27 @@ function install_docker() {
 
 function init_docker_swarm() {
     sudo docker swarm init --advertise-addr $(hostname -I | awk '{print $1}')
+}
+
+function ensure_docker_ready() {
+    # Install docker if not installed
+    apt list --installed | grep -q docker-ce || install_docker
+
+    # Init docker swarm if not initialized
+    sudo docker info | grep -q "Swarm: active" || init_docker_swarm
+
+    # Add user to docker group
+    sudo usermod -aG docker $USER
+}
+
+function ensure_packages_needed_ready() {
+    sudo DEBIAN_FRONTEND=noninteractive apt install -y wsdd valgrind curl wget apt-transport-https ca-certificates software-properties-common
+
+    # Install yq. (Run install_yq only if the /usr/bin/yq does not exist.)
+    [ -f /usr/bin/yq ] || install_yq
+
+    # Install docker
+    ensure_docker_ready
 }
 
 function ensure_nvidia_gpu() {
@@ -66,17 +80,6 @@ function better_performance() {
     sudo timedatectl set-timezone UTC
 }
 
-function ensure_docker_ready() {
-    # Install docker if not installed
-    apt list --installed | grep -q docker-ce || install_docker
-
-    # Init docker swarm if not initialized
-    sudo docker info | grep -q "Swarm: active" || init_docker_swarm
-
-    # Add user to docker group
-    sudo usermod -aG docker $USER
-}
-
 function clean_up_docker() {
     # if there is no stack deployed, run the system prune command
     # else, log and skip cleaning.
@@ -87,10 +90,6 @@ function clean_up_docker() {
     else
         echo "There are stacks already deployed and running. Skip cleaning."
     fi
-}
-
-function deploy() {
-    sudo docker stack deploy -c "$1" "$2" --detach --prune
 }
 
 function create_secret() {
@@ -113,6 +112,10 @@ function create_network() {
     fi
 }
 
+function deploy() {
+    sudo docker stack deploy -c "$1" "$2" --detach --prune
+}
+
 # Ensure packages needed are ready
 echo "Ensure packages needed are ready..."
 ensure_packages_needed_ready
@@ -123,9 +126,6 @@ ensure_nvidia_gpu
 
 echo "Tuning for better performance..."
 better_performance
-
-echo "Ensure docker is ready and in Swarm manager mode..."
-ensure_docker_ready
 
 echo "Cleaning up docker (if no stack deployed)..."
 clean_up_docker
