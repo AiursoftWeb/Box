@@ -10,7 +10,7 @@ services:
         target: BingSearchAPIKey
     environment:
       OpenAI__CompletionApiUrl: http://ollama_server:11434/api/chat
-      OpenAI__Model: 70B
+      OpenAI__Model: DeepseekR132B
     networks:
       - proxy_app
       - ollama_net
