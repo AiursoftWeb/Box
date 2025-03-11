@@ -3,6 +3,8 @@ version: '3.9'
 services:
   app:
     image: hub.aiursoft.cn/aiursoft/aiurdrive
+    environment:
+      AiFeatures__HyperScaling: True
     volumes:
       - aiurdrive-data:/data
 
