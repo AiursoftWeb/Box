@@ -77,14 +77,6 @@ services:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
-networks:
-  proxy_app:
-    external: true
-  ollama_net:
-    external: true
-  chat_internal:
-    driver: overlay
-
 volumes:
   chat-aspnet:
     driver: local
@@ -114,3 +106,11 @@ volumes:
 secrets:
   bing-search-key:
     external: true
+
+networks:
+  proxy_app:
+    external: true
+  ollama_net:
+    external: true
+  chat_internal:
+    driver: overlay

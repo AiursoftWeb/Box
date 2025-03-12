@@ -46,24 +46,24 @@ services:
         swarmpit.service.deployment.autoredeploy: 'true'
 
 volumes:
-  baget-db:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /swarm-vol/baget/db
-  baget-data:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /swarm-vol/baget/data
   baget-aspnet:
     driver: local
     driver_opts:
       type: none
       o: bind
       device: /swarm-vol/baget/aspnet
+  baget-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/baget/data
+  baget-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/baget/db
 
 secrets:
   nuget-publish-key:
