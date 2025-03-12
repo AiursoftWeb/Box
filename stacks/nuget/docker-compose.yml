@@ -1,28 +1,13 @@
 version: '3.9'
 
 services:
-  baget_old:
-    image: hub.aiursoft.cn/aiursoft/baget
-    volumes:
-      - nuget-data:/data
-    secrets:
-      - source: nuget-publish-key
-        target: ApiKey
-    networks:
-      - proxy_app
-    deploy:
-      resources:
-        limits:
-          cpus: '4.0'
-          memory: 4G
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
-
   baget:
+    depends_on:
+      - baget-db
     image: hub.aiursoft.cn/aiursoft/baget
     volumes:
       - baget-data:/data/files
-      - baget-aspnet:/root/.aspnet/
+      - baget-aspnet:/data/.aspnet
     environment:
       ConnectionStrings__DefaultConnection: Server=baget-db;Database=baget;Uid=baget;Pwd=<baget_password>;
       ConnectionStrings__DbType: MySql
@@ -61,12 +46,6 @@ services:
         swarmpit.service.deployment.autoredeploy: 'true'
 
 volumes:
-  nuget-data:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /swarm-vol/nuget-data
   baget-db:
     driver: local
     driver_opts:

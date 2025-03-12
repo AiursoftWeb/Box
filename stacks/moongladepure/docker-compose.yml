@@ -7,7 +7,7 @@ services:
     image: hub.aiursoft.cn/aiursoft/moongladepure
     volumes:
       - anduin-files:/data/files
-      - anduin-aspnet:/root/.aspnet/
+      - anduin-aspnet:/data/.aspnet/
     environment:
       OpenAI__CompletionApiUrl: http://ollama_server:11434/api/chat
       OpenAI__Model: DeepseekR170B
@@ -44,7 +44,7 @@ services:
     image: hub.aiursoft.cn/aiursoft/moongladepure
     volumes:
       - jimmoen-files:/data/files
-      - jimmoen-aspnet:/root/.aspnet/
+      - jimmoen-aspnet:/data/.aspnet/
     environment:
         OpenAI__CompletionApiUrl: http://ollama_server:11434/api/chat
         OpenAI__Model: DeepseekR170B
@@ -81,7 +81,7 @@ services:
     image: hub.aiursoft.cn/aiursoft/moongladepure
     volumes:
       - rest-files:/data/files
-      - rest-aspnet:/root/.aspnet/
+      - rest-aspnet:/data/.aspnet/
     environment:
         OpenAI__CompletionApiUrl: http://ollama_server:11434/api/chat
         OpenAI__Model: DeepseekR170B
@@ -118,7 +118,7 @@ services:
     image: hub.aiursoft.cn/aiursoft/moongladepure
     volumes:
       - cody-files:/data/files
-      - cody-aspnet:/root/.aspnet/
+      - cody-aspnet:/data/.aspnet/
     environment:
         OpenAI__CompletionApiUrl: http://ollama_server:11434/api/chat
         OpenAI__Model: DeepseekR170B
@@ -155,7 +155,7 @@ services:
     image: hub.aiursoft.cn/aiursoft/moongladepure
     volumes:
       - gxhao-files:/data/files
-      - gxhao-aspnet:/root/.aspnet/
+      - gxhao-aspnet:/data/.aspnet/
     environment:
         OpenAI__CompletionApiUrl: http://ollama_server:11434/api/chat
         OpenAI__Model: DeepseekR170B
@@ -192,7 +192,7 @@ services:
     image: hub.aiursoft.cn/aiursoft/moongladepure
     volumes:
       - anois-files:/data/files
-      - anois-aspnet:/root/.aspnet/
+      - anois-aspnet:/data/.aspnet/
     environment:
         OpenAI__CompletionApiUrl: http://ollama_server:11434/api/chat
         OpenAI__Model: DeepseekR170B
@@ -229,7 +229,7 @@ services:
     image: hub.aiursoft.cn/aiursoft/moongladepure
     volumes:
       - dvorak-files:/data/files
-      - dvorak-aspnet:/root/.aspnet/
+      - dvorak-aspnet:/data/.aspnet/
     environment:
         OpenAI__CompletionApiUrl: http://ollama_server:11434/api/chat
         OpenAI__Model: DeepseekR170B
@@ -266,7 +266,7 @@ services:
     image: hub.aiursoft.cn/aiursoft/moongladepure
     volumes:
       - kitlau-files:/data/files
-      - kitlau-aspnet:/root/.aspnet/
+      - kitlau-aspnet:/data/.aspnet/
     environment:
         OpenAI__CompletionApiUrl: http://ollama_server:11434/api/chat
         OpenAI__Model: DeepseekR170B
@@ -303,7 +303,7 @@ services:
     image: hub.aiursoft.cn/aiursoft/moongladepure
     volumes:
       - xinboo-files:/data/files
-      - xinboo-aspnet:/root/.aspnet/
+      - xinboo-aspnet:/data/.aspnet/
     environment:
         OpenAI__CompletionApiUrl: http://ollama_server:11434/api/chat
         OpenAI__Model: DeepseekR170B
@@ -340,7 +340,7 @@ services:
     image: hub.aiursoft.cn/aiursoft/moongladepure
     volumes:
       - gbiner-files:/data/files
-      - gbiner-aspnet:/root/.aspnet/
+      - gbiner-aspnet:/data/.aspnet/
     environment:
         OpenAI__CompletionApiUrl: http://ollama_server:11434/api/chat
         OpenAI__Model: DeepseekR170B
@@ -377,7 +377,7 @@ services:
     image: hub.aiursoft.cn/aiursoft/moongladepure
     volumes:
       - rdf-files:/data/files
-      - rdf-aspnet:/root/.aspnet/
+      - rdf-aspnet:/data/.aspnet/
     environment:
         OpenAI__CompletionApiUrl: http://ollama_server:11434/api/chat
         OpenAI__Model: DeepseekR170B
@@ -414,7 +414,7 @@ services:
     image: hub.aiursoft.cn/aiursoft/moongladepure
     volumes:
       - lyx-files:/data/files
-      - lyx-aspnet:/root/.aspnet/
+      - lyx-aspnet:/data/.aspnet/
     environment:
         OpenAI__CompletionApiUrl: http://ollama_server:11434/api/chat
         OpenAI__Model: DeepseekR170B
@@ -451,7 +451,7 @@ services:
     image: hub.aiursoft.cn/aiursoft/moongladepure
     volumes:
       - shubuzuo-files:/data/files
-      - shubuzuo-aspnet:/root/.aspnet/
+      - shubuzuo-aspnet:/data/.aspnet/
     environment:
         OpenAI__CompletionApiUrl: http://ollama_server:11434/api/chat
         OpenAI__Model: DeepseekR170B
@@ -488,7 +488,7 @@ services:
     image: hub.aiursoft.cn/aiursoft/moongladepure
     volumes:
       - lily-files:/data/files
-      - lily-aspnet:/root/.aspnet/
+      - lily-aspnet:/data/.aspnet/
     environment:
         OpenAI__CompletionApiUrl: http://ollama_server:11434/api/chat
         OpenAI__Model: DeepseekR170B
@@ -525,7 +525,7 @@ services:
     image: hub.aiursoft.cn/aiursoft/moongladepure
     volumes:
       - carson-files:/data/files
-      - carson-aspnet:/root/.aspnet/
+      - carson-aspnet:/data/.aspnet/
     environment:
         OpenAI__CompletionApiUrl: http://ollama_server:11434/api/chat
         OpenAI__Model: DeepseekR170B
@@ -562,7 +562,7 @@ services:
     image: hub.aiursoft.cn/aiursoft/moongladepure
     volumes:
       - zoneblog-files:/data/files
-      - zoneblog-aspnet:/root/.aspnet/
+      - zoneblog-aspnet:/data/.aspnet/
     environment:
         OpenAI__CompletionApiUrl: http://ollama_server:11434/api/chat
         OpenAI__Model: DeepseekR170B
