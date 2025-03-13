@@ -8,13 +8,13 @@ services:
     volumes:
       - baget-data:/data/files
       - baget-aspnet:/data/.aspnet
+    secrets:
+      - source: nuget-publish-key
+        target: ApiKey
     environment:
       ConnectionStrings__DefaultConnection: Server=baget-db;Database=baget;Uid=baget;Pwd=<baget_password>;
       ConnectionStrings__DbType: MySql
       Storage__Path: /data/files
-    secrets:
-      - source: nuget-publish-key
-        target: ApiKey
     networks:
       - proxy_app
       - baget_internal
