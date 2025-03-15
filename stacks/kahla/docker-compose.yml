@@ -9,7 +9,7 @@ services:
       - data:/data/files
       - aspnet:/data/.aspnet
     environment:
-        ConnectionStrings__DefaultConnection: Server=db;Database=kahla;Uid=kahla;Pwd=<kahla_password>;
+        ConnectionStrings__DefaultConnection: Server=db;Database=kahla;Uid=kahla;Pwd=kahla_password;
         ConnectionStrings__DbType: "MySql"
         Storage__Path: /data/files
     networks:
@@ -33,7 +33,7 @@ services:
       - MYSQL_RANDOM_ROOT_PASSWORD=true
       - MYSQL_DATABASE=kahla
       - MYSQL_USER=kahla
-      - MYSQL_PASSWORD=<kahla_password>
+      - MYSQL_PASSWORD=kahla_password
     networks:
       - internal
     deploy:
