@@ -16,6 +16,7 @@ services:
     deploy:
       resources:
         limits:
+          cpus: '8.0'
           memory: 50G
         reservations:
           generic_resources:
@@ -52,6 +53,7 @@ services:
     deploy:
       resources:
         limits:
+          cpus: '0.1'
           memory: 128M
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
