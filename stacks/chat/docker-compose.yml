@@ -12,7 +12,7 @@ services:
       - source: bing-search-key
         target: BingSearchAPIKey
     environment:
-      ConnectionStrings__DefaultConnection: Server=chat-db;Database=chat;Uid=chat;Pwd=<chat_password>;
+      ConnectionStrings__DefaultConnection: Server=db;Database=chat;Uid=chat;Pwd=<chat_password>;
       ConnectionStrings__DbType: MySql
       Storage__Path: /data/files
       OpenAI__CompletionApiUrl: http://ollama_server:11434/api/chat
