@@ -2,30 +2,73 @@ version: '3.9'
 
 services:
   app:
+    depends_on:
+      - db
     image: hub.aiursoft.cn/aiursoft/aiurdrive
-    environment:
-      AiFeatures__HyperScaling: "True"
     volumes:
-      - aiurdrive-data:/data
-
-      # Double hack here:
-      # AiurDrive will write the code to /tmp on the HOST, and then call docker on the HOST to compile the code.
+      - data:/data/files
+      - aspnet:/data/.aspnet
       - /var/run/docker.sock:/var/run/docker.sock
       - /tmp:/tmp
+    environment:
+      AiFeatures__HyperScaling: "True"
+      ConnectionStrings__DefaultConnection: Server=db;Database=aiurdrive;Uid=aiurdrive;Pwd=<aiurdrive_password>;
+      ConnectionStrings__DbType: MySql
+      Storage__Path: /data/files
     networks:
       - proxy_app
+      - internal
     deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 4G
+      update_config:
+        order: start-first
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
-networks:
-  proxy_app:
-    external: true
+  db:
+    image: hub.aiursoft.cn/mysql
+    volumes:
+      - db:/var/lib/mysql
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
+      - MYSQL_DATABASE=aiurdrive
+      - MYSQL_USER=aiurdrive
+      - MYSQL_PASSWORD=<aiurdrive_password>
+    networks:
+      - internal
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 4G
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
 
 volumes:
-  aiurdrive-data:
+  aspnet:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /swarm-vol/aiurdrive-data
+      device: /swarm-vol/aiurdrive/aspnet
+  data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/aiurdrive/data
+  db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/aiurdrive/db
+
+networks:
+  proxy_app:
+    external: true
+  internal:
+    driver: overlay

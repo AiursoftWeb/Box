@@ -1,13 +1,13 @@
 version: '3.9'
 
 services:
-  chat:
+  app:
     depends_on:
-      - chat-db
+      - db
     image: hub.aiursoft.cn/aiursoft/gptgateway
     volumes:
-      - chat-data:/data/files
-      - chat-aspnet:/data/.aspnet
+      - data:/data/files
+      - aspnet:/data/.aspnet
     secrets:
       - source: bing-search-key
         target: BingSearchAPIKey
@@ -20,7 +20,7 @@ services:
     networks:
       - proxy_app
       - ollama_net
-      - chat_internal
+      - internal
     deploy:
       resources:
         limits:
@@ -31,17 +31,17 @@ services:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
-  chat-db:
+  db:
     image: hub.aiursoft.cn/mysql
     volumes:
-      - chat-db:/var/lib/mysql
+      - db:/var/lib/mysql
     environment:
       - MYSQL_RANDOM_ROOT_PASSWORD=true
       - MYSQL_DATABASE=chat
       - MYSQL_USER=chat
       - MYSQL_PASSWORD=<chat_password>
     networks:
-      - chat_internal
+      - internal
     deploy:
       resources:
         limits:
@@ -80,19 +80,19 @@ services:
         swarmpit.service.deployment.autoredeploy: 'true'
 
 volumes:
-  chat-aspnet:
+  aspnet:
     driver: local
     driver_opts:
       type: none
       o: bind
       device: /swarm-vol/chat/aspnet
-  chat-data:
+  data:
     driver: local
     driver_opts:
       type: none
       o: bind
       device: /swarm-vol/chat/data
-  chat-db:
+  db:
     driver: local
     driver_opts:
       type: none
@@ -114,5 +114,5 @@ networks:
     external: true
   ollama_net:
     external: true
-  chat_internal:
+  internal:
     driver: overlay
