@@ -1,23 +1,23 @@
 version: '3.9'
 
 services:
-  baget:
+  app:
     depends_on:
-      - baget-db
+      - db
     image: hub.aiursoft.cn/aiursoft/baget
     volumes:
-      - baget-data:/data/files
-      - baget-aspnet:/data/.aspnet
+      - data:/data/files
+      - aspnet:/data/.aspnet
     secrets:
       - source: nuget-publish-key
         target: ApiKey
     environment:
-      ConnectionStrings__DefaultConnection: Server=baget-db;Database=baget;Uid=baget;Pwd=<baget_password>;
+      ConnectionStrings__DefaultConnection: Server=db;Database=baget;Uid=baget;Pwd=<baget_password>;
       ConnectionStrings__DbType: MySql
       Storage__Path: /data/files
     networks:
       - proxy_app
-      - baget_internal
+      - internal
     deploy:
       resources:
         limits:
@@ -28,17 +28,17 @@ services:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
-  baget-db:
+  db:
     image: hub.aiursoft.cn/mysql
     volumes:
-      - baget-db:/var/lib/mysql
+      - db:/var/lib/mysql
     environment:
       - MYSQL_RANDOM_ROOT_PASSWORD=true
       - MYSQL_DATABASE=baget
       - MYSQL_USER=baget
       - MYSQL_PASSWORD=<baget_password>
     networks:
-      - baget_internal
+      - internal
     deploy:
       resources:
         limits:
@@ -48,19 +48,19 @@ services:
         swarmpit.service.deployment.autoredeploy: 'true'
 
 volumes:
-  baget-aspnet:
+  aspnet:
     driver: local
     driver_opts:
       type: none
       o: bind
       device: /swarm-vol/baget/aspnet
-  baget-data:
+  data:
     driver: local
     driver_opts:
       type: none
       o: bind
       device: /swarm-vol/baget/data
-  baget-db:
+  db:
     driver: local
     driver_opts:
       type: none
@@ -74,5 +74,5 @@ secrets:
 networks:
   proxy_app:
     external: true
-  baget_internal:
+  internal:
     driver: overlay

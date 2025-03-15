@@ -1,56 +1,71 @@
 version: '3.9'
 
 services:
-  server:
+  app:
     depends_on:
       - db
     image: hub.aiursoft.cn/aiursoft/kahla
     volumes:
-      - kahla-data:/data
+      - data:/data/files
+      - aspnet:/data/.aspnet
     environment:
+        ConnectionStrings__DefaultConnection: Server=db;Database=kahla;Uid=kahla;Pwd=<kahla_password>;
         ConnectionStrings__DbType: "MySql"
-        ConnectionStrings__AllowCache: "True"
-        ConnectionStrings__DefaultConnection: Server=db;Database=kahla;Uid=kahla;Pwd=kahla_password;
+        Storage__Path: /data/files
     networks:
       - proxy_app
-      - kahla_app
+      - internal
     deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 4G
+      update_config:
+        order: start-first
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
-  # For local development, you can use the following command to start a mysql container.
-  # sudo docker run -d --name db -e MYSQL_RANDOM_ROOT_PASSWORD=true -e MYSQL_DATABASE=kahla -e MYSQL_USER=kahla -e MYSQL_PASSWORD=kahla_password -p 3306:3306 hub.aiursoft.cn/mysql
   db:
     image: hub.aiursoft.cn/mysql
     volumes:
-      - kahla-db:/var/lib/mysql
+      - db:/var/lib/mysql
     environment:
       - MYSQL_RANDOM_ROOT_PASSWORD=true
       - MYSQL_DATABASE=kahla
       - MYSQL_USER=kahla
-      - MYSQL_PASSWORD=kahla_password
+      - MYSQL_PASSWORD=<kahla_password>
     networks:
-      - kahla_app
+      - internal
     deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 4G
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
 volumes:
-  kahla-data:
+  aspnet:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /swarm-vol/kahla/kahla-data
-  kahla-db:
+      device: /swarm-vol/kahla/aspnet
+  data:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /swarm-vol/kahla/kahla-db
+      device: /swarm-vol/kahla/data
+  db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/kahla/db
 
 networks:
   proxy_app:
     external: true
-  kahla_app:
+  kahlinternala_app:
     driver: overlay
