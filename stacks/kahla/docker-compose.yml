@@ -67,5 +67,5 @@ volumes:
 networks:
   proxy_app:
     external: true
-  kahlinternala_app:
+  internal:
     driver: overlay
