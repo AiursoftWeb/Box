@@ -50,35 +50,6 @@ services:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
-  open-web:
-    image: hub.aiursoft.cn/ghcr.io/open-webui/open-webui:main
-    environment:
-      # Temp endpoint. Migrate to container ASAP.
-      - OLLAMA_BASE_URL=http://ollama_server:11434/
-      - ENABLE_OPENAI_API=False
-      - WEBUI_AUTH=True
-      - ENABLE_SIGNUP=True
-      - DEFAULT_USER_ROLE=user
-      - SHOW_ADMIN_DETAILS=False
-      - ENABLE_COMMUNITY_SHARING=False
-      - ENABLE_MESSAGE_RATING=False
-      - ENABLE_TAGS_GENERATION=False
-      - ENABLE_EVALUATION_ARENA_MODELS=False
-      - USER_PERMISSIONS_CHAT_FILE_UPLOAD=False
-      - USER_PERMISSIONS_CHAT_TEMPORARY=False
-    volumes:
-      - open-webui-data:/app/backend/data
-    networks:
-      - proxy_app
-      - ollama_net
-    deploy:
-      resources:
-        limits:
-          cpus: '6.0'
-          memory: 6G
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
-
 volumes:
   aspnet:
     driver: local
@@ -98,12 +69,6 @@ volumes:
       type: none
       o: bind
       device: /swarm-vol/chat/db
-  open-webui-data:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /swarm-vol/open-webui-data
 
 secrets:
   bing-search-key:
