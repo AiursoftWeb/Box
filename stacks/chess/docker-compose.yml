@@ -4,26 +4,27 @@ services:
   app:
     image: hub.aiursoft.cn/aiursoft/chessserver
     volumes:
-      - chess-data:/data
+      - aspnet:/data/.aspnet
     networks:
       - proxy_app
     deploy:
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
-      update_config:
-        order: start-first
       resources:
         limits:
+          cpus: '4.0'
           memory: 8G
+      update_config:
+        order: start-first
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
 
 networks:
   proxy_app:
     external: true
 
 volumes:
-  chess-data:
+  aspnet:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /swarm-vol/chess-data
+      device: /swarm-vol/chess/aspnet
