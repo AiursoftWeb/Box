@@ -17,6 +17,12 @@ services:
       - net
       - proxy_app
     deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 4G
+      update_config:
+        order: start-first
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
@@ -27,6 +33,10 @@ services:
     networks:
       - net
     deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 4G
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
@@ -37,6 +47,10 @@ services:
     networks:
       - net
     deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 4G
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
@@ -73,10 +87,10 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /swarm-vol/swarmpit-db-data
+      device: /swarm-vol/swarmpit/db-data
   influx-data:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /swarm-vol/swarmpit-influx-data
+      device: /swarm-vol/swarmpit/influx-data
