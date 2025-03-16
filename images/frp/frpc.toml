@@ -26,16 +26,6 @@ localPort = 443
 remotePort = 443
 transport.proxyProtocolVersion = "v2"
 
-# Check on Caddy.
-# Disable QUIC. Because caddy don't know the real IP address
-#[[proxies]]
-#name = "quic"
-#type = "udp"
-#localIP = "127.0.0.1"
-#localPort = 443
-#remotePort = 443
-#transport.proxyProtocolVersion = "v2"
-
 # Regular update to ensure safe.
 [[proxies]]
 name = "terraria_tcp"
@@ -46,19 +36,11 @@ remotePort = 7777
 
 # Regular update to ensure safe.
 [[proxies]]
-name = "mc_tcp"
+name = "mc"
 type = "tcp"
 localIP = "minecraft_server"
 localPort = 25565
 remotePort = 25565
-
-# Regular update to ensure safe.
-[[proxies]]
-name = "mc_udp"
-type = "udp"
-localIP = "minecraft_server"
-localPort = 19132
-remotePort = 19132
 
 # Regular update to ensure safe.
 [[proxies]]

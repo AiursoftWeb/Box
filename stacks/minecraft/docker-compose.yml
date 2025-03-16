@@ -18,10 +18,6 @@ services:
         published: 25565
         protocol: tcp
         mode: host
-      - target: 19132
-        published: 19132
-        protocol: udp
-        mode: host
       # 8123 will by proxy by Caddy.
     deploy:
       resources:
