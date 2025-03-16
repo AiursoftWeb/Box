@@ -18,25 +18,8 @@ services:
     deploy:
       resources:
         limits:
-          memory: 14336M
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
-  server_easy:
-    image: hub.aiursoft.cn/passivelemon/terraria-docker:latest
-    volumes:
-      - terraria_easy:/opt/terraria/config
-    networks:
-      - frp_net
-    ports:
-      # These ports are for internal use. For external, FRP will handle it.
-      - target: 7777
-        published: 7778
-        protocol: tcp
-        mode: host
-    deploy:
-      resources:
-        limits:
-          memory: 14336M
+          cpus: '2.00'
+          memory: 2G
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
@@ -47,12 +30,6 @@ volumes:
       type: none
       o: bind
       device: /swarm-vol/terraria
-  terraria_easy:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /swarm-vol/terraria_easy
 
 networks:
   frp_net:

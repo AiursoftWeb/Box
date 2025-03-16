@@ -46,14 +46,6 @@ remotePort = 7777
 
 # Regular update to ensure safe.
 [[proxies]]
-name = "terraria_easy_tcp"
-type = "tcp"
-localIP = "terraria_server_easy"
-localPort = 7777
-remotePort = 7778
-
-# Regular update to ensure safe.
-[[proxies]]
 name = "mc_tcp"
 type = "tcp"
 localIP = "minecraft_server"
