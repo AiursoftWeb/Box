@@ -4,31 +4,31 @@ services:
   app:
     image: hub.aiursoft.cn/aiursoft/cpprunner
     volumes:
-      - cpprunner-data:/data
-
-      # Double hack here:
-      # Cpprunner will write the code to /tmp on the HOST, and then call docker on the HOST to compile the code.
+      - aspnet:/data/.aspnet
       - /var/run/docker.sock:/var/run/docker.sock
       - /tmp:/tmp
     networks:
       - proxy_app
     deploy:
       replicas: 2
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
       resources:
         limits:
           cpus: '4.0'
-          memory: 1024M
-
-volumes:
-  cpprunner-data:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /swarm-vol/cpprunner-data
+          memory: 4G
+      update_config:
+        order: start-first
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
 
 networks:
   proxy_app:
     external: true
+
+volumes:
+  aspnet:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/cpprunner/aspnet
+
