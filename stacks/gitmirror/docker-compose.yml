@@ -8,9 +8,9 @@ services:
       - aspnet:/data/.aspnet
     secrets:
       - source: github-token
-        target: Mirrors_0_TargetToken
+        target: Mirrors:0:TargetToken
       - source: github-token
-        target: Mirrors_1_TargetToken
+        target: Mirrors:1:TargetToken
     environment:
       Storage__Path: /data/files
       Mirrors__0__FromType: GitLab
