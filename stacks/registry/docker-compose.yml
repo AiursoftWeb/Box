@@ -46,6 +46,22 @@ services:
     deploy:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
+
+  registry-cleaner:
+    image: alpine:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    entrypoint:
+      - "/bin/sh"
+      - "-c"
+      - |
+        while true; do 
+          containerID=$(docker ps | grep "registry-server" | awk "{print \$1}");
+          echo "Garbage collecting registry on $containerID";
+          docker exec $containerID registry garbage-collect /etc/docker/registry/config.yml --delete-untagged=true;
+          sleep 3600;
+        done
+
 volumes:
   registry-data:
     driver: local
