@@ -53,7 +53,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.1'
+          cpus: '1.0'
           memory: 128M
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
