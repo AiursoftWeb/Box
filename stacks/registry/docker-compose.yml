@@ -68,7 +68,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: 1.0
+          cpus: '1.0'
           memory: 1G
       update_config:
         order: start-first
