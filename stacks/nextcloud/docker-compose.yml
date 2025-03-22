@@ -64,9 +64,9 @@ services:
         echo "Disabling maintenance mode";
         docker ps --filter name=nextcloud_web -q | xargs -r -I {} docker exec -u www-data {} /usr/local/bin/php occ maintenance:mode --off;
         echo "Updating apt";
-        docker ps --filter name=nextcloud_web -q | xargs -r -I {} docker exec -u          {} apt-get update;
+        docker ps --filter name=nextcloud_web -q | xargs -r -I {} docker exec             {} apt-get update;
         echo "Installing ffmpeg";
-        docker ps --filter name=nextcloud_web -q | xargs -r -I {} docker exec -u www-data {} apt-get install -y ffmpeg;
+        docker ps --filter name=nextcloud_web -q | xargs -r -I {} docker exec             {} apt-get install -y ffmpeg;
         echo "Initialization done";
         while true; do
           echo "Starting nextcloud job runner";
