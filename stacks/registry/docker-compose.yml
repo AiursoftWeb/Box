@@ -70,13 +70,12 @@ services:
       - "-c"
       - |
         echo "Installing docker";
-        apk add --no-cache docker
+        apk add --no-cache docker;
         echo "Starting registry cleaner";
         while true; do
           sleep 20;
-          containerID=`docker ps --format '{{.ID}}' --filter name=registry-server`
-          echo "Garbage collecting registry on $containerID";
-          docker exec $containerID registry garbage-collect /etc/docker/registry/config.yml --delete-untagged=true;
+          docker ps --filter name=registry-server -q | xargs -r -I {} docker exec {} registry garbage-collect /etc/docker/registry/config.yml --delete-untagged=true;
+          echo "Garbage collection done";
           sleep 3600;
         done
     deploy:

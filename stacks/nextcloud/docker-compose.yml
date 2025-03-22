@@ -26,23 +26,6 @@ services:
       - PHP_UPLOAD_LIMIT=1G
       - PHP_OPCACHE_ENABLE=1
       - PHP_OPCACHE_MEMORY_CONSUMPTION=1024
-    # entrypoint: ["/bin/bash", "-c", "
-    #   apt update; 
-    #   apt install sudo; 
-    #   sudo -u www-data /bin/bash -c '
-    #     cd /var/www/html/;
-    #     ls;
-    #     php occ upgrade;
-    #     php occ db:add-missing-indices;
-    #     php occ db:convert-filecache-bigint;
-    #     php occ maintenance:mode --off;
-
-    #     # Setup cron
-    #     echo '*/5 * * * * /usr/local/bin/php -f /var/www/html/cron.php' > /var/spool/cron/crontabs/www-data;
-    #     crond -b -l 8;
-
-    #     /entrypoint.sh
-    #   '"]
     deploy:
       resources:
         limits:
@@ -50,17 +33,55 @@ services:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
-  cron:
+  nextcloud-jobrunner:
+    depends_on:
+      - web
     image: hub.aiursoft.cn/alpine
     networks: 
       - internal
-    depends_on:
-      - nextcloud
-    entrypoint: ["/bin/sh", "-c", "apk add curl && sleep 20 && while true; do sleep 300; curl -s https://nextcloud.aiursoft.cn/cron.php; done"]
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    entrypoint:
+      - "/bin/sh"
+      - "-c"
+      - |
+        echo "Installing docker";
+        apk add --no-cache docker;
+        echo "Starting nextcloud job runner. Sleep 120 seconds to wait for nextcloud web service";
+        sleep 120;
+        echo "Upgrading nextcloud";
+        docker ps --filter name=nextcloud_web -q | xargs -r -I {} docker exec -u www-data {} /usr/local/bin/php occ upgrade;
+        echo "Repairing nextcloud";
+        docker ps --filter name=nextcloud_web -q | xargs -r -I {} docker exec -u www-data {} /usr/local/bin/php occ maintenance:repair --include-expensive;
+        echo "Adding missing indices";
+        docker ps --filter name=nextcloud_web -q | xargs -r -I {} docker exec -u www-data {} /usr/local/bin/php occ db:add-missing-indices;
+        echo "Converting filecache bigint";
+        docker ps --filter name=nextcloud_web -q | xargs -r -I {} docker exec -u www-data {} /usr/local/bin/php occ db:convert-filecache-bigint;
+        echo "Scanning files";
+        docker ps --filter name=nextcloud_web -q | xargs -r -I {} docker exec -u www-data {} /usr/local/bin/php occ files:scan --all;
+        echo "Updating apps";
+        docker ps --filter name=nextcloud_web -q | xargs -r -I {} docker exec -u www-data {} /usr/local/bin/php occ app:update --all;
+        echo "Disabling maintenance mode";
+        docker ps --filter name=nextcloud_web -q | xargs -r -I {} docker exec -u www-data {} /usr/local/bin/php occ maintenance:mode --off;
+        echo "Updating apt";
+        docker ps --filter name=nextcloud_web -q | xargs -r -I {} docker exec -u          {} apt-get update;
+        echo "Installing ffmpeg";
+        docker ps --filter name=nextcloud_web -q | xargs -r -I {} docker exec -u www-data {} apt-get install -y ffmpeg;
+        echo "Initialization done";
+        while true; do
+          echo "Starting nextcloud job runner";
+          docker ps --filter name=nextcloud_web -q | xargs -r -I {} docker exec -u www-data {} /usr/local/bin/php -f /var/www/html/cron.php
+          echo "Nextcloud job runner done. Current time:";
+          date;
+          sleep 300;
+        done
     deploy:
       resources:
         limits:
+          cpus: '1.0'
           memory: 128M
+      update_config:
+        order: start-first
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
