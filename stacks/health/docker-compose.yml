@@ -54,28 +54,28 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /swarm-vol/prometheus-config
+      device: /swarm-vol/health/prometheus-config
   prometheus-data:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /swarm-vol/prometheus-data
+      device: /swarm-vol/health/prometheus-data
   grafana-config:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /swarm-vol/grafana-config
+      device: /swarm-vol/health/grafana-config
   grafana-data:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /swarm-vol/grafana-data
+      device: /swarm-vol/health/grafana-data
   sleepagent-data:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /swarm-vol/sleepagent-data
+      device: /swarm-vol/health/sleepagent-data
