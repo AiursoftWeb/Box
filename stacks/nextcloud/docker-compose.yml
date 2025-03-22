@@ -59,6 +59,8 @@ services:
         docker ps --filter name=nextcloud_web -q | xargs -r -I {} docker exec -u www-data {} /usr/local/bin/php occ db:convert-filecache-bigint;
         echo "Scanning files";
         docker ps --filter name=nextcloud_web -q | xargs -r -I {} docker exec -u www-data {} /usr/local/bin/php occ files:scan --all;
+        docker ps --filter name=nextcloud_web -q | xargs -r -I {} docker exec -u www-data {} /usr/local/bin/php occ files:scan-app-data;
+        docker ps --filter name=nextcloud_web -q | xargs -r -I {} docker exec -u www-data {} /usr/local/bin/php occ files:repair-tree;
         echo "Updating apps";
         docker ps --filter name=nextcloud_web -q | xargs -r -I {} docker exec -u www-data {} /usr/local/bin/php occ app:update --all;
         echo "Disabling maintenance mode";
