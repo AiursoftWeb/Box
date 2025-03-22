@@ -81,7 +81,7 @@ services:
       resources:
         limits:
           cpus: '1.0'
-          memory: 128M
+          memory: 1G
       update_config:
         order: start-first
       labels:
