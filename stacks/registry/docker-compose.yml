@@ -74,7 +74,7 @@ services:
         echo "Starting registry cleaner";
         while true; do
           sleep 20;
-          containerID=`docker ps | grep registry-server | awk '{print $1}'`
+          containerID=$(docker ps --format '{{.ID}}' --filter name=registry-server)
           echo "Garbage collecting registry on $containerID";
           docker exec $containerID registry garbage-collect /etc/docker/registry/config.yml --delete-untagged=true;
           sleep 3600;
