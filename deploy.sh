@@ -138,14 +138,14 @@ echo "Cleaning up docker (if no stack deployed)..."
 clean_up_docker
 
 echo "Creating secrets..."
-create_secret bing-search-key
-create_secret frp-token
-create_secret github-token
-create_secret gitlab-runner-token
-create_secret neko-image-gallery-access-token
-create_secret neko-image-gallery-admin-token
-create_secret nuget-publish-key
-create_secret xray-uuid
+find ./stacks -name 'docker-compose.yml' -type f | while read -r file; do
+  yq eval '.secrets | to_entries | .[] | select(.value.external == true) | .key' "$file" | while read -r secret_name; do
+    if [ -n "$secret_name" ]; then
+      echo "Creating secret $secret_name..."
+      create_secret "$secret_name"
+    fi
+  done
+done
 
 echo "Creating networks..."
 create_network proxy_app 10.234.0.0/16
