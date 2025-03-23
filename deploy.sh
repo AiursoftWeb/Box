@@ -148,9 +148,16 @@ find ./stacks -name 'docker-compose.yml' -type f | while read -r file; do
 done
 
 echo "Creating networks..."
-create_network proxy_app 10.234.0.0/16
-create_network frp_net 10.233.0.0/16
-create_network ollama_net 20.232.0.0/16
+subnet_third_octet=233
+external_networks=$(find ./stacks -name 'docker-compose.yml' -type f | xargs yq eval '.networks | to_entries | .[] | select(.value.external == true) | .key' 2>/dev/null | sort | uniq)
+for network in $external_networks; do
+  if [ "$network" == "---" ]; then
+    continue
+  fi
+  echo "Creating network $network ... on subnet 10.${subnet_third_octet}.0.0/16"
+  create_network "$network" "10.${subnet_third_octet}.0.0/16"
+  subnet_third_octet=$((subnet_third_octet + 1))
+done
 
 echo "Creating data folders..."
 find . -name 'docker-compose.yml' | while read file; do
