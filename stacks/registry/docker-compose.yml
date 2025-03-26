@@ -37,7 +37,7 @@ services:
         swarmpit.service.deployment.autoredeploy: 'true'
 
   registry-server:
-    image: registry:2.8.2
+    image: registry
     volumes:
       - registry-data:/var/lib/registry
     networks:
