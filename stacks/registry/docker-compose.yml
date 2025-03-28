@@ -6,11 +6,7 @@ services:
       - registry-server
     image: joxit/docker-registry-ui:main
     ports:
-      # These ports are for internal use. External usage is not allowed.
-      - target: 80
-        published: 8080
-        protocol: tcp
-        mode: host
+      - "127.0.0.1:8080:80/tcp"
     networks:
       - net
       - proxy_app

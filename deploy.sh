@@ -171,9 +171,15 @@ find . -name 'docker-compose.yml' | while read -r file; do
   yq eval -r '.services[].ports[]? | select(has("published")) | "\(.published) \(.protocol)"' "$file" | while read -r published protocol; do
     if [ -z "$protocol" ]; then
       continue
-    else
-      sudo ufw allow "${published}/${protocol}" && echo "Allowed ${published}/${protocol}"
     fi
+    
+    # Skip ports bound to localhost (127.0.0.1)
+    if [[ "$published" == 127.0.0.1:* ]]; then
+      echo "Skipping localhost-bound port: $published"
+      continue
+    fi
+    
+    sudo ufw allow "${published}/${protocol}" && echo "Allowed ${published}/${protocol}"
   done
 done
 
