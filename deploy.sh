@@ -240,6 +240,9 @@ fi
 echo "Starting registry..."
 deploy stacks/registry/docker-compose.yml registry # 8080
 
+echo "Blocking external access to the registry..."
+sudo iptables -t mangle -A PREROUTING ! -i lo -p tcp --dport 8080 -j DROP
+
 echo "Make sure the registry is ready..."
 sleep 15 # Could not trust result in the first few seconds, because the old registry might still be running
 while curl -s http://localhost:8080/ > /dev/null; [ $? -ne 0 ]; do
