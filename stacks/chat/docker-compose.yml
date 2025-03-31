@@ -11,12 +11,16 @@ services:
     secrets:
       - source: bing-search-key
         target: BingSearchAPIKey
+      - source: openai-key
+        target: Underlyings__OpenAI__Token
+      - source: deepseek-key
+        target: Underlyings__DeepSeek__Token
     environment:
       ConnectionStrings__DefaultConnection: Server=db;Database=chat;Uid=chat;Pwd=<chat_password>;
       ConnectionStrings__DbType: MySql
       Storage__Path: /data/files
-      OpenAI__CompletionApiUrl: http://ollama_server:11434/api/chat
-      OpenAI__Model: DeepseekR170B
+      Underlyings__Ollama__Instance: http://ollama_server:11434/
+      Underlyings__OpenAI__InstanceUrl: https://openai.api2d.net
     networks:
       - proxy_app
       - ollama_net
@@ -72,6 +76,10 @@ volumes:
 
 secrets:
   bing-search-key:
+    external: true
+  openai-key:
+    external: true
+  deepseek-key:
     external: true
 
 networks:
