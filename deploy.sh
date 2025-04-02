@@ -104,7 +104,7 @@ function create_secret() {
     local known_secrets=$(sudo docker secret ls --format '{{.Name}}')
     if [[ $known_secrets != *"$secret_name"* ]]; then
         echo "Please enter $secret_name secret"
-        read -s secret_value
+        read secret_value
         echo $secret_value | sudo docker secret create $secret_name -
     fi
 }
