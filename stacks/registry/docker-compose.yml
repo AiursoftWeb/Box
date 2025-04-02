@@ -71,12 +71,10 @@ services:
         echo "Installing docker";
         apk add --no-cache docker;
         echo "Starting registry cleaner";
-        while true; do
-          sleep 20;
-          docker ps --filter name=registry-server -q | xargs -r -I {} docker exec {} registry garbage-collect /etc/docker/registry/config.yml --delete-untagged=true;
-          echo "Garbage collection done";
-          sleep 3600;
-        done
+        sleep 20;
+        docker ps --filter name=registry-server -q | xargs -r -I {} docker exec {} registry garbage-collect /etc/docker/registry/config.yml --delete-untagged=true;
+        echo "Garbage collection done. Sleeping infinitely.";
+        sleep infinity;
     deploy:
       resources:
         limits:
