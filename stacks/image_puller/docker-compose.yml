@@ -3,8 +3,17 @@ version: '3.9'
 services:
   downloader:
     image: hub.aiursoft.cn/aiursoft/internalimages/imagepuller
+    environment:
+      - DOCKER_USERNAME=anduin2019
+    secrets:
+      - source: docker-key
+        target: DOCKER_PASSWORD
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     deploy:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
+
+secrets:
+  docker-key:
+    external: true
