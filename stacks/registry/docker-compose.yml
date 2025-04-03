@@ -58,32 +58,32 @@ services:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
-  registry-cleaner:
-    depends_on:
-      - registry-server
-    image: alpine:latest
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    entrypoint:
-      - "/bin/sh"
-      - "-c"
-      - |
-        echo "Installing docker";
-        apk add --no-cache docker;
-        echo "Starting registry cleaner";
-        sleep 20;
-        docker ps --filter name=registry-server -q | xargs -r -I {} docker exec {} registry garbage-collect /etc/docker/registry/config.yml --delete-untagged=true;
-        echo "Garbage collection done. Sleeping infinitely.";
-        sleep infinity;
-    deploy:
-      resources:
-        limits:
-          cpus: '1.0'
-          memory: 1G
-      update_config:
-        order: start-first
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
+  # registry-cleaner:
+  #   depends_on:
+  #     - registry-server
+  #   image: alpine:latest
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #   entrypoint:
+  #     - "/bin/sh"
+  #     - "-c"
+  #     - |
+  #       echo "Installing docker";
+  #       apk add --no-cache docker;
+  #       echo "Starting registry cleaner";
+  #       sleep 20;
+  #       docker ps --filter name=registry-server -q | xargs -r -I {} docker exec {} registry garbage-collect /etc/docker/registry/config.yml --delete-untagged=true;
+  #       echo "Garbage collection done. Sleeping infinitely.";
+  #       sleep infinity;
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         cpus: '1.0'
+  #         memory: 1G
+  #     update_config:
+  #       order: start-first
+  #     labels:
+  #       swarmpit.service.deployment.autoredeploy: 'true'
 
 volumes:
   registry-data:
