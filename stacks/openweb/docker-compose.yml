@@ -4,8 +4,7 @@ services:
   app:
     image: hub.aiursoft.cn/ghcr.io/open-webui/open-webui:main
     environment:
-      # Temp endpoint. Migrate to container ASAP.
-      - OLLAMA_BASE_URL=http://ollama_server:11434/
+      - OLLAMA_BASE_URL=http://chat_app:5000/
       - ENABLE_OPENAI_API=False
       - WEBUI_AUTH=True
       - ENABLE_SIGNUP=True
@@ -21,7 +20,6 @@ services:
       - data:/app/backend/data
     networks:
       - proxy_app
-      - ollama_net
     deploy:
       resources:
         limits:
