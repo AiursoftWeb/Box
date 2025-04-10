@@ -39,5 +39,3 @@ volumes:
 networks:
   proxy_app:
     external: true
-  ollama_net:
-    external: true
