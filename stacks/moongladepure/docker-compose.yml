@@ -716,7 +716,7 @@ services:
           memory: 4G
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
-      --
+      
   yuyuyuyublog:
     depends_on:
       - yuyuyuyublog-db
