@@ -716,6 +716,52 @@ services:
           memory: 4G
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
+      
+  yuyuyuyublog:
+    depends_on:
+      - yuyuyuyublog-db
+    image: hub.aiursoft.cn/aiursoft/moongladepure
+    volumes:
+      - yuyuyuyublog-files:/data/files
+      - yuyuyuyublog-aspnet:/data/.aspnet/
+    environment:
+        OpenAI__CompletionApiUrl: http://chat_app:5000/api/chat
+        OpenAI__Model: deepseek-r1:70b
+        ConnectionStrings__DefaultConnection: Server=yuyuyuyublog-db;Database=yuyuyuyublog;Uid=yuyuyuyublog;Pwd=<yuyuyuyublog_password>;
+        ConnectionStrings__DbType: MySql
+        Storage__Path: /data/files
+    networks:
+      - yuyuyuyublog_app
+      - proxy_app
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 4G
+      update_config:
+        order: start-first
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+  yuyuyuyublog-db:
+    image: hub.aiursoft.cn/mysql
+    volumes:
+      - yuyuyuyublog-db:/var/lib/mysql
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
+      - MYSQL_DATABASE=yuyuyuyublog
+      - MYSQL_USER=yuyuyuyublog
+      - MYSQL_PASSWORD=<yuyuyuyublog_password>
+    networks:
+      - yuyuyuyublog_app
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 4G
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+        
 
 networks:
   proxy_app:
@@ -752,6 +798,8 @@ networks:
     driver: overlay
   zoneblog_app:
     driver: overlay
+  yuyuyuyublog_app:
+    driver: overlay  
 
 volumes:
   anduin-aspnet:
@@ -1057,3 +1105,22 @@ volumes:
       type: none
       o: bind
       device: /swarm-vol/moongladepure/zoneblog/files
+
+  yuyuyuyublog-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/yuyuyuyublog/db
+  yuyuyuyublog-aspnet:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/yuyuyuyublog/aspnet
+  yuyuyuyublog-files:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/yuyuyuyublog/files
