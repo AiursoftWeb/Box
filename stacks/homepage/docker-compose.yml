@@ -7,6 +7,12 @@ services:
       - proxy_app
     deploy:
       replicas: 2
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 4G
+      update_config:
+        order: start-first
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
