@@ -1,0 +1,14 @@
+version: '3.9'
+
+services:
+  charter:
+    image: hub.aiursoft.cn/aiursoft/charter
+    networks:
+      - proxy_app
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+networks:
+  proxy_app:
+    external: true
