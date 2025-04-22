@@ -1,7 +1,7 @@
 version: '3.9'
 
 services:
-  charter:
+  app:
     image: hub.aiursoft.cn/aiursoft/charter
     networks:
       - proxy_app
