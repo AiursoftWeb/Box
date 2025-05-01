@@ -9,9 +9,17 @@ services:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
+  arm-downloader:
+    image: hub.aiursoft.cn/aiursoft/internalimages/apt-arm-mirror
+    volumes:
+      - arm-apt-mirror-data:/var/spool/apt-mirror
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
   web_apt:
     depends_on:
-      - app
+      - downloader
     image: hub.aiursoft.cn/aiursoft/static
     volumes:
       - apt-mirror-data:/data
@@ -24,7 +32,7 @@ services:
 
   web_ppa:
     depends_on:
-      - app
+      - downloader
     image: hub.aiursoft.cn/aiursoft/static
     volumes:
       - apt-mirror-data:/data
@@ -34,6 +42,19 @@ services:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
     entrypoint: ["sh", "-c", "/app/static --port 5000 --path /data/mirror/ppa.launchpad.net --allow-directory-browsing"]
+
+  web_arm:
+    depends_on:
+      - arm-downloader
+    image: hub.aiursoft.cn/aiursoft/static
+    volumes:
+      - arm-apt-mirror-data:/data
+    networks:
+      - proxy_app
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+    entrypoint: ["sh", "-c", "/app/static --port 5000 --path /data/mirror/ports.ubuntu.com --allow-directory-browsing"]
 
   web_immortal:
     image: hub.aiursoft.cn/aiursoft/static
@@ -53,6 +74,12 @@ volumes:
       type: none
       o: bind
       device: /swarm-vol/apt-mirror-data
+  arm-apt-mirror-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/arm-apt-mirror-data
   immortal-data:
     driver: local
     driver_opts:
