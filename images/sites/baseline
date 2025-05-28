@@ -39,7 +39,7 @@
 
 (rate_limit_api) {
 	rate_limit {
-		zone ip_limit {
+		zone ip_limit_api {
 			key    {remote_host}
 			events 1300
 			window 600s
