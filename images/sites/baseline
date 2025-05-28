@@ -26,3 +26,13 @@
 	header Strict-Transport-Security max-age=63072000
 }
 
+(rate_limit) {
+	rate_limit {
+		zone ip_limit {
+			key    {remote_host}
+			events 36
+			window 60s
+		}
+		log_key
+	}
+}
