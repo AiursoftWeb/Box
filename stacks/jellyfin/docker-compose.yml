@@ -20,6 +20,8 @@ services:
       - media-data:/mnt/data
     environment:
       - TZ=UTC
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=compute,utility,video
     networks:
       - proxy_app
     ports:
@@ -34,12 +36,16 @@ services:
         mode: host
     deploy:
       resources:
-        # reservations:
-        #   generic_resources:
-        #     - discrete_resource_spec:
-        #         kind: "NVIDIA-GPU"
-        #         value: 0
+        reservations:
+          generic_resources:
+            - discrete_resource_spec:
+                kind: "NVIDIA-GPU"
+                value: 0
+            - discrete_resource_spec:
+                kind: "NVIDIA-GPU"
+                value: 1
         limits:
+          cpus: '8.0'
           memory: 16G
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
