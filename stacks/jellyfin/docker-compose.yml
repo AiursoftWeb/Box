@@ -41,9 +41,6 @@ services:
             - discrete_resource_spec:
                 kind: "NVIDIA-GPU"
                 value: 0
-            - discrete_resource_spec:
-                kind: "NVIDIA-GPU"
-                value: 1
         limits:
           cpus: '8.0'
           memory: 16G
