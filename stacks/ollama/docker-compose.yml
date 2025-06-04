@@ -23,6 +23,9 @@ services:
           generic_resources:
             - discrete_resource_spec:
                 kind: "NVIDIA-GPU"
+                value: 0
+            - discrete_resource_spec:
+                kind: "NVIDIA-GPU"
                 value: 1
       replicas: 1
       restart_policy:
