@@ -28,7 +28,7 @@ services:
     networks:
       - frp_net
     environment:
-      - FRP_SERVER=110.42.35.222
+      - FRP_SERVER=114.66.61.90
     secrets:
       - source: frp-token
         target: frp-token
