@@ -7,7 +7,7 @@ services:
       - proxy_app
     volumes:
       - pub-data:/srv
-      - /swarm-vol/jellyfin/filebrowser/database.db:/database.db
+      - /swarm-vol/pubshare/filebrowser/database.db:/database.db
     environment:
       - FB_AUTHMETHOD=noauth
       - FB_NOAUTH=true

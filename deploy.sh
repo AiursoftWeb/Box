@@ -218,6 +218,7 @@ done
 echo "Creating files for volumes..."
 sudo touch /swarm-vol/koel/config
 sudo cp ./assets/database.db /swarm-vol/jellyfin/filebrowser/database.db
+sudo cp ./assets/database.db /swarm-vol/pubshare/filebrowser/database.db
 
 #=============================
 # Nvidia GPU Part
