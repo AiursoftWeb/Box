@@ -1,0 +1,33 @@
+version: '3.9' 
+
+services:
+  mediabrowser:
+    image: hub.aiursoft.cn/filebrowser/filebrowser
+    networks:
+      - proxy_app
+    volumes:
+      - pub-data:/srv
+      - /swarm-vol/jellyfin/filebrowser/database.db:/database.db
+    environment:
+      - FB_AUTHMETHOD=noauth
+      - FB_NOAUTH=true
+    healthcheck:
+      test: ["CMD", "true"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+networks:
+  proxy_app:
+    external: true
+
+volumes:
+  pub-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/pubshare/media
