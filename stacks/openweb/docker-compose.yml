@@ -1,7 +1,24 @@
 version: '3.9'
 
 services:
+  mcp:
+    image: hub.aiursoft.cn/ghcr.io/open-webui/mcpo:main
+    networks:
+      - internal
+    volumes:
+      - mcpo-data:/data
+    deploy:
+      resources:
+        limits:
+          cpus: '6.0'
+          memory: 6G
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+    entrypoint: ["mcpo", "--config", "/data/config.json"]
+
   app:
+    depends_on:
+      - mcp
     image: hub.aiursoft.cn/ghcr.io/open-webui/open-webui:main
     environment:
       - OLLAMA_BASE_URL=http://chat_app:5000/
@@ -28,21 +45,6 @@ services:
           memory: 6G
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
-
-  mcp:
-    image: hub.aiursoft.cn/ghcr.io/open-webui/mcpo:main
-    networks:
-      - internal
-    volumes:
-      - mcpo-data:/data
-    deploy:
-      resources:
-        limits:
-          cpus: '6.0'
-          memory: 6G
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
-    entrypoint: ["mcpo", "--config", "/data/config.json"]
 
 volumes:
   mcpo-data:
