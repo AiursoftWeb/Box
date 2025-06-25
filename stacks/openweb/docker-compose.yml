@@ -20,6 +20,7 @@ services:
       - data:/app/backend/data
     networks:
       - proxy_app
+      - internal
     deploy:
       resources:
         limits:
@@ -28,7 +29,28 @@ services:
       labels:
         swarmpit.service.deployment.autoredeploy: 'true'
 
+  mcp:
+    image: hub.aiursoft.cn/ghcr.io/open-webui/mcpo:main
+    networks:
+      - internal
+    volumes:
+      - mcpo-data:/data
+    deploy:
+      resources:
+        limits:
+          cpus: '6.0'
+          memory: 6G
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+    entrypoint: ["mcpo", "--config", "/data/config.json"]
+
 volumes:
+  mcpo-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/mcpo
   data:
     driver: local
     driver_opts:
@@ -39,3 +61,5 @@ volumes:
 networks:
   proxy_app:
     external: true
+  internal:
+    driver: overlay
