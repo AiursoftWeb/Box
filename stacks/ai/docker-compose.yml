@@ -94,7 +94,7 @@ services:
       - source: deepseek-key
         target: Underlyings__DeepSeek__Token
     environment:
-      ConnectionStrings__DefaultConnection: Server=db;Database=chat;Uid=chat;Pwd=<chat_password>;
+      ConnectionStrings__DefaultConnection: Server=ollama-gateway-db;Database=chat;Uid=chat;Pwd=<chat_password>;
       ConnectionStrings__DbType: MySql
       Storage__Path: /data/files
       Underlyings__Ollama__Instance: http://ollama-server:11434/
