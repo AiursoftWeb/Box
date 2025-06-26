@@ -10,7 +10,7 @@ services:
     networks:
       - proxy_app
     deploy:
-      replicas: 1
+      replicas: 2
       resources:
         limits:
           cpus: '4.0'
