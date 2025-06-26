@@ -72,7 +72,7 @@ services:
   #       apk add --no-cache docker;
   #       echo "Starting registry cleaner";
   #       sleep 20;
-  #       docker ps --filter name=registry-server -q | xargs -r -I {} docker exec {} registry garbage-collect /etc/docker/registry/config.yml --delete-untagged=true;
+  #       docker ps --filter name=registry-server -q | xargs -r -I {} docker exec {} registry garbage-collect /etc/distribution/config.yml --delete-untagged=true;
   #       echo "Garbage collection done. Sleeping infinitely.";
   #       sleep infinity;
   #   deploy:
