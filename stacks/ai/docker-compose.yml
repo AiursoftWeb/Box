@@ -101,6 +101,7 @@ services:
       Underlyings__OpenAI__InstanceUrl: https://openai.api2d.net
     networks:
       - internal
+      - proxy_app
     deploy:
       resources:
         limits:
