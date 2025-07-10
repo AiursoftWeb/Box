@@ -83,15 +83,6 @@ services:
     secrets:
       - authentik_pg_pass
       - authentik_secret_key
-    healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:9000/health/ || exit 1"]
-      start_period: 20s
-      interval: 30s
-      retries: 5
-      timeout: 5s
-    ports:
-      - "9000:9000"
-      - "9443:9443"
     command: server
     deploy:
       resources:
