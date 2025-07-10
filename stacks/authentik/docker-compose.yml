@@ -148,6 +148,12 @@ networks:
   internal:
     driver: overlay
 
+secrets:
+  pg_pass:
+    external: true
+  secret_key:
+    external: true
+
 volumes:
   database:
     driver: local
