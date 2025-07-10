@@ -37,7 +37,8 @@ services:
 
   ollama-warmup:
     depends_on:
-      - ollama-server
+      ollama-server:
+        condition: service_healthy
     image: hub.aiursoft.cn/alpine
     networks: 
       - internal
@@ -80,8 +81,10 @@ services:
 
   ollama-gateway:
     depends_on:
-      - ollama-gateway-db
-      - ollama-warmup
+      ollama-gateway-db:
+        condition: service_healthy
+      ollama-warmup:
+        condition: service_healthy
     image: hub.aiursoft.cn/aiursoft/gptgateway
     volumes:
       - gateway-data:/data/files
@@ -133,7 +136,8 @@ services:
 
   mcpo:
     depends_on:
-      - code-runner
+      code-runner:
+        condition: service_healthy
     image: hub.aiursoft.cn/ghcr.io/open-webui/mcpo:main
     networks:
       - internal
@@ -150,8 +154,10 @@ services:
 
   open-webui:
     depends_on:
-      - mcpo
-      - ollama-gateway
+      mcpo:
+        condition: service_healthy
+      ollama-gateway:
+        condition: service_healthy
     image: hub.aiursoft.cn/ghcr.io/open-webui/open-webui:main
     environment:
       - OLLAMA_BASE_URL=http://ollama-gateway:5000/
