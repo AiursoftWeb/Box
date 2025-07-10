@@ -1,3 +1,13 @@
+# depends on
+# image
+# volumes
+# environment
+# networks
+# secrets
+# healthcheck
+# command
+# deploy
+
 version: '3.9'
 
 services:
@@ -6,19 +16,28 @@ services:
     volumes:
       - database:/var/lib/postgresql/data
     environment:
-      POSTGRES_PASSWORD: ${PG_PASS:?database password required}
+      POSTGRES_PASSWORD: /run/secrets/pg_pass
       POSTGRES_USER: authentik_pg_user
       POSTGRES_DB: authentik
-    env_file:
-      - /swarm-vol/authentik/keys
     networks:
       - internal
+    secrets:
+      - pg_pass
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
       start_period: 20s
       interval: 30s
       retries: 5
       timeout: 5s
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8G
+      update_config:
+        order: stop-first
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
 
   redis:
     image: hub.aiursoft.cn/redis:alpine
@@ -33,6 +52,15 @@ services:
       retries: 5
       timeout: 3s
     command: --save 60 1 --loglevel warning
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4G
+      update_config:
+        order: stop-first
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
 
   server:
     depends_on:
@@ -43,21 +71,37 @@ services:
       - media:/media
       - custom-templates:/templates
     environment:
-      AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY:?secret key required}
+      AUTHENTIK_SECRET_KEY: /run/secrets/secret_key
       AUTHENTIK_REDIS__HOST: redis
       AUTHENTIK_POSTGRESQL__HOST: postgresql
       AUTHENTIK_POSTGRESQL__USER: authentik_pg_user
       AUTHENTIK_POSTGRESQL__NAME: authentik
-      AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
-    env_file:
-      - /swarm-vol/authentik/keys
+      AUTHENTIK_POSTGRESQL__PASSWORD: /run/secrets/pg_pass
     networks:
       - proxy_app
       - internal
+    secrets:
+      - pg_pass
+      - secret_key
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9000/health/ || exit 1"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
     ports:
       - "9000:9000"
       - "9443:9443"
     command: server
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8G
+      update_config:
+        order: start-first
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
 
   worker:
     depends_on:
@@ -69,15 +113,13 @@ services:
       - media:/media
       - certs:/certs
       - custom-templates:/templates
-    env_file:
-      - /swarm-vol/authentik/keys
     environment:
-      AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY:?secret key required}
+      AUTHENTIK_SECRET_KEY: /run/secrets/secret_key
       AUTHENTIK_REDIS__HOST: redis
       AUTHENTIK_POSTGRESQL__HOST: postgresql
       AUTHENTIK_POSTGRESQL__USER: authentik_pg_user
       AUTHENTIK_POSTGRESQL__NAME: authentik
-      AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
+      AUTHENTIK_POSTGRESQL__PASSWORD: /run/secrets/pg_pass
     # `user: root` and the docker socket volume are optional.
     # See more for the docker socket integration here:
     # https://goauthentik.io/docs/outposts/integrations/docker
@@ -86,7 +128,19 @@ services:
     # (1000:1000 by default)
     networks:
       - internal
+    secrets:
+      - pg_pass
+      - secret_key
     command: worker
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 4G
+      update_config:
+        order: stop-first
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
 
 networks:
   proxy_app:
