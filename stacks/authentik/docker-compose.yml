@@ -1,0 +1,127 @@
+version: '3.9'
+
+services:
+  postgresql:
+    image: hub.aiursoft.cn/postgres:16-alpine
+    volumes:
+      - database:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: ${PG_PASS:?database password required}
+      POSTGRES_USER: authentik_pg_user
+      POSTGRES_DB: authentik
+    env_file:
+      - /swarm-vol/authentik/keys
+    networks:
+      - internal
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
+
+  redis:
+    image: hub.aiursoft.cn/redis:alpine
+    volumes:
+      - redis:/data
+    networks:
+      - internal
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 3s
+    command: --save 60 1 --loglevel warning
+
+  server:
+    depends_on:
+      - postgresql
+      - redis
+    image: hub.aiursoft.cn/ghcr.io/goauthentik/server:2025.6
+    volumes:
+      - media:/media
+      - custom-templates:/templates
+    environment:
+      AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY:?secret key required}
+      AUTHENTIK_REDIS__HOST: redis
+      AUTHENTIK_POSTGRESQL__HOST: postgresql
+      AUTHENTIK_POSTGRESQL__USER: authentik_pg_user
+      AUTHENTIK_POSTGRESQL__NAME: authentik
+      AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
+    env_file:
+      - /swarm-vol/authentik/keys
+    networks:
+      - proxy_app
+      - internal
+    ports:
+      - "9000:9000"
+      - "9443:9443"
+    command: server
+
+  worker:
+    depends_on:
+      - postgresql
+      - redis
+    image: hub.aiursoft.cn/ghcr.io/goauthentik/server:2025.6
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - media:/media
+      - certs:/certs
+      - custom-templates:/templates
+    env_file:
+      - /swarm-vol/authentik/keys
+    environment:
+      AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY:?secret key required}
+      AUTHENTIK_REDIS__HOST: redis
+      AUTHENTIK_POSTGRESQL__HOST: postgresql
+      AUTHENTIK_POSTGRESQL__USER: authentik_pg_user
+      AUTHENTIK_POSTGRESQL__NAME: authentik
+      AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
+    # `user: root` and the docker socket volume are optional.
+    # See more for the docker socket integration here:
+    # https://goauthentik.io/docs/outposts/integrations/docker
+    # Removing `user: root` also prevents the worker from fixing the permissions
+    # on the mounted folders, so when removing this make sure the folders have the correct UID/GID
+    # (1000:1000 by default)
+    networks:
+      - internal
+    command: worker
+
+networks:
+  proxy_app:
+    external: true
+  internal:
+    driver: overlay
+
+volumes:
+  database:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/authentik/postgres-database
+  redis:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/authentik/redis-data
+  media:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/authentik/media-data
+  certs:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/authentik/certs
+  custom-templates:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/authentik/custom-templates
