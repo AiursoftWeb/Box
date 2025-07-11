@@ -29,3 +29,18 @@
 注意，需要额外配置插件配置 `Scheme Override:https` 来让 OAuth 正常工作。
 
 注意，需要额外修改 CSS 设置和 HTML 设置来让登录页面隐藏正常的登录框，并显示 Authentik 的登录框。
+
+## OpenGist
+
+* 基于 OpenId Connect 协议。
+* Client ID 和 Client Secret 需要通过环境变量传递给 OpenGist 服务。
+* 基于环境变量继承权限信息。可以将具有特定 `group` 的用户添加到 OpenGist 的管理员组中。
+  * 默认就开启了角色管理功能。
+  * 基于环境变量 `OG_OIDC_ADMIN_GROUP` 来指定哪些 `group` 的用户可以成为 OpenGist 的管理员。
+  * 基于环境变量 `OG_OIDC_GROUP_CLAIM_NAME` 来指定 `groups` 这个字段代表用户的角色信息。
+* 无法合并。需要手工删除老用户。
+* 注销时只会注销 OpenGist 的会话，不会影响 Authentik 的会话。
+
+注意，需要额外在管理员中心配置 `Disable signup` 为关，来确保 OAuth 完成的用户可以自动注册 OpenGist。
+
+注意：需要额外在管理员中心配置 `Disable login form` 为开，来确保不再显示 OpenGist 的登录框。
