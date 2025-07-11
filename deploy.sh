@@ -291,6 +291,7 @@ while curl -s http://localhost:8080/ > /dev/null; [ $? -ne 0 ]; do
 done
 
 echo "Prebuild images..."
+rm -rf ./images/sites/discovered
 mkdir -p ./images/sites/discovered && cp ./stacks/**/*.conf ./images/sites/discovered
 
 echo "Building images..."
