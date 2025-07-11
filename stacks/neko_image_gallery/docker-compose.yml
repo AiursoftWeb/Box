@@ -35,15 +35,13 @@ services:
     depends_on:
       - qdrant_database
     environment:
-      - APP_ACCESS_PROTECTED=True
+      - APP_ACCESS_PROTECTED=False
       - APP_QDRANT__COLL=NekoImg-v4
       - APP_QDRANT__HOST=qdrant_database
       - APP_OCR_SEARCH__OCR_MIN_CONFIDENCE=0.05
       - APP_ADMIN_API_ENABLE=True
       - APP_STORAGE__METHOD=local
     secrets:
-      - source: neko-image-gallery-access-token
-        target: app_access_token
       - source: neko-image-gallery-admin-token
         target: app_admin_token
     # runtime: nvidia
@@ -90,7 +88,5 @@ networks:
     driver: overlay
 
 secrets:
-  neko-image-gallery-access-token:
-    external: true
   neko-image-gallery-admin-token:
     external: true
