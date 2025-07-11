@@ -2,6 +2,8 @@
 
 ## OpenWeb Chat
 
+未登录完全无法使用，已登录可以使用几乎所有功能，管理员可以管理高级设置。
+
 * 基于 OpenId Connect 协议。
 * Client ID 和 Client Secret 需要通过环境变量传递给 OpenWeb Chat 服务。
 * 基于环境变量继承权限信息。可以将具有特定 `group` 的用户添加到 OpenWeb Chat 的管理员组中。
@@ -17,6 +19,8 @@
 
 ## Jellyfin
 
+未登录完全无法使用，已登录可以使用几乎所有功能，管理员可以管理高级设置。
+
 * 基于 OpenId Connect 协议。
 * Client ID 和 Client Secret 需要通过应用内的插件配置传给 Jellyfin 服务。
 * 基于插件的配置继承权限信息。可以将具有特定 `group` 的用户添加到 Jellyfin 的管理员组中。
@@ -31,6 +35,8 @@
 注意，需要额外修改 CSS 设置和 HTML 设置来让登录页面隐藏正常的登录框，并显示 Authentik 的登录框。
 
 ## OpenGist
+
+未登录可以匿名浏览，已登录可以使用几乎所有功能，管理员可以管理高级设置。
 
 * 基于 OpenId Connect 协议。
 * Client ID 和 Client Secret 需要通过环境变量传递给 OpenGist 服务。
