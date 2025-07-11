@@ -1,6 +1,16 @@
 version: '3.9'
 
 services:
+  authentik_proxy:
+    image: hub.aiursoft.cn/ghcr.io/goauthentik/proxy:2025.6
+    environment:
+      AUTHENTIK_HOST: "https://auth.aiursoft.cn/"
+      AUTHENTIK_INSECURE: "false"
+      AUTHENTIK_TOKEN: "{{SAKURATRAK_OUTPOST_TOKEN}}"
+    networks:
+      - proxy_app
+      - internal
+
   webapp:
     image: hub.aiursoft.cn/edgeneko/nekoimagegallery.app
     #image: edgeneko/nekoimagegallery.app # Avoid using mirror because this app updates very frequently
@@ -8,6 +18,7 @@ services:
       - OVERRIDE_API_URL=https://sakuratrak.aiursoft.cn/api
     networks:
       - proxy_app
+      - internal
     deploy:
       replicas: 2
       labels:
