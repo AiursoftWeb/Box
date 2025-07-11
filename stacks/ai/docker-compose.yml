@@ -166,9 +166,11 @@ services:
       - ENABLE_EVALUATION_ARENA_MODELS=False
       - USER_PERMISSIONS_CHAT_FILE_UPLOAD=False
       - USER_PERMISSIONS_CHAT_TEMPORARY=False
-      - ENABLE_OAUTH_SIGNUP=False
-      - OAUTH_MERGE_ACCOUNTS_BY_EMAIL=true
+      - ENABLE_OAUTH_SIGNUP=True
+      - OAUTH_MERGE_ACCOUNTS_BY_EMAIL=True
+      - OAUTH_ADMIN_ROLES=openweb-admins
       - OAUTH_PROVIDER_NAME=Aiursoft
+      - OAUTH_ROLES_CLAIM=groups
       - 'OPENID_PROVIDER_URL=https://auth.aiursoft.cn/application/o/openwebchat/.well-known/openid-configuration'
       - OAUTH_CLIENT_ID={{OPENWEB_CLIENT_ID}}
       - OAUTH_CLIENT_SECRET={{OPENWEB_CLIENT_SECRET}}
