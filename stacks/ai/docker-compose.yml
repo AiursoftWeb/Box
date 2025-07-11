@@ -157,7 +157,7 @@ services:
       - OLLAMA_BASE_URL=http://ollama-gateway:5000/
       - ENABLE_OPENAI_API=False
       - WEBUI_AUTH=True
-      - ENABLE_SIGNUP=True
+      - ENABLE_SIGNUP=False
       - DEFAULT_USER_ROLE=user
       - SHOW_ADMIN_DETAILS=False
       - ENABLE_COMMUNITY_SHARING=False
@@ -166,9 +166,9 @@ services:
       - ENABLE_EVALUATION_ARENA_MODELS=False
       - USER_PERMISSIONS_CHAT_FILE_UPLOAD=False
       - USER_PERMISSIONS_CHAT_TEMPORARY=False
-      - ENABLE_OAUTH_SIGNUP=true
+      - ENABLE_OAUTH_SIGNUP=False
       - OAUTH_MERGE_ACCOUNTS_BY_EMAIL=true
-      - OAUTH_PROVIDER_NAME=Authentik
+      - OAUTH_PROVIDER_NAME=Aiursoft
       - OPENID_PROVIDER_URL=https://auth.aiursoft.cn/application/o/openwebchat/.well-known/openid-configuration
       - OAUTH_CLIENT_ID=/run/secret/oauth_client_id
       - OAUTH_CLIENT_SECRET=/run/secret/oauth_client_secret
