@@ -154,7 +154,7 @@ services:
       - ollama-gateway
     image: hub.aiursoft.cn/ghcr.io/open-webui/open-webui:main
     environment:
-      - OLLAMA_BASE_URL=http://ollama-gateway:5000/
+      - 'OLLAMA_BASE_URL=http://ollama-gateway:5000/'
       - ENABLE_OPENAI_API=False
       - WEBUI_AUTH=True
       - ENABLE_SIGNUP=False
@@ -169,7 +169,7 @@ services:
       - ENABLE_OAUTH_SIGNUP=False
       - OAUTH_MERGE_ACCOUNTS_BY_EMAIL=true
       - OAUTH_PROVIDER_NAME=Aiursoft
-      - OPENID_PROVIDER_URL=https://auth.aiursoft.cn/application/o/openwebchat/.well-known/openid-configuration
+      - 'OPENID_PROVIDER_URL=https://auth.aiursoft.cn/application/o/openwebchat/.well-known/openid-configuration'
       - OAUTH_CLIENT_ID=/run/secret/oauth_client_id
       - OAUTH_CLIENT_SECRET=/run/secret/oauth_client_secret
       - 'OAUTH_SCOPES=openid email profile'
