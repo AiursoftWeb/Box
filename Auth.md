@@ -5,12 +5,13 @@
 * 基于 OpenId Connect 协议。
 * Client ID 和 Client Secret 需要通过环境变量传递给 OpenWeb Chat 服务。
 * 基于环境变量继承权限信息。可以将具有特定 `group` 的用户添加到 OpenWeb Chat 的管理员组中。
+  * 基于环境变量 `ENABLE_OAUTH_ROLE_MANAGEMENT` 来确保开启了角色管理功能。
+  * 基于环境变量 `OAUTH_ADMIN_ROLES` 来指定哪些 `group` 的用户可以成为 OpenWeb Chat 的管理员。
+  * 基于环境变量 `OAUTH_ROLES_CLAIM` 来指定 `groups` 这个字段代表用户的角色信息。
 * 在合并用户时自动根据 Email 进行匹配。
 * 注销时只会注销 OpenWeb Chat 的会话，不会影响 Authentik 的会话。
 
-注意，需要额外配置环境变量 `OAUTH_ADMIN_ROLES=openweb-admins` 来让具有特定 `group` 的用户成为 OpenWeb Chat 的管理员。
-
-注意：需要额外配置环境变量 `ENABLE_OAUTH_ROLE_MANAGEMENT=True` 来启用角色管理功能。
+注意：需要额外配置环境变量 `ENABLE_OAUTH_SIGNUP=True` 来允许 OAuth 完成的用户自动注册 OpenWeb Chat。
 
 注意：需要额外配置环境变量 `ENABLE_SIGNUP=False` 来让 OpenWeb Chat 禁用注册功能。
 
@@ -19,12 +20,11 @@
 * 基于 OpenId Connect 协议。
 * Client ID 和 Client Secret 需要通过应用内的插件配置传给 Jellyfin 服务。
 * 基于插件的配置继承权限信息。可以将具有特定 `group` 的用户添加到 Jellyfin 的管理员组中。
+  * 基于插件配置 `Enable Authorization by Plugin` 来确保开启了角色管理功能。
+  * 基于插件配置 `Admin Roles:jellyfin-admins` 来指定哪些 `group` 的用户可以成为 Jellyfin 的管理员。
+  * 基于插件配置 `Role Claim:groups` 来指定 `groups` 这个字段代表用户的角色信息。
 * 在合并用户时自动根据用户名进行匹配。
 * 注销时只会注销 Jellyfin 的会话，不会影响 Authentik 的会话。
-
-注意，需要额外配置插件配置 `Admin Roles:jellyfin-admins` 来让具有特定 `group` 的用户成为 Jellyfin 的管理员。
-
-注意，需要额外配置插件配置 `Role Claim:groups` 来让具有特定 `group` 的用户成为 Jellyfin 的管理员。
 
 注意，需要额外配置插件配置 `Scheme Override:https` 来让 OAuth 正常工作。
 
