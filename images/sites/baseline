@@ -30,7 +30,7 @@
 	rate_limit {
 		zone ip_limit {
 			key    {remote_host}
-			events 800
+			events 8000
 			window 600s
 		}
 		log_key
@@ -41,7 +41,7 @@
 	rate_limit {
 		zone ip_limit_api {
 			key    {remote_host}
-			events 1300
+			events 13000
 			window 600s
 		}
 		log_key
