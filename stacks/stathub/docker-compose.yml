@@ -11,7 +11,7 @@ services:
       - proxy_app
       - internal
 
-  stathub-app:
+  stathubserver:
     image: hub.aiursoft.cn/aiursoft/stathub
     volumes:
       - stathub-data:/data
