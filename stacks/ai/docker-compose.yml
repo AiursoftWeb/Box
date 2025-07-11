@@ -170,8 +170,8 @@ services:
       - OAUTH_MERGE_ACCOUNTS_BY_EMAIL=true
       - OAUTH_PROVIDER_NAME=Aiursoft
       - 'OPENID_PROVIDER_URL=https://auth.aiursoft.cn/application/o/openwebchat/.well-known/openid-configuration'
-      - OAUTH_CLIENT_ID=/run/secret/oauth_client_id
-      - OAUTH_CLIENT_SECRET=/run/secret/oauth_client_secret
+      - OAUTH_CLIENT_ID={{OPENWEB_CLIENT_ID}}
+      - OAUTH_CLIENT_SECRET={{OPENWEB_CLIENT_SECRET}}
       - 'OAUTH_SCOPES=openid email profile'
       - OPENID_REDIRECT_URI=https://openweb.aiursoft.cn/oauth/oidc/callback
     volumes:
@@ -179,11 +179,6 @@ services:
     networks:
       - proxy_app
       - internal
-    secrets:
-      - source: openweb_client_id
-        target: oauth_client_id
-      - source: openweb_client_secret
-        target: oauth_client_secret
     deploy:
       resources:
         limits:
@@ -204,10 +199,6 @@ secrets:
   openai-key:
     external: true
   deepseek-key:
-    external: true
-  openweb_client_id:
-    external: true
-  openweb_client_secret:
     external: true
 
 volumes:

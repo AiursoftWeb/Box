@@ -2,6 +2,18 @@
 
 set -e
 
+# Determine which env file to use
+if [ -f ".env.prod" ]; then
+    ENV_FILE=".env.prod"
+    echo "Using .env.prod for configuration."
+elif [ -f ".env" ]; then
+    ENV_FILE=".env"
+    echo "Using .env for configuration."
+else
+    ENV_FILE=""
+    echo "No .env or .env.prod file found. Proceeding without variable substitution."
+fi
+
 function install_yq() {
     local download_link="https://github.com/mikefarah/yq/releases/download/v4.45.1/yq_linux_amd64"
     sudo wget -O /usr/bin/yq "$download_link"
@@ -120,7 +132,28 @@ function create_network() {
 }
 
 function deploy() {
-    sudo docker stack deploy -c "$1" "$2" --detach --prune
+    local original_compose_file=$1
+    local stack_name=$2
+    local temp_compose_file=$(mktemp)
+
+    # Always copy to a temporary file to avoid modifying the original
+    cp "$original_compose_file" "$temp_compose_file"
+
+    # If an environment file is found, perform substitutions
+    if [ -n "$ENV_FILE" ]; then
+        # Read non-empty, non-comment lines from the env file
+        grep -v -e '^#' -e '^$' "$ENV_FILE" | while IFS='=' read -r key value; do
+            # Escape slashes and ampersands for sed
+            escaped_value=$(printf '%s\n' "$value" | sed -e 's/[\/&]/\\&/g')
+            # Use a different delimiter for sed to handle special characters in values
+            sed -i "s/{{$key}}/$escaped_value/g" "$temp_compose_file"
+        done
+    fi
+
+    sudo docker stack deploy -c "$temp_compose_file" "$stack_name" --detach --prune
+
+    # Clean up the temporary file
+    rm "$temp_compose_file"
 }
 
 function block_port() {
