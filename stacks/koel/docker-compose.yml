@@ -1,6 +1,16 @@
 version: '3.9'
 
 services:
+  authentik_proxy:
+    image: hub.aiursoft.cn/ghcr.io/goauthentik/proxy
+    environment:
+      AUTHENTIK_HOST: "https://auth.aiursoft.cn/"
+      AUTHENTIK_INSECURE: "false"
+      AUTHENTIK_TOKEN: "{{KOEL_OUTPOST_TOKEN}}"
+    networks:
+      - internal
+      - proxy_app
+
   koel:
     image: hub.aiursoft.cn/phanan/koel
     depends_on:
