@@ -9,6 +9,7 @@ services:
       AUTHENTIK_TOKEN: "{{KOEL_OUTPOST_TOKEN}}"
     networks:
       - proxy_app
+      - internal
 
   koel:
     image: hub.aiursoft.cn/phanan/koel
