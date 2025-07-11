@@ -8,7 +8,6 @@ services:
       AUTHENTIK_INSECURE: "false"
       AUTHENTIK_TOKEN: "{{KOEL_OUTPOST_TOKEN}}"
     networks:
-      - internal
       - proxy_app
 
   koel:
