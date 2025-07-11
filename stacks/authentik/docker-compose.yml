@@ -70,6 +70,7 @@ services:
     volumes:
       - media:/media
       - custom-templates:/templates
+      - icons:/web/dist/assets/icons
     environment:
       AUTHENTIK_SECRET_KEY: /run/secrets/authentik_secret_key
       AUTHENTIK_REDIS__HOST: redis
@@ -104,6 +105,7 @@ services:
       - media:/media
       - certs:/certs
       - custom-templates:/templates
+      - icons:/web/dist/assets/icons
     environment:
       AUTHENTIK_SECRET_KEY: /run/secrets/authentik_secret_key
       AUTHENTIK_REDIS__HOST: redis
@@ -146,6 +148,12 @@ secrets:
     external: true
 
 volumes:
+  icons:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/authentik/icons
   database:
     driver: local
     driver_opts:
