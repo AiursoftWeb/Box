@@ -11,7 +11,7 @@ services:
       - OG_OIDC_PROVIDER_NAME=Aiursoft
       - OG_OIDC_CLIENT_KEY={{OPENWEB_CLIENT_ID}}
       - OG_OIDC_SECRET={{OPENWEB_CLIENT_SECRET}}
-      - OG_OIDC_DISCOVERY_URL=https://auth.aiursoft.cn/application/o/opengist/.well-known/openid-configuration'
+      - 'OG_OIDC_DISCOVERY_URL=https://auth.aiursoft.cn/application/o/opengist/.well-known/openid-configuration'
       - OG_OIDC_GROUP_CLAIM_NAME=groups
       - OG_OIDC_ADMIN_GROUP=gist-admins
     deploy:
