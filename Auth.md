@@ -50,3 +50,40 @@
 注意，需要额外在管理员中心配置 `Disable signup` 为关，来确保 OAuth 完成的用户可以自动注册 OpenGist。
 
 注意：需要额外在管理员中心配置 `Disable login form` 为开，来确保不再显示 OpenGist 的登录框。
+
+## Gitea
+
+未登录可以匿名浏览，已登录可以使用几乎所有功能，管理员可以管理高级设置。
+
+* 基于 OpenId Connect 协议。
+* Client ID 和 Client Secret 需要通过应用内置的 OAuth2 配置传给 Gitea 服务。
+* 基于应用内置的 OAuth2 配置继承权限信息。可以将具有特定 `group` 的用户添加到 Gitea 的管理员组中。
+  * 基于应用内置的 OAuth2 配置 `Claim name providing group names for this source. (Optional)` 来确保开启了角色管理功能。
+  * 基于应用内置的 OAuth2 配置 `Group Claim value for administrator users. (Optional - requires claim name above)` 来指定哪些 `group` 的用户可以成为 Gitea 的管理员。
+  * 基于应用内置的 OAuth2 配置 `Claim name providing group names for this source. (Optional)` 来指定 `groups` 这个字段代表用户的角色信息。
+* 在合并用户时自动根据 Email 进行匹配。
+* 注销时只会注销 Gitea 的会话，不会影响 Authentik 的会话。
+
+注意，需要额外配置应用的环境变量
+
+```env
+[service]
+REGISTER_EMAIL_CONFIRM = false
+ENABLE_NOTIFY_MAIL = false
+DISABLE_REGISTRATION = true
+ALLOW_ONLY_EXTERNAL_REGISTRATION = true
+REQUIRE_SIGNIN_VIEW = false
+ENABLE_PASSWORD_SIGNIN_FORM = false
+ENABLE_PASSKEY_AUTHENTICATION = false
+
+[openid]
+ENABLE_OPENID_SIGNIN = false
+ENABLE_OPENID_SIGNUP = false
+
+[oauth2_client]
+ENABLE_AUTO_REGISTRATION = true
+ACCOUNT_LINKING = auto
+
+```
+
+来实现匿名可以浏览、注册无需确认、注册无需邮件通知、禁止注册、禁止密码登录、禁止外部 OpenID 登录、禁止外部 OAuth 登录、自动注册 OAuth 完成的用户、自动合并 OAuth 完成的用户。
