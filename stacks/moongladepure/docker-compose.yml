@@ -58,11 +58,15 @@ services:
       - jimmoen-files:/data/files
       - jimmoen-aspnet:/data/.aspnet/
     environment:
-        OpenAI__CompletionApiUrl: http://chat_app:5000/api/chat
-        OpenAI__Model: qwen3:32b
-        ConnectionStrings__DefaultConnection: Server=jimmoen-db;Database=jimmoen;Uid=jimmoen;Pwd=<jimmoen_password>;
-        ConnectionStrings__DbType: MySql
-        Storage__Path: /data/files
+      - OpenAI__CompletionApiUrl=http://chat_app:5000/api/chat
+      - OpenAI__Model=qwen3:32b
+      - ConnectionStrings__DefaultConnection=Server=jimmoen-db;Database=jimmoen;Uid=jimmoen;Pwd=<jimmoen_password>;
+      - ConnectionStrings__DbType=MySql
+      - Storage__Path=/data/files
+      - AppSettings__AuthProvider=OIDC
+      - OIDC__Authority=https://auth.aiursoft.cn/application/o/jimmoenblog
+      - OIDC__ClientId={{JIMMOEN_BLOG_CLIENT_ID}}
+      - OIDC__ClientSecret={{JIMMOEN_BLOG_CLIENT_SECRET}}
     networks:
       - jimmoen_app
       - proxy_app
@@ -103,11 +107,15 @@ services:
       - rest-files:/data/files
       - rest-aspnet:/data/.aspnet/
     environment:
-        OpenAI__CompletionApiUrl: http://chat_app:5000/api/chat
-        OpenAI__Model: qwen3:32b
-        ConnectionStrings__DefaultConnection: Server=rest-db;Database=rest;Uid=rest;Pwd=<rest_password>;
-        ConnectionStrings__DbType: MySql
-        Storage__Path: /data/files
+      - OpenAI__CompletionApiUrl=http://chat_app:5000/api/chat
+      - OpenAI__Model=qwen3:32b
+      - ConnectionStrings__DefaultConnection=Server=rest-db;Database=rest;Uid=rest;Pwd=<rest_password>;
+      - ConnectionStrings__DbType=MySql
+      - Storage__Path=/data/files
+      - AppSettings__AuthProvider=OIDC
+      - OIDC__Authority=https://auth.aiursoft.cn/application/o/restblog
+      - OIDC__ClientId={{REST_BLOG_CLIENT_ID}}
+      - OIDC__ClientSecret={{REST_BLOG_CLIENT_SECRET}}
     networks:
       - rest_app
       - proxy_app
@@ -148,11 +156,15 @@ services:
       - cody-files:/data/files
       - cody-aspnet:/data/.aspnet/
     environment:
-        OpenAI__CompletionApiUrl: http://chat_app:5000/api/chat
-        OpenAI__Model: qwen3:32b
-        ConnectionStrings__DefaultConnection: Server=cody-db;Database=cody;Uid=cody;Pwd=<cody_password>;
-        ConnectionStrings__DbType: MySql
-        Storage__Path: /data/files
+      - OpenAI__CompletionApiUrl=http://chat_app:5000/api/chat
+      - OpenAI__Model=qwen3:32b
+      - ConnectionStrings__DefaultConnection=Server=cody-db;Database=cody;Uid=cody;Pwd=<cody_password>;
+      - ConnectionStrings__DbType=MySql
+      - Storage__Path=/data/files
+      - AppSettings__AuthProvider=OIDC
+      - OIDC__Authority=https://auth.aiursoft.cn/application/o/codyblog
+      - OIDC__ClientId={{CODY_BLOG_CLIENT_ID}}
+      - OIDC__ClientSecret={{CODY_BLOG_CLIENT_SECRET}}
     networks:
       - cody_app
       - proxy_app
@@ -193,11 +205,15 @@ services:
       - gxhao-files:/data/files
       - gxhao-aspnet:/data/.aspnet/
     environment:
-        OpenAI__CompletionApiUrl: http://chat_app:5000/api/chat
-        OpenAI__Model: qwen3:32b
-        ConnectionStrings__DefaultConnection: Server=gxhao-db;Database=gxhao;Uid=gxhao;Pwd=<gxhao_password>;
-        ConnectionStrings__DbType: MySql
-        Storage__Path: /data/files
+      - OpenAI__CompletionApiUrl=http://chat_app:5000/api/chat
+      - OpenAI__Model=qwen3:32b
+      - ConnectionStrings__DefaultConnection=Server=gxhao-db;Database=gxhao;Uid=gxhao;Pwd=<gxhao_password>;
+      - ConnectionStrings__DbType=MySql
+      - Storage__Path=/data/files
+      - AppSettings__AuthProvider=OIDC
+      - OIDC__Authority=https://auth.aiursoft.cn/application/o/gxhaoblog
+      - OIDC__ClientId={{GXHAO_BLOG_CLIENT_ID}}
+      - OIDC__ClientSecret={{GXHAO_BLOG_CLIENT_SECRET}}
     networks:
       - gxhao_app
       - proxy_app
@@ -238,11 +254,15 @@ services:
       - anois-files:/data/files
       - anois-aspnet:/data/.aspnet/
     environment:
-        OpenAI__CompletionApiUrl: http://chat_app:5000/api/chat
-        OpenAI__Model: qwen3:32b
-        ConnectionStrings__DefaultConnection: Server=anois-db;Database=anois;Uid=anois;Pwd=<anois_password>;
-        ConnectionStrings__DbType: MySql
-        Storage__Path: /data/files
+      - OpenAI__CompletionApiUrl=http://chat_app:5000/api/chat
+      - OpenAI__Model=qwen3:32b
+      - ConnectionStrings__DefaultConnection=Server=anois-db;Database=anois;Uid=anois;Pwd=<anois_password>;
+      - ConnectionStrings__DbType=MySql
+      - Storage__Path=/data/files
+      - AppSettings__AuthProvider=OIDC
+      - OIDC__Authority=https://auth.aiursoft.cn/application/o/anoisblog
+      - OIDC__ClientId={{ANOIS_BLOG_CLIENT_ID}}
+      - OIDC__ClientSecret={{ANOIS_BLOG_CLIENT_SECRET}}
     networks:
       - anois_app
       - proxy_app
@@ -283,11 +303,15 @@ services:
       - dvorak-files:/data/files
       - dvorak-aspnet:/data/.aspnet/
     environment:
-        OpenAI__CompletionApiUrl: http://chat_app:5000/api/chat
-        OpenAI__Model: qwen3:32b
-        ConnectionStrings__DefaultConnection: Server=dvorak-db;Database=dvorak;Uid=dvorak;Pwd=<dvorak_password>;
-        ConnectionStrings__DbType: MySql
-        Storage__Path: /data/files
+      - OpenAI__CompletionApiUrl=http://chat_app:5000/api/chat
+      - OpenAI__Model=qwen3:32b
+      - ConnectionStrings__DefaultConnection=Server=dvorak-db;Database=dvorak;Uid=dvorak;Pwd=<dvorak_password>;
+      - ConnectionStrings__DbType=MySql
+      - Storage__Path=/data/files
+      - AppSettings__AuthProvider=OIDC
+      - OIDC__Authority=https://auth.aiursoft.cn/application/o/dvorakblog
+      - OIDC__ClientId={{DVORAK_BLOG_CLIENT_ID}}
+      - OIDC__ClientSecret={{DVORAK_BLOG_CLIENT_SECRET}}
     networks:
       - dvorak_app
       - proxy_app
@@ -328,11 +352,15 @@ services:
       - kitlau-files:/data/files
       - kitlau-aspnet:/data/.aspnet/
     environment:
-        OpenAI__CompletionApiUrl: http://chat_app:5000/api/chat
-        OpenAI__Model: qwen3:32b
-        ConnectionStrings__DefaultConnection: Server=kitlau-db;Database=kitlau;Uid=kitlau;Pwd=<kitlau_password>;
-        ConnectionStrings__DbType: MySql
-        Storage__Path: /data/files
+      - OpenAI__CompletionApiUrl=http://chat_app:5000/api/chat
+      - OpenAI__Model=qwen3:32b
+      - ConnectionStrings__DefaultConnection=Server=kitlau-db;Database=kitlau;Uid=kitlau;Pwd=<kitlau_password>;
+      - ConnectionStrings__DbType=MySql
+      - Storage__Path=/data/files
+      - AppSettings__AuthProvider=OIDC
+      - OIDC__Authority=https://auth.aiursoft.cn/application/o/kitlaublog
+      - OIDC__ClientId={{KITLAU_BLOG_CLIENT_ID}}
+      - OIDC__ClientSecret={{KITLAU_BLOG_CLIENT_SECRET}}
     networks:
       - kitlau_app
       - proxy_app
@@ -373,11 +401,15 @@ services:
       - xinboo-files:/data/files
       - xinboo-aspnet:/data/.aspnet/
     environment:
-        OpenAI__CompletionApiUrl: http://chat_app:5000/api/chat
-        OpenAI__Model: qwen3:32b
-        ConnectionStrings__DefaultConnection: Server=xinboo-db;Database=xinboo;Uid=xinboo;Pwd=<xinboo_password>;
-        ConnectionStrings__DbType: MySql
-        Storage__Path: /data/files
+      - OpenAI__CompletionApiUrl=http://chat_app:5000/api/chat
+      - OpenAI__Model=qwen3:32b
+      - ConnectionStrings__DefaultConnection=Server=xinboo-db;Database=xinboo;Uid=xinboo;Pwd=<xinboo_password>;
+      - ConnectionStrings__DbType=MySql
+      - Storage__Path=/data/files
+      - AppSettings__AuthProvider=OIDC
+      - OIDC__Authority=https://auth.aiursoft.cn/application/o/xinbooblog
+      - OIDC__ClientId={{XINBOO_BLOG_CLIENT_ID}}
+      - OIDC__ClientSecret={{XINBOO_BLOG_CLIENT_SECRET}}
     networks:
       - xinboo_app
       - proxy_app
@@ -418,11 +450,15 @@ services:
       - gbiner-files:/data/files
       - gbiner-aspnet:/data/.aspnet/
     environment:
-        OpenAI__CompletionApiUrl: http://chat_app:5000/api/chat
-        OpenAI__Model: qwen3:32b
-        ConnectionStrings__DefaultConnection: Server=gbiner-db;Database=gbiner;Uid=gbiner;Pwd=<gbiner_password>;
-        ConnectionStrings__DbType: MySql
-        Storage__Path: /data/files
+      - OpenAI__CompletionApiUrl=http://chat_app:5000/api/chat
+      - OpenAI__Model=qwen3:32b
+      - ConnectionStrings__DefaultConnection=Server=gbiner-db;Database=gbiner;Uid=gbiner;Pwd=<gbiner_password>;
+      - ConnectionStrings__DbType=MySql
+      - Storage__Path=/data/files
+      - AppSettings__AuthProvider=OIDC
+      - OIDC__Authority=https://auth.aiursoft.cn/application/o/gbinerblog
+      - OIDC__ClientId={{GBINER_BLOG_CLIENT_ID}}
+      - OIDC__ClientSecret={{GBINER_BLOG_CLIENT_SECRET}}
     networks:
       - gbiner_app
       - proxy_app
@@ -463,11 +499,15 @@ services:
       - rdf-files:/data/files
       - rdf-aspnet:/data/.aspnet/
     environment:
-        OpenAI__CompletionApiUrl: http://chat_app:5000/api/chat
-        OpenAI__Model: qwen3:32b
-        ConnectionStrings__DefaultConnection: Server=rdf-db;Database=rdf;Uid=rdf;Pwd=<rdf_password>;
-        ConnectionStrings__DbType: MySql
-        Storage__Path: /data/files
+      - OpenAI__CompletionApiUrl=http://chat_app:5000/api/chat
+      - OpenAI__Model=qwen3:32b
+      - ConnectionStrings__DefaultConnection=Server=rdf-db;Database=rdf;Uid=rdf;Pwd=<rdf_password>;
+      - ConnectionStrings__DbType=MySql
+      - Storage__Path=/data/files
+      - AppSettings__AuthProvider=OIDC
+      - OIDC__Authority=https://auth.aiursoft.cn/application/o/rdfblog
+      - OIDC__ClientId={{RDF_BLOG_CLIENT_ID}}
+      - OIDC__ClientSecret={{RDF_BLOG_CLIENT_SECRET}}
     networks:
       - rdf_app
       - proxy_app
@@ -508,11 +548,15 @@ services:
       - lyx-files:/data/files
       - lyx-aspnet:/data/.aspnet/
     environment:
-        OpenAI__CompletionApiUrl: http://chat_app:5000/api/chat
-        OpenAI__Model: qwen3:32b
-        ConnectionStrings__DefaultConnection: Server=lyx-db;Database=lyx;Uid=lyx;Pwd=<lyx_password>;
-        ConnectionStrings__DbType: MySql
-        Storage__Path: /data/files
+      - OpenAI__CompletionApiUrl=http://chat_app:5000/api/chat
+      - OpenAI__Model=qwen3:32b
+      - ConnectionStrings__DefaultConnection=Server=lyx-db;Database=lyx;Uid=lyx;Pwd=<lyx_password>;
+      - ConnectionStrings__DbType=MySql
+      - Storage__Path=/data/files
+      - AppSettings__AuthProvider=OIDC
+      - OIDC__Authority=https://auth.aiursoft.cn/application/o/lyxblog
+      - OIDC__ClientId={{LYX_BLOG_CLIENT_ID}}
+      - OIDC__ClientSecret={{LYX_BLOG_CLIENT_SECRET}}
     networks:
       - lyx_app
       - proxy_app
@@ -549,11 +593,15 @@ services:
       - shubuzuo-files:/data/files
       - shubuzuo-aspnet:/data/.aspnet/
     environment:
-        OpenAI__CompletionApiUrl: http://chat_app:5000/api/chat
-        OpenAI__Model: qwen3:32b
-        ConnectionStrings__DefaultConnection: Server=shubuzuo-db;Database=shubuzuo;Uid=shubuzuo;Pwd=<shubuzuo_password>;
-        ConnectionStrings__DbType: MySql
-        Storage__Path: /data/files
+      - OpenAI__CompletionApiUrl=http://chat_app:5000/api/chat
+      - OpenAI__Model=qwen3:32b
+      - ConnectionStrings__DefaultConnection=Server=shubuzuo-db;Database=shubuzuo;Uid=shubuzuo;Pwd=<shubuzuo_password>;
+      - ConnectionStrings__DbType=MySql
+      - Storage__Path=/data/files
+      - AppSettings__AuthProvider=OIDC
+      - OIDC__Authority=https://auth.aiursoft.cn/application/o/shubuzuoblog
+      - OIDC__ClientId={{SHUBUZUO_BLOG_CLIENT_ID}}
+      - OIDC__ClientSecret={{SHUBUZUO_BLOG_CLIENT_SECRET}}
     networks:
       - shubuzuo_app
       - proxy_app
@@ -594,11 +642,15 @@ services:
       - lily-files:/data/files
       - lily-aspnet:/data/.aspnet/
     environment:
-        OpenAI__CompletionApiUrl: http://chat_app:5000/api/chat
-        OpenAI__Model: qwen3:32b
-        ConnectionStrings__DefaultConnection: Server=lily-db;Database=lily;Uid=lily;Pwd=<lily_password>;
-        ConnectionStrings__DbType: MySql
-        Storage__Path: /data/files
+      - OpenAI__CompletionApiUrl=http://chat_app:5000/api/chat
+      - OpenAI__Model=qwen3:32b
+      - ConnectionStrings__DefaultConnection=Server=lily-db;Database=lily;Uid=lily;Pwd=<lily_password>;
+      - ConnectionStrings__DbType=MySql
+      - Storage__Path=/data/files
+      - AppSettings__AuthProvider=OIDC
+      - OIDC__Authority=https://auth.aiursoft.cn/application/o/lilyblog
+      - OIDC__ClientId={{LILY_BLOG_CLIENT_ID}}
+      - OIDC__ClientSecret={{LILY_BLOG_CLIENT_SECRET}}
     networks:
       - lily_app
       - proxy_app
@@ -639,11 +691,15 @@ services:
       - carson-files:/data/files
       - carson-aspnet:/data/.aspnet/
     environment:
-        OpenAI__CompletionApiUrl: http://chat_app:5000/api/chat
-        OpenAI__Model: qwen3:32b
-        ConnectionStrings__DefaultConnection: Server=carson-db;Database=carson;Uid=carson;Pwd=<carson_password>;
-        ConnectionStrings__DbType: MySql
-        Storage__Path: /data/files
+      - OpenAI__CompletionApiUrl=http://chat_app:5000/api/chat
+      - OpenAI__Model=qwen3:32b
+      - ConnectionStrings__DefaultConnection=Server=carson-db;Database=carson;Uid=carson;Pwd=<carson_password>;
+      - ConnectionStrings__DbType=MySql
+      - Storage__Path=/data/files
+      - AppSettings__AuthProvider=OIDC
+      - OIDC__Authority=https://auth.aiursoft.cn/application/o/carsonblog
+      - OIDC__ClientId={{CARSON_BLOG_CLIENT_ID}}
+      - OIDC__ClientSecret={{CARSON_BLOG_CLIENT_SECRET}}
     networks:
       - carson_app
       - proxy_app
@@ -684,11 +740,15 @@ services:
       - zoneblog-files:/data/files
       - zoneblog-aspnet:/data/.aspnet/
     environment:
-        OpenAI__CompletionApiUrl: http://chat_app:5000/api/chat
-        OpenAI__Model: qwen3:32b
-        ConnectionStrings__DefaultConnection: Server=zoneblog-db;Database=zoneblog;Uid=zoneblog;Pwd=<zoneblog_password>;
-        ConnectionStrings__DbType: MySql
-        Storage__Path: /data/files
+      - OpenAI__CompletionApiUrl=http://chat_app:5000/api/chat
+      - OpenAI__Model=qwen3:32b
+      - ConnectionStrings__DefaultConnection=Server=zoneblog-db;Database=zoneblog;Uid=zoneblog;Pwd=<zoneblog_password>;
+      - ConnectionStrings__DbType=MySql
+      - Storage__Path=/data/files
+      - AppSettings__AuthProvider=OIDC
+      - OIDC__Authority=https://auth.aiursoft.cn/application/o/zoneblog
+      - OIDC__ClientId={{ZONEBLOG_BLOG_CLIENT_ID}}
+      - OIDC__ClientSecret={{ZONEBLOG_BLOG_CLIENT_SECRET}}
     networks:
       - zoneblog_app
       - proxy_app
@@ -729,11 +789,15 @@ services:
       - yuyuyuyublog-files:/data/files
       - yuyuyuyublog-aspnet:/data/.aspnet/
     environment:
-        OpenAI__CompletionApiUrl: http://chat_app:5000/api/chat
-        OpenAI__Model: qwen3:32b
-        ConnectionStrings__DefaultConnection: Server=yuyuyuyublog-db;Database=yuyuyuyublog;Uid=yuyuyuyublog;Pwd=<yuyuyuyublog_password>;
-        ConnectionStrings__DbType: MySql
-        Storage__Path: /data/files
+      - OpenAI__CompletionApiUrl=http://chat_app:5000/api/chat
+      - OpenAI__Model=qwen3:32b
+      - ConnectionStrings__DefaultConnection=Server=yuyuyuyublog-db;Database=yuyuyuyublog;Uid=yuyuyuyublog;Pwd=<yuyuyuyublog_password>;
+      - ConnectionStrings__DbType=MySql
+      - Storage__Path=/data/files
+      - AppSettings__AuthProvider=OIDC
+      - OIDC__Authority=https://auth.aiursoft.cn/application/o/yuyuyuyublog
+      - OIDC__ClientId={{YUYUYUYUBLOG_BLOG_CLIENT_ID}}
+      - OIDC__ClientSecret={{YUYUYUYUBLOG_BLOG_CLIENT_SECRET}}
     networks:
       - yuyuyuyublog_app
       - proxy_app
