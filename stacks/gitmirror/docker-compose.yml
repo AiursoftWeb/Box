@@ -12,23 +12,26 @@ services:
       - source: github-token
         target: Mirrors:1:TargetToken
     environment:
-      Storage__Path: /data/files
-      Mirrors__0__FromType: GitLab
-      Mirrors__0__FromServer: https://gitlab.aiursoft.cn
-      Mirrors__0__FromToken: ""
-      Mirrors__0__FromOrgName: Anduin
-      Mirrors__0__OrgOrUser: User
-      Mirrors__0__TargetType: GitHub
-      Mirrors__0__TargetServer: https://api.github.com
-      Mirrors__0__TargetOrgName: Anduin2017
-      Mirrors__1__FromType: GitLab
-      Mirrors__1__FromServer: https://gitlab.aiursoft.cn
-      Mirrors__1__FromToken: ""
-      Mirrors__1__FromOrgName: Aiursoft
-      Mirrors__1__OrgOrUser: Org
-      Mirrors__1__TargetType: GitHub
-      Mirrors__1__TargetServer: https://api.github.com
-      Mirrors__1__TargetOrgName: AiursoftWeb
+      - Storage__Path=/data/files
+      - Mirrors__0__FromType=GitLab
+      - Mirrors__0__FromServer=https://gitlab.aiursoft.cn
+      - Mirrors__0__FromToken=''
+      - Mirrors__0__FromOrgName=Anduin
+      - Mirrors__0__OrgOrUser=User
+      - Mirrors__0__TargetType=GitHub
+      - Mirrors__0__TargetServer=https://api.github.com
+      - Mirrors__0__TargetOrgName=Anduin2017
+      - Mirrors__1__FromType=GitLab
+      - Mirrors__1__FromServer=https://gitlab.aiursoft.cn
+      - Mirrors__1__FromToken=""
+      - Mirrors__1__FromOrgName=Aiursoft
+      - Mirrors__1__OrgOrUser=Org
+      - Mirrors__1__TargetType=GitHub
+      - Mirrors__1__TargetServer=https://api.github.com
+      - Mirrors__1__TargetOrgName=AiursoftWeb
+      - OIDC_Authority=https://auth.aiursoft.cn/application/o/gitmirror/.well-known/openid-configuration
+      - OIDC_ClientId={{GITMIRROR_CLIENT_ID}}
+      - OIDC_ClientSecret={{GITMIRROR_CLIENT_SECRET}}
     networks:
       - proxy_app
     deploy:
