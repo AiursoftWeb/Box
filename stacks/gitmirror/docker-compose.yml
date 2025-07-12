@@ -29,9 +29,9 @@ services:
       - Mirrors__1__TargetType=GitHub
       - Mirrors__1__TargetServer=https://api.github.com
       - Mirrors__1__TargetOrgName=AiursoftWeb
-      - OIDC_Authority=https://auth.aiursoft.cn/application/o/gitmirror/.well-known/openid-configuration
-      - OIDC_ClientId={{GITMIRROR_CLIENT_ID}}
-      - OIDC_ClientSecret={{GITMIRROR_CLIENT_SECRET}}
+      - OIDC__Authority=https://auth.aiursoft.cn/application/o/gitmirror/.well-known/openid-configuration
+      - OIDC__ClientId={{GITMIRROR_CLIENT_ID}}
+      - OIDC__ClientSecret={{GITMIRROR_CLIENT_SECRET}}
     networks:
       - proxy_app
     deploy:
