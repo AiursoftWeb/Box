@@ -29,7 +29,7 @@ services:
       - Mirrors__1__TargetType=GitHub
       - Mirrors__1__TargetServer=https://api.github.com
       - Mirrors__1__TargetOrgName=AiursoftWeb
-      - OIDC__Authority=https://auth.aiursoft.cn/application/o/gitmirror/.well-known/openid-configuration
+      - OIDC__Authority=https://auth.aiursoft.cn/application/o/gitmirror
       - OIDC__ClientId={{GITMIRROR_CLIENT_ID}}
       - OIDC__ClientSecret={{GITMIRROR_CLIENT_SECRET}}
     networks:
