@@ -25,6 +25,7 @@ services:
       - FORCE_HTTPS=true
     volumes:
       - music:/music
+      - artifacts:/artifacts
       - covers:/var/www/html/public/img/covers
       - search_index:/var/www/html/storage/search-indexes
       - /swarm-vol/koel/config:/var/www/html/.env # This is a single file, not a directory
@@ -69,6 +70,12 @@ volumes:
       type: none
       o: bind
       device: /swarm-vol/koel/music
+  artifacts:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/koel/artifacts
   covers:
     driver: local
     driver_opts:

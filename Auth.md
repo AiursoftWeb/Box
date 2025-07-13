@@ -87,3 +87,10 @@ ACCOUNT_LINKING = auto
 ```
 
 来实现匿名可以浏览、注册无需确认、注册无需邮件通知、禁止注册、禁止密码登录、禁止外部 OpenID 登录、禁止外部 OAuth 登录、自动注册 OAuth 完成的用户、自动合并 OAuth 完成的用户。
+
+## Gitlab
+
+未登录可以匿名浏览，已登录可以使用几乎所有功能，管理员可以管理高级设置。
+
+* 基于 OpenId Connect 协议。
+* Client ID 和 Client Secret 需要通过应用内置的 OAuth2 配置传给 Gitlab 服务。
