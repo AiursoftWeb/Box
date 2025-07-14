@@ -88,6 +88,44 @@ ACCOUNT_LINKING = auto
 
 来实现匿名可以浏览、注册无需确认、注册无需邮件通知、禁止注册、禁止密码登录、禁止外部 OpenID 登录、禁止外部 OAuth 登录、自动注册 OAuth 完成的用户、自动合并 OAuth 完成的用户。
 
+## Koel
+
+```mermaid
+sequenceDiagram
+    User->>+Caddy: I want to access app!
+    Caddy->>+Outpost: Is this request valid?
+    Outpost->>+Caddy: No. No cookie found. 302 to Auth!
+    Caddy->>+User: 302 to Auth center!
+    User->>+Auth: I want to login!
+    Auth->>+User: Enter your passkey!
+    User->>+Auth: Here is my passkey!
+    Auth->>+User: Okay. You are logged in! 302 to Outpost with Code!
+    User->>+Caddy: I have a Code! Take me to Outpost!
+    Caddy->>+Outpost: He finished auth! He has a code!
+    Outpost->>+Auth: What's his information? Here is the code and secret!
+    Auth->>+Outpost: Here is his info..
+    Outpost->>+Outpost: Create user. Save in database.
+    Outpost->>+Caddy: A cookie for outpost.
+    Caddy->>+User: Set a cookie for outpost. 302 to app.
+    User->>+Caddy: I want to access the app. With my cookie.
+    Caddy->>+Outpost: Is this cookie valid?
+    Outpost->>+Caddy: Yes. A valid cookie. 200!
+    Caddy->>+App: +HTTP Header: User ID
+    App->>+App: Got header. Create user in database.
+    App->>+Caddy: App experience
+    Caddy->>+User:App experience
+```
+
+未登录完全无法使用，已登录可以使用几乎所有功能。
+
+* 基于 Forward Auth 协议。
+* 通过 Caddy 的 Forward Auth 模块来验证用户身份。
+* Koel 会基于 IP 地址来确保只有来自 Caddy 的请求才会被接受。
+* Koel 自己会通过 HTTP Header 来获取用户信息。
+* 不支持权限管理。所有人都是 User 角色。
+* 不支持合并用户。需要手工删除老用户。
+* 注销时只会注销 Koel 的会话，不会影响 Authentik 的会话。
+
 ## Gitlab
 
 未登录可以匿名浏览，已登录可以使用几乎所有功能，管理员可以管理高级设置。
