@@ -15,6 +15,11 @@ services:
     image: hub.aiursoft.cn/aiursoft/stathub
     volumes:
       - stathub-data:/data
+    environment:
+      - RequiresAuth=True
+      - OIDC__Authority=https://auth.aiursoft.cn/application/o/gitmirror
+      - OIDC__ClientId={{STATHUB_CLIENT_ID}}
+      - OIDC__ClientSecret={{STATHUB_CLIENT_SECRET}}
     networks:
       - proxy_app
       - internal
