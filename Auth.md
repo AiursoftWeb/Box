@@ -216,3 +216,47 @@ gitlab_rails['omniauth_providers'] = [
   }
 ]
 ```
+
+## Nextcloud
+
+未登录完全无法使用，已登录可以使用几乎所有功能，管理员可以管理高级设置。
+
+* 基于 OpenId Connect 协议。
+* Client ID 和 Client Secret 需要通过应用内置的插件配置传给 Nextcloud 服务。
+* 基于插件的配置继承权限信息。可以将具有特定特点的用户添加到 Nextcloud 的管理员组中。
+  * Nextcloud 的角色管理功能非常特殊，只有 groups 里包含 `admin` 的用户才会被认为是管理员。
+  * 基于命令 `sudo docker exec --user www-data -it nextcloud-aio-nextcloud php occ config:app:set --value=0 user_oidc allow_multiple_user_backends` 来禁止 Nextcloud 的登录框。
+* 在合并用户时，Nextcloud 只会根据你设置的属性来和现有的 username 进行比对。
+  * 首先，我们需要统计每个老 Nextcloud 用户的 `user_id`，然后将其映射到 Autentik 里的用户表的 `nextcloud_user_id` 属性上。
+  * 然后需要增加一个 Property Mapping，将 `nextcloud_user_id`，映射为给 Nextcloud 看的 `user_id` 属性。如果不存在这个属性，则给 Nextcloud 展示 `username`。
+  * 在 Nextcloud 的 `Attribute Mapping` 中，设置 `User ID mapping` 的 mapping 为 `user_id`。
+  * 在 Nextcloud 的 `Attribute Mapping` 中，设置 `quota` 的 mapping 为 `quota`，并在 Authentik 设置默认值为 `200G`。
+  * 在 Nextcloud 的 `Attribute Mapping` 中，设置 `Groups` 的 mapping 为 `groups`。
+  * 禁止：Nextcloud by default every user will get a unique user ID that is a hashed value of the provider and user ID. This can be turned off but uniqueness of users accross multiple user backends and providers is no longer preserved then.
+  * 禁止: Nextcloud to keep IDs in plain text, but also preserve uniqueness of them across multiple providers, a prefix with the providers name is added.
+  * 设置 `'allow_local_remote_servers' => true` 在 `config.php` 来允许 Nextcloud 访问 Authentik 的 API。
+  * 在 Authentik 的 Provider 设置里，Subject Mode 设为 Based on the User's UUID
+
+```python
+# Extract all groups the user is a member of
+groups = [group.name for group in user.ak_groups.all()]
+
+# In Nextcloud, administrators must be members of a fixed group called "admin".
+
+# If a user is an admin in authentik, ensure that "admin" is appended to their group list.
+if user.is_superuser and "admin" not in groups:
+    groups.append("admin")
+
+return {
+    "name": request.user.name,
+    "groups": groups,
+    # Set a quota by using the "nextcloud_quota" property in the user's attributes
+    "quota": user.group_attributes().get("nextcloud_quota", "200G"),
+    # To connect an existing Nextcloud user, set "nextcloud_user_id" to the Nextcloud username.
+    "user_id": user.attributes.get("nextcloud_user_id", str(user.username)),
+}
+```
+
+完成上述配置后，用户通过 Authentik 登录 Nextcloud 时，Nextcloud 会使用 `nextcloud_user_id` 属性来识别用户，并将其映射到 Nextcloud 的用户 ID 上。如果不存在，则会创建一个新的 Nextcloud 用户，并使用 `nextcloud_user_id` 作为其 ID。
+
+在未给用户设置 `nextcloud_user_id` 属性的情况下，Nextcloud 会使用 `username` 作为用户 ID。
