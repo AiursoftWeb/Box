@@ -36,8 +36,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '4.0'
-          memory: 8G
+          cpus: '8.0'
+          memory: 12G
       update_config:
         order: start-first
       labels:
@@ -60,8 +60,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '4.0'
-          memory: 8G
+          cpus: '8.0'
+          memory: 12G
       update_config:
         order: start-first
       labels:
