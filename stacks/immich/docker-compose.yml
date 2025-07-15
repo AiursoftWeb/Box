@@ -27,7 +27,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
     environment:
       - TZ=UTC
-      - DB_DATABASE_NAME=database
+      - DB_DATABASE_NAME=immich_db
       - DB_USERNAME=immich_db_user
       - DB_PASSWORD=immich_db_password
     networks:
