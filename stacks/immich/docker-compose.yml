@@ -1,0 +1,93 @@
+version: '3.9'
+
+# DB_DATA_LOCATION=./postgres
+
+# # To set a timezone, uncomment the next line and change Etc/UTC to a TZ identifier from this list: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#List
+# # TZ=Etc/UTC
+
+# # The Immich version to use. You can pin this to a specific version like "v1.71.0"
+
+# # Connection secret for postgres. You should change it to a random password
+# # Please use only the characters `A-Za-z0-9`, without special characters or spaces
+# DB_PASSWORD=postgres
+
+# # The values below this line do not need to be changed
+# ###################################################################################
+# DB_USERNAME=postgres
+# DB_DATABASE_NAME=immich
+
+services:
+  immich-server:
+    depends_on:
+      - redis
+      - database
+    image: ghcr.io/immich-app/immich-server:release
+    environment:
+      - TZ=UTC
+      - DB_DATABASE_NAME=database
+      - DB_USERNAME=immich_db_user
+      - DB_PASSWORD=immich_db_password
+    volumes:
+      - upload-location:/usr/src/app/upload
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      - internal
+      - proxy_app
+
+  immich-machine-learning:
+    image: ghcr.io/immich-app/immich-machine-learning:release
+    environment:
+      - TZ=UTC
+      - DB_DATABASE_NAME=database
+      - DB_USERNAME=immich_db_user
+      - DB_PASSWORD=immich_db_password
+    volumes:
+      - model-cache:/cache
+    networks:
+      - internal
+
+  redis:
+    image: valkey/valkey:8-bookworm
+    healthcheck:
+      test: redis-cli ping || exit 1
+    networks:
+      - internal
+
+  database:
+    image: ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0
+    environment:
+      POSTGRES_PASSWORD: immich_db_password
+      POSTGRES_USER: immich_db_user
+      POSTGRES_DB: immich_db
+      POSTGRES_INITDB_ARGS: '--data-checksums'
+    networks:
+      - internal
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+networks:
+  internal:
+    driver: overlay
+  proxy_app:
+    external: true
+
+
+volumes:
+  upload-location:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/immich/upload
+  model-cache:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/immich/model-cache
+  db-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/immich/db-data
