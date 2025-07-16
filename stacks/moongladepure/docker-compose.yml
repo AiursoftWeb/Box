@@ -41,11 +41,22 @@ services:
       - MYSQL_PASSWORD=<anduin_password>
     networks:
       - anduin_app
+    stop_grace_period: 60s
+    stop_signal: SIGINT
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
     deploy:
       resources:
         limits:
           cpus: '4.0'
-          memory: 4G
+          memory: 8G
+      update_config:
+        order: stop-first
+        delay: 20s
     
       
   jimmoen:
@@ -87,11 +98,22 @@ services:
       - MYSQL_PASSWORD=<jimmoen_password>
     networks:
       - jimmoen_app
+    stop_grace_period: 60s
+    stop_signal: SIGINT
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
     deploy:
       resources:
         limits:
           cpus: '4.0'
-          memory: 4G
+          memory: 8G
+      update_config:
+        order: stop-first
+        delay: 20s
 
   rest:
     depends_on:
@@ -132,11 +154,22 @@ services:
       - MYSQL_PASSWORD=<rest_password>
     networks:
       - rest_app
+    stop_grace_period: 60s
+    stop_signal: SIGINT
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
     deploy:
       resources:
         limits:
           cpus: '4.0'
-          memory: 4G
+          memory: 8G
+      update_config:
+        order: stop-first
+        delay: 20s
     
         
   cody:
@@ -178,11 +211,22 @@ services:
       - MYSQL_PASSWORD=<cody_password>
     networks:
       - cody_app
+    stop_grace_period: 60s
+    stop_signal: SIGINT
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
     deploy:
       resources:
         limits:
           cpus: '4.0'
-          memory: 4G
+          memory: 8G
+      update_config:
+        order: stop-first
+        delay: 20s
 
   gxhao:
     depends_on:
@@ -223,11 +267,22 @@ services:
       - MYSQL_PASSWORD=<gxhao_password>
     networks:
       - gxhao_app
+    stop_grace_period: 60s
+    stop_signal: SIGINT
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
     deploy:
       resources:
         limits:
           cpus: '4.0'
-          memory: 4G
+          memory: 8G
+      update_config:
+        order: stop-first
+        delay: 20s
 
   anois:
     depends_on:
@@ -268,11 +323,22 @@ services:
       - MYSQL_PASSWORD=<anois_password>
     networks:
       - anois_app
+    stop_grace_period: 60s
+    stop_signal: SIGINT
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
     deploy:
       resources:
         limits:
           cpus: '4.0'
-          memory: 4G
+          memory: 8G
+      update_config:
+        order: stop-first
+        delay: 20s
 
   dvorak:
     depends_on:
@@ -313,11 +379,22 @@ services:
       - MYSQL_PASSWORD=<dvorak_password>
     networks:
       - dvorak_app
+    stop_grace_period: 60s
+    stop_signal: SIGINT
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
     deploy:
       resources:
         limits:
           cpus: '4.0'
-          memory: 4G
+          memory: 8G
+      update_config:
+        order: stop-first
+        delay: 20s
 
   kitlau:
     depends_on:
@@ -358,11 +435,22 @@ services:
       - MYSQL_PASSWORD=<kitlau_password>
     networks:
       - kitlau_app
+    stop_grace_period: 60s
+    stop_signal: SIGINT
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
     deploy:
       resources:
         limits:
           cpus: '4.0'
-          memory: 4G
+          memory: 8G
+      update_config:
+        order: stop-first
+        delay: 20s
 
   xinboo:
     depends_on:
@@ -403,11 +491,22 @@ services:
       - MYSQL_PASSWORD=<xinboo_password>
     networks:
       - xinboo_app
+    stop_grace_period: 60s
+    stop_signal: SIGINT
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
     deploy:
       resources:
         limits:
           cpus: '4.0'
-          memory: 4G
+          memory: 8G
+      update_config:
+        order: stop-first
+        delay: 20s
 
   gbiner:
     depends_on:
@@ -448,11 +547,22 @@ services:
       - MYSQL_PASSWORD=<gbiner_password>
     networks:
       - gbiner_app
+    stop_grace_period: 60s
+    stop_signal: SIGINT
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
     deploy:
       resources:
         limits:
           cpus: '4.0'
-          memory: 4G
+          memory: 8G
+      update_config:
+        order: stop-first
+        delay: 20s
 
   rdf:
     depends_on:
@@ -493,11 +603,22 @@ services:
       - MYSQL_PASSWORD=<rdf_password>
     networks:
       - rdf_app
+    stop_grace_period: 60s
+    stop_signal: SIGINT
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
     deploy:
       resources:
         limits:
           cpus: '4.0'
-          memory: 4G
+          memory: 8G
+      update_config:
+        order: stop-first
+        delay: 20s
 
   lyx:
     depends_on:
@@ -538,7 +659,22 @@ services:
       - MYSQL_PASSWORD=<lyx_password>
     networks:
       - lyx_app
+    stop_grace_period: 60s
+    stop_signal: SIGINT
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
     deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8G
+      update_config:
+        order: stop-first
+        delay: 20s
 
   shubuzuo:
     depends_on:
@@ -579,11 +715,22 @@ services:
       - MYSQL_PASSWORD=<shubuzuo_password>
     networks:
       - shubuzuo_app
+    stop_grace_period: 60s
+    stop_signal: SIGINT
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
     deploy:
       resources:
         limits:
           cpus: '4.0'
-          memory: 4G
+          memory: 8G
+      update_config:
+        order: stop-first
+        delay: 20s
 
   lily:
     depends_on:
@@ -624,11 +771,22 @@ services:
       - MYSQL_PASSWORD=<lily_password>
     networks:
       - lily_app
+    stop_grace_period: 60s
+    stop_signal: SIGINT
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
     deploy:
       resources:
         limits:
           cpus: '4.0'
-          memory: 4G
+          memory: 8G
+      update_config:
+        order: stop-first
+        delay: 20s
 
   carson:
     depends_on:
@@ -669,11 +827,22 @@ services:
       - MYSQL_PASSWORD=<carson_password>
     networks:
       - carson_app
+    stop_grace_period: 60s
+    stop_signal: SIGINT
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
     deploy:
       resources:
         limits:
           cpus: '4.0'
-          memory: 4G
+          memory: 8G
+      update_config:
+        order: stop-first
+        delay: 20s
 
   zoneblog:
     depends_on:
@@ -714,11 +883,22 @@ services:
       - MYSQL_PASSWORD=<zoneblog_password>
     networks:
       - zoneblog_app
+    stop_grace_period: 60s
+    stop_signal: SIGINT
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
     deploy:
       resources:
         limits:
           cpus: '4.0'
-          memory: 4G
+          memory: 8G
+      update_config:
+        order: stop-first
+        delay: 20s
     
       
   yuyuyuyublog:

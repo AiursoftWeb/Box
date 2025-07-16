@@ -33,6 +33,12 @@ services:
       - internal
       - proxy_app
     deploy:
+      resources:
+        limits:
+          cpus: '8.0'
+          memory: 12G
+      update_config:
+        order: start-first
 
   koel-db:
     image: hub.aiursoft.cn/mysql
@@ -45,7 +51,22 @@ services:
       - MYSQL_PASSWORD=<koel_password>
     networks:
       - internal
+    stop_grace_period: 60s
+    stop_signal: SIGINT
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
     deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8G
+      update_config:
+        order: stop-first
+        delay: 20s
     
 
 networks:

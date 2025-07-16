@@ -7,6 +7,12 @@ services:
       - proxy_app
     deploy:
       replicas: 2
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8G
+      update_config:
+        order: start-first
 
   comments:
     image: hub.aiursoft.cn/artalk/artalk-go
@@ -19,6 +25,12 @@ services:
       - db
     deploy:
       replicas: 2
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4G
+      update_config:
+        order: start-first
 
   db:
     image: hub.aiursoft.cn/mysql
@@ -29,7 +41,22 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=Password1234
       - MYSQL_DATABASE=artalk
+    stop_grace_period: 60s
+    stop_signal: SIGINT
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
     deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8G
+      update_config:
+        order: stop-first
+        delay: 20s
 
 volumes:
   edgeneko-blog-db:
