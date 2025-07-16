@@ -1,6 +1,15 @@
 version: '3.9'
 
 services:
+  authentik_proxy:
+    image: hub.aiursoft.cn/ghcr.io/goauthentik/proxy:2025.6
+    environment:
+      AUTHENTIK_HOST: "https://auth.aiursoft.cn/"
+      AUTHENTIK_INSECURE: "false"
+      AUTHENTIK_TOKEN: "{{FILESHARE_OUTPOST_TOKEN}}"
+    networks:
+      - proxy_app
+
   mediabrowser:
     image: hub.aiursoft.cn/filebrowser/filebrowser
     volumes:
@@ -12,7 +21,6 @@ services:
       - FB_NOAUTH=true
     networks:
       - proxy_app
-      - internal
     healthcheck:
       test: ["CMD", "true"]
       interval: 10s
@@ -28,8 +36,6 @@ services:
         delay: 20s
 
 networks:
-  internal:
-    driver: overlay
   proxy_app:
     external: true
 
