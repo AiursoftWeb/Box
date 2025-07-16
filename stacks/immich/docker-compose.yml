@@ -21,7 +21,7 @@ services:
     depends_on:
       - redis
       - database
-    image: ghcr.io/immich-app/immich-server:release
+    image: hub.aiursoft.cn/ghcr.io/immich-app/immich-server:release
     volumes:
       - upload-location:/usr/src/app/upload
       - /etc/localtime:/etc/localtime:ro
@@ -47,7 +47,7 @@ services:
     depends_on:
       - redis
       - database
-    image: ghcr.io/immich-app/immich-machine-learning:release
+    image: hub.aiursoft.cn/ghcr.io/immich-app/immich-machine-learning:release
     volumes:
       - model-cache:/cache
     environment:
@@ -68,7 +68,7 @@ services:
         swarmpit.service.deployment.autoredeploy: 'true'
 
   redis:
-    image: valkey/valkey:8-bookworm
+    image: hub.aiursoft.cn/valkey/valkey:8-bookworm
     healthcheck:
       test: redis-cli ping || exit 1
     networks:
@@ -84,7 +84,7 @@ services:
         swarmpit.service.deployment.autoredeploy: 'true'
 
   database:
-    image: ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0
+    image: hub.aiursoft.cn/ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0
     volumes:
       - db-data:/var/lib/postgresql/data
     environment:
