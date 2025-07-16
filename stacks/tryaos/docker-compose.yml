@@ -1,0 +1,25 @@
+version: '3.9'
+
+services:
+  vnc:
+    image: hub.aiursoft.cn/aiursoft/stathub
+    volumes:
+      - /dev/dri:/dev/dri
+      - aos-data:/data/
+    networks:
+      - proxy_app
+    deploy:
+      labels:
+        swarmpit.service.deployment.autoredeploy: 'true'
+
+volumes:
+  aos-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/tryaos/aos-data
+
+networks:
+  proxy_app:
+    external: true
