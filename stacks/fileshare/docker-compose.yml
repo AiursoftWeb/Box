@@ -1,0 +1,54 @@
+version: '3.9'
+
+services:
+  mediabrowser:
+    image: hub.aiursoft.cn/filebrowser/filebrowser
+    volumes:
+      - data:/srv
+      - database:/database
+      - config:/config
+    environment:
+      - FB_AUTHMETHOD=noauth
+      - FB_NOAUTH=true
+    networks:
+      - proxy_app
+      - internal
+    healthcheck:
+      test: ["CMD", "true"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8G
+      update_config:
+        order: stop-first
+        delay: 20s
+
+networks:
+  internal:
+    driver: overlay
+  proxy_app:
+    external: true
+
+volumes:
+  data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/fileshare/data
+  database:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/fileshare/database
+  config:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/fileshare/config

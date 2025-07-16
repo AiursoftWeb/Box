@@ -8,6 +8,7 @@ services:
     deploy:
       resources:
         limits:
+          cpus: '2.0'
           memory: 4G
 
   web:
@@ -34,69 +35,12 @@ services:
         mode: host
     deploy:
       resources:
-        # reservations:
-        #   generic_resources:
-        #     - discrete_resource_spec:
-        #         kind: "NVIDIA-GPU"
-        #         value: 0
         limits:
           cpus: '8.0'
           memory: 16G
-
-  mediabrowser:
-    image: hub.aiursoft.cn/filebrowser/filebrowser
-    networks:
-      - proxy_app
-    volumes:
-      - media-data:/srv
-      - /swarm-vol/jellyfin/filebrowser/database.db:/database/filebrowser.db
-    environment:
-      - FB_AUTHMETHOD=noauth
-      - FB_NOAUTH=true
-    healthcheck:
-      test: ["CMD", "true"]
-      interval: 10s
-      timeout: 10s
-      retries: 3
-    deploy:
-
-  webdav:
-    image: hub.aiursoft.cn/bytemark/webdav
-    networks:
-      - proxy_app
-    environment:
-      AUTH_TYPE: Digest
-      USERNAME: USER
-      PASSWORD: PASSWORD
-    volumes:
-      - media-data:/var/lib/dav/data
-
-  smb:
-    image: hub.aiursoft.cn/andyzhangx/samba:win-fix
-    volumes:
-      - media-data:/mount
-    deploy:
-    
-    environment:
-      - WORKGROUP=WORKGROUP
-    ports:
-      # These ports are for internal use. External request is not allowed.
-      - target: 139
-        published: 139
-        protocol: tcp
-        mode: host
-      - target: 445
-        published: 445
-        protocol: tcp
-        mode: host
-    # -s <name;/path>;browsable(yes);readonly(no);guestok(yes);users(all);admins(none);writelist(none);comment(string)
-    #command: "-p -n -u 'USER;PASSWORD' -w 'WORKGROUP' -S -s 'media;/mount;yes;no;no;all;none;none;Media Share;force user = nobody;force group = nogroup;force create mode = 0666;force directory mode = 0777'"
-    command: "-p -n -u 'USER;PASSWORD' -w 'WORKGROUP' -S -s 'media;/mount;yes;no;no;all;none;none;Media Share;create mask = 0777;directory mask = 0777;force user = nobody;force group = nogroup;force create mode = 0666;force directory mode = 0777'"
-    healthcheck:
-      test: ["CMD", "smbclient", "-L", "//localhost", "-U", "USER%PASSWORD"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
+      update_config:
+        order: stop-first
+        delay: 20s
 
 networks:
   proxy_app:
