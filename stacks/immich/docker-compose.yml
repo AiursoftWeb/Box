@@ -25,6 +25,7 @@ services:
     volumes:
       - upload-location:/usr/src/app/upload
       - /etc/localtime:/etc/localtime:ro
+      - external:/external
     environment:
       - TZ=UTC
       - DB_DATABASE_NAME=immich_db
@@ -111,6 +112,12 @@ volumes:
       type: none
       o: bind
       device: /swarm-vol/immich/upload
+  external:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/immich/external
   model-cache:
     driver: local
     driver_opts:
