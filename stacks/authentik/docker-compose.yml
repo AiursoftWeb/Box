@@ -23,6 +23,8 @@ services:
       - internal
     secrets:
       - authentik_pg_pass
+    stop_grace_period: 60s
+    stop_signal: SIGINT
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
       start_period: 20s
@@ -36,6 +38,7 @@ services:
           memory: 8G
       update_config:
         order: stop-first
+        delay: 20s
 
   redis:
     image: hub.aiursoft.cn/redis:alpine

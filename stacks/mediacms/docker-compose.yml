@@ -22,7 +22,13 @@ services:
       - redis
       - db
     deploy:
-    
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4G
+      update_config:
+        order: stop-first
+        delay: 20s
       restart_policy:
         condition: none
 
@@ -41,6 +47,12 @@ services:
     depends_on:
       - migrations
     deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8G
+      update_config:
+        order: start-first
 
   celery_beat:
     image: hub.aiursoft.cn/mediacms/mediacms
@@ -57,6 +69,15 @@ services:
     depends_on:
       - redis
     deploy:
+      restart_policy:
+        condition: none
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4G
+      update_config:
+        order: stop-first
+        delay: 20s
 
   celery_worker:
     image: hub.aiursoft.cn/mediacms/mediacms
@@ -72,6 +93,13 @@ services:
     depends_on:
       - migrations
     deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4G
+      update_config:
+        order: stop-first
+        delay: 20s
 
   db:
     image: hub.aiursoft.cn/postgres:15.2-alpine
@@ -84,12 +112,22 @@ services:
       POSTGRES_PASSWORD: mediacms
       POSTGRES_DB: mediacms
       TZ: Europe/London
+    stop_grace_period: 60s
+    stop_signal: SIGINT
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready", "--host=db", "--dbname=$POSTGRES_DB", "--username=$POSTGRES_USER"]
-      interval: 10s
-      timeout: 5s
+      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      start_period: 20s
+      interval: 30s
       retries: 5
+      timeout: 5s
     deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8G
+      update_config:
+        order: stop-first
+        delay: 20s
 
   redis:
     image: "hub.aiursoft.cn/redis:alpine"
@@ -103,7 +141,13 @@ services:
       timeout: 10s
       retries: 3
     deploy:
-    
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4G
+      update_config:
+        order: stop-first
+        delay: 20s
 
 networks:
   proxy_app:
