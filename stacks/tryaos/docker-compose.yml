@@ -4,7 +4,7 @@ services:
   vnc:
     image: hub.aiursoft.cn/anduin/anduinos-in-docker
     volumes:
-      - /dev/dri:/dev/dri
+      - /dev/kvm:/dev/kvm
       - aos-data:/data/
     networks:
       - proxy_app
