@@ -30,8 +30,6 @@ services:
       resources:
         limits:
           memory: 16384M
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   nextcloud-jobrunner:
     depends_on:
@@ -85,8 +83,6 @@ services:
           memory: 1G
       update_config:
         order: start-first
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   nextclouddb:
     image: hub.aiursoft.cn/mysql
@@ -104,8 +100,6 @@ services:
       resources:
         limits:
           memory: 8192M
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   redis:
     image: hub.aiursoft.cn/redis:alpine
@@ -117,8 +111,7 @@ services:
       resources:
         limits:
           memory: 8192M
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
+    
 
 networks:
   internal:

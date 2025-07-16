@@ -7,8 +7,7 @@ services:
       - proxy_app
     deploy:
       replicas: 2
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
+    
 
 networks:
   proxy_app:

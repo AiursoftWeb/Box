@@ -32,8 +32,6 @@ services:
         condition: any
         delay: 5s
         max_attempts: 3
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   ollama-warmup:
     depends_on:
@@ -56,8 +54,6 @@ services:
         limits:
           cpus: '1.0'
           memory: 128M
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   ollama-gateway-db:
     image: hub.aiursoft.cn/mysql
@@ -75,8 +71,6 @@ services:
         limits:
           cpus: '4.0'
           memory: 4G
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   ollama-gateway:
     depends_on:
@@ -109,8 +103,6 @@ services:
           memory: 4G
       update_config:
         order: start-first
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   code-runner:
     image: hub.aiursoft.cn/aiursoft/cpprunner
@@ -128,8 +120,6 @@ services:
           memory: 4G
       update_config:
         order: start-first
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   mcpo:
     depends_on:
@@ -144,8 +134,7 @@ services:
         limits:
           cpus: '6.0'
           memory: 6G
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
+    
     entrypoint: ["mcpo", "--config", "/data/config.json"]
 
   open-webui:
@@ -188,8 +177,7 @@ services:
         limits:
           cpus: '6.0'
           memory: 6G
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
+    
 
 networks:
   internal:

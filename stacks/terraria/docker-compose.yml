@@ -20,8 +20,6 @@ services:
         limits:
           cpus: '2.00'
           memory: 2G
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
 volumes:
   terraria:

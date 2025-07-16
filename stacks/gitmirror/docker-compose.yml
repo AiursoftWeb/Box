@@ -42,8 +42,6 @@ services:
           memory: 4G
       update_config:
         order: start-first
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
 volumes:
   aspnet:

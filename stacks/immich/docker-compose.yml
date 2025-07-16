@@ -40,8 +40,6 @@ services:
           memory: 12G
       update_config:
         order: start-first
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   immich-machine-learning:
     depends_on:
@@ -64,8 +62,6 @@ services:
           memory: 12G
       update_config:
         order: start-first
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   redis:
     image: hub.aiursoft.cn/valkey/valkey:8-bookworm
@@ -80,8 +76,6 @@ services:
           memory: 8G
       update_config:
         order: start-first
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   database:
     image: hub.aiursoft.cn/ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0
@@ -101,8 +95,7 @@ services:
           memory: 8G
       update_config:
         order: start-first
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
+    
 
 networks:
   internal:

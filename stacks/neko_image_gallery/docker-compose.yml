@@ -21,8 +21,6 @@ services:
       - internal
     deploy:
       replicas: 2
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   server:
     image: hub.aiursoft.cn/edgeneko/neko-image-gallery:edge-cpu
@@ -55,8 +53,7 @@ services:
         limits:
           cpus: '8.0'
           memory: 8G
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
+    
     command: ["--root-path", "/api"]
 
   qdrant_database:

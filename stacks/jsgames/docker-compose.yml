@@ -6,80 +6,61 @@ services:
     networks:
       - proxy_app
     deploy:
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   game2048:
     image: hub.aiursoft.cn/anduin/2048
     networks:
       - proxy_app
     deploy:
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   hextris:
     image: hub.aiursoft.cn/anduin/hextris
     networks:
       - proxy_app
     deploy:
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   cat:
     image: hub.aiursoft.cn/anduin/phaser-catch-the-cat
     networks:
       - proxy_app
     deploy:
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
+    
   
   three:
     image: hub.aiursoft.cn/anduin/threebody
     networks:
       - proxy_app
     deploy:
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   life:
     image: hub.aiursoft.cn/anduin/liferestart
     networks:
       - proxy_app
     deploy:
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   miku:
     image: hub.aiursoft.cn/indexyz/mikutap
     networks:
       - proxy_app
     deploy:
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   minesweeper:
     image: hub.aiursoft.cn/anduin/minesweeper
     networks:
       - proxy_app
     deploy:
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   oi:
     image: hub.aiursoft.cn/anduin/oi-wiki
     networks:
       - proxy_app
     deploy:
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   ctf:
     image: hub.aiursoft.cn/anduin/ctf-wiki:latest
     networks:
       - proxy_app
     deploy:
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   ipcalc:
     image: hub.aiursoft.cn/anduin/ipcalc:latest
@@ -87,8 +68,7 @@ services:
       - proxy_app
     deploy:
       replicas: 2
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
+    
 
 networks:
   proxy_app:

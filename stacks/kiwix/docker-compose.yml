@@ -9,8 +9,6 @@ services:
       - kiwix-data:/data
     deploy:
       replicas: 2
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
 volumes:
   kiwix-data:

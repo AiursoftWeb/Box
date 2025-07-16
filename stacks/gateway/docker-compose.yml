@@ -12,8 +12,7 @@ services:
       - source: xray-uuid
         target: user_id
     deploy:
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
+    
 
 networks:
   proxy_app:

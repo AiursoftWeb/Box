@@ -22,8 +22,7 @@ services:
       - redis
       - db
     deploy:
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
+    
       restart_policy:
         condition: none
 
@@ -42,8 +41,6 @@ services:
     depends_on:
       - migrations
     deploy:
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   celery_beat:
     image: hub.aiursoft.cn/mediacms/mediacms
@@ -60,8 +57,6 @@ services:
     depends_on:
       - redis
     deploy:
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   celery_worker:
     image: hub.aiursoft.cn/mediacms/mediacms
@@ -77,8 +72,6 @@ services:
     depends_on:
       - migrations
     deploy:
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   db:
     image: hub.aiursoft.cn/postgres:15.2-alpine
@@ -97,8 +90,6 @@ services:
       timeout: 5s
       retries: 5
     deploy:
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   redis:
     image: "hub.aiursoft.cn/redis:alpine"
@@ -112,8 +103,7 @@ services:
       timeout: 10s
       retries: 3
     deploy:
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
+    
 
 networks:
   proxy_app:

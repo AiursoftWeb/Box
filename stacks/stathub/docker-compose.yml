@@ -14,8 +14,6 @@ services:
       - proxy_app
       - internal
     deploy:
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
 volumes:
   stathub-data:

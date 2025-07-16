@@ -23,8 +23,6 @@ services:
       resources:
         limits:
           memory: 14336M
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
 volumes:
   world:

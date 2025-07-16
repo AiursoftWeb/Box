@@ -32,8 +32,6 @@ services:
           memory: 1G
       update_config:
         order: start-first
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   registry-server:
     image: registry
@@ -55,8 +53,6 @@ services:
           memory: 1G
       update_config:
         order: start-first
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   # registry-cleaner:
   #   depends_on:

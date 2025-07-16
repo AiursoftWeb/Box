@@ -8,8 +8,7 @@ services:
     networks:
       - proxy_app
     deploy:
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
+    
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:5000/"]
       interval: 10s

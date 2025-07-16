@@ -13,8 +13,7 @@ services:
     environment:
       - TZ=UTC
     deploy:
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
+    
 
 networks:
   proxy_app:

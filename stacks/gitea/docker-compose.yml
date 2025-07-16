@@ -19,8 +19,6 @@ services:
         limits:
           cpus: '8.0'
           memory: 4096M
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
 volumes:
   gitea-data:

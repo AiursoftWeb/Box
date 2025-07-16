@@ -33,8 +33,6 @@ services:
       - internal
       - proxy_app
     deploy:
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   koel-db:
     image: hub.aiursoft.cn/mysql
@@ -48,8 +46,7 @@ services:
     networks:
       - internal
     deploy:
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
+    
 
 networks:
   internal:

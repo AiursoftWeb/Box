@@ -28,8 +28,7 @@ services:
           memory: 4G
       update_config:
         order: start-first
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
+    
   
   anduin-db:
     image: hub.aiursoft.cn/mysql
@@ -47,8 +46,7 @@ services:
         limits:
           cpus: '4.0'
           memory: 4G
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
+    
       
   jimmoen:
     depends_on:
@@ -77,8 +75,6 @@ services:
           memory: 4G
       update_config:
         order: start-first
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   jimmoen-db:
     image: hub.aiursoft.cn/mysql
@@ -96,8 +92,6 @@ services:
         limits:
           cpus: '4.0'
           memory: 4G
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   rest:
     depends_on:
@@ -126,8 +120,6 @@ services:
           memory: 4G
       update_config:
         order: start-first
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   rest-db:
     image: hub.aiursoft.cn/mysql
@@ -145,8 +137,7 @@ services:
         limits:
           cpus: '4.0'
           memory: 4G
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
+    
         
   cody:
     depends_on:
@@ -175,8 +166,6 @@ services:
           memory: 4G
       update_config:
         order: start-first
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   cody-db:
     image: hub.aiursoft.cn/mysql
@@ -194,8 +183,6 @@ services:
         limits:
           cpus: '4.0'
           memory: 4G
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   gxhao:
     depends_on:
@@ -224,8 +211,6 @@ services:
           memory: 4G
       update_config:
         order: start-first
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   gxhao-db:
     image: hub.aiursoft.cn/mysql
@@ -243,8 +228,6 @@ services:
         limits:
           cpus: '4.0'
           memory: 4G
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   anois:
     depends_on:
@@ -273,8 +256,6 @@ services:
           memory: 4G
       update_config:
         order: start-first
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   anois-db:
     image: hub.aiursoft.cn/mysql
@@ -292,8 +273,6 @@ services:
         limits:
           cpus: '4.0'
           memory: 4G
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   dvorak:
     depends_on:
@@ -322,8 +301,6 @@ services:
           memory: 4G
       update_config:
         order: start-first
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   dvorak-db:
     image: hub.aiursoft.cn/mysql
@@ -341,8 +318,6 @@ services:
         limits:
           cpus: '4.0'
           memory: 4G
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   kitlau:
     depends_on:
@@ -371,8 +346,6 @@ services:
           memory: 4G
       update_config:
         order: start-first
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   kitlau-db:
     image: hub.aiursoft.cn/mysql
@@ -390,8 +363,6 @@ services:
         limits:
           cpus: '4.0'
           memory: 4G
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   xinboo:
     depends_on:
@@ -420,8 +391,6 @@ services:
           memory: 4G
       update_config:
         order: start-first
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   xinboo-db:
     image: hub.aiursoft.cn/mysql
@@ -439,8 +408,6 @@ services:
         limits:
           cpus: '4.0'
           memory: 4G
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   gbiner:
     depends_on:
@@ -469,8 +436,6 @@ services:
           memory: 4G
       update_config:
         order: start-first
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   gbiner-db:
     image: hub.aiursoft.cn/mysql
@@ -488,8 +453,6 @@ services:
         limits:
           cpus: '4.0'
           memory: 4G
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   rdf:
     depends_on:
@@ -518,8 +481,6 @@ services:
           memory: 4G
       update_config:
         order: start-first
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   rdf-db:
     image: hub.aiursoft.cn/mysql
@@ -537,8 +498,6 @@ services:
         limits:
           cpus: '4.0'
           memory: 4G
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   lyx:
     depends_on:
@@ -567,8 +526,6 @@ services:
           memory: 4G
       update_config:
         order: start-first
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   lyx-db:
     image: hub.aiursoft.cn/mysql
@@ -582,8 +539,6 @@ services:
     networks:
       - lyx_app
     deploy:
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   shubuzuo:
     depends_on:
@@ -612,8 +567,6 @@ services:
           memory: 4G
       update_config:
         order: start-first
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   shubuzuo-db:
     image: hub.aiursoft.cn/mysql
@@ -631,8 +584,6 @@ services:
         limits:
           cpus: '4.0'
           memory: 4G
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   lily:
     depends_on:
@@ -661,8 +612,6 @@ services:
           memory: 4G
       update_config:
         order: start-first
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   lily-db:
     image: hub.aiursoft.cn/mysql
@@ -680,8 +629,6 @@ services:
         limits:
           cpus: '4.0'
           memory: 4G
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   carson:
     depends_on:
@@ -710,8 +657,6 @@ services:
           memory: 4G
       update_config:
         order: start-first
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   carson-db:
     image: hub.aiursoft.cn/mysql
@@ -729,8 +674,6 @@ services:
         limits:
           cpus: '4.0'
           memory: 4G
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   zoneblog:
     depends_on:
@@ -759,8 +702,6 @@ services:
           memory: 4G
       update_config:
         order: start-first
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   zoneblog-db:
     image: hub.aiursoft.cn/mysql
@@ -778,8 +719,7 @@ services:
         limits:
           cpus: '4.0'
           memory: 4G
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
+    
       
   yuyuyuyublog:
     depends_on:
@@ -808,8 +748,6 @@ services:
           memory: 4G
       update_config:
         order: start-first
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   yuyuyuyublog-db:
     image: hub.aiursoft.cn/mysql
@@ -827,8 +765,7 @@ services:
         limits:
           cpus: '4.0'
           memory: 4G
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
+    
         
 
 networks:

@@ -36,8 +36,6 @@ services:
           memory: 8G
       update_config:
         order: stop-first
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   redis:
     image: hub.aiursoft.cn/redis:alpine
@@ -59,8 +57,6 @@ services:
           memory: 4G
       update_config:
         order: stop-first
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   server:
     depends_on:
@@ -92,8 +88,6 @@ services:
           memory: 8G
       update_config:
         order: start-first
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   worker:
     depends_on:
@@ -132,8 +126,7 @@ services:
           memory: 4G
       update_config:
         order: stop-first
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
+    
 
 networks:
   proxy_app:

@@ -14,8 +14,6 @@ services:
       - Remotely_ApplicationOptions__DbProvider=SQLite
       - Remotely_ConnectionStrings__SQLite=Data Source=/app/AppData/Remotely.db
     deploy:
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
 volumes:
   remotely-data:

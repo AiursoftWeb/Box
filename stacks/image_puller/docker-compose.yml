@@ -11,8 +11,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     deploy:
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
+    
 
 secrets:
   docker-key:

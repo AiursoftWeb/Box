@@ -52,8 +52,6 @@ services:
       resources:
         limits:
           memory: 32G
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   runner:
     depends_on:

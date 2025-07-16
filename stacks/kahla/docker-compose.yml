@@ -27,8 +27,6 @@ services:
           memory: 4G
       update_config:
         order: start-first
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   db:
     image: hub.aiursoft.cn/mysql
@@ -46,8 +44,7 @@ services:
         limits:
           cpus: '4.0'
           memory: 4G
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
+    
 
 secrets:
   kahla-vapid-key-public:

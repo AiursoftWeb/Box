@@ -15,8 +15,6 @@ services:
       - OG_OIDC_GROUP_CLAIM_NAME=groups
       - OG_OIDC_ADMIN_GROUP=gist-admins
     deploy:
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
 volumes:
   gist-data:

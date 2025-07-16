@@ -9,8 +9,6 @@ services:
       resources:
         limits:
           memory: 4G
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   web:
     image: hub.aiursoft.cn/jellyfin/jellyfin
@@ -44,8 +42,6 @@ services:
         limits:
           cpus: '8.0'
           memory: 16G
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   mediabrowser:
     image: hub.aiursoft.cn/filebrowser/filebrowser
@@ -63,8 +59,6 @@ services:
       timeout: 10s
       retries: 3
     deploy:
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
 
   webdav:
     image: hub.aiursoft.cn/bytemark/webdav
@@ -82,8 +76,7 @@ services:
     volumes:
       - media-data:/mount
     deploy:
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
+    
     environment:
       - WORKGROUP=WORKGROUP
     ports:

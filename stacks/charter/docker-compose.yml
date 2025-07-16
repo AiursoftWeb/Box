@@ -16,8 +16,7 @@ services:
     networks:
       - proxy_app
     deploy:
-      labels:
-        swarmpit.service.deployment.autoredeploy: 'true'
+    
 
 networks:
   proxy_app:
