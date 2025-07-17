@@ -1,0 +1,76 @@
+#docker pull hub.aiursoft.cn/vikunja/vikunja:latest
+version: '3.9'
+
+services:
+  app:
+    image: hub.aiursoft.cn/vikunja/vikunja:latest
+    volumes:
+        - vikunja-files:/app/vikunja/files
+        #- /swarm-vol/vikunja/config:/app/vikunja/config.yml:ro
+    environment:
+      - 'VIKUNJA_SERVICE_PUBLICURL: https://todo.aiursoft.cn'
+      - 'VIKUNJA_DATABASE_HOST: db'
+      - 'VIKUNJA_DATABASE_PASSWORD: vikunja_password'
+      - 'VIKUNJA_DATABASE_TYPE: mysql'
+      - 'VIKUNJA_DATABASE_USER: vikunja'
+      - 'VIKUNJA_DATABASE_DATABASE: vikunja'
+      - 'VIKUNJA_SERVICE_JWTSECRET: {{VIKUNJA_SERVICE_JWTSECRET}}'
+    networks:
+      - proxy_app
+      - internal
+    deploy:
+      replicas: 2
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8G
+      update_config:
+        order: start-first
+
+  db:
+    image: hub.aiursoft.cn/mysql
+    networks: 
+      - internal
+    volumes:
+      - vikunja-db:/var/lib/mysql
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
+      - MYSQL_DATABASE=vikunja
+      - MYSQL_USER=vikunja
+      - MYSQL_PASSWORD=vikunja_password
+    stop_grace_period: 60s
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8G
+      update_config:
+        order: stop-first
+        delay: 20s
+
+networks:
+  proxy_app:
+    external: true
+  internal:
+    driver: overlay
+
+volumes:
+  vikunja-files:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/vikunja/files
+  vikunja-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/vikunja/db
+    
