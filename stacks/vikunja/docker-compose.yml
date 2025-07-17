@@ -3,18 +3,20 @@ version: '3.9'
 
 services:
   app:
+    depends_on:
+      - db
     image: hub.aiursoft.cn/vikunja/vikunja:latest
     volumes:
         - vikunja-files:/app/vikunja/files
         #- /swarm-vol/vikunja/config:/app/vikunja/config.yml:ro
     environment:
-      - 'VIKUNJA_SERVICE_PUBLICURL: https://todo.aiursoft.cn'
-      - 'VIKUNJA_DATABASE_HOST: db'
-      - 'VIKUNJA_DATABASE_PASSWORD: vikunja_password'
-      - 'VIKUNJA_DATABASE_TYPE: mysql'
-      - 'VIKUNJA_DATABASE_USER: vikunja'
-      - 'VIKUNJA_DATABASE_DATABASE: vikunja'
-      - 'VIKUNJA_SERVICE_JWTSECRET: {{VIKUNJA_SERVICE_JWTSECRET}}'
+      - VIKUNJA_SERVICE_PUBLICURL=https://todo.aiursoft.cn
+      - VIKUNJA_DATABASE_HOST=db
+      - VIKUNJA_DATABASE_PASSWORD=vikunja_password
+      - VIKUNJA_DATABASE_TYPE=mysql
+      - VIKUNJA_DATABASE_USER=vikunja
+      - VIKUNJA_DATABASE_DATABASE=vikunja
+      - VIKUNJA_SERVICE_JWTSECRET={{VIKUNJA_SERVICE_JWTSECRET}}
     networks:
       - proxy_app
       - internal
