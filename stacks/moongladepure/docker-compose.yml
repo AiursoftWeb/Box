@@ -42,7 +42,6 @@ services:
     networks:
       - anduin_app
     stop_grace_period: 60s
-    stop_signal: SIGINT
     healthcheck:
       test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
       start_period: 20s
@@ -99,7 +98,6 @@ services:
     networks:
       - jimmoen_app
     stop_grace_period: 60s
-    stop_signal: SIGINT
     healthcheck:
       test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
       start_period: 20s
@@ -155,7 +153,6 @@ services:
     networks:
       - rest_app
     stop_grace_period: 60s
-    stop_signal: SIGINT
     healthcheck:
       test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
       start_period: 20s
@@ -212,7 +209,6 @@ services:
     networks:
       - cody_app
     stop_grace_period: 60s
-    stop_signal: SIGINT
     healthcheck:
       test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
       start_period: 20s
@@ -268,7 +264,6 @@ services:
     networks:
       - gxhao_app
     stop_grace_period: 60s
-    stop_signal: SIGINT
     healthcheck:
       test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
       start_period: 20s
@@ -324,7 +319,6 @@ services:
     networks:
       - anois_app
     stop_grace_period: 60s
-    stop_signal: SIGINT
     healthcheck:
       test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
       start_period: 20s
@@ -380,7 +374,6 @@ services:
     networks:
       - dvorak_app
     stop_grace_period: 60s
-    stop_signal: SIGINT
     healthcheck:
       test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
       start_period: 20s
@@ -436,7 +429,6 @@ services:
     networks:
       - kitlau_app
     stop_grace_period: 60s
-    stop_signal: SIGINT
     healthcheck:
       test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
       start_period: 20s
@@ -492,7 +484,6 @@ services:
     networks:
       - xinboo_app
     stop_grace_period: 60s
-    stop_signal: SIGINT
     healthcheck:
       test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
       start_period: 20s
@@ -548,7 +539,6 @@ services:
     networks:
       - gbiner_app
     stop_grace_period: 60s
-    stop_signal: SIGINT
     healthcheck:
       test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
       start_period: 20s
@@ -604,7 +594,6 @@ services:
     networks:
       - rdf_app
     stop_grace_period: 60s
-    stop_signal: SIGINT
     healthcheck:
       test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
       start_period: 20s
@@ -660,7 +649,6 @@ services:
     networks:
       - lyx_app
     stop_grace_period: 60s
-    stop_signal: SIGINT
     healthcheck:
       test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
       start_period: 20s
@@ -716,7 +704,6 @@ services:
     networks:
       - shubuzuo_app
     stop_grace_period: 60s
-    stop_signal: SIGINT
     healthcheck:
       test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
       start_period: 20s
@@ -772,7 +759,6 @@ services:
     networks:
       - lily_app
     stop_grace_period: 60s
-    stop_signal: SIGINT
     healthcheck:
       test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
       start_period: 20s
@@ -828,7 +814,6 @@ services:
     networks:
       - carson_app
     stop_grace_period: 60s
-    stop_signal: SIGINT
     healthcheck:
       test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
       start_period: 20s
@@ -884,7 +869,6 @@ services:
     networks:
       - zoneblog_app
     stop_grace_period: 60s
-    stop_signal: SIGINT
     healthcheck:
       test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
       start_period: 20s

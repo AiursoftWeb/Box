@@ -64,7 +64,6 @@ services:
     volumes:
       - neko-image-gallery-vector-db:/qdrant/storage:z
     stop_grace_period: 60s
-    stop_signal: SIGINT
     deploy:
       resources:
         limits:

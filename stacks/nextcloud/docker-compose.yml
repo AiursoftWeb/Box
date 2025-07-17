@@ -30,6 +30,9 @@ services:
       resources:
         limits:
           memory: 16384M
+          cpus: '16.0'
+      update_config:
+        order: start-first
 
   nextcloud-jobrunner:
     depends_on:
@@ -97,7 +100,6 @@ services:
       - MYSQL_DATABASE=nextcloud
       - MYSQL_USER=nextcloud
     stop_grace_period: 60s
-    stop_signal: SIGINT
     healthcheck:
       test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
       start_period: 20s
@@ -119,11 +121,21 @@ services:
       - nextcloud-redis:/data
     networks: 
       - internal
+    stop_grace_period: 60s
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 3s
     deploy:
       resources:
         limits:
+          cpus: '1.0'
           memory: 8192M
-    
+      update_config:
+        order: stop-first
+        delay: 20s
 
 networks:
   internal:

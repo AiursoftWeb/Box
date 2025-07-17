@@ -66,10 +66,13 @@ services:
 
   redis:
     image: hub.aiursoft.cn/valkey/valkey:8-bookworm
-    healthcheck:
-      test: redis-cli ping || exit 1
+    volumes:
+      - redis:/data
     networks:
       - internal
+    stop_grace_period: 60s
+    healthcheck:
+      test: redis-cli ping || exit 1
     deploy:
       resources:
         limits:
@@ -90,7 +93,6 @@ services:
     networks:
       - internal
     stop_grace_period: 60s
-    stop_signal: SIGINT
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
       start_period: 20s
@@ -163,3 +165,9 @@ volumes:
       type: none
       o: bind
       device: /swarm-vol/immich/db-data
+  redis:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/immich/redis

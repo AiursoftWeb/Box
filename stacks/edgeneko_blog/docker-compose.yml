@@ -42,7 +42,6 @@ services:
       - MYSQL_ROOT_PASSWORD=Password1234
       - MYSQL_DATABASE=artalk
     stop_grace_period: 60s
-    stop_signal: SIGINT
     healthcheck:
       test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
       start_period: 20s

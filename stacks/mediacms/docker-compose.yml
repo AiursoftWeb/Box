@@ -113,7 +113,6 @@ services:
       POSTGRES_DB: mediacms
       TZ: Europe/London
     stop_grace_period: 60s
-    stop_signal: SIGINT
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
       start_period: 20s
@@ -135,6 +134,7 @@ services:
       - internal
     volumes:
       - redis_data:/data
+    stop_grace_period: 60s
     healthcheck:
       test: ["CMD", "redis-cli","ping"]
       interval: 30s
