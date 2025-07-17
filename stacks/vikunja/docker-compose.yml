@@ -21,7 +21,6 @@ services:
       - proxy_app
       - internal
     deploy:
-      replicas: 2
       resources:
         limits:
           cpus: '4.0'
