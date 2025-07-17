@@ -8,6 +8,13 @@ services:
     networks:
       - proxy_app
     deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+      update_config:
+        order: stop-first
+        delay: 20s
 
 volumes:
   flyclass-data:

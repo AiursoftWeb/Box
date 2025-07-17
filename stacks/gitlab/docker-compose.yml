@@ -43,6 +43,7 @@ services:
         prometheus_monitoring['enable'] = false
         sidekiq['metrics_enabled'] = false
         puma['exporter_enabled'] = false
+    stop_grace_period: 60s
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:80"]
       interval: 60s
@@ -52,6 +53,9 @@ services:
       resources:
         limits:
           memory: 32G
+      update_config:
+        order: stop-first
+        delay: 20s
 
   runner:
     depends_on:

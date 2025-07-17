@@ -12,7 +12,12 @@ services:
       - source: xray-uuid
         target: user_id
     deploy:
-    
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+      update_config:
+        order: start-first
 
 networks:
   proxy_app:

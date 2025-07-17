@@ -14,11 +14,15 @@ services:
         published: 2201
         protocol: tcp
         mode: host
+    stop_grace_period: 60s
     deploy:
       resources:
         limits:
           cpus: '8.0'
           memory: 4096M
+      update_config:
+        order: stop-first
+        delay: 20s
 
 volumes:
   gitea-data:
