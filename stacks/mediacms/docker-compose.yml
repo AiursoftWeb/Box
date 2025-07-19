@@ -2,11 +2,12 @@ version: '3.9'
 
 services:
   migrations:
+    depends_on:
+      - redis
+      - db
     image: hub.aiursoft.cn/mediacms/mediacms
     volumes:
-      - mediacms-files:/home/mediacms.io/mediacms/media_files
-    networks:
-      - internal
+      - mediacms:/home/mediacms.io/mediacms/
     environment:
       ENABLE_UWSGI: 'no'
       ENABLE_NGINX: 'no'
@@ -16,36 +17,33 @@ services:
       ADMIN_USER: 'admin'
       ADMIN_EMAIL: 'admin@localhost'
       ADMIN_PASSWORD: 'a_very_secure_password_here' 
+    networks:
+      - internal
     command: "./deploy/docker/prestart.sh"
-    depends_on:
-      - redis
-      - db
     deploy:
       resources:
         limits:
           cpus: '2.0'
           memory: 4G
-      # 这是一个初始化任务，不需要更新策略
-      # 将重启策略改为 on-failure，这样如果迁移失败（例如DB还没准备好），它会重试
       restart_policy:
         condition: on-failure
         delay: 5s
         max_attempts: 3
 
   web:
+    depends_on:
+      - migrations
     image: hub.aiursoft.cn/mediacms/mediacms
-    networks:
-      - proxy_app # Port 80
-      - internal
     volumes:
-      - mediacms-files:/home/mediacms.io/mediacms/media_files
+      - mediacms:/home/mediacms.io/mediacms/
     environment:
       ENABLE_CELERY_BEAT: 'no'
       ENABLE_CELERY_SHORT: 'no'
       ENABLE_CELERY_LONG: 'no'
       ENABLE_MIGRATIONS: 'no'
-    depends_on:
-      - migrations
+    networks:
+      - proxy_app # Port 80
+      - internal
     deploy:
       replicas: 1
       resources:
@@ -57,21 +55,19 @@ services:
         delay: 20s
 
   celery_beat:
+    depends_on:
+      - redis
     image: hub.aiursoft.cn/mediacms/mediacms
-    networks:
-      - internal
     volumes:
-      - mediacms-files:/home/mediacms.io/mediacms/media_files
-    command: "./deploy/docker/celery-beat.sh"
+      - mediacms:/home/mediacms.io/mediacms/
     environment:
       ENABLE_UWSGI: 'no'
       ENABLE_NGINX: 'no'
       ENABLE_CELERY_SHORT: 'no'
       ENABLE_CELERY_LONG: 'no'
       ENABLE_MIGRATIONS: 'no'
-    depends_on:
-      - redis
-      - migrations
+    networks:
+      - internal
     deploy:
       replicas: 1
       restart_policy:
@@ -85,20 +81,18 @@ services:
         delay: 20s
 
   celery_worker:
+    depends_on:
+      - migrations
     image: hub.aiursoft.cn/mediacms/mediacms
-    networks:
-      - internal
     volumes:
-      - mediacms-files:/home/mediacms.io/mediacms/media_files
-    # 添加了启动 worker 的命令，确保它执行正确的任务
-    command: "./deploy/docker/celery-worker.sh"
+      - mediacms:/home/mediacms.io/mediacms/
     environment:
       ENABLE_UWSGI: 'no'
       ENABLE_NGINX: 'no'
       ENABLE_CELERY_BEAT: 'no'
       ENABLE_MIGRATIONS: 'no'
-    depends_on:
-      - migrations
+    networks:
+      - internal
     deploy:
       replicas: 1 # 建议从1个副本开始
       resources:
@@ -112,7 +106,7 @@ services:
         condition: on-failure
 
   db:
-    image: hub.aiursoft.cn/postgres:15.2-alpine
+    image: hub.aiursoft.cn/postgres
     networks:
       - internal
     volumes:
@@ -166,12 +160,12 @@ networks:
     driver: overlay
 
 volumes:
-  mediacms-files:
+  mediacms:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /swarm-vol/media-cms/root/media_files
+      device: /swarm-vol/media-cms/data
   postgres_data:
     driver: local
     driver_opts:
