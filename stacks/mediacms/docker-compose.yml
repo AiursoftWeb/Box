@@ -2,12 +2,11 @@ version: '3.9'
 
 services:
   migrations:
-    depends_on:
-      - redis
-      - db
     image: hub.aiursoft.cn/mediacms/mediacms
     volumes:
-      - mediacms:/home/mediacms.io/mediacms/
+      - mediacms-files:/home/mediacms.io/mediacms/media_files
+    networks:
+      - internal
     environment:
       ENABLE_UWSGI: 'no'
       ENABLE_NGINX: 'no'
@@ -16,62 +15,64 @@ services:
       ENABLE_CELERY_BEAT: 'no'
       ADMIN_USER: 'admin'
       ADMIN_EMAIL: 'admin@localhost'
-      ADMIN_PASSWORD: 'a_very_secure_password_here' 
-    networks:
-      - internal
-    command: "./deploy/docker/prestart.sh"
+      ADMIN_PASSWORD: 'a_very_secure_password_here'
+    # Migrate, and never quit
+    command: "./deploy/docker/prestart.sh && sleep infinity"
+    depends_on:
+      - redis
+      - db
     deploy:
       resources:
         limits:
           cpus: '2.0'
           memory: 4G
+      update_config:
+        order: stop-first
+        delay: 20s
       restart_policy:
         condition: on-failure
         delay: 5s
         max_attempts: 3
 
   web:
-    depends_on:
-      - migrations
     image: hub.aiursoft.cn/mediacms/mediacms
+    networks:
+      - proxy_app # Port 80
+      - internal
     volumes:
-      - mediacms:/home/mediacms.io/mediacms/
+      - mediacms-files:/home/mediacms.io/mediacms/media_files
     environment:
       ENABLE_CELERY_BEAT: 'no'
       ENABLE_CELERY_SHORT: 'no'
       ENABLE_CELERY_LONG: 'no'
       ENABLE_MIGRATIONS: 'no'
-    networks:
-      - proxy_app # Port 80
-      - internal
+    depends_on:
+      - migrations
     deploy:
-      replicas: 1
       resources:
         limits:
           cpus: '4.0'
           memory: 8G
       update_config:
-        order: stop-first
-        delay: 20s
+        order: start-first
 
   celery_beat:
-    depends_on:
-      - redis
     image: hub.aiursoft.cn/mediacms/mediacms
+    networks:
+      - internal
     volumes:
-      - mediacms:/home/mediacms.io/mediacms/
+      - mediacms-files:/home/mediacms.io/mediacms/media_files
     environment:
       ENABLE_UWSGI: 'no'
       ENABLE_NGINX: 'no'
       ENABLE_CELERY_SHORT: 'no'
       ENABLE_CELERY_LONG: 'no'
       ENABLE_MIGRATIONS: 'no'
-    networks:
-      - internal
+    depends_on:
+      - redis
     deploy:
-      replicas: 1
       restart_policy:
-        condition: on-failure
+        condition: none
       resources:
         limits:
           cpus: '2.0'
@@ -81,20 +82,19 @@ services:
         delay: 20s
 
   celery_worker:
-    depends_on:
-      - migrations
     image: hub.aiursoft.cn/mediacms/mediacms
+    networks:
+      - internal
     volumes:
-      - mediacms:/home/mediacms.io/mediacms/
+      - mediacms-files:/home/mediacms.io/mediacms/media_files
     environment:
       ENABLE_UWSGI: 'no'
       ENABLE_NGINX: 'no'
       ENABLE_CELERY_BEAT: 'no'
       ENABLE_MIGRATIONS: 'no'
-    networks:
-      - internal
+    depends_on:
+      - migrations
     deploy:
-      replicas: 1 # 建议从1个副本开始
       resources:
         limits:
           cpus: '2.0'
@@ -102,8 +102,6 @@ services:
       update_config:
         order: stop-first
         delay: 20s
-      restart_policy:
-        condition: on-failure
 
   db:
     image: hub.aiursoft.cn/postgres
@@ -160,12 +158,12 @@ networks:
     driver: overlay
 
 volumes:
-  mediacms:
+  mediacms-files:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /swarm-vol/media-cms/data
+      device: /swarm-vol/media-cms/root/media_files
   postgres_data:
     driver: local
     driver_opts:
