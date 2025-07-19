@@ -57,7 +57,7 @@ services:
         delay: 20s
 
   dind:
-    image: docker:24.0.5-dind
+    image: docker:dind-rootless
     cap_add:
       - NET_ADMIN
       - SYS_ADMIN
