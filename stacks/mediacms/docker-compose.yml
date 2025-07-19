@@ -62,7 +62,7 @@ services:
       - internal
     volumes:
       - mediacms-files:/home/mediacms.io/mediacms/media_files
-    command: "./deploy/docker/celery-beat.sh"
+    command: "celery -A mediacms.celery beat -l INFO --scheduler django_celery_beat.schedulers:DatabaseScheduler"
     environment:
       ENABLE_UWSGI: 'no'
       ENABLE_NGINX: 'no'
@@ -91,7 +91,7 @@ services:
     volumes:
       - mediacms-files:/home/mediacms.io/mediacms/media_files
     # 添加了启动 worker 的命令，确保它执行正确的任务
-    command: "./deploy/docker/celery-worker.sh"
+    command: "celery -A mediacms.celery worker -l INFO -Q long-running,short-running"
     environment:
       ENABLE_UWSGI: 'no'
       ENABLE_NGINX: 'no'
