@@ -70,7 +70,7 @@ services:
     depends_on:
       - gitlab
       - dind
-    image: hub.aiursoft.cn/aiursoft/internalimages/ubuntu-with-docker
+    image: hub.aiursoft.cn/aiursoft/internalimages/runner
     environment:
       GITLAB_ENDPOINT: http://gitlab
       DOCKER_HOST: tcp://dind:2375
