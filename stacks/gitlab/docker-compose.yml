@@ -4,7 +4,6 @@ services:
   gitlab:
     image: hub.aiursoft.cn/gitlab/gitlab-ee
     ports:
-      # These ports are for internal use. For external, FRP will handle it.
       - target: 2202
         published: 2202
         protocol: tcp
@@ -57,14 +56,23 @@ services:
         order: stop-first
         delay: 20s
 
+  dind:
+    image: docker:24.0.5-dind
+    privileged: true
+    environment:
+      DOCKER_TLS_CERTDIR: ""
+    networks:
+      - runner_net
+
   runner:
     depends_on:
       - gitlab
-    image: hub.aiursoft.cn/aiursoft/internalimages/runner
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+      - dind
+    image: hub.aiursoft.cn/aiursoft/internalimages/ubuntu-with-docker
     environment:
-      - GITLAB_ENDPOINT=http://gitlab
+      GITLAB_ENDPOINT: http://gitlab
+      DOCKER_HOST: tcp://dind:2375
+      DOCKER_TLS_CERTDIR: ""
     networks:
       - runner_net
     secrets:
@@ -75,7 +83,6 @@ services:
           cpus: '10.0'
           memory: 16G
       replicas: 6
-      # Disable auto-redeploy, because runner may stop when CI is running.
 
 volumes:
   gitlab-data:
