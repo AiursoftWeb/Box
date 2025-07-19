@@ -58,7 +58,9 @@ services:
 
   dind:
     image: docker:24.0.5-dind
-    privileged: true
+    cap_add:
+      - NET_ADMIN
+      - SYS_ADMIN
     environment:
       DOCKER_TLS_CERTDIR: ""
     networks:
