@@ -5,7 +5,7 @@ services:
     image: hub.aiursoft.cn/edgeneko/blogv2-src
     networks:
       - proxy_app
-    stop_grace_period: 60s
+    stop_grace_period: 20s
     deploy:
       replicas: 2
       resources:
@@ -14,7 +14,7 @@ services:
           memory: 8G
       update_config:
         order: start-first
-        delay: 20s
+        delay: 5s
 
   comments:
     image: hub.aiursoft.cn/artalk/artalk-go
@@ -25,7 +25,7 @@ services:
       - artalk-data:/data
     depends_on:
       - db
-    stop_grace_period: 60s
+    stop_grace_period: 20s
     deploy:
       replicas: 2
       resources:
@@ -34,7 +34,7 @@ services:
           memory: 4G
       update_config:
         order: start-first
-        delay: 20s
+        delay: 5s
 
   db:
     image: hub.aiursoft.cn/mysql
@@ -59,7 +59,7 @@ services:
           memory: 8G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
 
 volumes:
   edgeneko-blog-db:

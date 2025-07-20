@@ -71,8 +71,8 @@ services:
           cpus: '8.0'
           memory: 8G
       update_config:
-        order: start-first
-        delay: 20s
+        order: stop-first
+        delay: 60s
     command: ["--root-path", "/api"]
 
   qdrant_database:
@@ -90,7 +90,7 @@ services:
           memory: 8G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
 
 volumes:
   neko-image-gallery-vector-db:

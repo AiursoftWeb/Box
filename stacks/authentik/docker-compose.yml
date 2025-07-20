@@ -37,7 +37,7 @@ services:
           memory: 8G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
 
   redis:
     image: hub.aiursoft.cn/redis:alpine
@@ -60,7 +60,7 @@ services:
           memory: 4G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
 
   server:
     depends_on:
@@ -93,7 +93,7 @@ services:
           memory: 8G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
 
   worker:
     depends_on:
@@ -133,7 +133,7 @@ services:
           memory: 4G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
     
 
 networks:

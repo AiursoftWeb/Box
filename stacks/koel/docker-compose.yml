@@ -76,8 +76,7 @@ services:
           memory: 8G
       update_config:
         order: stop-first
-        delay: 20s
-    
+        delay: 60s
 
 networks:
   internal:

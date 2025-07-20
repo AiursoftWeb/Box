@@ -15,7 +15,7 @@ services:
           memory: 1G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:5000/"]
       interval: 10s

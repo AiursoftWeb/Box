@@ -42,7 +42,7 @@ services:
           memory: 12G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
 
   immich-machine-learning:
     depends_on:
@@ -66,7 +66,7 @@ services:
           memory: 12G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
 
   redis:
     image: hub.aiursoft.cn/valkey/valkey:8-bookworm
@@ -83,8 +83,8 @@ services:
           cpus: '4.0'
           memory: 8G
       update_config:
-        order: start-first
-        delay: 20s
+        order: stop-first
+        delay: 60s
 
   database:
     image: hub.aiursoft.cn/ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0
@@ -111,7 +111,7 @@ services:
           memory: 8G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
 
   smb:
     image: hub.aiursoft.cn/andyzhangx/samba:win-fix
@@ -145,7 +145,7 @@ services:
           memory: 1G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
 
 networks:
   internal:

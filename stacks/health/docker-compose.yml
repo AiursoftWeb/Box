@@ -16,7 +16,7 @@ services:
           memory: 2G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
 
   prometheus:
     depends_on:
@@ -37,7 +37,7 @@ services:
           memory: 2G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
 
   grafana:
     depends_on:
@@ -58,7 +58,7 @@ services:
           memory: 2G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
 
 networks:
   internal:

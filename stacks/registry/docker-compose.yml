@@ -25,15 +25,16 @@ services:
       - TAGLIST_PAGE_SIZE=100
       - REGISTRY_SECURED=false
       - CATALOG_ELEMENTS_LIMIT=1000
-    stop_grace_period: 60s
+    stop_grace_period: 20s
     deploy:
+      replicas: 2
       resources:
         limits:
           cpus: '1.0'
           memory: 1G
       update_config:
         order: start-first
-        delay: 20s
+        delay: 5s
 
   registry-server:
     image: registry
@@ -52,11 +53,11 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '1.0'
-          memory: 1G
+          cpus: '2.0'
+          memory: 4G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
 
   # registry-cleaner:
   #   depends_on:

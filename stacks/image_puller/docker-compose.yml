@@ -10,7 +10,7 @@ services:
         target: DOCKER_PASSWORD
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    stop_grace_period: 60s
+    stop_grace_period: 20s
     deploy:
       replicas: 1
       resources:
@@ -19,7 +19,7 @@ services:
           memory: 4G
       update_config:
         order: start-first
-        delay: 20s
+        delay: 5s
 
 secrets:
   docker-key:

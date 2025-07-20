@@ -12,8 +12,8 @@ services:
           cpus: '2.0'
           memory: 4G
       update_config:
-        order: start-first
-        delay: 20s
+        order: stop-first
+        delay: 60s
 
   web:
     image: hub.aiursoft.cn/jellyfin/jellyfin
@@ -45,7 +45,7 @@ services:
           memory: 16G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
 
 networks:
   proxy_app:

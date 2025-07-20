@@ -34,7 +34,7 @@ services:
           cpus: '16.0'
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
 
   nextcloud-jobrunner:
     depends_on:
@@ -89,7 +89,7 @@ services:
           memory: 1G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
 
   nextclouddb:
     image: hub.aiursoft.cn/mysql
@@ -117,7 +117,7 @@ services:
           memory: 8G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
 
   redis:
     image: hub.aiursoft.cn/redis:alpine
@@ -139,7 +139,7 @@ services:
           memory: 8192M
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
 
 networks:
   internal:

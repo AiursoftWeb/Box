@@ -9,21 +9,21 @@ services:
       AUTHENTIK_TOKEN: "{{LAB_OUTPOST_TOKEN}}"
     networks:
       - proxy_app
-    stop_grace_period: 60s
+    stop_grace_period: 20s
     deploy:
       resources:
         limits:
           cpus: '2.0'
           memory: 2G
       update_config:
-        order: stop-first
-        delay: 20s
+        order: start-first
+        delay: 5s
 
   app:
     image: hub.aiursoft.cn/aiursoft/internalimages/lab
     networks:
       - proxy_app
-    stop_grace_period: 60s
+    stop_grace_period: 20s
     deploy:
       replicas: 3
       resources:
@@ -32,9 +32,8 @@ services:
           memory: 1G
       update_config:
         order: start-first
-        delay: 20s
+        delay: 5s
     
-
 networks:
   proxy_app:
     external: true

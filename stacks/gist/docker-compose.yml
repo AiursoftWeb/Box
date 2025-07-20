@@ -22,7 +22,7 @@ services:
           memory: 2G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
 
 volumes:
   gist-data:
