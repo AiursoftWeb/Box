@@ -65,11 +65,13 @@ services:
       - dind
     image: hub.aiursoft.cn/aiursoft/internalimages/runner
     environment:
-      GITLAB_ENDPOINT: http://gitlab
+      # Use public endpoint so the jobrunner can access GitLab.
+      # The actual jobrunner will not use the internal endpoint.
+      GITLAB_ENDPOINT: https://gitlab.aiursoft.cn
       DOCKER_HOST: tcp://dind:2375
       DOCKER_TLS_CERTDIR: ""
     networks:
-      - internal
+      - proxy_app
       - runner_with_dind
     secrets:
       - gitlab-runner-token
