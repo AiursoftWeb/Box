@@ -5,16 +5,31 @@ services:
     image: hub.aiursoft.cn/aiursoft/aiurui
     networks:
       - proxy_app
+    stop_grace_period: 60s
     deploy:
       replicas: 2
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+      update_config:
+        order: start-first
+        delay: 20s
 
   stack:
     image: hub.aiursoft.cn/aiursoft/uistack
     networks:
       - proxy_app
+    stop_grace_period: 60s
     deploy:
       replicas: 2
-    
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+      update_config:
+        order: start-first
+        delay: 20s
 
 networks:
   proxy_app:
