@@ -21,14 +21,15 @@ services:
     networks:
       - anduin_app
       - proxy_app
+    stop_grace_period: 60s
     deploy:
       resources:
         limits:
           cpus: '4.0'
           memory: 4G
       update_config:
-        order: start-first
-    
+        order: stop-first
+        delay: 20s
   
   anduin-db:
     image: hub.aiursoft.cn/mysql
@@ -78,13 +79,15 @@ services:
     networks:
       - jimmoen_app
       - proxy_app
+    stop_grace_period: 60s
     deploy:
       resources:
         limits:
           cpus: '4.0'
           memory: 4G
       update_config:
-        order: start-first
+        order: stop-first
+        delay: 20s
 
   jimmoen-db:
     image: hub.aiursoft.cn/mysql
@@ -133,13 +136,15 @@ services:
     networks:
       - rest_app
       - proxy_app
+    stop_grace_period: 60s
     deploy:
       resources:
         limits:
           cpus: '4.0'
           memory: 4G
       update_config:
-        order: start-first
+        order: stop-first
+        delay: 20s
 
   rest-db:
     image: hub.aiursoft.cn/mysql
@@ -189,13 +194,15 @@ services:
     networks:
       - cody_app
       - proxy_app
+    stop_grace_period: 60s
     deploy:
       resources:
         limits:
           cpus: '4.0'
           memory: 4G
       update_config:
-        order: start-first
+        order: stop-first
+        delay: 20s
 
   cody-db:
     image: hub.aiursoft.cn/mysql
@@ -244,13 +251,15 @@ services:
     networks:
       - gxhao_app
       - proxy_app
+    stop_grace_period: 60s
     deploy:
       resources:
         limits:
           cpus: '4.0'
           memory: 4G
       update_config:
-        order: start-first
+        order: stop-first
+        delay: 20s
 
   gxhao-db:
     image: hub.aiursoft.cn/mysql
@@ -299,13 +308,15 @@ services:
     networks:
       - anois_app
       - proxy_app
+    stop_grace_period: 60s
     deploy:
       resources:
         limits:
           cpus: '4.0'
           memory: 4G
       update_config:
-        order: start-first
+        order: stop-first
+        delay: 20s
 
   anois-db:
     image: hub.aiursoft.cn/mysql
@@ -354,13 +365,15 @@ services:
     networks:
       - dvorak_app
       - proxy_app
+    stop_grace_period: 60s
     deploy:
       resources:
         limits:
           cpus: '4.0'
           memory: 4G
       update_config:
-        order: start-first
+        order: stop-first
+        delay: 20s
 
   dvorak-db:
     image: hub.aiursoft.cn/mysql
@@ -409,13 +422,15 @@ services:
     networks:
       - kitlau_app
       - proxy_app
+    stop_grace_period: 60s
     deploy:
       resources:
         limits:
           cpus: '4.0'
           memory: 4G
       update_config:
-        order: start-first
+        order: stop-first
+        delay: 20s
 
   kitlau-db:
     image: hub.aiursoft.cn/mysql
@@ -464,13 +479,15 @@ services:
     networks:
       - xinboo_app
       - proxy_app
+    stop_grace_period: 60s
     deploy:
       resources:
         limits:
           cpus: '4.0'
           memory: 4G
       update_config:
-        order: start-first
+        order: stop-first
+        delay: 20s
 
   xinboo-db:
     image: hub.aiursoft.cn/mysql
@@ -519,13 +536,15 @@ services:
     networks:
       - gbiner_app
       - proxy_app
+    stop_grace_period: 60s
     deploy:
       resources:
         limits:
           cpus: '4.0'
           memory: 4G
       update_config:
-        order: start-first
+        order: stop-first
+        delay: 20s
 
   gbiner-db:
     image: hub.aiursoft.cn/mysql
@@ -574,13 +593,15 @@ services:
     networks:
       - rdf_app
       - proxy_app
+    stop_grace_period: 60s
     deploy:
       resources:
         limits:
           cpus: '4.0'
           memory: 4G
       update_config:
-        order: start-first
+        order: stop-first
+        delay: 20s
 
   rdf-db:
     image: hub.aiursoft.cn/mysql
@@ -629,13 +650,15 @@ services:
     networks:
       - lyx_app
       - proxy_app
+    stop_grace_period: 60s
     deploy:
       resources:
         limits:
           cpus: '4.0'
           memory: 4G
       update_config:
-        order: start-first
+        order: stop-first
+        delay: 20s
 
   lyx-db:
     image: hub.aiursoft.cn/mysql
@@ -684,13 +707,15 @@ services:
     networks:
       - shubuzuo_app
       - proxy_app
+    stop_grace_period: 60s
     deploy:
       resources:
         limits:
           cpus: '4.0'
           memory: 4G
       update_config:
-        order: start-first
+        order: stop-first
+        delay: 20s
 
   shubuzuo-db:
     image: hub.aiursoft.cn/mysql
@@ -739,13 +764,15 @@ services:
     networks:
       - lily_app
       - proxy_app
+    stop_grace_period: 60s
     deploy:
       resources:
         limits:
           cpus: '4.0'
           memory: 4G
       update_config:
-        order: start-first
+        order: stop-first
+        delay: 20s
 
   lily-db:
     image: hub.aiursoft.cn/mysql
@@ -794,13 +821,15 @@ services:
     networks:
       - carson_app
       - proxy_app
+    stop_grace_period: 60s
     deploy:
       resources:
         limits:
           cpus: '4.0'
           memory: 4G
       update_config:
-        order: start-first
+        order: stop-first
+        delay: 20s
 
   carson-db:
     image: hub.aiursoft.cn/mysql
@@ -849,13 +878,15 @@ services:
     networks:
       - zoneblog_app
       - proxy_app
+    stop_grace_period: 60s
     deploy:
       resources:
         limits:
           cpus: '4.0'
           memory: 4G
       update_config:
-        order: start-first
+        order: stop-first
+        delay: 20s
 
   zoneblog-db:
     image: hub.aiursoft.cn/mysql
@@ -905,13 +936,15 @@ services:
     networks:
       - yuyuyuyublog_app
       - proxy_app
+    stop_grace_period: 60s
     deploy:
       resources:
         limits:
           cpus: '4.0'
           memory: 4G
       update_config:
-        order: start-first
+        order: stop-first
+        delay: 20s
 
   yuyuyuyublog-db:
     image: hub.aiursoft.cn/mysql
@@ -924,13 +957,15 @@ services:
       - MYSQL_PASSWORD=<yuyuyuyublog_password>
     networks:
       - yuyuyuyublog_app
+    stop_grace_period: 60s
     deploy:
       resources:
         limits:
           cpus: '4.0'
           memory: 4G
-    
-        
+      update_config:
+        order: stop-first
+        delay: 20s
 
 networks:
   proxy_app:

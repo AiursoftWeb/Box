@@ -19,10 +19,15 @@ services:
         protocol: tcp
         mode: host
       # 8123 will by proxy by Caddy.
+    stop_grace_period: 60s
     deploy:
       resources:
         limits:
-          memory: 14336M
+          cpus: '16.0'
+          memory: 32G
+      update_config:
+        order: stop-first
+        delay: 20s
 
 volumes:
   world:

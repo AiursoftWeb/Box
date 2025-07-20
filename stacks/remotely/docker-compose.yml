@@ -13,7 +13,15 @@ services:
       - ASPNETCORE_HTTP_PORTS=5000
       - Remotely_ApplicationOptions__DbProvider=SQLite
       - Remotely_ConnectionStrings__SQLite=Data Source=/app/AppData/Remotely.db
+    stop_grace_period: 60s
     deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8G
+      update_config:
+        order: stop-first
+        delay: 20s
 
 volumes:
   remotely-data:

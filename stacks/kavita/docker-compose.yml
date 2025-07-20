@@ -12,8 +12,15 @@ services:
       - proxy_app
     environment:
       - TZ=UTC
+    stop_grace_period: 60s
     deploy:
-    
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+      update_config:
+        order: stop-first
+        delay: 20s
 
 networks:
   proxy_app:

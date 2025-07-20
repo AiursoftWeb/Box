@@ -20,6 +20,7 @@ services:
     networks:
       - proxy_app
       - internal
+    stop_grace_period: 60s
     deploy:
       resources:
         limits:
@@ -27,6 +28,7 @@ services:
           memory: 8G
       update_config:
         order: start-first
+        delay: 20s
 
   db:
     image: hub.aiursoft.cn/mysql

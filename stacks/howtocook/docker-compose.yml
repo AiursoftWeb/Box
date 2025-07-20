@@ -5,6 +5,7 @@ services:
     image: hub.aiursoft.cn/ghcr.io/anduin2017/how-to-cook
     networks:
       - proxy_app
+    stop_grace_period: 60s
     deploy:
       replicas: 3
       resources:
@@ -13,7 +14,7 @@ services:
           memory: 4G
       update_config:
         order: start-first
-    
+        delay: 20s
 
 networks:
   proxy_app:

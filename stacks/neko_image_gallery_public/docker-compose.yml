@@ -6,8 +6,16 @@ services:
     #image: edgeneko/nekoimagegallery.app # Avoid using mirror because this app updates very frequently
     networks:
       - proxy_app
+    stop_grace_period: 60s
     deploy:
       replicas: 2
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+      update_config:
+        order: start-first
+        delay: 20s
 
   server:
     image: hub.aiursoft.cn/edgeneko/neko-image-gallery:edge-cpu
@@ -30,11 +38,15 @@ services:
       - source: neko-image-gallery-admin-token
         target: app_admin_token
     # runtime: nvidia
+    stop_grace_period: 60s
     deploy:
       resources:
         limits:
           cpus: '4.0'
           memory: 8G
+      update_config:
+        order: stop-first
+        delay: 20s
     
       # resources:
       #   reservations:

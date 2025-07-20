@@ -10,6 +10,15 @@ services:
     networks:
       - proxy_app
       - internal
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+      update_config:
+        order: stop-first
+        delay: 20s
 
   webapp:
     image: hub.aiursoft.cn/edgeneko/nekoimagegallery.app
@@ -19,8 +28,15 @@ services:
     networks:
       - proxy_app
       - internal
+    stop_grace_period: 60s
     deploy:
-      replicas: 2
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+      update_config:
+        order: stop-first
+        delay: 20s
 
   server:
     image: hub.aiursoft.cn/edgeneko/neko-image-gallery:edge-cpu
@@ -43,6 +59,7 @@ services:
       - source: neko-image-gallery-admin-token
         target: app_admin_token
     # runtime: nvidia
+    stop_grace_period: 60s
     deploy:
       resources:
         # reservations:
@@ -53,7 +70,9 @@ services:
         limits:
           cpus: '8.0'
           memory: 8G
-    
+      update_config:
+        order: start-first
+        delay: 20s
     command: ["--root-path", "/api"]
 
   qdrant_database:

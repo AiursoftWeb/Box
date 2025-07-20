@@ -5,13 +5,29 @@ services:
     image: hub.aiursoft.cn/aiursoft/internalimages/apt-mirror
     volumes:
       - apt-mirror-data:/var/spool/apt-mirror
+    stop_grace_period: 60s
     deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8G
+      update_config:
+        order: stop-first
+        delay: 20s
 
   arm-downloader:
     image: hub.aiursoft.cn/aiursoft/internalimages/apt-arm-mirror
     volumes:
       - arm-apt-mirror-data:/var/spool/apt-mirror
+    stop_grace_period: 60s
     deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8G
+      update_config:
+        order: stop-first
+        delay: 20s
 
   web_apt:
     depends_on:
@@ -21,7 +37,15 @@ services:
       - apt-mirror-data:/data
     networks:
       - proxy_app
+    stop_grace_period: 60s
     deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8G
+      update_config:
+        order: stop-first
+        delay: 20s
     
     entrypoint: ["sh", "-c", "/app/static --port 5000 --path /data/mirror/archive.ubuntu.com --allow-directory-browsing"]
 
@@ -33,8 +57,15 @@ services:
       - apt-mirror-data:/data
     networks:
       - proxy_app
+    stop_grace_period: 60s
     deploy:
-    
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8G
+      update_config:
+        order: stop-first
+        delay: 20s
     entrypoint: ["sh", "-c", "/app/static --port 5000 --path /data/mirror/ppa.launchpad.net --allow-directory-browsing"]
 
   web_arm:
@@ -45,8 +76,15 @@ services:
       - arm-apt-mirror-data:/data
     networks:
       - proxy_app
+    stop_grace_period: 60s
     deploy:
-    
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8G
+      update_config:
+        order: stop-first
+        delay: 20s
     entrypoint: ["sh", "-c", "/app/static --port 5000 --path /data/mirror/ports.ubuntu.com --allow-directory-browsing"]
 
   web_immortal:
@@ -55,8 +93,15 @@ services:
       - immortal-data:/data
     networks:
       - proxy_app
+    stop_grace_period: 60s
     deploy:
-    
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8G
+      update_config:
+        order: stop-first
+        delay: 20s
     entrypoint: ["sh", "-c", "/app/static --port 5000 --path /data --mirror https://downloads.immortalwrt.org/ --cache-mirror"]
 
 volumes:

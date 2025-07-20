@@ -14,6 +14,7 @@ services:
       - OLLAMA_KV_CACHE_TYPE=q8_0
       - OLLAMA_SCHED_SPREAD=1
       - GIN_MODE=release
+    stop_grace_period: 60s
     deploy:
       resources:
         limits:
@@ -28,6 +29,9 @@ services:
                 kind: "NVIDIA-GPU"
                 value: 1
       replicas: 1
+      update_config:
+        order: stop-first
+        delay: 20s
       restart_policy:
         condition: any
         delay: 5s
@@ -49,11 +53,15 @@ services:
             curl -v http://ollama-server:11434/api/generate -d '{"model": "qwen3:32b"}'; \
             sleep 900; \
           done
+    stop_grace_period: 60s
     deploy:
       resources:
         limits:
           cpus: '1.0'
-          memory: 128M
+          memory: 1G
+      update_config:
+        order: stop-first
+        delay: 20s
 
   ollama-gateway-db:
     image: hub.aiursoft.cn/mysql
@@ -106,6 +114,7 @@ services:
     networks:
       - internal
       - proxy_app
+    stop_grace_period: 60s
     deploy:
       resources:
         limits:
@@ -113,6 +122,7 @@ services:
           memory: 4G
       update_config:
         order: start-first
+        delay: 20s
 
   code-runner:
     image: hub.aiursoft.cn/aiursoft/cpprunner
@@ -122,6 +132,7 @@ services:
       - /tmp:/tmp
     networks:
       - internal
+    stop_grace_period: 60s
     deploy:
       replicas: 2
       resources:
@@ -130,6 +141,7 @@ services:
           memory: 4G
       update_config:
         order: start-first
+        delay: 20s
 
   mcpo:
     depends_on:
@@ -139,12 +151,15 @@ services:
       - internal
     volumes:
       - mcpo-data:/data
+    stop_grace_period: 60s
     deploy:
       resources:
         limits:
           cpus: '6.0'
           memory: 6G
-    
+      update_config:
+        order: start-first
+        delay: 20s
     entrypoint: ["mcpo", "--config", "/data/config.json"]
 
   open-webui:
@@ -182,12 +197,15 @@ services:
     networks:
       - proxy_app
       - internal
+    stop_grace_period: 60s
     deploy:
       resources:
         limits:
           cpus: '6.0'
           memory: 6G
-    
+      update_config:
+        order: stop-first
+        delay: 20s
 
 networks:
   internal:

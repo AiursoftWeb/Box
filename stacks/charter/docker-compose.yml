@@ -10,12 +10,29 @@ services:
       AUTHENTIK_TOKEN: "{{CHARTER_OUTPOST_TOKEN}}"
     networks:
       - proxy_app
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+      update_config:
+        order: stop-first
+        delay: 20s
 
   app:
     image: hub.aiursoft.cn/aiursoft/charter
     networks:
       - proxy_app
+    stop_grace_period: 60s
     deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+      update_config:
+        order: start-first
+        delay: 20s
     
 
 networks:
