@@ -9,6 +9,15 @@ services:
       - default_target_lang=zh
     networks:
       - proxy_app
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+      update_config:
+        order: start-first
+        delay: 20s
 
 networks:
   proxy_app:

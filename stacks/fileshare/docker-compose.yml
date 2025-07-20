@@ -7,8 +7,17 @@ services:
       AUTHENTIK_HOST: "https://auth.aiursoft.cn/"
       AUTHENTIK_INSECURE: "false"
       AUTHENTIK_TOKEN: "{{FILESHARE_OUTPOST_TOKEN}}"
+    stop_grace_period: 60s
     networks:
       - proxy_app
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+      update_config:
+        order: stop-first
+        delay: 20s
 
   mediabrowser:
     image: hub.aiursoft.cn/filebrowser/filebrowser
@@ -21,6 +30,7 @@ services:
       - FB_NOAUTH=true
     networks:
       - proxy_app
+    stop_grace_period: 60s
     healthcheck:
       test: ["CMD", "true"]
       interval: 10s

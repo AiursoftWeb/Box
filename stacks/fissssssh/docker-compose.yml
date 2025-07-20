@@ -5,6 +5,7 @@ services:
     image: hub.aiursoft.cn/fissssssh/fissssssh.gitlab.io
     networks:
       - proxy_app
+    stop_grace_period: 60s
     deploy:
       replicas: 2
       resources:
@@ -13,6 +14,7 @@ services:
           memory: 1G
       update_config:
         order: start-first
+        delay: 20s
 
 networks:
   proxy_app:

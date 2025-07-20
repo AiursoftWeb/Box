@@ -34,13 +34,15 @@ services:
     networks:
       - internal
       - proxy_app
+    stop_grace_period: 60s
     deploy:
       resources:
         limits:
           cpus: '8.0'
           memory: 12G
       update_config:
-        order: start-first
+        order: stop-first
+        delay: 20s
 
   immich-machine-learning:
     depends_on:
@@ -56,13 +58,15 @@ services:
       - DB_PASSWORD=immich_db_password
     networks:
       - internal
+    stop_grace_period: 60s
     deploy:
       resources:
         limits:
           cpus: '8.0'
           memory: 12G
       update_config:
-        order: start-first
+        order: stop-first
+        delay: 20s
 
   redis:
     image: hub.aiursoft.cn/valkey/valkey:8-bookworm
@@ -80,6 +84,7 @@ services:
           memory: 8G
       update_config:
         order: start-first
+        delay: 20s
 
   database:
     image: hub.aiursoft.cn/ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0
@@ -127,11 +132,20 @@ services:
     # -s <name;/path>;browsable(yes);readonly(no);guestok(yes);users(all);admins(none);writelist(none);comment(string)
     #command: "-p -n -u 'USER;PASSWORD' -w 'WORKGROUP' -S -s 'media;/mount;yes;no;no;all;none;none;Media Share;force user = nobody;force group = nogroup;force create mode = 0666;force directory mode = 0777'"
     command: "-p -n -u 'USER;PASSWORD' -w 'WORKGROUP' -S -s 'media;/mount;yes;no;no;all;none;none;Media Share;create mask = 0777;directory mask = 0777;force user = nobody;force group = nogroup;force create mode = 0666;force directory mode = 0777'"
+    stop_grace_period: 60s
     healthcheck:
       test: ["CMD", "smbclient", "-L", "//localhost", "-U", "USER%PASSWORD"]
       interval: 30s
       timeout: 10s
       retries: 3
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+      update_config:
+        order: stop-first
+        delay: 20s
 
 networks:
   internal:

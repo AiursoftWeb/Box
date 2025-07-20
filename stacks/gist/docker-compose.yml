@@ -14,7 +14,15 @@ services:
       - 'OG_OIDC_DISCOVERY_URL=https://auth.aiursoft.cn/application/o/opengist/.well-known/openid-configuration'
       - OG_OIDC_GROUP_CLAIM_NAME=groups
       - OG_OIDC_ADMIN_GROUP=gist-admins
+    stop_grace_period: 60s
     deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+      update_config:
+        order: stop-first
+        delay: 20s
 
 volumes:
   gist-data:

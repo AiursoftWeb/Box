@@ -25,6 +25,7 @@ services:
       - TAGLIST_PAGE_SIZE=100
       - REGISTRY_SECURED=false
       - CATALOG_ELEMENTS_LIMIT=1000
+    stop_grace_period: 60s
     deploy:
       resources:
         limits:
@@ -32,6 +33,7 @@ services:
           memory: 1G
       update_config:
         order: start-first
+        delay: 20s
 
   registry-server:
     image: registry
@@ -46,13 +48,15 @@ services:
       REGISTRY_HTTP_HEADERS_Access-Control-Allow-Headers: '[Authorization,Accept,Cache-Control]'
       REGISTRY_HTTP_HEADERS_Access-Control-Expose-Headers: '[Docker-Content-Digest]'
       REGISTRY_STORAGE_DELETE_ENABLED: 'true'
+    stop_grace_period: 60s
     deploy:
       resources:
         limits:
           cpus: '1.0'
           memory: 1G
       update_config:
-        order: start-first
+        order: stop-first
+        delay: 20s
 
   # registry-cleaner:
   #   depends_on:

@@ -60,6 +60,7 @@ services:
           memory: 4G
       update_config:
         order: stop-first
+        delay: 20s
 
   server:
     depends_on:
@@ -84,13 +85,15 @@ services:
       - authentik_pg_pass
       - authentik_secret_key
     command: server
+    stop_grace_period: 60s
     deploy:
       resources:
         limits:
           cpus: '4.0'
           memory: 8G
       update_config:
-        order: start-first
+        order: stop-first
+        delay: 20s
 
   worker:
     depends_on:
@@ -122,6 +125,7 @@ services:
       - authentik_pg_pass
       - authentik_secret_key
     command: worker
+    stop_grace_period: 60s
     deploy:
       resources:
         limits:
@@ -129,6 +133,7 @@ services:
           memory: 4G
       update_config:
         order: stop-first
+        delay: 20s
     
 
 networks:

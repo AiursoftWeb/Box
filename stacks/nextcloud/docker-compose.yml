@@ -26,13 +26,15 @@ services:
       - PHP_UPLOAD_LIMIT=1G
       - PHP_OPCACHE_ENABLE=1
       - PHP_OPCACHE_MEMORY_CONSUMPTION=1024
+    stop_grace_period: 60s
     deploy:
       resources:
         limits:
           memory: 16384M
           cpus: '16.0'
       update_config:
-        order: start-first
+        order: stop-first
+        delay: 20s
 
   nextcloud-jobrunner:
     depends_on:
@@ -79,13 +81,15 @@ services:
           date;
           sleep 300;
         done
+    stop_grace_period: 60s
     deploy:
       resources:
         limits:
           cpus: '1.0'
           memory: 1G
       update_config:
-        order: start-first
+        order: stop-first
+        delay: 20s
 
   nextclouddb:
     image: hub.aiursoft.cn/mysql

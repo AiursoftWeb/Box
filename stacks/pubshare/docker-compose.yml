@@ -7,8 +7,15 @@ services:
       - pub-data:/data
     networks:
       - proxy_app
+    stop_grace_period: 60s
     deploy:
-    
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+      update_config:
+        order: stop-first
+        delay: 20s
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:5000/"]
       interval: 10s

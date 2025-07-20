@@ -52,6 +52,7 @@ services:
     deploy:
       resources:
         limits:
+          cpus: '16.0'
           memory: 32G
       update_config:
         order: stop-first
@@ -80,12 +81,16 @@ services:
       # Don't have to add the runner_with_dind network here, because this service only registers new runners. And job runner will be in the runner_with_dind network.
     secrets:
       - gitlab-runner-token
+    stop_grace_period: 60s
     deploy:
       resources:
         limits:
           cpus: '10.0'
           memory: 16G
       replicas: 6
+      update_config:
+        order: start-first
+        delay: 20s
 
 volumes:
   gitlab-data:

@@ -7,9 +7,18 @@ services:
       AUTHENTIK_HOST: "https://auth.aiursoft.cn/"
       AUTHENTIK_INSECURE: "false"
       AUTHENTIK_TOKEN: "{{KOEL_OUTPOST_TOKEN}}"
+    stop_grace_period: 60s
     networks:
       - proxy_app
       - internal
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+      update_config:
+        order: stop-first
+        delay: 20s
 
   koel:
     image: hub.aiursoft.cn/phanan/koel
@@ -32,13 +41,15 @@ services:
     networks:
       - internal
       - proxy_app
+    stop_grace_period: 60s
     deploy:
       resources:
         limits:
           cpus: '8.0'
           memory: 12G
       update_config:
-        order: start-first
+        order: stop-first
+        delay: 20s
 
   koel-db:
     image: hub.aiursoft.cn/mysql

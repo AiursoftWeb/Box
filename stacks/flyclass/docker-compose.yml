@@ -7,6 +7,7 @@ services:
       - flyclass-data:/data
     networks:
       - proxy_app
+    stop_grace_period: 60s
     deploy:
       resources:
         limits:
