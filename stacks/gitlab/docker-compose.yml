@@ -58,7 +58,8 @@ services:
         delay: 20s
 
   # Before starting, run:
-  # sudo docker run -it --name dind --privileged -e "DOCKER_TLS_CERTDIR=" --network runner_with_dind docker:dind
+  # sudo mkdir /swarm-vol/dind
+  # sudo docker run -it --name dind --privileged -e "DOCKER_TLS_CERTDIR=" --network runner_with_dind -v /swarm-vol/dind:/var/lib/docker docker:dind
   # That will start a Docker-in-Docker container that can be used by the GitLab Runner. Expose tcp://dind:2375
   runner_register:
     depends_on:
