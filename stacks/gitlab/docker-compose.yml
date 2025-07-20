@@ -11,7 +11,7 @@ services:
     networks:
       - frp_net
       - proxy_app
-      - internal
+      - internal # Communicate with the runner registration service.
       - runner_with_dind # So the job runner can access it.
     volumes:
       - gitlab-data:/var/opt/gitlab
@@ -70,7 +70,7 @@ services:
     environment:
       # Use public endpoint so the jobrunner can access GitLab.
       # The actual jobrunner will not use the internal endpoint.
-      - GITLAB_ENDPOINT=https://gitlab.aiursoft.cn
+      - GITLAB_ENDPOINT=http://gitlab
       - JOB_DOCKER_TO_USE_SOCKET=tcp://dind:2375
       - JOB_CONTAINER_IN_NETWORK=runner_with_dind
       - JOB_CONTAINER_IMAGE=hub.aiursoft.cn/aiursoft/internalimages/jobrunner:latest
