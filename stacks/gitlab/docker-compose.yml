@@ -58,7 +58,7 @@ services:
         delay: 20s
 
   # Before starting, run:
-  # sudo docker run -it --name dind-rootless -e "DOCKER_TLS_CERTDIR=" --network runner_with_dind docker:dind
+  # sudo docker run -it --name dind --privileged -e "DOCKER_TLS_CERTDIR=" --network runner_with_dind docker:dind
   # That will start a Docker-in-Docker container that can be used by the GitLab Runner. Expose tcp://dind:2375
   runner:
     depends_on:
