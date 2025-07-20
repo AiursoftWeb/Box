@@ -12,6 +12,7 @@ services:
       - frp_net
       - proxy_app
       - internal
+      - runner_with_dind # So the job runner can access it.
     volumes:
       - gitlab-data:/var/opt/gitlab
       - gitlab-log:/var/log/gitlab
@@ -64,15 +65,16 @@ services:
       - gitlab
       - dind
     image: hub.aiursoft.cn/aiursoft/internalimages/runner
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
     environment:
       # Use public endpoint so the jobrunner can access GitLab.
       # The actual jobrunner will not use the internal endpoint.
-      GITLAB_ENDPOINT: https://gitlab.aiursoft.cn
-      DOCKER_HOST: tcp://dind:2375
-      DOCKER_TLS_CERTDIR: ""
+      - GITLAB_ENDPOINT=https://gitlab.aiursoft.cn
+      - JOB_DOCKER_TO_USE_SOCKET=tcp://dind:2375
+      - JOB_CONTAINER_IN_NETWORK=runner_with_dind
     networks:
-      - proxy_app
-      - runner_with_dind
+      - internal # So it can access the GitLab API service.
     secrets:
       - gitlab-runner-token
     deploy:
