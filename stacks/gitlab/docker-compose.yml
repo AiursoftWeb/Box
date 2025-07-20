@@ -60,7 +60,7 @@ services:
   # Before starting, run:
   # sudo docker run -it --name dind --privileged -e "DOCKER_TLS_CERTDIR=" --network runner_with_dind docker:dind
   # That will start a Docker-in-Docker container that can be used by the GitLab Runner. Expose tcp://dind:2375
-  runner:
+  runner_register:
     depends_on:
       - gitlab
       - dind
@@ -73,8 +73,10 @@ services:
       - GITLAB_ENDPOINT=https://gitlab.aiursoft.cn
       - JOB_DOCKER_TO_USE_SOCKET=tcp://dind:2375
       - JOB_CONTAINER_IN_NETWORK=runner_with_dind
+      - JOB_CONTAINER_IMAGE=hub.aiursoft.cn/aiursoft/internalimages/jobrunner:latest
     networks:
       - internal # So it can access the GitLab API service.
+      # Don't have to add the runner_with_dind network here, because this service only registers new runners. And job runner will be in the runner_with_dind network.
     secrets:
       - gitlab-runner-token
     deploy:
