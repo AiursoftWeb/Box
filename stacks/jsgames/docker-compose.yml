@@ -5,7 +5,7 @@ services:
     image: hub.aiursoft.cn/anduin/gameoflife
     networks:
       - proxy_app
-    stop_grace_period: 60s
+    stop_grace_period: 20s
     deploy:
       resources:
         limits:
@@ -13,13 +13,13 @@ services:
           memory: 2G
       update_config:
         order: start-first
-        delay: 20s
+        delay: 5s
 
   game2048:
     image: hub.aiursoft.cn/anduin/2048
     networks:
       - proxy_app
-    stop_grace_period: 60s
+    stop_grace_period: 20s
     deploy:
       resources:
         limits:
@@ -27,13 +27,13 @@ services:
           memory: 2G
       update_config:
         order: start-first
-        delay: 20s
+        delay: 5s
 
   hextris:
     image: hub.aiursoft.cn/anduin/hextris
     networks:
       - proxy_app
-    stop_grace_period: 60s
+    stop_grace_period: 20s
     deploy:
       resources:
         limits:
@@ -41,13 +41,13 @@ services:
           memory: 2G
       update_config:
         order: start-first
-        delay: 20s
+        delay: 5s
 
   cat:
     image: hub.aiursoft.cn/anduin/phaser-catch-the-cat
     networks:
       - proxy_app
-    stop_grace_period: 60s
+    stop_grace_period: 20s
     deploy:
       resources:
         limits:
@@ -55,13 +55,13 @@ services:
           memory: 2G
       update_config:
         order: start-first
-        delay: 20s
+        delay: 5s
 
   three:
     image: hub.aiursoft.cn/anduin/threebody
     networks:
       - proxy_app
-    stop_grace_period: 60s
+    stop_grace_period: 20s
     deploy:
       resources:
         limits:
@@ -69,13 +69,13 @@ services:
           memory: 2G
       update_config:
         order: start-first
-        delay: 20s
+        delay: 5s
 
   life:
     image: hub.aiursoft.cn/anduin/liferestart
     networks:
       - proxy_app
-    stop_grace_period: 60s
+    stop_grace_period: 20s
     deploy:
       resources:
         limits:
@@ -83,13 +83,13 @@ services:
           memory: 2G
       update_config:
         order: start-first
-        delay: 20s
+        delay: 5s
 
   miku:
     image: hub.aiursoft.cn/indexyz/mikutap
     networks:
       - proxy_app
-    stop_grace_period: 60s
+    stop_grace_period: 20s
     deploy:
       resources:
         limits:
@@ -97,13 +97,13 @@ services:
           memory: 2G
       update_config:
         order: start-first
-        delay: 20s
+        delay: 5s
 
   minesweeper:
     image: hub.aiursoft.cn/anduin/minesweeper
     networks:
       - proxy_app
-    stop_grace_period: 60s
+    stop_grace_period: 20s
     deploy:
       resources:
         limits:
@@ -111,13 +111,13 @@ services:
           memory: 2G
       update_config:
         order: start-first
-        delay: 20s
+        delay: 5s
 
   oi:
     image: hub.aiursoft.cn/anduin/oi-wiki
     networks:
       - proxy_app
-    stop_grace_period: 60s
+    stop_grace_period: 20s
     deploy:
       resources:
         limits:
@@ -125,13 +125,13 @@ services:
           memory: 2G
       update_config:
         order: start-first
-        delay: 20s
+        delay: 5s
 
   ctf:
     image: hub.aiursoft.cn/anduin/ctf-wiki:latest
     networks:
       - proxy_app
-    stop_grace_period: 60s
+    stop_grace_period: 20s
     deploy:
       resources:
         limits:
@@ -139,13 +139,13 @@ services:
           memory: 2G
       update_config:
         order: start-first
-        delay: 20s
+        delay: 5s
 
   ipcalc:
     image: hub.aiursoft.cn/anduin/ipcalc:latest
     networks:
       - proxy_app
-    stop_grace_period: 60s
+    stop_grace_period: 20s
     deploy:
       resources:
         limits:
@@ -153,7 +153,7 @@ services:
           memory: 2G
       update_config:
         order: start-first
-        delay: 20s
+        delay: 5s
 
 networks:
   proxy_app:

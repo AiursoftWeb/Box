@@ -29,7 +29,7 @@ services:
           memory: 4G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
   
   anduin-db:
     image: hub.aiursoft.cn/mysql
@@ -56,7 +56,7 @@ services:
           memory: 8G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
     
       
   jimmoen:
@@ -87,7 +87,7 @@ services:
           memory: 4G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
 
   jimmoen-db:
     image: hub.aiursoft.cn/mysql
@@ -114,7 +114,7 @@ services:
           memory: 8G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
 
   rest:
     depends_on:
@@ -144,7 +144,7 @@ services:
           memory: 4G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
 
   rest-db:
     image: hub.aiursoft.cn/mysql
@@ -171,7 +171,7 @@ services:
           memory: 8G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
     
         
   cody:
@@ -202,7 +202,7 @@ services:
           memory: 4G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
 
   cody-db:
     image: hub.aiursoft.cn/mysql
@@ -229,7 +229,7 @@ services:
           memory: 8G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
 
   gxhao:
     depends_on:
@@ -259,7 +259,7 @@ services:
           memory: 4G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
 
   gxhao-db:
     image: hub.aiursoft.cn/mysql
@@ -286,7 +286,7 @@ services:
           memory: 8G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
 
   anois:
     depends_on:
@@ -316,7 +316,7 @@ services:
           memory: 4G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
 
   anois-db:
     image: hub.aiursoft.cn/mysql
@@ -343,7 +343,7 @@ services:
           memory: 8G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
 
   dvorak:
     depends_on:
@@ -373,7 +373,7 @@ services:
           memory: 4G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
 
   dvorak-db:
     image: hub.aiursoft.cn/mysql
@@ -400,7 +400,7 @@ services:
           memory: 8G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
 
   kitlau:
     depends_on:
@@ -430,7 +430,7 @@ services:
           memory: 4G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
 
   kitlau-db:
     image: hub.aiursoft.cn/mysql
@@ -457,7 +457,7 @@ services:
           memory: 8G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
 
   xinboo:
     depends_on:
@@ -487,7 +487,7 @@ services:
           memory: 4G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
 
   xinboo-db:
     image: hub.aiursoft.cn/mysql
@@ -514,7 +514,7 @@ services:
           memory: 8G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
 
   gbiner:
     depends_on:
@@ -544,7 +544,7 @@ services:
           memory: 4G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
 
   gbiner-db:
     image: hub.aiursoft.cn/mysql
@@ -571,7 +571,7 @@ services:
           memory: 8G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
 
   rdf:
     depends_on:
@@ -601,7 +601,7 @@ services:
           memory: 4G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
 
   rdf-db:
     image: hub.aiursoft.cn/mysql
@@ -628,7 +628,7 @@ services:
           memory: 8G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
 
   lyx:
     depends_on:
@@ -658,7 +658,7 @@ services:
           memory: 4G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
 
   lyx-db:
     image: hub.aiursoft.cn/mysql
@@ -685,7 +685,7 @@ services:
           memory: 8G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
 
   shubuzuo:
     depends_on:
@@ -715,7 +715,7 @@ services:
           memory: 4G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
 
   shubuzuo-db:
     image: hub.aiursoft.cn/mysql
@@ -742,7 +742,7 @@ services:
           memory: 8G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
 
   lily:
     depends_on:
@@ -772,7 +772,7 @@ services:
           memory: 4G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
 
   lily-db:
     image: hub.aiursoft.cn/mysql
@@ -799,7 +799,7 @@ services:
           memory: 8G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
 
   carson:
     depends_on:
@@ -829,7 +829,7 @@ services:
           memory: 4G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
 
   carson-db:
     image: hub.aiursoft.cn/mysql
@@ -856,7 +856,7 @@ services:
           memory: 8G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
 
   zoneblog:
     depends_on:
@@ -886,7 +886,7 @@ services:
           memory: 4G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
 
   zoneblog-db:
     image: hub.aiursoft.cn/mysql
@@ -913,7 +913,7 @@ services:
           memory: 8G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
     
       
   yuyuyuyublog:
@@ -944,7 +944,7 @@ services:
           memory: 4G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
 
   yuyuyuyublog-db:
     image: hub.aiursoft.cn/mysql
@@ -965,7 +965,7 @@ services:
           memory: 4G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
 
 networks:
   proxy_app:

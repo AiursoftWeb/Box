@@ -7,7 +7,7 @@ services:
       - proxy_app
     volumes:
       - kiwix-data:/data
-    stop_grace_period: 60s
+    stop_grace_period: 20s
     deploy:
       replicas: 2
       resources:
@@ -16,7 +16,7 @@ services:
           memory: 2G
       update_config:
         order: start-first
-        delay: 20s
+        delay: 5s
 
 volumes:
   kiwix-data:

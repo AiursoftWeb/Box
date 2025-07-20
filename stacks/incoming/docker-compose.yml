@@ -26,7 +26,7 @@ services:
           memory: 16G
       update_config:
         order: stop-first
-        delay: 10s
+        delay: 60s
     # Do NOT auto redeploy this. Because this is built locally.
     # Every time we run the deploy.sh will update the image.
     # During incidents, we may need to manually ssh into the server and restart the service.
@@ -48,7 +48,7 @@ services:
           memory: 8G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
     # Do NOT auto redeploy this. Because this is built locally.
     # Every time we run the deploy.sh will update the image.
     # During incidents, we may need to manually ssh into the server and restart the service.
@@ -70,7 +70,7 @@ services:
           memory: 8G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
     # Do NOT auto redeploy this. Because this is built locally.
     # Every time we run the deploy.sh will update the image.
     # During incidents, we may need to manually ssh into the server and restart the service.

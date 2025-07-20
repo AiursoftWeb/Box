@@ -19,10 +19,10 @@ services:
       resources:
         limits:
           cpus: '8.0'
-          memory: 4096M
+          memory: 16G
       update_config:
         order: stop-first
-        delay: 20s
+        delay: 60s
 
 volumes:
   gitea-data:

@@ -11,7 +11,7 @@ services:
     secrets:
       - source: xray-uuid
         target: user_id
-    stop_grace_period: 60s
+    stop_grace_period: 20s
     deploy:
       resources:
         limits:
@@ -19,7 +19,7 @@ services:
           memory: 4G
       update_config:
         order: start-first
-        delay: 20s
+        delay: 5s
 
 networks:
   proxy_app:

@@ -10,15 +10,15 @@ services:
     networks:
       - proxy_app
       - internal
-    stop_grace_period: 60s
+    stop_grace_period: 20s
     deploy:
       resources:
         limits:
           cpus: '2.0'
           memory: 2G
       update_config:
-        order: stop-first
-        delay: 20s
+        order: start-first
+        delay: 5s
 
   webapp:
     image: hub.aiursoft.cn/edgeneko/nekoimagegallery.app
@@ -28,15 +28,15 @@ services:
     networks:
       - proxy_app
       - internal
-    stop_grace_period: 60s
+    stop_grace_period: 20s
     deploy:
       resources:
         limits:
           cpus: '2.0'
           memory: 2G
       update_config:
-        order: stop-first
-        delay: 20s
+        order: start-first
+        delay: 5s
 
   server:
     image: hub.aiursoft.cn/edgeneko/neko-image-gallery:edge-cpu
