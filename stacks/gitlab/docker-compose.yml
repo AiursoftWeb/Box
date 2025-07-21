@@ -92,6 +92,37 @@ services:
         order: start-first
         delay: 5s
 
+
+  group_runner_register:
+    depends_on:
+      - gitlab
+      - dind
+    image: hub.aiursoft.cn/aiursoft/internalimages/runner
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      # Use public endpoint so the jobrunner can access GitLab.
+      # The actual jobrunner will not use the internal endpoint.
+      - GITLAB_ENDPOINT=http://gitlab
+      - JOB_DOCKER_TO_USE_SOCKET=tcp://dind:2375
+      - JOB_CONTAINER_IN_NETWORK=runner_with_dind
+      - JOB_CONTAINER_IMAGE=hub.aiursoft.cn/aiursoft/internalimages/jobrunner:latest
+    networks:
+      - internal # So it can access the GitLab API service.
+      # Don't have to add the runner_with_dind network here, because this service only registers new runners. And job runner will be in the runner_with_dind network.
+    secrets:
+      - gitlab-runner-token-for-group
+    stop_grace_period: 20s
+    deploy:
+      resources:
+        limits:
+          cpus: '10.0'
+          memory: 16G
+      replicas: 6
+      update_config:
+        order: start-first
+        delay: 5s
+
 volumes:
   gitlab-data:
     driver: local
@@ -130,4 +161,6 @@ networks:
 
 secrets:
   gitlab-runner-token:
+    external: true
+  gitlab-runner-token-for-group:
     external: true
