@@ -12,7 +12,7 @@ services:
       - frp_net
       - proxy_app
       - internal # Communicate with the runner registration service.
-      - runner_with_dind # So the job runner can access it.
+      - job_runner # Communicate with the job runner.
     volumes:
       - gitlab-data:/var/opt/gitlab
       - gitlab-log:/var/log/gitlab
@@ -58,14 +58,9 @@ services:
         order: stop-first
         delay: 60s
 
-  # Before starting, run:
-  # sudo mkdir /swarm-vol/dind
-  # sudo docker run -it --name dind --privileged -e "DOCKER_TLS_CERTDIR=" --network runner_with_dind -v /swarm-vol/dind:/var/lib/docker docker:dind
-  # That will start a Docker-in-Docker container that can be used by the GitLab Runner. Expose tcp://dind:2375
   runner_register:
     depends_on:
       - gitlab
-      - dind
     image: hub.aiursoft.cn/aiursoft/internalimages/runner
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -73,12 +68,12 @@ services:
       # Use public endpoint so the jobrunner can access GitLab.
       # The actual jobrunner will not use the internal endpoint.
       - GITLAB_ENDPOINT=http://gitlab
-      - JOB_DOCKER_TO_USE_SOCKET=tcp://dind:2375
-      - JOB_CONTAINER_IN_NETWORK=runner_with_dind
+      - JOB_DOCKER_TO_USE_SOCKET=/var/run/docker.sock
+      - JOB_CONTAINER_IN_NETWORK=job_runner
       - JOB_CONTAINER_IMAGE=hub.aiursoft.cn/aiursoft/internalimages/jobrunner:latest
     networks:
       - internal # So it can access the GitLab API service.
-      # Don't have to add the runner_with_dind network here, because this service only registers new runners. And job runner will be in the runner_with_dind network.
+      # Don't have to add the job_runner network here, because this service only registers new runners. And job runner will be in the job_runner network.
     secrets:
       - gitlab-runner-token
     stop_grace_period: 20s
@@ -92,11 +87,9 @@ services:
         order: start-first
         delay: 5s
 
-
   group_runner_register:
     depends_on:
       - gitlab
-      - dind
     image: hub.aiursoft.cn/aiursoft/internalimages/runner
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -104,12 +97,12 @@ services:
       # Use public endpoint so the jobrunner can access GitLab.
       # The actual jobrunner will not use the internal endpoint.
       - GITLAB_ENDPOINT=http://gitlab
-      - JOB_DOCKER_TO_USE_SOCKET=tcp://dind:2375
-      - JOB_CONTAINER_IN_NETWORK=runner_with_dind
+      - JOB_DOCKER_TO_USE_SOCKET=/var/run/docker.sock
+      - JOB_CONTAINER_IN_NETWORK=job_runner
       - JOB_CONTAINER_IMAGE=hub.aiursoft.cn/aiursoft/internalimages/jobrunner:latest
     networks:
       - internal # So it can access the GitLab API service.
-      # Don't have to add the runner_with_dind network here, because this service only registers new runners. And job runner will be in the runner_with_dind network.
+      # Don't have to add the job_runner network here, because this service only registers new runners. And job runner will be in the job_runner network.
     secrets:
       - source: gitlab-runner-token-for-group
         target: gitlab-runner-token
@@ -157,7 +150,7 @@ networks:
     external: true
   internal:
     driver: overlay
-  runner_with_dind:
+  job_runner:
     external: true
 
 secrets:

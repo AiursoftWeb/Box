@@ -224,20 +224,6 @@ for network in $external_networks; do
   subnet_third_octet=$((subnet_third_octet + 1))
 done
 
-echo "Creating a dind container..."
-if ! sudo docker ps -a --format '{{.Names}}' | grep -q '^dind$'; then
-  #sudo docker run -d --name dind --privileged -e "DOCKER_TLS_CERTDIR=" --network runner_with_dind -v /swarm-vol/dind:/var/lib/docker docker:dind
-  sudo docker run -d --name dind \
-    --privileged \
-    -e DOCKER_TLS_CERTDIR="" \
-    --network runner_with_dind \
-    --restart unless-stopped \
-    -v /swarm-vol/dind:/var/lib/docker \
-    hub.aiursoft.cn/docker:dind
-else
-  echo "Dind container already exists. Skipping creation."
-fi
-
 echo "Creating data folders..."
 find . -name 'docker-compose.yml' | while read file; do
   awk '{if(/device:/) print $2}' "$file" | while read -r path; do
