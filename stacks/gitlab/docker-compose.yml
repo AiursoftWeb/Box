@@ -11,8 +11,7 @@ services:
     networks:
       - frp_net
       - proxy_app
-      - internal # Communicate with the runner registration service.
-      - job_runner # Communicate with the job runner.
+      - internal
     volumes:
       - gitlab-data:/var/opt/gitlab
       - gitlab-log:/var/log/gitlab
@@ -68,12 +67,8 @@ services:
       # Use public endpoint so the jobrunner can access GitLab.
       # The actual jobrunner will not use the internal endpoint.
       - GITLAB_ENDPOINT=http://gitlab
-      - JOB_DOCKER_TO_USE_SOCKET=/var/run/docker.sock
-      - JOB_CONTAINER_IN_NETWORK=job_runner
-      - JOB_CONTAINER_IMAGE=hub.aiursoft.cn/aiursoft/internalimages/jobrunner:latest
     networks:
-      - internal # So it can access the GitLab API service.
-      # Don't have to add the job_runner network here, because this service only registers new runners. And job runner will be in the job_runner network.
+      - internal
     secrets:
       - gitlab-runner-token
     stop_grace_period: 20s
@@ -94,15 +89,9 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
-      # Use public endpoint so the jobrunner can access GitLab.
-      # The actual jobrunner will not use the internal endpoint.
       - GITLAB_ENDPOINT=http://gitlab
-      - JOB_DOCKER_TO_USE_SOCKET=/var/run/docker.sock
-      - JOB_CONTAINER_IN_NETWORK=job_runner
-      - JOB_CONTAINER_IMAGE=hub.aiursoft.cn/aiursoft/internalimages/jobrunner:latest
     networks:
-      - internal # So it can access the GitLab API service.
-      # Don't have to add the job_runner network here, because this service only registers new runners. And job runner will be in the job_runner network.
+      - internal
     secrets:
       - source: gitlab-runner-token-for-group
         target: gitlab-runner-token
@@ -150,8 +139,6 @@ networks:
     external: true
   internal:
     driver: overlay
-  job_runner:
-    external: true
 
 secrets:
   gitlab-runner-token:
