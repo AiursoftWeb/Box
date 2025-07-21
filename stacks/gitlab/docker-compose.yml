@@ -111,7 +111,8 @@ services:
       - internal # So it can access the GitLab API service.
       # Don't have to add the runner_with_dind network here, because this service only registers new runners. And job runner will be in the runner_with_dind network.
     secrets:
-      - gitlab-runner-token-for-group
+      - source: gitlab-runner-token-for-group
+        target: gitlab-runner-token
     stop_grace_period: 20s
     deploy:
       resources:
