@@ -90,16 +90,20 @@ services:
         "
         EOF
         chmod +x /usr/local/bin/update_tasks.sh
-        # Every 5 minutes, run the update_tasks.sh script
-        echo "*/5 * * * * /usr/local/bin/update_tasks.sh" > /etc/cron.d/vikunja-update-tasks
-        # Give execution rights on the cron job
+        echo "*/3 * * * * /usr/local/bin/update_tasks.sh" > /etc/cron.d/vikunja-update-tasks
         chmod 0644 /etc/cron.d/vikunja-update-tasks
-        # Create the log file to be able to tail it
-        touch /var/log/cron.log
-        # Start cron service
-        cron && tail -f /var/log/cron.log
+        cron -f -L 15
     networks:
       - internal
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+      update_config:
+        order: stop-first
+        delay: 60s
 
 networks:
   proxy_app:
