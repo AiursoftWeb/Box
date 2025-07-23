@@ -58,15 +58,14 @@ services:
         delay: 60s
 
   cron:
-    image: hub.aiursoft.cn/alpine
+    image: hub.aiursoft.cn/aiursoft/internalimages/ubuntu
     depends_on:
       - db
     command:
-      - sh
+      - bash
       - -c
       - |
-        apk update
-        apk add -U mysql-client busybox-suid
+        apt-get update && apt-get install -y mysql-client cron
         mkdir -p /usr/local/bin
         cat <<'EOF' > /usr/local/bin/update_tasks.sh
         #!/bin/sh
@@ -91,8 +90,10 @@ services:
         "
         EOF
         chmod +x /usr/local/bin/update_tasks.sh
-        echo "*/3 * * * * /usr/local/bin/update_tasks.sh" > /etc/crontabs/root
-        crond -f -L /dev/stdout
+        # Every 5 minutes, run the update_tasks.sh script
+        echo "*/5 * * * * /usr/local/bin/update_tasks.sh" > /etc/cron.d/vikunja-update-tasks
+        # Start cron service
+        cron && tail -f /var/log/cron.log
     networks:
       - internal
 
