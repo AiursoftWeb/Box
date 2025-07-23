@@ -69,7 +69,7 @@ services:
         mkdir -p /usr/local/bin
         cat <<'EOF' > /usr/local/bin/update_tasks.sh
         #!/bin/sh
-        mysql \
+        /usr/bin/mysql \
           -h "db" \
           -u "vikunja" \
           -p"vikunja_password" \
