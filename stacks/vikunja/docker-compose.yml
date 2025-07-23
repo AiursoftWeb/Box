@@ -70,7 +70,8 @@ services:
       - sh
       - -c
       - |
-        apk add --no‑cache mysql-client busybox-suid
+        apk update
+        apk add --no-cache mysql-client busybox-suid
         cat <<EOF > /etc/crontabs/root
         */3 * * * * mysql -h $DB_HOST -u$DB_USER -p$DB_PASS $DB_NAME -e "UPDATE tasks SET due_date = COALESCE(end_date, due_date), end_date = COALESCE(end_date, due_date), start_date = CASE WHEN start_date IS NULL THEN DATE_SUB(COALESCE(end_date, due_date), INTERVAL 3 DAY) ELSE start_date END WHERE repeat_after = 0 AND (due_date IS NOT NULL OR end_date IS NOT NULL);"
         EOF
