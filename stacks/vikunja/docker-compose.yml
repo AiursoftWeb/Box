@@ -90,8 +90,9 @@ services:
         "
         EOF
         chmod +x /usr/local/bin/update_tasks.sh
-        echo "*/3 * * * * /usr/local/bin/update_tasks.sh" > /etc/cron.d/vikunja-update-tasks
+        echo "*/3 * * * * root /usr/local/bin/update_tasks.sh >> /var/log/cron.log 2>&1" > /etc/cron.d/vikunja-update-tasks
         chmod 0644 /etc/cron.d/vikunja-update-tasks
+        touch /var/log/cron.log
         cron -f -L 15
     networks:
       - internal
