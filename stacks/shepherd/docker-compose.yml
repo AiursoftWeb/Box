@@ -2,15 +2,16 @@ version: '3.9'
 
 services:
   app:
-    image: hub.aiursoft.cn/containrrr/watchtower
+    image: hub.aiursoft.cn/containrrr/shepherd
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
-      - WATCHTOWER_POLL_INTERVAL=120
-      - WATCHTOWER_CLEANUP=true
-      - WATCHTOWER_INCLUDE_STOPPED=true
+      - REGISTRY_HOST=hub.aiursoft.cn
     stop_grace_period: 60s
     deploy:
+      placement:
+        constraints:
+          - node.role == manager
       resources:
         limits:
           cpus: '0.5'
