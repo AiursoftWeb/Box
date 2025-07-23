@@ -130,6 +130,8 @@ services:
       - code-runner-aspnet-data:/data/.aspnet
       - /var/run/docker.sock:/var/run/docker.sock
       - /tmp:/tmp
+    environment:
+      - DockerImageSettings__Prefix=hub.aiursoft.cn
     networks:
       - internal
     stop_grace_period: 20s
