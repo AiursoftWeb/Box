@@ -7,6 +7,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
       - REGISTRY_HOST=hub.aiursoft.cn
+      - TZ=UTC
     stop_grace_period: 60s
     deploy:
       placement:
