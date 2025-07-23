@@ -92,6 +92,10 @@ services:
         chmod +x /usr/local/bin/update_tasks.sh
         # Every 5 minutes, run the update_tasks.sh script
         echo "*/5 * * * * /usr/local/bin/update_tasks.sh" > /etc/cron.d/vikunja-update-tasks
+        # Give execution rights on the cron job
+        chmod 0644 /etc/cron.d/vikunja-update-tasks
+        # Create the log file to be able to tail it
+        touch /var/log/cron.log
         # Start cron service
         cron && tail -f /var/log/cron.log
     networks:
