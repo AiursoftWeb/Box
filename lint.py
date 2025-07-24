@@ -73,12 +73,6 @@ def process_file(path: str):
             print("    ❌ 配置不符合规范：")
             for e in errs:
                 print(f"      - {e}")
-        else:
-            print("    ✅ 配置符合规范")
-
-    if not has_error:
-        print("  🎉 所有服务配置均符合规范")
-
 
 def main(root='.'):
     for dirpath, _, filenames in os.walk(root):
