@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   peertube:
-    image: hub.aiursoft.cn/chocobozzz/peertube
+    image: hub.aiursoft.cn/chocobozzz/peertube:production-bookworm
     environment:
       - POSTGRES_USER=<POSTGRES_USER>
       - POSTGRES_PASSWORD=<POSTGRES_PASSWORD>
