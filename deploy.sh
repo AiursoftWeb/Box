@@ -332,8 +332,8 @@ sudo docker build ./images/frp      -t localhost:8080/box_starting/local_frp:lat
 sudo docker push localhost:8080/box_starting/local_frp:latest
 sudo docker build ./images/sites    -t localhost:8080/box_starting/local_sites:latest
 sudo docker push localhost:8080/box_starting/local_sites:latest
-sudo docker build ./images/vector    -t localhost:8080/box_starting/local_vector:latest
-sudo docker push localhost:8080/box_starting/local_vector:latest
+sudo docker build ./images/pysyncer    -t localhost:8080/box_starting/local_pysyncer:latest
+sudo docker push localhost:8080/box_starting/local_pysyncer:latest
 
 echo "Starting incoming proxy..."
 deploy stacks/incoming/docker-compose.yml incoming # 8080

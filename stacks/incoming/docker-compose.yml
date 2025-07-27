@@ -65,11 +65,8 @@ services:
         order: stop-first
         delay: 60s
 
-  vector:
-    build:
-      context: .
-      dockerfile: Dockerfile.vector
-    image: localhost:8080/box_starting/local_vector
+  pysyncer:
+    image: localhost:8080/box_starting/local_pysyncer
     depends_on:
       - clickhouse
     networks:
@@ -78,10 +75,10 @@ services:
     volumes:
       # 不能直接写：
       #- /data/caddy/logs:/var/log/caddy:ro
-      # 因为 /data/caddy/logs 是 sites 容器的目录，而 vector 容器是和 sites 容器分开的。
+      # 因为 /data/caddy/logs 是 sites 容器的目录，而 pysyncer 容器是和 sites 容器分开的。
       # 和 sites 的穿透方法一样，路径也完全一样，这样最终阅读的目录就变成了： /data/caddy/logs/web.log
       - sites-data:/data:ro
-      - vector-data:/state
+      - pysyncer-data:/state
     stop_grace_period: 60s
     deploy:
       resources:
@@ -149,12 +146,12 @@ volumes:
       type: none
       o: bind
       device: /swarm-vol/sites-click-house-data
-  vector-data:
+  pysyncer-data:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /swarm-vol/vector-data
+      device: /swarm-vol/pysyncer-data
 
 networks:
   frp_net:
