@@ -1,0 +1,36 @@
+version: '3.9'
+
+services:
+  clickhouse:
+    image: hub.aiursoft.cn/clickhouse/clickhouse-server:latest
+    environment:
+      - CLICKHOUSE_USER=default
+      - CLICKHOUSE_PASSWORD=123456
+    networks:
+      - proxy_app
+      - clickhouse_net
+    volumes:
+      - click-house-data:/var/lib/clickhouse
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8G
+      update_config:
+        order: stop-first
+        delay: 60s
+
+networks:
+  clickhouse_net:
+    external: true
+  proxy_app:
+    external: true
+
+volumes:
+  click-house-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/click-house/db-data

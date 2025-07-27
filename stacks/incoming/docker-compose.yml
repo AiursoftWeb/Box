@@ -31,32 +31,12 @@ services:
     # Every time we run the deploy.sh will update the image.
     # During incidents, we may need to manually ssh into the server and restart the service.
 
-  clickhouse:
-    image: hub.aiursoft.cn/clickhouse/clickhouse-server:latest
-    environment:
-      - CLICKHOUSE_USER=default
-      - CLICKHOUSE_PASSWORD=123456
-    networks:
-      - internal
-      - proxy_app
-    volumes:
-      - click-house-data:/var/lib/clickhouse
-    stop_grace_period: 60s
-    deploy:
-      resources:
-        limits:
-          cpus: '4.0'
-          memory: 8G
-      update_config:
-        order: stop-first
-        delay: 60s
-
   pysyncer:
     image: localhost:8080/box_starting/local_pysyncer
     depends_on:
       - clickhouse
     networks:
-      - internal
+      - clickhouse_net
     volumes:
       - sites-data:/data:ro
     stop_grace_period: 60s
@@ -120,20 +100,14 @@ volumes:
       type: none
       o: bind
       device: /swarm-vol/sites-data
-  click-house-data:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /swarm-vol/sites-click-house-data
 
 networks:
   frp_net:
     external: true
   proxy_app:
     external: true
-  internal:
-    driver: overlay
+  clickhouse_net:
+    external: true
 
 secrets:
   frp-token:
