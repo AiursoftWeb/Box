@@ -31,6 +31,37 @@ services:
     # Every time we run the deploy.sh will update the image.
     # During incidents, we may need to manually ssh into the server and restart the service.
 
+  clickhouse:
+    image: hub.aiursoft.cn/clickhouse/clickhouse-server:latest
+    # 暂时为了调试方便，先暴露出来。毕竟最终它只是一个数据库。
+    # 等完全搭好了，就不用暴露了。而是只给 superset 访问。
+    ports:
+      - target: 8123
+        published: 8123
+        protocol: tcp
+        mode: host
+      - target: 9000
+        published: 9000
+        protocol: tcp
+        mode: host
+    networks:
+    # 暂时为了调试方便，先把它加入到 frp_net 和 proxy_app 网络。
+    # 等完全搭好了，就只给 superset 访问。
+    # 这里应该不是必需的。
+      - frp_net
+      - proxy_app
+    volumes:
+      - click-house-data:/var/lib/clickhouse
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8G
+      update_config:
+        order: stop-first
+        delay: 60s
+
   frpc_ningbo:
     image: localhost:8080/box_starting/local_frp
     networks:
@@ -82,6 +113,12 @@ volumes:
       type: none
       o: bind
       device: /swarm-vol/sites-data
+  click-house-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/sites-click-house-data
 
 networks:
   frp_net:
