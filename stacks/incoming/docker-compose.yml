@@ -38,6 +38,7 @@ services:
       - CLICKHOUSE_PASSWORD=123456
     networks:
       - internal
+      - proxy_app
     volumes:
       - click-house-data:/var/lib/clickhouse
     stop_grace_period: 60s
