@@ -10,11 +10,11 @@ fingerprint.strategy = "device_and_inode"
 [transforms.parse]
 type   = "remap"
 inputs = ["caddy"]
+condition = '.logger == "http.log.access" || .logger == "http.log.error"'
 source = '''
 structured = parse_json!(.message)
-
 . = {
-  "ts":           to_timestamp!(structured.ts),
+  "ts":           structured.ts,
   "level":        structured.level,
   "logger":       structured.logger,
   "msg":          structured.msg,
