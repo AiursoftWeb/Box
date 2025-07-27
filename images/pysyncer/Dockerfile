@@ -1,23 +1,20 @@
 # ===========================
 # Build/Runtime in one stage
 # ===========================
-FROM python:3.12-slim
+FROM localhost:8080/box_starting/local_ubuntu 
 
 ENV PYTHONUNBUFFERED=1 \
     PIP_NO_CACHE_DIR=1
 
 # 必要包：clickhouse-connect 做写入；tzdata 提供时区；watchdog/uvloop 可选
 RUN apt-get update && apt-get install -y --no-install-recommends \
-        curl ca-certificates tzdata \
+        curl ca-certificates tzdata python3 python-is-python3 python3-pip \
     && rm -rf /var/lib/apt/lists/*
 
 RUN pip install clickhouse-connect==0.7.19 uvloop==0.20.0 watchdog==4.0.1
 
 WORKDIR /app
 COPY main.py /app/main.py
-
-# state 目录保存 offset
-VOLUME ["/state"]
 
 # 默认环境变量（可在 compose/Swarm 覆盖）
 ENV LOG_FILE=/data/caddy/logs/web.log \
