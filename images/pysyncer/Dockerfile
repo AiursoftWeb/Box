@@ -10,6 +10,7 @@ ENV PYTHONUNBUFFERED=1 \
 # 必要包：clickhouse-connect 做写入；tzdata 提供时区；watchdog/uvloop 可选
 RUN apt-get update && apt-get install -y --no-install-recommends \
         curl ca-certificates tzdata python3 python-is-python3 python3-pip \
+        build-essential python3-dev \
     && rm -rf /var/lib/apt/lists/*
 
 RUN pip install clickhouse-connect==0.7.19 uvloop==0.20.0 watchdog==4.0.1
