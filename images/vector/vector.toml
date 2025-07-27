@@ -14,7 +14,7 @@ source = '''
 structured = parse_json!(.message)
 
 . = {
-  "ts":           structured.ts,
+  "ts":           to_timestamp!(structured.ts),
   "level":        structured.level,
   "logger":       structured.logger,
   "msg":          structured.msg,
