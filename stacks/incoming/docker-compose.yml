@@ -76,7 +76,7 @@ services:
       - internal
       - proxy_app
     environment:
-      - VITE_CLICKHOUSE_URL=http://clickhouse:8123
+      - VITE_CLICKHOUSE_URL=https://clickhouse.aiursoft.cn
       - VITE_CLICKHOUSE_USER=default
       - VITE_CLICKHOUSE_PASS=123456
     stop_grace_period: 60s
