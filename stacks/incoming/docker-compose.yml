@@ -62,6 +62,32 @@ services:
         order: stop-first
         delay: 60s
 
+  vector:
+    build:
+      context: .
+      dockerfile: Dockerfile.vector
+    image: localhost:8080/box_starting/local_vector
+    depends_on:
+      - clickhouse
+    networks:
+      - frp_net
+      - proxy_app
+    volumes:
+      # 不能直接写：
+      #- /data/caddy/logs:/var/log/caddy:ro
+      # 因为 /data/caddy/logs 是 sites 容器的目录，而 vector 容器是和 sites 容器分开的。
+      # 和 sites 的穿透方法一样，路径也完全一样，这样最终阅读的目录就变成了： /data/caddy/logs/web.log
+      - sites-data:/data:ro
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+      update_config:
+        order: stop-first
+        delay: 60s
+
   frpc_ningbo:
     image: localhost:8080/box_starting/local_frp
     networks:
