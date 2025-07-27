@@ -13,8 +13,5 @@ COPY vector.toml /etc/vector/vector.toml
 # 2. 创建日志目录挂载点（可选）
 RUN mkdir -p /data/caddy/logs/web.log
 
-# 3. 确保权限
-RUN chown -R vector:vector /etc/vector /data/caddy/logs
-
 # 启动时，Vector 会自动加载 /etc/vector/vector.toml
 ENTRYPOINT ["vector", "-c", "/etc/vector/vector.toml"]
