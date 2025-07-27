@@ -12,11 +12,8 @@ type = "remap"
 inputs = ["caddy"]
 source = '''
 structured = parse_json!(.message)
-
-ts_iso = to_string!(to_timestamp!(structured.ts))
-
 . = {
-  ts:            ts_iso,
+  ts =           to_string!(structured.ts),
   level:         structured.level,
   logger:        structured.logger,
   msg:           structured.msg,
