@@ -35,14 +35,20 @@ del(.message)
 ############################################
 # 3) Sink: 写入 ClickHouse
 [sinks.clickhouse]
-type = "clickhouse"
-inputs = ["parse"]
-endpoint = "http://clickhouse:8123"
-compression = "gzip"
-database = "logs"
-table = "caddy_requests"
+type            = "clickhouse"
+inputs          = ["parse"]
+endpoint        = "http://clickhouse:8123"
+compression     = "gzip"
+database        = "logs"
+table           = "caddy_requests"
+
+# Basic auth 跟你 docker-compose 里 CLICKHOUSE_USER/PASSWORD 保持一致
 auth.strategy   = "basic"
 auth.user       = "default"
 auth.password   = "123456"
+
 batch.max_events = 1000
+
+# —— 把 timeout_secs 移到 request 子表 —— 
+[sinks.clickhouse.request]
 timeout_secs = 30
