@@ -33,26 +33,11 @@ services:
 
   clickhouse:
     image: hub.aiursoft.cn/clickhouse/clickhouse-server:latest
-    # 暂时为了调试方便，先暴露出来。毕竟最终它只是一个数据库。
-    # 等完全搭好了，就不用暴露了。而是只给 superset 访问。
     environment:
       - CLICKHOUSE_USER=default
       - CLICKHOUSE_PASSWORD=123456
-    ports:
-      - target: 8123
-        published: 8123
-        protocol: tcp
-        mode: host
-      - target: 9000
-        published: 9000
-        protocol: tcp
-        mode: host
     networks:
-    # 暂时为了调试方便，先把它加入到 frp_net 和 proxy_app 网络。
-    # 等完全搭好了，就只给 superset 访问。
-    # 这里应该不是必需的。
-      - frp_net
-      - proxy_app
+      - internal
     volumes:
       - click-house-data:/var/lib/clickhouse
     stop_grace_period: 60s
@@ -70,15 +55,9 @@ services:
     depends_on:
       - clickhouse
     networks:
-      - frp_net
-      - proxy_app
+      - internal
     volumes:
-      # 不能直接写：
-      #- /data/caddy/logs:/var/log/caddy:ro
-      # 因为 /data/caddy/logs 是 sites 容器的目录，而 pysyncer 容器是和 sites 容器分开的。
-      # 和 sites 的穿透方法一样，路径也完全一样，这样最终阅读的目录就变成了： /data/caddy/logs/web.log
       - sites-data:/data:ro
-      - pysyncer-data:/state
     stop_grace_period: 60s
     deploy:
       resources:
@@ -158,6 +137,8 @@ networks:
     external: true
   proxy_app:
     external: true
+  internal:
+    driver: overlay
 
 secrets:
   frp-token:
