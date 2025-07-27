@@ -125,12 +125,6 @@ volumes:
       type: none
       o: bind
       device: /swarm-vol/sites-click-house-data
-  pysyncer-data:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /swarm-vol/pysyncer-data
 
 networks:
   frp_net:
