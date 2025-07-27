@@ -13,21 +13,21 @@ inputs = ["caddy"]
 source = '''
 structured = parse_json!(.message)
 . = {
-  ts:           parse_timestamp!(structured.ts),
-  level:        structured.level,
-  logger:       structured.logger,
-  msg:          structured.msg,
-  remote_ip:    structured.request.remote_ip,
-  remote_port:  to_int(structured.request.remote_port),
-  method:       structured.request.method,
-  host:         structured.request.host,
-  uri:          structured.request.uri,
-  status:       to_int(structured.status),
-  duration_ms:  to_float(structured.duration) * 1000.0,
-  bytes_sent:   to_int(structured.size),
-  user_agent:   coalesce(structured.request.headers."User-Agent"[0], ""),
-  err_id:       coalesce(structured.err_id, ""),
-  err_trace:    coalesce(structured.err_trace, "")
+  "ts":           structured.ts,
+  "level":        structured.level,
+  "logger":       structured.logger,
+  "msg":          structured.msg,
+  "remote_ip":    structured.request.remote_ip,
+  "remote_port":  to_int(structured.request.remote_port),
+  "method":       structured.request.method,
+  "host":         structured.request.host,
+  "uri":          structured.request.uri,
+  "status":       to_int(structured.status),
+  "duration_ms":  to_float(structured.duration) * 1000.0,
+  "bytes_sent":   to_int(structured.size),
+  "user_agent":   coalesce(structured.request.headers["User-Agent"][0], ""),
+  "err_id":       coalesce(structured.err_id, ""),
+  "err_trace":    coalesce(structured.err_trace, "")
 }
 del(.message)
 '''
