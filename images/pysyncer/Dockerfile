@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         build-essential python3-dev \
     && rm -rf /var/lib/apt/lists/*
 
-RUN pip install clickhouse-connect==0.7.19 uvloop==0.20.0 watchdog==4.0.1
+RUN pip install clickhouse-connect==0.8.18 uvloop==0.21.0 watchdog==6.0.0
 
 WORKDIR /app
 COPY main.py /app/main.py
