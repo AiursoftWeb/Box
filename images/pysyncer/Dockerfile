@@ -4,7 +4,8 @@
 FROM localhost:8080/box_starting/local_ubuntu 
 
 ENV PYTHONUNBUFFERED=1 \
-    PIP_NO_CACHE_DIR=1
+    PIP_NO_CACHE_DIR=1 \
+    PIP_BREAK_SYSTEM_PACKAGES=1
 
 # 必要包：clickhouse-connect 做写入；tzdata 提供时区；watchdog/uvloop 可选
 RUN apt-get update && apt-get install -y --no-install-recommends \
