@@ -1,6 +1,24 @@
 version: '3.9'
 
 services:
+  authentik_proxy:
+    image: hub.aiursoft.cn/ghcr.io/goauthentik/proxy:2025.6
+    environment:
+      AUTHENTIK_HOST: "https://auth.aiursoft.cn/"
+      AUTHENTIK_INSECURE: "false"
+      AUTHENTIK_TOKEN: "{{CLICKHOUSE_OUTPOST_TOKEN}}"
+    stop_grace_period: 20s
+    networks:
+      - proxy_app
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+      update_config:
+        order: start-first
+        delay: 5s
+
   clickhouse:
     image: hub.aiursoft.cn/clickhouse/clickhouse-server:latest
     environment:
