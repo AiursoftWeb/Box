@@ -6,9 +6,6 @@
 
 FROM timberio/vector:latest-alpine
 
-# 切换到 root，把配置和依赖都复制进来
-USER root
-
 # 1. 复制主配置
 #    请在同目录下准备好 vector.toml（见下方示例）
 COPY vector.toml /etc/vector/vector.toml
@@ -18,9 +15,6 @@ RUN mkdir -p /data/caddy/logs/web.log
 
 # 3. 确保权限
 RUN chown -R vector:vector /etc/vector /data/caddy/logs
-
-# 切回到非特权用户
-USER vector
 
 # 启动时，Vector 会自动加载 /etc/vector/vector.toml
 ENTRYPOINT ["vector", "-c", "/etc/vector/vector.toml"]
