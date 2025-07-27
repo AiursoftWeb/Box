@@ -25,9 +25,9 @@ structured = parse_json!(.message)
   "status":       to_int(structured.status),
   "duration_ms":  to_float(structured.duration) * 1000.0,
   "bytes_sent":   to_int(structured.size),
-  "user_agent":   coalesce(structured.request.headers."User-Agent"[0], ""),
-  "err_id":       structured.err_id ?? "",
-  "err_trace":    structured.err_trace ?? ""
+  "user_agent":   to_string(structured.request.headers."User-Agent"[0], ""),
+  "err_id":       to_string(structured.err_id),
+  "err_trace":    to_string(structured.err_trace)
 }
 del(.message)
 '''
