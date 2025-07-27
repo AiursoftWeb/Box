@@ -26,7 +26,7 @@ CH_DB = os.getenv('CLICKHOUSE_DATABASE', 'logs')
 CH_TABLE = os.getenv('CLICKHOUSE_TABLE', 'caddy_requests')
 BATCH_SIZE = int(os.getenv('BATCH_SIZE', '1000'))
 FLUSH_INTERVAL = float(os.getenv('FLUSH_INTERVAL_SEC', '2'))
-TZ = ZoneInfo(os.getenv('TZ', 'Asia/Singapore'))
+TZ = ZoneInfo(os.getenv('TZ', 'UTC'))
 
 # Columns in ClickHouse order
 COLUMNS = [
