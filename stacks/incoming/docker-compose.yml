@@ -69,27 +69,6 @@ services:
         order: stop-first
         delay: 60s
 
-  chui:
-    image: hub.aiursoft.cn/ghcr.io/caioricciuti/ch-ui:latest
-    depends_on:
-      - clickhouse
-    networks:
-      - internal
-      - proxy_app
-    environment:
-      - VITE_CLICKHOUSE_URL=https://clickhouse.aiursoft.cn
-      - VITE_CLICKHOUSE_USER=default
-      - VITE_CLICKHOUSE_PASS=123456
-    stop_grace_period: 60s
-    deploy:
-      resources:
-        limits:
-          cpus: '2.0'
-          memory: 4G
-      update_config:
-        order: stop-first
-        delay: 60s
-
   frpc_ningbo:
     image: localhost:8080/box_starting/local_frp
     networks:
