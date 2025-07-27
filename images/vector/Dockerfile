@@ -1,17 +1,33 @@
-# Dockerfile.vector
-#
-# 构建一个自带 vector.toml 配置的 Vector 镜像
-# 能够从 /var/log/caddy/log.json 中按行读取 JSON 日志，
-# 把每行 JSON 解析成字段，然后写入 ClickHouse。
+# ===========================
+# Build/Runtime in one stage
+# ===========================
+FROM python:3.12-slim
 
-FROM timberio/vector:latest-alpine
+ENV PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1
 
-# 1. 复制主配置
-#    请在同目录下准备好 vector.toml（见下方示例）
-COPY vector.toml /etc/vector/vector.toml
+# 必要包：clickhouse-connect 做写入；tzdata 提供时区；watchdog/uvloop 可选
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        curl ca-certificates tzdata \
+    && rm -rf /var/lib/apt/lists/*
 
-# 2. 创建日志目录挂载点（可选）
-RUN mkdir -p /data/caddy/logs/web.log
+RUN pip install clickhouse-connect==0.7.19 uvloop==0.20.0 watchdog==4.0.1
 
-# 启动时，Vector 会自动加载 /etc/vector/vector.toml
-ENTRYPOINT ["vector", "-c", "/etc/vector/vector.toml"]
+WORKDIR /app
+COPY main.py /app/main.py
+
+# state 目录保存 offset
+VOLUME ["/state"]
+
+# 默认环境变量（可在 compose/Swarm 覆盖）
+ENV LOG_FILE=/data/caddy/logs/web.log \
+    CLICKHOUSE_URL=http://clickhouse:8123 \
+    CLICKHOUSE_USER=default \
+    CLICKHOUSE_PASSWORD=123456 \
+    CLICKHOUSE_DATABASE=logs \
+    CLICKHOUSE_TABLE=caddy_requests \
+    BATCH_SIZE=1000 \
+    FLUSH_INTERVAL_SEC=2 \
+    TZ="UTC"
+
+CMD ["python", "/app/main.py"]

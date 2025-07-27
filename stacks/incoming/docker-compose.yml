@@ -81,6 +81,7 @@ services:
       # 因为 /data/caddy/logs 是 sites 容器的目录，而 vector 容器是和 sites 容器分开的。
       # 和 sites 的穿透方法一样，路径也完全一样，这样最终阅读的目录就变成了： /data/caddy/logs/web.log
       - sites-data:/data:ro
+      - vector-data:/state
     stop_grace_period: 60s
     deploy:
       resources:
@@ -148,6 +149,12 @@ volumes:
       type: none
       o: bind
       device: /swarm-vol/sites-click-house-data
+  vector-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/vector-data
 
 networks:
   frp_net:
