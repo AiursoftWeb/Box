@@ -13,7 +13,6 @@ inputs = ["caddy"]
 source = '''
 structured = parse_json!(.message)
 
-// Convert epoch seconds to a Timestamp, then to an ISO string
 ts_iso = to_string!(to_timestamp!(structured.ts))
 
 . = {
