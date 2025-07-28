@@ -31,6 +31,24 @@ services:
     # Every time we run the deploy.sh will update the image.
     # During incidents, we may need to manually ssh into the server and restart the service.
 
+  pysyncer:
+    image: localhost:8080/box_starting/local_pysyncer
+    depends_on:
+      - clickhouse
+    networks:
+      - clickhouse_net
+    volumes:
+      - sites-data:/data:ro
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+      update_config:
+        order: stop-first
+        delay: 60s
+
   frpc_ningbo:
     image: localhost:8080/box_starting/local_frp
     networks:
@@ -87,6 +105,8 @@ networks:
   frp_net:
     external: true
   proxy_app:
+    external: true
+  clickhouse_net:
     external: true
 
 secrets:
