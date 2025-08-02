@@ -120,11 +120,6 @@ services:
     environment:
       - WORKGROUP=WORKGROUP
     ports:
-      # These ports are for internal use. External request is not allowed.
-      - target: 139
-        published: 139
-        protocol: tcp
-        mode: host
       - target: 445
         published: 445
         protocol: tcp
