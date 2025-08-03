@@ -43,7 +43,7 @@ remotePort = 7777
 
 [[proxies]]
 name = "satisfactory_messaging"
-type = "udp"
+type = "tcp"
 localIP = "satisfactory_server"
 localPort = 8888
 remotePort = 8888
