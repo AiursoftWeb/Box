@@ -34,6 +34,8 @@ services:
         limits:
           cpus: '8'
           memory: 16G
+        reservations:
+          memory: 4G
       update_config:
         order: stop-first
         delay: 60s
