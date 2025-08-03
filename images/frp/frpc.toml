@@ -28,11 +28,25 @@ transport.proxyProtocolVersion = "v2"
 
 # Regular update to ensure safe.
 [[proxies]]
-name = "terraria_tcp"
+name = "satisfactory_tcp"
 type = "tcp"
 localIP = "satisfactory_server"
 localPort = 7777
 remotePort = 7777
+
+[[proxies]]
+name = "satisfactory_udp"
+type = "udp"
+localIP = "satisfactory_server"
+localPort = 7777
+remotePort = 7777
+
+[[proxies]]
+name = "satisfactory_messaging"
+type = "udp"
+localIP = "satisfactory_server"
+localPort = 8888
+remotePort = 8888
 
 # Regular update to ensure safe.
 [[proxies]]
