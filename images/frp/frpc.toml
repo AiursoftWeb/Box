@@ -30,7 +30,7 @@ transport.proxyProtocolVersion = "v2"
 [[proxies]]
 name = "terraria_tcp"
 type = "tcp"
-localIP = "terraria_server"
+localIP = "satisfactory_server"
 localPort = 7777
 remotePort = 7777
 
