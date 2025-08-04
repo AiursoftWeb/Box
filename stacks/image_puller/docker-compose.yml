@@ -4,10 +4,14 @@ services:
   downloader:
     image: hub.aiursoft.cn/aiursoft/internalimages/imagepuller
     environment:
+      - MIRROR_TARGET=registry.aiursoft.cn
       - DOCKER_USERNAME=anduin2019
+      - LOCAL_DOCKER_USERNAME=anduin@aiursoft.com
     secrets:
       - source: docker-key
         target: DOCKER_PASSWORD
+      - source: local-docker-key
+        target: LOCAL_DOCKER_PASSWORD
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     stop_grace_period: 20s
@@ -23,4 +27,6 @@ services:
 
 secrets:
   docker-key:
+    external: true
+  local-docker-key:
     external: true
