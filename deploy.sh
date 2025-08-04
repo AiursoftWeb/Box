@@ -219,8 +219,6 @@ while IFS= read -r file; do
   done < <(yq eval '.secrets | to_entries | .[] | select(.value.external == true) | .key' "$file")
 done < <(find ./stacks -name 'docker-compose.yml' -type f)
 
-exit 1;
-
 echo "Creating networks..."
 subnet_third_octet=233
 external_networks=$(find ./stacks -name 'docker-compose.yml' -type f | xargs yq eval '.networks | to_entries | .[] | select(.value.external == true) | .key' 2>/dev/null | sort | uniq)
