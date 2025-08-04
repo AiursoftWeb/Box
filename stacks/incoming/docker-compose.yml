@@ -33,8 +33,6 @@ services:
 
   pysyncer:
     image: localhost:8080/box_starting/local_pysyncer
-    depends_on:
-      - clickhouse
     networks:
       - clickhouse_net
     volumes:
