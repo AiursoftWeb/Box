@@ -113,11 +113,17 @@ function clean_up_docker() {
 
 function create_secret() {
     local secret_name=$1
-    local known_secrets=$(sudo docker secret ls --format '{{.Name}}')
-    if [[ $known_secrets != *"$secret_name"* ]]; then
-        echo "Please enter $secret_name secret"
-        read secret_value
-        echo $secret_value | sudo docker secret create $secret_name -
+    if ! sudo docker secret ls --format '{{.Name}}' | grep -Fxq "$secret_name"; then
+        local secret_value
+        if [ -t 0 ]; then
+          read -rs -p "Enter value for secret '$secret_name': " secret_value
+          echo
+        else
+          read -rs -p "Enter value for secret '$secret_name': " secret_value < /dev/tty
+          echo
+        fi
+
+        printf '%s' "$secret_value" | sudo docker secret create "$secret_name" -
     fi
 }
 
@@ -203,14 +209,16 @@ echo "Cleaning up docker (if no stack deployed)..."
 clean_up_docker
 
 echo "Creating secrets..."
-find ./stacks -name 'docker-compose.yml' -type f | while read -r file; do
-  yq eval '.secrets | to_entries | .[] | select(.value.external == true) | .key' "$file" | while read -r secret_name; do
+while IFS= read -r file; do
+  while IFS= read -r secret_name; do
     if [ -n "$secret_name" ]; then
       echo "Creating secret $secret_name..."
       create_secret "$secret_name"
     fi
-  done
-done
+  done < <(yq eval '.secrets | to_entries | .[] | select(.value.external == true) | .key' "$file")
+done < <(find ./stacks -name 'docker-compose.yml' -type f)
+
+exit 1;
 
 echo "Creating networks..."
 subnet_third_octet=233
