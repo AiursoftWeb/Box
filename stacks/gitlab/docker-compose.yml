@@ -42,6 +42,19 @@ services:
         prometheus_monitoring['enable'] = false
         sidekiq['metrics_enabled'] = false
         puma['exporter_enabled'] = false
+        registry_external_url 'https://registry.gitlab.aiursoft.cn'
+        gitlab_rails['registry_enabled'] = true
+        gitlab_rails['registry_host'] = "registry.gitlab.aiursoft.cn"
+        gitlab_rails['registry_port'] = "443"
+        gitlab_rails['registry_path'] = "/var/opt/gitlab/gitlab-rails/shared/registry"
+        registry['enable'] = true
+        registry['registry_http_addr'] = "0.0.0.0:5050"
+        registry['storage'] = {
+          'filesystem' => {
+            'rootdirectory' => "/var/opt/gitlab/gitlab-rails/shared/registry"
+          }
+        }
+        registry['storage_delete_enabled'] = true
     stop_grace_period: 60s
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:80"]
