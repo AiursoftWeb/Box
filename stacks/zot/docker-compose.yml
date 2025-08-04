@@ -5,6 +5,9 @@ version: '3.9'
 services:
   server:
     image: hub.aiursoft.cn/aiursoft/internalimages/zot:latest
+    volumes:
+      - zot-blob:/data
+      - zot-config:/config
     networks:
       - proxy_app
     stop_grace_period: 60s
@@ -18,12 +21,18 @@ services:
         delay: 60s
 
 volumes:
-  zot-data:
+  zot-blob:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /swarm-vol/zot-data
+      device: /swarm-vol/zot-data/blob
+  zot-config:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/zot-data/config
 
 networks:
   net:
