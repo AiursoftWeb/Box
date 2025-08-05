@@ -6,6 +6,12 @@ services:
       - registry-server
     image: joxit/docker-registry-ui:main
     ports:
+    # Although we write "127.0.0.1:8080:80", Docker Swarm converts it to a DNAT on 0.0.0.0:8080.
+    # Due to kernel DNAT behavior, external access fails while local access works.
+    # Tested with: Docker XX.X.X, Linux Kernel X.Y.Z
+    # Verified with: `iptables -t nat -L -n -v | grep 8080`
+    # Output might be:
+    #  204 12240 DNAT       6    --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:8080 to:172.18.0.2:8080
       - 127.0.0.1:8080:80
       # - target: 80
       #   published: 8080
