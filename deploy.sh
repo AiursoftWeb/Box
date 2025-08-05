@@ -347,8 +347,8 @@ deploy stage2/stacks/incoming/docker-compose.yml incoming # 8080
 
 echo "Make sure the caddy is ready..."
 sleep 5 # Could not trust result in the first few seconds, because the old registry might still be running
-while curl -s https://test.aiursoft.cn > /dev/null; [ $? -ne 0 ]; do
-    echo "Waiting for caddy (https://test.aiursoft.cn) to start... ETA: 25s"
+while curl -s http://test.aiursoft.cn > /dev/null; [ $? -ne 0 ]; do
+    echo "Waiting for caddy (http://test.aiursoft.cn) to start... ETA: 25s"
     sleep 1
 done
 
