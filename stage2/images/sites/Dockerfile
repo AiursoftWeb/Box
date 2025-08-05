@@ -1,6 +1,6 @@
 # ============================
 # Prepare caddy Environment
-FROM caddy:builder AS caddy-build-env
+FROM localhost:8080/public_mirror/caddy:builder AS caddy-build-env
 
 RUN xcaddy build \
     --with github.com/ueffel/caddy-brotli \
@@ -19,7 +19,7 @@ RUN /bin/bash /app/build_proxy.sh
 
 # ============================
 # Prepare Runtime Environment
-FROM caddy
+FROM localhost:8080/public_mirror/caddy:latest
 
 WORKDIR /app
 

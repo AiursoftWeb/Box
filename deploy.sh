@@ -218,11 +218,11 @@ while IFS= read -r file; do
       create_secret "$secret_name"
     fi
   done < <(yq eval '.secrets | to_entries | .[] | select(.value.external == true) | .key' "$file")
-done < <(find ./stacks -name 'docker-compose.yml' -type f)
+done < <(find ./stage* -name 'docker-compose.yml' -type f)
 
 echo "Creating networks..."
 subnet_third_octet=233
-external_networks=$(find ./stacks -name 'docker-compose.yml' -type f | xargs yq eval '.networks | to_entries | .[] | select(.value.external == true) | .key' 2>/dev/null | sort | uniq)
+external_networks=$(find ./stage* -name 'docker-compose.yml' -type f | xargs yq eval '.networks | to_entries | .[] | select(.value.external == true) | .key' 2>/dev/null | sort | uniq)
 for network in $external_networks; do
   if [ "$network" == "---" ]; then
     continue
@@ -295,16 +295,15 @@ fi
 # Nvidia GPU Part end
 #=============================
 
-
 #=============================
-# Stage 1: Registry
+# Stage 0: Start a simple registry
 #=============================
 echo "Starting registry..."
-deploy stage1/registry/docker-compose.yml registry # 8080
+deploy stage0/registry/docker-compose.yml registry # 8080
 
 echo "Blocking external access to the registry..."
-sudo iptables -t mangle -A PREROUTING ! -i lo -p tcp --dport 8080 -j DROP
-block_port 8080
+#sudo iptables -t mangle -A PREROUTING ! -i lo -p tcp --dport 8080 -j DROP
+#block_port 8080
 
 echo "Make sure the registry is ready..."
 sleep 15 # Could not trust result in the first few seconds, because the old registry might still be running
@@ -312,26 +311,35 @@ while curl -s http://localhost:8080/ > /dev/null; [ $? -ne 0 ]; do
     echo "Waiting for registry(http://localhost:8080/) to start..."
     sleep 1
 done
-#=============================
-# Stage 1 end
-#=============================
 
+#=============================
+# Stage 1: Mirror public some images
+#=============================
+echo "Mirroring public images..."
+bash ./stage1/mirror.sh
+
+#=============================
+# Stage 2: Build and start basic web infrastructure
+#=============================
 echo "Prebuild images..."
-rm -rf ./images/sites/discovered
-mkdir -p ./images/sites/discovered && cp ./stage4/**/*.conf ./images/sites/discovered
+rm -rf ./stage2/images/sites/discovered
+mkdir -p ./stage2/images/sites/discovered && \
+    cp ./stage3/**/*.conf ./stage2/images/sites/discovered && \
+    cp ./stage4/**/*.conf ./stage2/images/sites/discovered
 
 echo "Building images..."
-sudo docker build ./images/ubuntu   -t localhost:8080/box_starting/local_ubuntu:latest
+sudo docker build ./stage2/images/ubuntu   -t localhost:8080/box_starting/local_ubuntu:latest
 sudo docker push localhost:8080/box_starting/local_ubuntu:latest
-sudo docker build ./images/frp      -t localhost:8080/box_starting/local_frp:latest
+sudo docker build ./stage2/images/frp      -t localhost:8080/box_starting/local_frp:latest
 sudo docker push localhost:8080/box_starting/local_frp:latest
-sudo docker build ./images/sites    -t localhost:8080/box_starting/local_sites:latest
+sudo docker build ./stage2/images/sites    -t localhost:8080/box_starting/local_sites:latest
 sudo docker push localhost:8080/box_starting/local_sites:latest
-sudo docker build ./images/pysyncer    -t localhost:8080/box_starting/local_pysyncer:latest
+sudo docker build ./stage2/images/pysyncer    -t localhost:8080/box_starting/local_pysyncer:latest
 sudo docker push localhost:8080/box_starting/local_pysyncer:latest
 
 echo "Starting incoming proxy..."
-deploy stacks/incoming/docker-compose.yml incoming # 8080
+deploy stage2/stacks/incoming/docker-compose.yml incoming # 8080
+exit;
 
 echo "Make sure the registry is ready..."
 sleep 5 # Could not trust result in the first few seconds, because the old registry might still be running
@@ -339,6 +347,7 @@ while curl -s https://hub.aiursoft.cn > /dev/null; [ $? -ne 0 ]; do
     echo "Waiting for registry (https://hub.aiursoft.cn) to start... ETA: 25s"
     sleep 1
 done
+
 
 echo "Deploying business stacks..."
 serviceCount=$(sudo docker service ls --format '{{.Name}}' | wc -l | awk '{print $1}')

@@ -1,4 +1,4 @@
-FROM ubuntu:24.10
+FROM localhost/public_mirror/ubuntu:25.04
 
 COPY source.list /suggested.sources.list
 
