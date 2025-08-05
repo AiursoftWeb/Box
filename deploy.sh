@@ -74,17 +74,18 @@ function ensure_nvidia_gpu() {
     }
 }
 
-function better_performance() {
+better_performance() {
     # Avoid system sleep (If gsettings command exists)
-    if command -v gsettings &> /dev/null; then
-        echo "Avoid system sleep..."
+    if command -v gsettings &>/dev/null; then
+        echo "Disabling sleep via gsettings..."
         gsettings set org.gnome.desktop.session idle-delay 0 || true
         gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-type 'nothing' || true
         gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-battery-type 'nothing' || true
     fi
+
     sudo systemctl mask sleep.target suspend.target hibernate.target hybrid-sleep.target
 
-    # Tuning for better performance
+    echo "Applying runtime sysctl tweaks for performance..."
     sudo sysctl -w net.core.rmem_max=2500000
     sudo sysctl -w net.core.wmem_max=2500000
     sudo sysctl -w net.ipv4.tcp_congestion_control=bbr
@@ -93,9 +94,7 @@ function better_performance() {
     sudo sysctl -w fs.inotify.max_user_watches=524288
     sudo sysctl -w fs.inotify.max_queued_events=524288
     sudo sysctl -w fs.aio-max-nr=2097152
-    sudo sysctl -p
 
-    # Set timezone to UTC
     sudo timedatectl set-timezone UTC
 }
 
@@ -105,6 +104,7 @@ function clean_up_docker() {
     if [ $(sudo docker stack ls --format '{{.Name}}' | wc -l) -eq 0 ]; then
         echo "Seems running on a new cluster. Cleaning up docker..."
         sudo docker system prune -a --volumes -f
+        sudo docker network prune -f
         #sudo docker builder prune -f
     else
         echo "There are stacks already deployed and running. Skip cleaning."
@@ -203,6 +203,7 @@ ensure_packages_needed_ready
 echo "Ensure has Nvidia GPU and have installed..."
 ensure_nvidia_gpu
 
+# Tuning for better performance
 echo "Tuning for better performance..."
 better_performance
 
@@ -294,8 +295,12 @@ fi
 # Nvidia GPU Part end
 #=============================
 
+
+#=============================
+# Stage 1: Registry
+#=============================
 echo "Starting registry..."
-deploy stacks/registry/docker-compose.yml registry # 8080
+deploy stage1/registry/docker-compose.yml registry # 8080
 
 echo "Blocking external access to the registry..."
 sudo iptables -t mangle -A PREROUTING ! -i lo -p tcp --dport 8080 -j DROP
@@ -304,13 +309,16 @@ block_port 8080
 echo "Make sure the registry is ready..."
 sleep 15 # Could not trust result in the first few seconds, because the old registry might still be running
 while curl -s http://localhost:8080/ > /dev/null; [ $? -ne 0 ]; do
-    echo "Waiting for registry(http://localhost:8080) to start..."
+    echo "Waiting for registry(http://localhost:8080/) to start..."
     sleep 1
 done
+#=============================
+# Stage 1 end
+#=============================
 
 echo "Prebuild images..."
 rm -rf ./images/sites/discovered
-mkdir -p ./images/sites/discovered && cp ./stacks/**/*.conf ./images/sites/discovered
+mkdir -p ./images/sites/discovered && cp ./stage4/**/*.conf ./images/sites/discovered
 
 echo "Building images..."
 sudo docker build ./images/ubuntu   -t localhost:8080/box_starting/local_ubuntu:latest
@@ -334,7 +342,7 @@ done
 
 echo "Deploying business stacks..."
 serviceCount=$(sudo docker service ls --format '{{.Name}}' | wc -l | awk '{print $1}')
-find ./stacks -name 'docker-compose.yml' -print0 | while IFS= read -r -d '' file; do
+find ./stage4 -name 'docker-compose.yml' -print0 | while IFS= read -r -d '' file; do
     # Skip the registry and incoming stacks
     if [[ $file == *"registry"* ]]; then
         continue
