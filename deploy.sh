@@ -214,7 +214,11 @@ ensure_packages_needed_ready
 
 # Ensure has Nvidia GPU and have installed nvidia-container-toolkit and nvidia-docker2
 print_ok "Ensure has Nvidia GPU and have installed..."
-ensure_nvidia_gpu
+if [ -f /usr/bin/nvidia-smi ]; then
+    ensure_nvidia_gpu
+else
+    print_warn "Nvidia GPU not found. Skipping Nvidia GPU configuration. GPU pass-through will not be available."
+fi
 
 # Tuning for better performance
 print_ok "Tuning for better performance..."
@@ -255,29 +259,30 @@ done
 #=============================
 # Nvidia GPU Part
 #=============================
-print_ok "Configuring docker daemon for Nvidia GPU..."
-GPU_IDS=$(valgrind /usr/bin/nvidia-smi -a 2> /dev/null | grep "GPU UUID" | awk '{print substr($4,5,36)}')
-print_ok "Detected GPU UUIDs:"
-print_ok "$GPU_IDS"
-JSON_GPU_RESOURCES=""
-for ID in $GPU_IDS; do
-    JSON_GPU_RESOURCES+="\"NVIDIA-GPU=$ID\","
-done
-JSON_GPU_RESOURCES=${JSON_GPU_RESOURCES%,}  # 去掉最后一个逗号
+if [ -f /usr/bin/nvidia-smi ]; then
+  print_ok "Configuring docker daemon for Nvidia GPU..."
+  GPU_IDS=$(valgrind /usr/bin/nvidia-smi -a 2> /dev/null | grep "GPU UUID" | awk '{print substr($4,5,36)}')
+  print_ok "Detected GPU UUIDs:"
+  print_ok "$GPU_IDS"
+  JSON_GPU_RESOURCES=""
+  for ID in $GPU_IDS; do
+      JSON_GPU_RESOURCES+="\"NVIDIA-GPU=$ID\","
+  done
+  JSON_GPU_RESOURCES=${JSON_GPU_RESOURCES%,}  # 去掉最后一个逗号
 
-if [ -f /etc/docker/daemon.json ]; then
-    old_hash_daemon=$(sha256sum /etc/docker/daemon.json | awk '{print $1}')
-else
-    old_hash_daemon=""
-fi
+  if [ -f /etc/docker/daemon.json ]; then
+      old_hash_daemon=$(sha256sum /etc/docker/daemon.json | awk '{print $1}')
+  else
+      old_hash_daemon=""
+  fi
 
-if [ -f /etc/nvidia-container-runtime/config.toml ]; then
-    old_hash_nvidia=$(sha256sum /etc/nvidia-container-runtime/config.toml | awk '{print $1}')
-else
-    old_hash_nvidia=""
-fi
+  if [ -f /etc/nvidia-container-runtime/config.toml ]; then
+      old_hash_nvidia=$(sha256sum /etc/nvidia-container-runtime/config.toml | awk '{print $1}')
+  else
+      old_hash_nvidia=""
+  fi
 
-sudo tee /etc/docker/daemon.json > /dev/null <<EOF
+  sudo tee /etc/docker/daemon.json > /dev/null <<EOF
 {
   "runtimes": {
     "nvidia": {
@@ -294,15 +299,18 @@ sudo tee /etc/docker/daemon.json > /dev/null <<EOF
   ]
 }
 EOF
-sudo sed -i 's/#swarm-resource = "DOCKER_RESOURCE_GPU"/swarm-resource = "DOCKER_RESOURCE_GPU"/' /etc/nvidia-container-runtime/config.toml
+  sudo sed -i 's/#swarm-resource = "DOCKER_RESOURCE_GPU"/swarm-resource = "DOCKER_RESOURCE_GPU"/' /etc/nvidia-container-runtime/config.toml
 
-new_hash_daemon=$(sha256sum /etc/docker/daemon.json | awk '{print $1}')
-new_hash_nvidia=$(sha256sum /etc/nvidia-container-runtime/config.toml | awk '{print $1}')
-if [ "$old_hash_daemon" != "$new_hash_daemon" ] || [ "$old_hash_nvidia" != "$new_hash_nvidia" ]; then
-    print_warn "Configuration files changed. Restarting docker service..."
-    sudo systemctl restart docker.service
+  new_hash_daemon=$(sha256sum /etc/docker/daemon.json | awk '{print $1}')
+  new_hash_nvidia=$(sha256sum /etc/nvidia-container-runtime/config.toml | awk '{print $1}')
+  if [ "$old_hash_daemon" != "$new_hash_daemon" ] || [ "$old_hash_nvidia" != "$new_hash_nvidia" ]; then
+      print_warn "Configuration files changed. Restarting docker service..."
+      sudo systemctl restart docker.service
+  else
+      print_ok "Configuration files not changed."
+  fi
 else
-    print_ok "Configuration files not changed."
+  print_warn "Nvidia GPU not found. Skipping Nvidia GPU configuration. GPU pass-through will not be available."
 fi
 #=============================
 # Nvidia GPU Part end
