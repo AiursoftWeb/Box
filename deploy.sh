@@ -418,12 +418,17 @@ print_ok "Starting Authentik and Zot..."
 deploy stage3/stacks/authentik/docker-compose.yml authentik
 deploy stage3/stacks/zot/docker-compose.yml zot
 
-print_ok "Make sure the zot is ready..."
+print_ok "Making sure the zot is ready..."
 sleep 5 # Could not trust result in the first few seconds, because the old zot might still be running
 while curl -s https://hub.aiursoft.cn > /dev/null; [ $? -ne 0 ]; do
     print_warn "Waiting for registry (https://hub.aiursoft.cn) to start... ETA: 25s"
     sleep 1
 done
+
+print_ok "Making sure the authentik is ready..."
+while curl -s https://auth.aiursoft.cn > /dev/null; [ $? -ne 0 ]; do
+    print_warn "Waiting for authentik (https://auth.aiursoft.cn) to start... ETA: 25s"
+    sleep 1
 
 print_warn "=============================================================================="
 print_warn "   Ending stage 3: Authentik and Zot are ready."
