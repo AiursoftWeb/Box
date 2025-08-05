@@ -324,9 +324,9 @@ bash ./stage1/mirror.sh
 echo "Prebuild stage 2 images..."
 rm -rf ./stage2/images/sites/discovered
 mkdir -p ./stage2/images/sites/discovered && \
-    cp ./stage2/**/*.conf ./stage2/images/sites/discovered && \
-    cp ./stage3/**/*.conf ./stage2/images/sites/discovered && \
-    cp ./stage4/**/*.conf ./stage2/images/sites/discovered
+    cp ./stage2/stacks/**/*.conf ./stage2/images/sites/discovered && \
+    cp ./stage3/stacks/**/*.conf ./stage2/images/sites/discovered && \
+    cp ./stage4/stacks/**/*.conf ./stage2/images/sites/discovered
 
 echo "Building images..."
 sudo docker build ./stage2/images/ubuntu   -t localhost:8080/box_starting/local_ubuntu:latest
