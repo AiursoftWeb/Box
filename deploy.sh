@@ -157,7 +157,7 @@ function deploy() {
         done
     fi
 
-    sudo docker stack deploy -c "$temp_compose_file" "$stack_name" --detach --prune
+    sudo docker stack deploy -c "$temp_compose_file" "$stack_name" --detach --prune --with-registry-auth
 
     # Clean up the temporary file
     rm "$temp_compose_file"
