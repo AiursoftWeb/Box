@@ -1,0 +1,43 @@
+{
+    "distSpecVersion": "1.0.1",
+    "storage": {
+        "rootDirectory": "/data",
+        "dedupe": true,
+        "gc": true,
+        "gcInterval": "6h"
+    },
+    "http": {
+        "address": "0.0.0.0",
+        "port": "5000",
+        "realm": "zot",
+        "compat": [
+            "docker2s2"
+        ],
+        "auth": {
+            "failDelay": 5
+        }
+    },
+    "log": {
+        "level": "info",
+        "output": "stdout",
+        "audit": "stdout"
+    },
+    "extensions": {
+        "search": {
+            "enable": true,
+            "cve": {
+                "updateInterval": "2h"
+            }
+        },
+        "scrub": {
+            "enable": true,
+            "interval": "24h"
+        },
+        "ui": {
+            "enable": true
+        },
+        "mgmt": {
+            "enable": true
+        }
+    }
+}

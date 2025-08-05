@@ -12,7 +12,7 @@ version: '3.9'
 
 services:
   postgresql:
-    image: hub.aiursoft.cn/postgres:16-alpine
+    image: localhost:8080/public_mirror/postgres:16-alpine
     volumes:
       - database:/var/lib/postgresql/data
     environment:
@@ -40,7 +40,7 @@ services:
         delay: 60s
 
   redis:
-    image: hub.aiursoft.cn/redis:alpine
+    image: localhost:8080/public_mirror/redis:alpine
     volumes:
       - redis:/data
     networks:
@@ -66,7 +66,7 @@ services:
     depends_on:
       - postgresql
       - redis
-    image: hub.aiursoft.cn/ghcr.io/goauthentik/server:2025.6
+    image: localhost:8080/public_mirror/ghcr.io/goauthentik/server:2025.6
     volumes:
       - media:/media
       - custom-templates:/templates
@@ -99,7 +99,7 @@ services:
     depends_on:
       - postgresql
       - redis
-    image: hub.aiursoft.cn/ghcr.io/goauthentik/server:2025.6
+    image: localhost:8080/public_mirror/ghcr.io/goauthentik/server:2025.6
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - media:/media

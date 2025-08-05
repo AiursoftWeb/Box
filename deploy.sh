@@ -321,9 +321,10 @@ bash ./stage1/mirror.sh
 #=============================
 # Stage 2: Build and start basic web infrastructure
 #=============================
-echo "Prebuild images..."
+echo "Prebuild stage 2 images..."
 rm -rf ./stage2/images/sites/discovered
 mkdir -p ./stage2/images/sites/discovered && \
+    cp ./stage2/**/*.conf ./stage2/images/sites/discovered && \
     cp ./stage3/**/*.conf ./stage2/images/sites/discovered && \
     cp ./stage4/**/*.conf ./stage2/images/sites/discovered
 
@@ -343,12 +344,32 @@ exit;
 
 echo "Make sure the registry is ready..."
 sleep 5 # Could not trust result in the first few seconds, because the old registry might still be running
-while curl -s https://hub.aiursoft.cn > /dev/null; [ $? -ne 0 ]; do
+while curl -s https://test.aiursoft.cn > /dev/null; [ $? -ne 0 ]; do
     echo "Waiting for registry (https://hub.aiursoft.cn) to start... ETA: 25s"
     sleep 1
 done
 
+#=============================
+# Stage 3: Build and start Authentik and Zot
+#=============================
+echo "Prebuild stage 3 images..."
+sudo docker build ./stage3/images/zot -t localhost:8080/box_starting/local_zot:latest
+sudo docker push localhost:8080/box_starting/local_zot:latest
 
+echo "Starting Authentik and Zot..."
+deploy stage3/stacks/authentik/docker-compose.yml authentik
+deploy stage3/stacks/zot/docker-compose.yml zot
+
+echo "Make sure the zot is ready..."
+sleep 5 # Could not trust result in the first few seconds, because the old zot might still be running
+while curl -s https://registry.aiursoft.cn > /dev/null; [ $? -ne 0 ]; do
+    echo "Waiting for registry (https://registry.aiursoft.cn) to start... ETA: 25s"
+    sleep 1
+done
+
+#=============================
+# Stage 4: Deploy business stacks
+#=============================
 echo "Deploying business stacks..."
 serviceCount=$(sudo docker service ls --format '{{.Name}}' | wc -l | awk '{print $1}')
 find ./stage4 -name 'docker-compose.yml' -print0 | while IFS= read -r -d '' file; do
