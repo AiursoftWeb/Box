@@ -13,8 +13,25 @@
         "compat": [
             "docker2s2"
         ],
+        "externalUrl": "https://hub.aiursoft.cn",
+        "accessControl": {
+            "repositories": {
+                "**": {
+                    "anonymousPolicy": [
+                        "read"
+                    ],
+                    "defaultPolicy": [
+                        "read"
+                    ]
+                }
+            },
+            "adminPolicy": {
+                "users": ["anduin@aiursoft.com"],
+                "actions": ["read", "create", "update", "delete"]
+            }
+        },
         "auth": {
-            "failDelay": 5
+            "apikey": true
         }
     },
     "log": {
