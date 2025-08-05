@@ -1,26 +1,17 @@
-version: '3.9'
-
 services:
   registry-ui:
     depends_on:
       - registry-server
+    restart: unless-stopped
     image: joxit/docker-registry-ui:main
     ports:
-    # Although we write "127.0.0.1:8080:80", Docker Swarm converts it to a DNAT on 0.0.0.0:8080.
-    # Due to kernel DNAT behavior, external access fails while local access works.
-    # Tested with: Docker XX.X.X, Linux Kernel X.Y.Z
-    # Verified with: `iptables -t nat -L -n -v | grep 8080`
-    # Output might be:
-    #  204 12240 DNAT       6    --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:8080 to:172.18.0.2:8080
-      - 127.0.0.1:8080:80
-      # - target: 80
-      #   published: 8080
-      #   protocol: tcp
-      #   mode: host
-      #   host_ip: 127.0.0.1
+      - target: 80
+        published: 8080
+        protocol: tcp
+        mode: host
+        host_ip: 127.0.0.1
     networks:
       - net
-      - proxy_app
     environment:
       - SINGLE_REGISTRY=true
       - REGISTRY_TITLE=localhost
@@ -33,17 +24,9 @@ services:
       - TAGLIST_PAGE_SIZE=100
       - REGISTRY_SECURED=false
       - CATALOG_ELEMENTS_LIMIT=1000
-    stop_grace_period: 20s
-    deploy:
-      resources:
-        limits:
-          cpus: '1.0'
-          memory: 1G
-      update_config:
-        order: start-first
-        delay: 5s
 
   registry-server:
+    restart: unless-stopped
     image: registry
     volumes:
       - registry-data:/var/lib/registry
@@ -56,15 +39,6 @@ services:
       REGISTRY_HTTP_HEADERS_Access-Control-Allow-Headers: '[Authorization,Accept,Cache-Control]'
       REGISTRY_HTTP_HEADERS_Access-Control-Expose-Headers: '[Docker-Content-Digest]'
       REGISTRY_STORAGE_DELETE_ENABLED: 'true'
-    stop_grace_period: 60s
-    deploy:
-      resources:
-        limits:
-          cpus: '2.0'
-          memory: 4G
-      update_config:
-        order: stop-first
-        delay: 60s
 
 volumes:
   registry-data:
@@ -76,6 +50,4 @@ volumes:
 
 networks:
   net:
-    driver: overlay
-  proxy_app:
-    external: true
+    driver: bridge

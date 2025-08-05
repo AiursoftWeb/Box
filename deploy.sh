@@ -313,7 +313,9 @@ print_warn "   Starting stage 0: Mission is to start a simple registry"
 print_warn "=============================================================================="
 sleep 3
 
-deploy stage0/registry/docker-compose.yml registry # 8080
+sudo docker compose -f ./stage0/registry/docker-compose.yml up -d --pull always --no-recreate --remove-orphans
+
+#deploy stage0/registry/docker-compose.yml registry # 8080
 
 print_ok "Make sure the registry is ready..."
 sleep 5 # Could not trust result in the first few seconds, because the old registry might still be running
