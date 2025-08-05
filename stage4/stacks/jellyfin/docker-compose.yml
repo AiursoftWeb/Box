@@ -27,16 +27,6 @@ services:
       #- NVIDIA_DRIVER_CAPABILITIES=compute,utility,video
     networks:
       - proxy_app
-    ports:
-      # These ports are for internal discovery. External request is not allowed.
-      - target: 1900
-        published: 1900
-        protocol: udp
-        mode: host
-      - target: 7359
-        published: 7359
-        protocol: udp
-        mode: host
     stop_grace_period: 60s
     deploy:
       resources:
