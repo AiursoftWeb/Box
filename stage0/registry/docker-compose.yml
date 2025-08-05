@@ -6,7 +6,7 @@ services:
       - registry-server
     image: joxit/docker-registry-ui:main
     ports:
-      - 127.0.1:8080:80
+      - 127.0.0.1:8080:80
       # - target: 80
       #   published: 8080
       #   protocol: tcp
