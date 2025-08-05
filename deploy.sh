@@ -366,8 +366,8 @@ deploy stage3/stacks/zot/docker-compose.yml zot
 
 echo "Make sure the zot is ready..."
 sleep 5 # Could not trust result in the first few seconds, because the old zot might still be running
-while curl -s https://registry.aiursoft.cn > /dev/null; [ $? -ne 0 ]; do
-    echo "Waiting for registry (https://registry.aiursoft.cn) to start... ETA: 25s"
+while curl -s https://hub.aiursoft.cn > /dev/null; [ $? -ne 0 ]; do
+    echo "Waiting for registry (https://hub.aiursoft.cn) to start... ETA: 25s"
     sleep 1
 done
 

@@ -4,7 +4,7 @@ services:
   downloader:
     image: hub.aiursoft.cn/aiursoft/internalimages/imagepuller
     environment:
-      - MIRROR_TARGET=registry.aiursoft.cn
+      - MIRROR_TARGET=hub.aiursoft.cn
       - DOCKER_USERNAME=anduin2019
       - LOCAL_DOCKER_USERNAME=anduin@aiursoft.com
     secrets:
