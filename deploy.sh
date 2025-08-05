@@ -329,18 +329,21 @@ mkdir -p ./stage2/images/sites/discovered && \
     cp ./stage4/stacks/**/*.conf ./stage2/images/sites/discovered
 
 echo "Building images..."
+echo "Building local ubuntu..."
 sudo docker build ./stage2/images/ubuntu   -t localhost:8080/box_starting/local_ubuntu:latest
 sudo docker push localhost:8080/box_starting/local_ubuntu:latest
+echo "Building local caddy..."
 sudo docker build ./stage2/images/frp      -t localhost:8080/box_starting/local_frp:latest
 sudo docker push localhost:8080/box_starting/local_frp:latest
+echo "Building local caddy..."
 sudo docker build ./stage2/images/sites    -t localhost:8080/box_starting/local_sites:latest
 sudo docker push localhost:8080/box_starting/local_sites:latest
+echo "Building local pysyncer..."
 sudo docker build ./stage2/images/pysyncer    -t localhost:8080/box_starting/local_pysyncer:latest
 sudo docker push localhost:8080/box_starting/local_pysyncer:latest
 
 echo "Starting incoming proxy..."
 deploy stage2/stacks/incoming/docker-compose.yml incoming # 8080
-exit;
 
 echo "Make sure the registry is ready..."
 sleep 5 # Could not trust result in the first few seconds, because the old registry might still be running
@@ -353,6 +356,7 @@ done
 # Stage 3: Build and start Authentik and Zot
 #=============================
 echo "Prebuild stage 3 images..."
+echo "Building local zot..."
 sudo docker build ./stage3/images/zot -t localhost:8080/box_starting/local_zot:latest
 sudo docker push localhost:8080/box_starting/local_zot:latest
 
