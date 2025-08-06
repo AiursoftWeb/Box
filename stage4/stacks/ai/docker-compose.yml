@@ -124,6 +124,26 @@ services:
         order: start-first
         delay: 5s
 
+  authentik_proxy:
+    depends_on:
+      - ollama-gateway
+    image: hub.aiursoft.cn/ghcr.io/goauthentik/proxy:2025.6
+    environment:
+      AUTHENTIK_HOST: "https://auth.aiursoft.cn/"
+      AUTHENTIK_INSECURE: "false"
+      AUTHENTIK_TOKEN: "{{OLLAMA_GATEWAY_OUTPOST_TOKEN}}"
+    stop_grace_period: 20s
+    networks:
+      - proxy_app
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+      update_config:
+        order: start-first
+        delay: 5s
+
   code-runner:
     image: hub.aiursoft.cn/aiursoft/cpprunner
     volumes:
