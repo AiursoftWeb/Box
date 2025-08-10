@@ -357,7 +357,7 @@ mkdir -p ./stage2/images/sites/discovered && \
 print_ok "Building local ubuntu..."
 sudo docker build ./stage2/images/ubuntu   -t localhost:8080/box_starting/local_ubuntu:latest
 sudo docker push localhost:8080/box_starting/local_ubuntu:latest
-print_ok "Building local caddy..."
+print_ok "Building local frp..."
 sudo docker build ./stage2/images/frp      -t localhost:8080/box_starting/local_frp:latest
 sudo docker push localhost:8080/box_starting/local_frp:latest
 print_ok "Building local caddy..."
