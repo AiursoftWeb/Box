@@ -44,9 +44,9 @@ services:
       - NC_DOMAIN=nextcloud.aiursoft.cn
       - TALK_HOST=talk.aiursoft.cn
       - TALK_PORT=3478
-      - TURN_SECRET={{YOUR_TURN_SECRET}}
-      - SIGNALING_SECRET={{YOUR_SIGNALING_SECRET}}
-      - INTERNAL_SECRET={{YOUR_INTERNAL_SECRET}}
+      - TURN_SECRET={{NEXTCLOUD_TURN_SECRET}}
+      - SIGNALING_SECRET={{NEXTCLOUD_SIGNALING_SECRET}}
+      - INTERNAL_SECRET={{NEXTCLOUD_INTERNAL_SECRET}}
     networks: 
       - internal
       - proxy_app
