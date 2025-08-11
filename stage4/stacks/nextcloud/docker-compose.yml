@@ -47,6 +47,7 @@ services:
       - SIGNALING_SECRET=__REPLACE_ME__
       - INTERNAL_SECRET=__REPLACE_ME__
       - TALK_HOST=talk.aiursoft.cn
+      - ETURNAL_RELAY_IPV6_ADDR=none
     networks: 
       - internal
       - proxy_app
