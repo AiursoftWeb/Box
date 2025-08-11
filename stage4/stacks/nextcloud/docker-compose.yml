@@ -2,6 +2,7 @@ version: '3'
 
 services:
   web:
+    # This version need to be updated regularly
     image: hub.aiursoft.cn/nextcloud:31.0.4
     networks: 
       - internal
@@ -32,6 +33,39 @@ services:
         limits:
           memory: 16384M
           cpus: '16.0'
+      update_config:
+        order: stop-first
+        delay: 60s
+
+  aio:
+    image: hub.aiursoft.cn/ghcr.io/nextcloud-releases/aio-talk
+    environment:
+      - TZ=UTC
+      - NC_DOMAIN=nextcloud.aiursoft.cn
+      - TALK_PORT=3478
+      - TURN_SECRET=__REPLACE_ME__
+      - SIGNALING_SECRET=__REPLACE_ME__
+      - INTERNAL_SECRET=__REPLACE_ME__
+      - TALK_HOST=talk.aiursoft.cn
+    networks: 
+      - internal
+      - proxy_app
+      - frp_net
+    ports:
+      - target: 3478
+        published: 3478
+        protocol: tcp
+        mode: host
+      - target: 3478
+        published: 3478
+        protocol: udp
+        mode: host
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        limits:
+          memory: 8192M
+          cpus: '8.0'
       update_config:
         order: stop-first
         delay: 60s

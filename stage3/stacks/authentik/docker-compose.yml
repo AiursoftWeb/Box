@@ -66,6 +66,7 @@ services:
     depends_on:
       - postgresql
       - redis
+    # This version need to be updated regularly
     image: localhost:8080/public_mirror/ghcr.io/goauthentik/server:2025.6
     volumes:
       - media:/media
