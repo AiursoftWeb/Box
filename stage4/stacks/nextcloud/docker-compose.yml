@@ -180,6 +180,8 @@ networks:
     driver: overlay
   proxy_app:
     external: true
+  frp_net:
+    external: true
 
 volumes:
   nextcloud-db:
