@@ -1,5 +1,4 @@
 {
-	email anduin@aiursoft.com
 	log {
 		format json
 		output file /data/caddy/logs/web.log {
