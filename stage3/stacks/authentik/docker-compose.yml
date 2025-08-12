@@ -73,12 +73,20 @@ services:
       - custom-templates:/templates
       - icons:/web/dist/assets/icons
     environment:
-      AUTHENTIK_SECRET_KEY: /run/secrets/authentik_secret_key
-      AUTHENTIK_REDIS__HOST: redis
-      AUTHENTIK_POSTGRESQL__HOST: postgresql
-      AUTHENTIK_POSTGRESQL__USER: authentik_pg_user
-      AUTHENTIK_POSTGRESQL__NAME: authentik
-      AUTHENTIK_POSTGRESQL__PASSWORD: /run/secrets/authentik_pg_pass
+      - AUTHENTIK_SECRET_KEY=/run/secrets/authentik_secret_key
+      - AUTHENTIK_REDIS__HOST=redis
+      - AUTHENTIK_POSTGRESQL__HOST=postgresql
+      - AUTHENTIK_POSTGRESQL__USER=authentik_pg_user
+      - AUTHENTIK_POSTGRESQL__NAME=authentik
+      - AUTHENTIK_POSTGRESQL__PASSWORD=/run/secrets/authentik_pg_pass
+      - AUTHENTIK_EMAIL__HOST=mail.aiursoft.com
+      - AUTHENTIK_EMAIL__PORT=587
+      - AUTHENTIK_EMAIL__USERNAME=service@aiursoft.com
+      - AUTHENTIK_EMAIL__PASSWORD={{AUTHENTIK_EMAIL_PASSWORD}}
+      - AUTHENTIK_EMAIL__USE_TLS=true
+      - AUTHENTIK_EMAIL__USE_SSL=false
+      - AUTHENTIK_EMAIL__TIMEOUT='10'
+      - AUTHENTIK_EMAIL__FROM=Aiursoft Service <service@aiursoft.com>
     networks:
       - proxy_app
       - internal
