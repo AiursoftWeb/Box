@@ -3,7 +3,7 @@ version: '3'
 services:
   web:
     # This version need to be updated regularly
-    image: hub.aiursoft.cn/nextcloud:31.0.4
+    image: hub.aiursoft.cn/nextcloud:31.0.7
     networks: 
       - internal
       - proxy_app
