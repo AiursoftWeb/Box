@@ -42,6 +42,19 @@ services:
         prometheus_monitoring['enable'] = false
         sidekiq['metrics_enabled'] = false
         puma['exporter_enabled'] = false
+        # SMTP 配置（Mailcow）
+        gitlab_rails['smtp_enable'] = true
+        gitlab_rails['smtp_address'] = "mail.aiursoft.com"
+        gitlab_rails['smtp_port'] = 587
+        gitlab_rails['smtp_user_name'] = "service@aiursoft.com"
+        gitlab_rails['smtp_password'] = "{{GITLAB_EMAIL_PASSWORD}}"
+        gitlab_rails['smtp_domain'] = "mail.aiursoft.com"
+        gitlab_rails['smtp_authentication'] = "login"
+        gitlab_rails['smtp_enable_starttls_auto'] = true
+        gitlab_rails['smtp_tls'] = false
+        gitlab_rails['smtp_openssl_verify_mode'] = 'none'
+        gitlab_rails['gitlab_email_from'] = 'service@aiursoft.com'
+        gitlab_rails['gitlab_email_reply_to'] = 'service@aiursoft.com'
     stop_grace_period: 60s
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:80"]
