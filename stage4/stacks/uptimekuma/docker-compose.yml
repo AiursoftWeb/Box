@@ -1,0 +1,33 @@
+#docker run -d --restart=always -p 3001:3001 -v uptime-kuma:/app/data --name uptime-kuma louislam/uptime-kuma:1
+version: '3.9'
+
+services:
+  server:
+    image: hub.aiursoft.cn/louislam/uptime-kuma:1
+    volumes:
+      - uptime-kuma:/app/data
+    environment:
+      - NODE_ENV=production
+    networks:
+      - proxy_app
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+      update_config:
+        order: stop-first
+        delay: 60s
+
+networks:
+  proxy_app:
+    external: true
+
+volumes:
+  uptime-kuma:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/uptime-kuma-data
