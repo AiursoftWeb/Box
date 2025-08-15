@@ -1,5 +1,13 @@
 #!/bin/bash
 set -euo pipefail
+#==========================
+# Argument Parsing
+#==========================
+STACK_FILTER=""
+if [[ "$1" == "--filter" ]] && [[ -n "$2" ]]; then
+  STACK_FILTER="$2"
+  echo -e "${Green}[  OK  ]${Font} ${Blue} Running with filter, will only deploy stacks containing: '$STACK_FILTER'${Font}"
+fi
 
 #==========================
 # Color
@@ -414,11 +422,21 @@ sleep 3
 
 print_ok "Deploying business stacks..."
 serviceCount=$(sudo docker service ls --format '{{.Name}}' | wc -l | awk '{print $1}')
-find ./stage4 -name 'docker-compose.yml' -print0 | while IFS= read -r -d '' file; do
-    deploy "$file" "$(basename "$(dirname "$file")")"
 
-    # If serviceCount < 10, which means this is a new cluster. Sleep 10 to slow down the deployment.
-    if [ $serviceCount -lt 10 ]; then
-        sleep 10
+find ./stage4 -name 'docker-compose.yml' -print0 | while IFS= read -r -d '' file; do
+    # Extract the stack name from the file path (e.g., ./stage4/gitlab/docker-compose.yml -> gitlab)
+    stack_name=$(basename "$(dirname "$file")")
+
+    # Check if a filter is active, and if the stack name matches the filter
+    if [ -z "$STACK_FILTER" ] || [[ "$stack_name" == *"$STACK_FILTER"* ]]; then
+        print_ok "Deploying stack: $stack_name"
+        deploy "$file" "$stack_name"
+
+        # If it's a new cluster, slow down the deployment to avoid overwhelming the system
+        if [ $serviceCount -lt 10 ]; then
+            sleep 10
+        fi
+    else
+        print_info "Skipping stack '$stack_name' due to filter."
     fi
 done
