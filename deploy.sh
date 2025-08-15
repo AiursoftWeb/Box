@@ -1,15 +1,6 @@
 #!/bin/bash
 set -euo pipefail
 #==========================
-# Argument Parsing
-#==========================
-STACK_FILTER=""
-if [[ "$1" == "--filter" ]] && [[ -n "$2" ]]; then
-  STACK_FILTER="$2"
-  echo -e "${Green}[  OK  ]${Font} ${Blue} Running with filter, will only deploy stacks containing: '$STACK_FILTER'${Font}"
-fi
-
-#==========================
 # Color
 #==========================
 export Green="\033[32m"
@@ -23,6 +14,15 @@ export INFO="${Blue}[ INFO ]${Font}"
 export OK="${Green}[  OK  ]${Font}"
 export ERROR="${Red}[FAILED]${Font}"
 export WARNING="${Yellow}[ WARN ]${Font}"
+
+#==========================
+# Argument Parsing
+#==========================
+STACK_FILTER=""
+if [[ "$1" == "--filter" ]] && [[ -n "$2" ]]; then
+  STACK_FILTER="$2"
+  echo -e "${Green}[  OK  ]${Font} ${Blue} Running with filter, will only deploy stacks containing: '$STACK_FILTER'${Font}"
+fi
 
 #==========================
 # Print Colorful Text
