@@ -5,6 +5,7 @@ services:
   server:
     image: hub.aiursoft.cn/louislam/uptime-kuma:1
     volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
       - uptime-kuma:/app/data
     environment:
       - NODE_ENV=production
