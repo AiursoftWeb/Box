@@ -1,0 +1,288 @@
+version: '3.9'
+
+services:
+  ollama-server:
+    image: hub.aiursoft.cn/ollama/ollama:latest
+    volumes:
+      - ollama-data:/root/.ollama
+    networks:
+      - internal
+    environment:
+      - OLLAMA_HOST=0.0.0.0
+      - OLLAMA_KEEP_ALIVE=200m
+      - OLLAMA_FLASH_ATTENTION=1
+      - OLLAMA_KV_CACHE_TYPE=q8_0
+      - OLLAMA_SCHED_SPREAD=1
+      - GIN_MODE=release
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '8.0'
+          memory: 50G
+        reservations:
+          generic_resources:
+            - discrete_resource_spec:
+                kind: "NVIDIA-GPU"
+                value: 0
+            - discrete_resource_spec:
+                kind: "NVIDIA-GPU"
+                value: 1
+      replicas: 1
+      update_config:
+        order: stop-first
+        delay: 60s
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 3
+
+  ollama-warmup:
+    depends_on:
+      - ollama-server
+    image: hub.aiursoft.cn/alpine
+    networks: 
+      - internal
+    entrypoint:
+      - "/bin/sh"
+      - "-c"
+      - |
+          apk add curl && \
+          sleep 40 && \
+          while true; do \
+            curl -v http://ollama-server:11434/api/generate -d '{"model": "qwen3:30b-a3b-thinking-2507-q8_0:30b-a3b-thinking-2507-q8_0"}'; \
+            sleep 900; \
+          done
+    stop_grace_period: 20s
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+      update_config:
+        order: start-first
+        delay: 5s
+
+  ollama-gateway-db:
+    image: hub.aiursoft.cn/mysql
+    volumes:
+      - gateway-db:/var/lib/mysql
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
+      - MYSQL_DATABASE=chat
+      - MYSQL_USER=chat
+      - MYSQL_PASSWORD=<chat_password>
+    networks:
+      - internal
+    stop_grace_period: 60s
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8G
+      update_config:
+        order: stop-first
+        delay: 60s
+
+  ollama-gateway:
+    depends_on:
+      - ollama-gateway-db
+      - ollama-warmup
+    image: hub.aiursoft.cn/aiursoft/gptgateway
+    volumes:
+      - gateway-data:/data/files
+      - gateway-aspnet:/data/.aspnet
+    secrets:
+      - source: bing-search-key
+        target: BingSearchAPIKey
+      - source: openai-key
+        target: Underlyings__OpenAI__Token
+      - source: deepseek-key
+        target: Underlyings__DeepSeek__Token
+    environment:
+      ConnectionStrings__DefaultConnection: Server=ollama-gateway-db;Database=chat;Uid=chat;Pwd=<chat_password>;
+      ConnectionStrings__DbType: MySql
+      Storage__Path: /data/files
+      Underlyings__Ollama__Instance: http://ollama-server:11434/
+      Underlyings__OpenAI__InstanceUrl: https://openai.api2d.net
+    networks:
+      - internal
+      - proxy_app
+    stop_grace_period: 20s
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 4G
+      update_config:
+        order: start-first
+        delay: 5s
+
+  authentik_proxy:
+    depends_on:
+      - ollama-gateway
+    image: hub.aiursoft.cn/ghcr.io/goauthentik/proxy:2025.6
+    environment:
+      AUTHENTIK_HOST: "https://auth.aiursoft.cn/"
+      AUTHENTIK_INSECURE: "false"
+      AUTHENTIK_TOKEN: "{{OLLAMA_GATEWAY_OUTPOST_TOKEN}}"
+    stop_grace_period: 20s
+    networks:
+      - proxy_app
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+      update_config:
+        order: start-first
+        delay: 5s
+
+  code-runner:
+    image: hub.aiursoft.cn/aiursoft/cpprunner
+    volumes:
+      - code-runner-aspnet-data:/data/.aspnet
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /tmp:/tmp
+    environment:
+      - DockerImageSettings__Prefix=hub.aiursoft.cn
+    networks:
+      - internal
+    stop_grace_period: 20s
+    deploy:
+      replicas: 2
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 4G
+      update_config:
+        order: start-first
+        delay: 5s
+
+  mcpo:
+    depends_on:
+      - code-runner
+    image: hub.aiursoft.cn/ghcr.io/open-webui/mcpo:main
+    networks:
+      - internal
+    volumes:
+      - mcpo-data:/data
+    stop_grace_period: 20s
+    deploy:
+      resources:
+        limits:
+          cpus: '6.0'
+          memory: 6G
+      update_config:
+        order: start-first
+        delay: 5s
+    entrypoint: ["mcpo", "--config", "/data/config.json"]
+
+  open-webui:
+    depends_on:
+      - mcpo
+      - ollama-gateway
+    image: hub.aiursoft.cn/ghcr.io/open-webui/open-webui:main
+    environment:
+      - 'OLLAMA_BASE_URL=http://ollama-gateway:5000/'
+      - ENABLE_OPENAI_API=False
+      - WEBUI_AUTH=True
+      - ENABLE_LOGIN_FORM=False
+      - ENABLE_SIGNUP=False
+      - DEFAULT_USER_ROLE=user
+      - SHOW_ADMIN_DETAILS=False
+      - ENABLE_COMMUNITY_SHARING=False
+      - ENABLE_MESSAGE_RATING=False
+      - ENABLE_TAGS_GENERATION=False
+      - ENABLE_EVALUATION_ARENA_MODELS=False
+      - USER_PERMISSIONS_CHAT_FILE_UPLOAD=False
+      - USER_PERMISSIONS_CHAT_TEMPORARY=False
+      - ENABLE_OAUTH_SIGNUP=True
+      - ENABLE_OAUTH_ROLE_MANAGEMENT=True
+      - OAUTH_MERGE_ACCOUNTS_BY_EMAIL=True
+      - OAUTH_ADMIN_ROLES=openweb-admins
+      - OAUTH_PROVIDER_NAME=Aiursoft
+      - OAUTH_ROLES_CLAIM=groups
+      - 'OPENID_PROVIDER_URL=https://auth.aiursoft.cn/application/o/openwebchat/.well-known/openid-configuration'
+      - OAUTH_CLIENT_ID={{OPENWEB_CLIENT_ID}}
+      - OAUTH_CLIENT_SECRET={{OPENWEB_CLIENT_SECRET}}
+      - 'OAUTH_SCOPES=openid email profile'
+      - OPENID_REDIRECT_URI=https://openweb.aiursoft.cn/oauth/oidc/callback
+    volumes:
+      - open-webui-data:/app/backend/data
+    networks:
+      - proxy_app
+      - internal
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '6.0'
+          memory: 6G
+      update_config:
+        order: stop-first
+        delay: 60s
+
+networks:
+  internal:
+    driver: overlay
+  proxy_app:
+    external: true
+
+secrets:
+  bing-search-key:
+    external: true
+  openai-key:
+    external: true
+  deepseek-key:
+    external: true
+
+volumes:
+  ollama-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/ai/ollama/data
+  code-runner-aspnet-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/ai/code-runner/aspnet
+  gateway-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/ai/gateway/data
+  gateway-aspnet:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/ai/gateway/aspnet
+  gateway-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/ai/gateway/db
+  mcpo-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/ai/mcpo
+  open-webui-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/ai/open-webui/data

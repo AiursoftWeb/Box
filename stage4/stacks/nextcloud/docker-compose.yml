@@ -1,0 +1,216 @@
+version: '3'
+
+services:
+  web:
+    # This version need to be updated regularly
+    image: hub.aiursoft.cn/nextcloud:31.0.7
+    networks: 
+      - internal
+      - proxy_app
+    depends_on:
+      - nextclouddb
+      - redis
+    volumes:
+      - nextcloud-config:/var/www/html/config
+      - nextcloud-custom-apps:/var/www/html/custom_apps
+      - nextcloud-data:/mnt/data
+    environment:
+      - TZ=UTC
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+      - MYSQL_PASSWORD=dbpassword
+      - MYSQL_HOST=nextclouddb
+      - REDIS_HOST=redis
+      - NEXTCLOUD_DATA_DIR=/mnt/data
+      - NEXTCLOUD_TRUSTED_DOMAINS=nextcloud.aiursoft.cn
+      - PHP_MEMORY_LIMIT=1G
+      - PHP_UPLOAD_LIMIT=1G
+      - PHP_OPCACHE_ENABLE=1
+      - PHP_OPCACHE_MEMORY_CONSUMPTION=1024
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        limits:
+          memory: 16384M
+          cpus: '16.0'
+      update_config:
+        order: stop-first
+        delay: 60s
+
+  aio:
+    image: hub.aiursoft.cn/ghcr.io/nextcloud-releases/aio-talk
+    environment:
+      - TZ=UTC
+      - NC_DOMAIN=nextcloud.aiursoft.cn
+      - TALK_HOST=talk.aiursoft.cn
+      - TALK_PORT=3478
+      - TURN_SECRET={{NEXTCLOUD_TURN_SECRET}}
+      - SIGNALING_SECRET={{NEXTCLOUD_SIGNALING_SECRET}}
+      - INTERNAL_SECRET={{NEXTCLOUD_INTERNAL_SECRET}}
+    networks: 
+      - internal
+      - proxy_app
+      - frp_net
+    ports:
+      - target: 3478
+        published: 3478
+        protocol: tcp
+        mode: host
+      - target: 3478
+        published: 3478
+        protocol: udp
+        mode: host
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        limits:
+          memory: 8192M
+          cpus: '8.0'
+      update_config:
+        order: stop-first
+        delay: 60s
+
+  nextcloud-jobrunner:
+    depends_on:
+      - web
+    image: hub.aiursoft.cn/alpine
+    networks: 
+      - internal
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    entrypoint:
+      - "/bin/sh"
+      - "-c"
+      - |
+        echo "Installing docker";
+        apk add --no-cache docker;
+        echo "Starting nextcloud job runner. Sleep 120 seconds to wait for nextcloud web service";
+        sleep 120;
+        # Avoid upgrade here because it may mess up the instance.
+        # echo "Upgrading nextcloud";
+        # docker ps --filter name=nextcloud_web -q | xargs -r -I {} docker exec -u www-data {} /usr/local/bin/php occ upgrade;
+        # echo "Repairing nextcloud";
+        # docker ps --filter name=nextcloud_web -q | xargs -r -I {} docker exec -u www-data {} /usr/local/bin/php occ maintenance:repair --include-expensive;
+        # echo "Adding missing indices";
+        # docker ps --filter name=nextcloud_web -q | xargs -r -I {} docker exec -u www-data {} /usr/local/bin/php occ db:add-missing-indices;
+        # echo "Converting filecache bigint";
+        # docker ps --filter name=nextcloud_web -q | xargs -r -I {} docker exec -u www-data {} /usr/local/bin/php occ db:convert-filecache-bigint;
+        # echo "Scanning files";
+        # docker ps --filter name=nextcloud_web -q | xargs -r -I {} docker exec -u www-data {} /usr/local/bin/php occ files:scan --all;
+        # docker ps --filter name=nextcloud_web -q | xargs -r -I {} docker exec -u www-data {} /usr/local/bin/php occ files:scan-app-data;
+        # docker ps --filter name=nextcloud_web -q | xargs -r -I {} docker exec -u www-data {} /usr/local/bin/php occ files:repair-tree;
+        # echo "Updating apps";
+        # docker ps --filter name=nextcloud_web -q | xargs -r -I {} docker exec -u www-data {} /usr/local/bin/php occ app:update --all;
+        # echo "Disabling maintenance mode";
+        # docker ps --filter name=nextcloud_web -q | xargs -r -I {} docker exec -u www-data {} /usr/local/bin/php occ maintenance:mode --off;
+        # echo "Updating apt";
+        # docker ps --filter name=nextcloud_web -q | xargs -r -I {} docker exec             {} apt update;
+        # echo "Installing ffmpeg";
+        # docker ps --filter name=nextcloud_web -q | xargs -r -I {} docker exec             {} apt install -y ffmpeg;
+        # echo "Initialization done";
+        while true; do
+          echo "Starting nextcloud job runner";
+          docker ps --filter name=nextcloud_web -q | xargs -r -I {} docker exec -u www-data {} /usr/local/bin/php -f /var/www/html/cron.php
+          echo "Nextcloud job runner done. Current time:";
+          date;
+          sleep 300;
+        done
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+      update_config:
+        order: stop-first
+        delay: 60s
+
+  nextclouddb:
+    image: hub.aiursoft.cn/mysql
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    networks: 
+      - internal
+    volumes:
+      - nextcloud-db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root_dbpassword
+      - MYSQL_PASSWORD=dbpassword
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+    stop_grace_period: 60s
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8G
+      update_config:
+        order: stop-first
+        delay: 60s
+
+  redis:
+    image: hub.aiursoft.cn/redis:alpine
+    volumes:
+      - nextcloud-redis:/data
+    networks: 
+      - internal
+    stop_grace_period: 60s
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 3s
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 8192M
+      update_config:
+        order: stop-first
+        delay: 60s
+
+networks:
+  internal:
+    driver: overlay
+  proxy_app:
+    external: true
+  frp_net:
+    external: true
+
+volumes:
+  nextcloud-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/nextcloud/db
+  nextcloud-redis:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/nextcloud/redis
+  nextcloud-config:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/nextcloud/config
+  nextcloud-custom-apps:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/nextcloud/custom_apps
+  nextcloud-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/nextcloud/data

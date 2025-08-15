@@ -1,0 +1,1330 @@
+version: '3.9'
+
+services:
+  anduin:
+    depends_on:
+      - anduin-db
+    image: hub.aiursoft.cn/aiursoft/moongladepure
+    volumes:
+      - anduin-files:/data/files
+      - anduin-aspnet:/data/.aspnet/
+    environment:
+      - OpenAI__CompletionApiUrl=https://chat.aiursoft.cn/api/chat
+      - OpenAI__Model=qwen3:30b-a3b-thinking-2507-q8_0:32b
+      - ConnectionStrings__DefaultConnection=Server=anduin-db;Database=anduin;Uid=anduin;Pwd=<anduin_password>;
+      - ConnectionStrings__DbType=MySql
+      - Storage__Path=/data/files
+      - AppSettings__AuthProvider=OIDC
+      - OIDC__Authority=https://auth.aiursoft.cn/application/o/anduinblog
+      - OIDC__ClientId={{ANDUIN_BLOG_CLIENT_ID}}
+      - OIDC__ClientSecret={{ANDUIN_BLOG_CLIENT_SECRET}}
+    networks:
+      - anduin_app
+      - proxy_app
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 4G
+      update_config:
+        order: stop-first
+        delay: 60s
+  
+  anduin-db:
+    image: hub.aiursoft.cn/mysql
+    volumes:
+      - anduin-db:/var/lib/mysql
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
+      - MYSQL_DATABASE=anduin
+      - MYSQL_USER=anduin
+      - MYSQL_PASSWORD=<anduin_password>
+    networks:
+      - anduin_app
+    stop_grace_period: 60s
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8G
+      update_config:
+        order: stop-first
+        delay: 60s
+    
+      
+  jimmoen:
+    depends_on:
+      - jimmoen-db
+    image: hub.aiursoft.cn/aiursoft/moongladepure
+    volumes:
+      - jimmoen-files:/data/files
+      - jimmoen-aspnet:/data/.aspnet/
+    environment:
+      - OpenAI__CompletionApiUrl=https://chat.aiursoft.cn/api/chat
+      - OpenAI__Model=qwen3:30b-a3b-thinking-2507-q8_0:32b
+      - ConnectionStrings__DefaultConnection=Server=jimmoen-db;Database=jimmoen;Uid=jimmoen;Pwd=<jimmoen_password>;
+      - ConnectionStrings__DbType=MySql
+      - Storage__Path=/data/files
+      - AppSettings__AuthProvider=OIDC
+      - OIDC__Authority=https://auth.aiursoft.cn/application/o/jimmoenblog
+      - OIDC__ClientId={{JIMMOEN_BLOG_CLIENT_ID}}
+      - OIDC__ClientSecret={{JIMMOEN_BLOG_CLIENT_SECRET}}
+    networks:
+      - jimmoen_app
+      - proxy_app
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 4G
+      update_config:
+        order: stop-first
+        delay: 60s
+
+  jimmoen-db:
+    image: hub.aiursoft.cn/mysql
+    volumes:
+      - jimmoen-db:/var/lib/mysql
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
+      - MYSQL_DATABASE=jimmoen
+      - MYSQL_USER=jimmoen
+      - MYSQL_PASSWORD=<jimmoen_password>
+    networks:
+      - jimmoen_app
+    stop_grace_period: 60s
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8G
+      update_config:
+        order: stop-first
+        delay: 60s
+
+  rest:
+    depends_on:
+      - rest-db
+    image: hub.aiursoft.cn/aiursoft/moongladepure
+    volumes:
+      - rest-files:/data/files
+      - rest-aspnet:/data/.aspnet/
+    environment:
+      - OpenAI__CompletionApiUrl=https://chat.aiursoft.cn/api/chat
+      - OpenAI__Model=qwen3:30b-a3b-thinking-2507-q8_0:32b
+      - ConnectionStrings__DefaultConnection=Server=rest-db;Database=rest;Uid=rest;Pwd=<rest_password>;
+      - ConnectionStrings__DbType=MySql
+      - Storage__Path=/data/files
+      - AppSettings__AuthProvider=OIDC
+      - OIDC__Authority=https://auth.aiursoft.cn/application/o/restblog
+      - OIDC__ClientId={{REST_BLOG_CLIENT_ID}}
+      - OIDC__ClientSecret={{REST_BLOG_CLIENT_SECRET}}
+    networks:
+      - rest_app
+      - proxy_app
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 4G
+      update_config:
+        order: stop-first
+        delay: 60s
+
+  rest-db:
+    image: hub.aiursoft.cn/mysql
+    volumes:
+      - rest-db:/var/lib/mysql
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
+      - MYSQL_DATABASE=rest
+      - MYSQL_USER=rest
+      - MYSQL_PASSWORD=<rest_password>
+    networks:
+      - rest_app
+    stop_grace_period: 60s
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8G
+      update_config:
+        order: stop-first
+        delay: 60s
+    
+        
+  cody:
+    depends_on:
+      - cody-db
+    image: hub.aiursoft.cn/aiursoft/moongladepure
+    volumes:
+      - cody-files:/data/files
+      - cody-aspnet:/data/.aspnet/
+    environment:
+      - OpenAI__CompletionApiUrl=https://chat.aiursoft.cn/api/chat
+      - OpenAI__Model=qwen3:30b-a3b-thinking-2507-q8_0:32b
+      - ConnectionStrings__DefaultConnection=Server=cody-db;Database=cody;Uid=cody;Pwd=<cody_password>;
+      - ConnectionStrings__DbType=MySql
+      - Storage__Path=/data/files
+      - AppSettings__AuthProvider=OIDC
+      - OIDC__Authority=https://auth.aiursoft.cn/application/o/codyblog
+      - OIDC__ClientId={{CODY_BLOG_CLIENT_ID}}
+      - OIDC__ClientSecret={{CODY_BLOG_CLIENT_SECRET}}
+    networks:
+      - cody_app
+      - proxy_app
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 4G
+      update_config:
+        order: stop-first
+        delay: 60s
+
+  cody-db:
+    image: hub.aiursoft.cn/mysql
+    volumes:
+      - cody-db:/var/lib/mysql
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
+      - MYSQL_DATABASE=cody
+      - MYSQL_USER=cody
+      - MYSQL_PASSWORD=<cody_password>
+    networks:
+      - cody_app
+    stop_grace_period: 60s
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8G
+      update_config:
+        order: stop-first
+        delay: 60s
+
+  gxhao:
+    depends_on:
+      - gxhao-db
+    image: hub.aiursoft.cn/aiursoft/moongladepure
+    volumes:
+      - gxhao-files:/data/files
+      - gxhao-aspnet:/data/.aspnet/
+    environment:
+      - OpenAI__CompletionApiUrl=https://chat.aiursoft.cn/api/chat
+      - OpenAI__Model=qwen3:30b-a3b-thinking-2507-q8_0:32b
+      - ConnectionStrings__DefaultConnection=Server=gxhao-db;Database=gxhao;Uid=gxhao;Pwd=<gxhao_password>;
+      - ConnectionStrings__DbType=MySql
+      - Storage__Path=/data/files
+      - AppSettings__AuthProvider=OIDC
+      - OIDC__Authority=https://auth.aiursoft.cn/application/o/gxhaoblog
+      - OIDC__ClientId={{GXHAO_BLOG_CLIENT_ID}}
+      - OIDC__ClientSecret={{GXHAO_BLOG_CLIENT_SECRET}}
+    networks:
+      - gxhao_app
+      - proxy_app
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 4G
+      update_config:
+        order: stop-first
+        delay: 60s
+
+  gxhao-db:
+    image: hub.aiursoft.cn/mysql
+    volumes:
+      - gxhao-db:/var/lib/mysql
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
+      - MYSQL_DATABASE=gxhao
+      - MYSQL_USER=gxhao
+      - MYSQL_PASSWORD=<gxhao_password>
+    networks:
+      - gxhao_app
+    stop_grace_period: 60s
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8G
+      update_config:
+        order: stop-first
+        delay: 60s
+
+  anois:
+    depends_on:
+      - anois-db
+    image: hub.aiursoft.cn/aiursoft/moongladepure
+    volumes:
+      - anois-files:/data/files
+      - anois-aspnet:/data/.aspnet/
+    environment:
+      - OpenAI__CompletionApiUrl=https://chat.aiursoft.cn/api/chat
+      - OpenAI__Model=qwen3:30b-a3b-thinking-2507-q8_0:32b
+      - ConnectionStrings__DefaultConnection=Server=anois-db;Database=anois;Uid=anois;Pwd=<anois_password>;
+      - ConnectionStrings__DbType=MySql
+      - Storage__Path=/data/files
+      - AppSettings__AuthProvider=OIDC
+      - OIDC__Authority=https://auth.aiursoft.cn/application/o/anoisblog
+      - OIDC__ClientId={{ANOIS_BLOG_CLIENT_ID}}
+      - OIDC__ClientSecret={{ANOIS_BLOG_CLIENT_SECRET}}
+    networks:
+      - anois_app
+      - proxy_app
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 4G
+      update_config:
+        order: stop-first
+        delay: 60s
+
+  anois-db:
+    image: hub.aiursoft.cn/mysql
+    volumes:
+      - anois-db:/var/lib/mysql
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
+      - MYSQL_DATABASE=anois
+      - MYSQL_USER=anois
+      - MYSQL_PASSWORD=<anois_password>
+    networks:
+      - anois_app
+    stop_grace_period: 60s
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8G
+      update_config:
+        order: stop-first
+        delay: 60s
+
+  dvorak:
+    depends_on:
+      - dvorak-db
+    image: hub.aiursoft.cn/aiursoft/moongladepure
+    volumes:
+      - dvorak-files:/data/files
+      - dvorak-aspnet:/data/.aspnet/
+    environment:
+      - OpenAI__CompletionApiUrl=https://chat.aiursoft.cn/api/chat
+      - OpenAI__Model=qwen3:30b-a3b-thinking-2507-q8_0:32b
+      - ConnectionStrings__DefaultConnection=Server=dvorak-db;Database=dvorak;Uid=dvorak;Pwd=<dvorak_password>;
+      - ConnectionStrings__DbType=MySql
+      - Storage__Path=/data/files
+      - AppSettings__AuthProvider=OIDC
+      - OIDC__Authority=https://auth.aiursoft.cn/application/o/dvorakblog
+      - OIDC__ClientId={{DVORAK_BLOG_CLIENT_ID}}
+      - OIDC__ClientSecret={{DVORAK_BLOG_CLIENT_SECRET}}
+    networks:
+      - dvorak_app
+      - proxy_app
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 4G
+      update_config:
+        order: stop-first
+        delay: 60s
+
+  dvorak-db:
+    image: hub.aiursoft.cn/mysql
+    volumes:
+      - dvorak-db:/var/lib/mysql
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
+      - MYSQL_DATABASE=dvorak
+      - MYSQL_USER=dvorak
+      - MYSQL_PASSWORD=<dvorak_password>
+    networks:
+      - dvorak_app
+    stop_grace_period: 60s
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8G
+      update_config:
+        order: stop-first
+        delay: 60s
+
+  kitlau:
+    depends_on:
+      - kitlau-db
+    image: hub.aiursoft.cn/aiursoft/moongladepure
+    volumes:
+      - kitlau-files:/data/files
+      - kitlau-aspnet:/data/.aspnet/
+    environment:
+      - OpenAI__CompletionApiUrl=https://chat.aiursoft.cn/api/chat
+      - OpenAI__Model=qwen3:30b-a3b-thinking-2507-q8_0:32b
+      - ConnectionStrings__DefaultConnection=Server=kitlau-db;Database=kitlau;Uid=kitlau;Pwd=<kitlau_password>;
+      - ConnectionStrings__DbType=MySql
+      - Storage__Path=/data/files
+      - AppSettings__AuthProvider=OIDC
+      - OIDC__Authority=https://auth.aiursoft.cn/application/o/kitlaublog
+      - OIDC__ClientId={{KITLAU_BLOG_CLIENT_ID}}
+      - OIDC__ClientSecret={{KITLAU_BLOG_CLIENT_SECRET}}
+    networks:
+      - kitlau_app
+      - proxy_app
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 4G
+      update_config:
+        order: stop-first
+        delay: 60s
+
+  kitlau-db:
+    image: hub.aiursoft.cn/mysql
+    volumes:
+      - kitlau-db:/var/lib/mysql
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
+      - MYSQL_DATABASE=kitlau
+      - MYSQL_USER=kitlau
+      - MYSQL_PASSWORD=<kitlau_password>
+    networks:
+      - kitlau_app
+    stop_grace_period: 60s
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8G
+      update_config:
+        order: stop-first
+        delay: 60s
+
+  xinboo:
+    depends_on:
+      - xinboo-db
+    image: hub.aiursoft.cn/aiursoft/moongladepure
+    volumes:
+      - xinboo-files:/data/files
+      - xinboo-aspnet:/data/.aspnet/
+    environment:
+      - OpenAI__CompletionApiUrl=https://chat.aiursoft.cn/api/chat
+      - OpenAI__Model=qwen3:30b-a3b-thinking-2507-q8_0:32b
+      - ConnectionStrings__DefaultConnection=Server=xinboo-db;Database=xinboo;Uid=xinboo;Pwd=<xinboo_password>;
+      - ConnectionStrings__DbType=MySql
+      - Storage__Path=/data/files
+      - AppSettings__AuthProvider=OIDC
+      - OIDC__Authority=https://auth.aiursoft.cn/application/o/xinbooblog
+      - OIDC__ClientId={{XINBOO_BLOG_CLIENT_ID}}
+      - OIDC__ClientSecret={{XINBOO_BLOG_CLIENT_SECRET}}
+    networks:
+      - xinboo_app
+      - proxy_app
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 4G
+      update_config:
+        order: stop-first
+        delay: 60s
+
+  xinboo-db:
+    image: hub.aiursoft.cn/mysql
+    volumes:
+      - xinboo-db:/var/lib/mysql
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
+      - MYSQL_DATABASE=xinboo
+      - MYSQL_USER=xinboo
+      - MYSQL_PASSWORD=<xinboo_password>
+    networks:
+      - xinboo_app
+    stop_grace_period: 60s
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8G
+      update_config:
+        order: stop-first
+        delay: 60s
+
+  gbiner:
+    depends_on:
+      - gbiner-db
+    image: hub.aiursoft.cn/aiursoft/moongladepure
+    volumes:
+      - gbiner-files:/data/files
+      - gbiner-aspnet:/data/.aspnet/
+    environment:
+      - OpenAI__CompletionApiUrl=https://chat.aiursoft.cn/api/chat
+      - OpenAI__Model=qwen3:30b-a3b-thinking-2507-q8_0:32b
+      - ConnectionStrings__DefaultConnection=Server=gbiner-db;Database=gbiner;Uid=gbiner;Pwd=<gbiner_password>;
+      - ConnectionStrings__DbType=MySql
+      - Storage__Path=/data/files
+      - AppSettings__AuthProvider=OIDC
+      - OIDC__Authority=https://auth.aiursoft.cn/application/o/gbinerblog
+      - OIDC__ClientId={{GBINER_BLOG_CLIENT_ID}}
+      - OIDC__ClientSecret={{GBINER_BLOG_CLIENT_SECRET}}
+    networks:
+      - gbiner_app
+      - proxy_app
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 4G
+      update_config:
+        order: stop-first
+        delay: 60s
+
+  gbiner-db:
+    image: hub.aiursoft.cn/mysql
+    volumes:
+      - gbiner-db:/var/lib/mysql
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
+      - MYSQL_DATABASE=gbiner
+      - MYSQL_USER=gbiner
+      - MYSQL_PASSWORD=<gbiner_password>
+    networks:
+      - gbiner_app
+    stop_grace_period: 60s
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8G
+      update_config:
+        order: stop-first
+        delay: 60s
+
+  rdf:
+    depends_on:
+      - rdf-db
+    image: hub.aiursoft.cn/aiursoft/moongladepure
+    volumes:
+      - rdf-files:/data/files
+      - rdf-aspnet:/data/.aspnet/
+    environment:
+      - OpenAI__CompletionApiUrl=https://chat.aiursoft.cn/api/chat
+      - OpenAI__Model=qwen3:30b-a3b-thinking-2507-q8_0:32b
+      - ConnectionStrings__DefaultConnection=Server=rdf-db;Database=rdf;Uid=rdf;Pwd=<rdf_password>;
+      - ConnectionStrings__DbType=MySql
+      - Storage__Path=/data/files
+      - AppSettings__AuthProvider=OIDC
+      - OIDC__Authority=https://auth.aiursoft.cn/application/o/rdfblog
+      - OIDC__ClientId={{RDF_BLOG_CLIENT_ID}}
+      - OIDC__ClientSecret={{RDF_BLOG_CLIENT_SECRET}}
+    networks:
+      - rdf_app
+      - proxy_app
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 4G
+      update_config:
+        order: stop-first
+        delay: 60s
+
+  rdf-db:
+    image: hub.aiursoft.cn/mysql
+    volumes:
+      - rdf-db:/var/lib/mysql
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
+      - MYSQL_DATABASE=rdf
+      - MYSQL_USER=rdf
+      - MYSQL_PASSWORD=<rdf_password>
+    networks:
+      - rdf_app
+    stop_grace_period: 60s
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8G
+      update_config:
+        order: stop-first
+        delay: 60s
+
+  lyx:
+    depends_on:
+      - lyx-db
+    image: hub.aiursoft.cn/aiursoft/moongladepure
+    volumes:
+      - lyx-files:/data/files
+      - lyx-aspnet:/data/.aspnet/
+    environment:
+      - OpenAI__CompletionApiUrl=https://chat.aiursoft.cn/api/chat
+      - OpenAI__Model=qwen3:30b-a3b-thinking-2507-q8_0:32b
+      - ConnectionStrings__DefaultConnection=Server=lyx-db;Database=lyx;Uid=lyx;Pwd=<lyx_password>;
+      - ConnectionStrings__DbType=MySql
+      - Storage__Path=/data/files
+      - AppSettings__AuthProvider=OIDC
+      - OIDC__Authority=https://auth.aiursoft.cn/application/o/lyxblog
+      - OIDC__ClientId={{LYX_BLOG_CLIENT_ID}}
+      - OIDC__ClientSecret={{LYX_BLOG_CLIENT_SECRET}}
+    networks:
+      - lyx_app
+      - proxy_app
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 4G
+      update_config:
+        order: stop-first
+        delay: 60s
+
+  lyx-db:
+    image: hub.aiursoft.cn/mysql
+    volumes:
+      - lyx-db:/var/lib/mysql
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
+      - MYSQL_DATABASE=lyx
+      - MYSQL_USER=lyx
+      - MYSQL_PASSWORD=<lyx_password>
+    networks:
+      - lyx_app
+    stop_grace_period: 60s
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8G
+      update_config:
+        order: stop-first
+        delay: 60s
+
+  shubuzuo:
+    depends_on:
+      - shubuzuo-db
+    image: hub.aiursoft.cn/aiursoft/moongladepure
+    volumes:
+      - shubuzuo-files:/data/files
+      - shubuzuo-aspnet:/data/.aspnet/
+    environment:
+      - OpenAI__CompletionApiUrl=https://chat.aiursoft.cn/api/chat
+      - OpenAI__Model=qwen3:30b-a3b-thinking-2507-q8_0:32b
+      - ConnectionStrings__DefaultConnection=Server=shubuzuo-db;Database=shubuzuo;Uid=shubuzuo;Pwd=<shubuzuo_password>;
+      - ConnectionStrings__DbType=MySql
+      - Storage__Path=/data/files
+      - AppSettings__AuthProvider=OIDC
+      - OIDC__Authority=https://auth.aiursoft.cn/application/o/shubuzuoblog
+      - OIDC__ClientId={{SHUBUZUO_BLOG_CLIENT_ID}}
+      - OIDC__ClientSecret={{SHUBUZUO_BLOG_CLIENT_SECRET}}
+    networks:
+      - shubuzuo_app
+      - proxy_app
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 4G
+      update_config:
+        order: stop-first
+        delay: 60s
+
+  shubuzuo-db:
+    image: hub.aiursoft.cn/mysql
+    volumes:
+      - shubuzuo-db:/var/lib/mysql
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
+      - MYSQL_DATABASE=shubuzuo
+      - MYSQL_USER=shubuzuo
+      - MYSQL_PASSWORD=<shubuzuo_password>
+    networks:
+      - shubuzuo_app
+    stop_grace_period: 60s
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8G
+      update_config:
+        order: stop-first
+        delay: 60s
+
+  lily:
+    depends_on:
+      - lily-db
+    image: hub.aiursoft.cn/aiursoft/moongladepure
+    volumes:
+      - lily-files:/data/files
+      - lily-aspnet:/data/.aspnet/
+    environment:
+      - OpenAI__CompletionApiUrl=https://chat.aiursoft.cn/api/chat
+      - OpenAI__Model=qwen3:30b-a3b-thinking-2507-q8_0:32b
+      - ConnectionStrings__DefaultConnection=Server=lily-db;Database=lily;Uid=lily;Pwd=<lily_password>;
+      - ConnectionStrings__DbType=MySql
+      - Storage__Path=/data/files
+      - AppSettings__AuthProvider=OIDC
+      - OIDC__Authority=https://auth.aiursoft.cn/application/o/lilyblog
+      - OIDC__ClientId={{LILY_BLOG_CLIENT_ID}}
+      - OIDC__ClientSecret={{LILY_BLOG_CLIENT_SECRET}}
+    networks:
+      - lily_app
+      - proxy_app
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 4G
+      update_config:
+        order: stop-first
+        delay: 60s
+
+  lily-db:
+    image: hub.aiursoft.cn/mysql
+    volumes:
+      - lily-db:/var/lib/mysql
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
+      - MYSQL_DATABASE=lily
+      - MYSQL_USER=lily
+      - MYSQL_PASSWORD=<lily_password>
+    networks:
+      - lily_app
+    stop_grace_period: 60s
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8G
+      update_config:
+        order: stop-first
+        delay: 60s
+
+  carson:
+    depends_on:
+      - carson-db
+    image: hub.aiursoft.cn/aiursoft/moongladepure
+    volumes:
+      - carson-files:/data/files
+      - carson-aspnet:/data/.aspnet/
+    environment:
+      - OpenAI__CompletionApiUrl=https://chat.aiursoft.cn/api/chat
+      - OpenAI__Model=qwen3:30b-a3b-thinking-2507-q8_0:32b
+      - ConnectionStrings__DefaultConnection=Server=carson-db;Database=carson;Uid=carson;Pwd=<carson_password>;
+      - ConnectionStrings__DbType=MySql
+      - Storage__Path=/data/files
+      - AppSettings__AuthProvider=OIDC
+      - OIDC__Authority=https://auth.aiursoft.cn/application/o/carsonblog
+      - OIDC__ClientId={{CARSON_BLOG_CLIENT_ID}}
+      - OIDC__ClientSecret={{CARSON_BLOG_CLIENT_SECRET}}
+    networks:
+      - carson_app
+      - proxy_app
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 4G
+      update_config:
+        order: stop-first
+        delay: 60s
+
+  carson-db:
+    image: hub.aiursoft.cn/mysql
+    volumes:
+      - carson-db:/var/lib/mysql
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
+      - MYSQL_DATABASE=carson
+      - MYSQL_USER=carson
+      - MYSQL_PASSWORD=<carson_password>
+    networks:
+      - carson_app
+    stop_grace_period: 60s
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8G
+      update_config:
+        order: stop-first
+        delay: 60s
+
+  zoneblog:
+    depends_on:
+      - zoneblog-db
+    image: hub.aiursoft.cn/aiursoft/moongladepure
+    volumes:
+      - zoneblog-files:/data/files
+      - zoneblog-aspnet:/data/.aspnet/
+    environment:
+      - OpenAI__CompletionApiUrl=https://chat.aiursoft.cn/api/chat
+      - OpenAI__Model=qwen3:30b-a3b-thinking-2507-q8_0:32b
+      - ConnectionStrings__DefaultConnection=Server=zoneblog-db;Database=zoneblog;Uid=zoneblog;Pwd=<zoneblog_password>;
+      - ConnectionStrings__DbType=MySql
+      - Storage__Path=/data/files
+      - AppSettings__AuthProvider=OIDC
+      - OIDC__Authority=https://auth.aiursoft.cn/application/o/zoneblog
+      - OIDC__ClientId={{ZONEBLOG_BLOG_CLIENT_ID}}
+      - OIDC__ClientSecret={{ZONEBLOG_BLOG_CLIENT_SECRET}}
+    networks:
+      - zoneblog_app
+      - proxy_app
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 4G
+      update_config:
+        order: stop-first
+        delay: 60s
+
+  zoneblog-db:
+    image: hub.aiursoft.cn/mysql
+    volumes:
+      - zoneblog-db:/var/lib/mysql
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
+      - MYSQL_DATABASE=zoneblog
+      - MYSQL_USER=zoneblog
+      - MYSQL_PASSWORD=<zoneblog_password>
+    networks:
+      - zoneblog_app
+    stop_grace_period: 60s
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8G
+      update_config:
+        order: stop-first
+        delay: 60s
+    
+      
+  yuyuyuyublog:
+    depends_on:
+      - yuyuyuyublog-db
+    image: hub.aiursoft.cn/aiursoft/moongladepure
+    volumes:
+      - yuyuyuyublog-files:/data/files
+      - yuyuyuyublog-aspnet:/data/.aspnet/
+    environment:
+      - OpenAI__CompletionApiUrl=https://chat.aiursoft.cn/api/chat
+      - OpenAI__Model=qwen3:30b-a3b-thinking-2507-q8_0:32b
+      - ConnectionStrings__DefaultConnection=Server=yuyuyuyublog-db;Database=yuyuyuyublog;Uid=yuyuyuyublog;Pwd=<yuyuyuyublog_password>;
+      - ConnectionStrings__DbType=MySql
+      - Storage__Path=/data/files
+      - AppSettings__AuthProvider=OIDC
+      - OIDC__Authority=https://auth.aiursoft.cn/application/o/yuyuyuyublog
+      - OIDC__ClientId={{YUYUYUYUBLOG_BLOG_CLIENT_ID}}
+      - OIDC__ClientSecret={{YUYUYUYUBLOG_BLOG_CLIENT_SECRET}}
+    networks:
+      - yuyuyuyublog_app
+      - proxy_app
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 4G
+      update_config:
+        order: stop-first
+        delay: 60s
+
+  yuyuyuyublog-db:
+    image: hub.aiursoft.cn/mysql
+    volumes:
+      - yuyuyuyublog-db:/var/lib/mysql
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
+      - MYSQL_DATABASE=yuyuyuyublog
+      - MYSQL_USER=yuyuyuyublog
+      - MYSQL_PASSWORD=<yuyuyuyublog_password>
+    networks:
+      - yuyuyuyublog_app
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 4G
+      update_config:
+        order: stop-first
+        delay: 60s
+
+networks:
+  proxy_app:
+    external: true
+  anduin_app:
+    driver: overlay
+  jimmoen_app:
+    driver: overlay
+  rest_app:
+    driver: overlay
+  cody_app:
+    driver: overlay
+  gxhao_app:
+    driver: overlay
+  anois_app:
+    driver: overlay
+  dvorak_app:
+    driver: overlay
+  kitlau_app:
+    driver: overlay
+  xinboo_app:
+    driver: overlay
+  gbiner_app:
+    driver: overlay
+  rdf_app:
+    driver: overlay
+  lyx_app:
+    driver: overlay
+  shubuzuo_app:
+    driver: overlay
+  lily_app:
+    driver: overlay
+  carson_app:
+    driver: overlay
+  zoneblog_app:
+    driver: overlay
+  yuyuyuyublog_app:
+    driver: overlay  
+
+volumes:
+  anduin-aspnet:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/anduin/aspnet
+  anduin-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/anduin/db
+  anduin-files:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/anduin/files
+
+  jimmoen-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/jimmoen/db
+  jimmoen-aspnet:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/jimmoen/aspnet
+  jimmoen-files:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/jimmoen/files
+
+  rest-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/rest/db
+  rest-aspnet:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/rest/aspnet
+  rest-files:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/rest/files
+
+  cody-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/cody/db
+  cody-aspnet:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/cody/aspnet
+  cody-files:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/cody/files
+
+  gxhao-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/gxhao/db
+  gxhao-aspnet:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/gxhao/aspnet
+  gxhao-files:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/gxhao/files
+
+  anois-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/anois/db
+  anois-aspnet:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/anois/aspnet
+  anois-files:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/anois/files
+
+  dvorak-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/dvorak/db
+  dvorak-aspnet:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/dvorak/aspnet
+  dvorak-files:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/dvorak/files
+
+  kitlau-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/kitlau/db
+  kitlau-aspnet:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/kitlau/aspnet
+  kitlau-files:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/kitlau/files
+
+  xinboo-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/xinboo/db
+  xinboo-aspnet:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/xinboo/aspnet
+  xinboo-files:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/xinboo/files
+
+  gbiner-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/gbiner/db
+  gbiner-aspnet:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/gbiner/aspnet
+  gbiner-files:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/gbiner/files
+
+  rdf-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/rdf/db
+  rdf-aspnet:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/rdf/aspnet
+  rdf-files:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/rdf/files
+
+  lyx-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/lyx/db
+  lyx-aspnet:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/lyx/aspnet
+  lyx-files:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/lyx/files  
+
+  shubuzuo-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/shubuzuo/db
+  shubuzuo-aspnet:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/shubuzuo/aspnet
+  shubuzuo-files:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/shubuzuo/files
+
+  lily-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/lily/db
+  lily-aspnet:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/lily/aspnet
+  lily-files:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/lily/files
+
+  carson-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/carson/db
+  carson-aspnet:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/carson/aspnet
+  carson-files:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/carson/files
+
+  zoneblog-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/zoneblog/db
+  zoneblog-aspnet:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/zoneblog/aspnet
+  zoneblog-files:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/zoneblog/files
+
+  yuyuyuyublog-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/yuyuyuyublog/db
+  yuyuyuyublog-aspnet:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/yuyuyuyublog/aspnet
+  yuyuyuyublog-files:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/moongladepure/yuyuyuyublog/files

@@ -1,0 +1,62 @@
+version: '3.9' 
+
+services:
+  downloader:
+    image: hub.aiursoft.cn/aiursoft/internalimages/youtubedl
+    volumes:
+      - media-data:/mnt/data
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4G
+      update_config:
+        order: stop-first
+        delay: 60s
+
+  web:
+    image: hub.aiursoft.cn/jellyfin/jellyfin
+    volumes:
+      - config-data:/config
+      - cache-data:/cache
+      - media-data:/mnt/data
+    environment:
+      - TZ=UTC
+      #- NVIDIA_VISIBLE_DEVICES=all
+      #- NVIDIA_DRIVER_CAPABILITIES=compute,utility,video
+    networks:
+      - proxy_app
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '8.0'
+          memory: 16G
+      update_config:
+        order: stop-first
+        delay: 60s
+
+networks:
+  proxy_app:
+    external: true
+
+volumes:
+  config-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/jellyfin/config
+  cache-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/jellyfin/cache
+  media-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/jellyfin/media

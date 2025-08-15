@@ -1,0 +1,89 @@
+serverAddr = "FRP_SERVER_IP"
+serverPort = 7000
+auth.token = "FRP_TOKEN"
+transport.poolCount = 30
+#transport.useCompression = true
+webServer.addr = "0.0.0.0"
+# TODO: Proxy with Caddy
+webServer.port = 7400
+webServer.user = "admin"
+webServer.password = "admin"
+
+# Check on Caddy.
+[[proxies]]
+name = "http"
+type = "tcp"
+localIP = "incoming_sites"
+localPort = 80
+remotePort = 80
+
+# Check on Caddy.
+[[proxies]]
+name = "https"
+type = "tcp"
+localIP = "incoming_sites"
+localPort = 443
+remotePort = 443
+transport.proxyProtocolVersion = "v2"
+
+# Regular update to ensure safe.
+[[proxies]]
+name = "satisfactory_tcp"
+type = "tcp"
+localIP = "satisfactory_server"
+localPort = 7777
+remotePort = 7777
+
+[[proxies]]
+name = "satisfactory_udp"
+type = "udp"
+localIP = "satisfactory_server"
+localPort = 7777
+remotePort = 7777
+
+# Regular update to ensure safe.
+[[proxies]]
+name = "nextcloud_talk_tcp"
+type = "tcp"
+localIP = "nextcloud_aio"
+localPort = 3478
+remotePort = 3478
+
+# Regular update to ensure safe.
+[[proxies]]
+name = "nextcloud_talk_udp"
+type = "udp"
+localIP = "nextcloud_aio"
+localPort = 3478
+remotePort = 3478
+
+[[proxies]]
+name = "satisfactory_messaging"
+type = "tcp"
+localIP = "satisfactory_server"
+localPort = 8888
+remotePort = 8888
+
+# Regular update to ensure safe.
+[[proxies]]
+name = "mc"
+type = "tcp"
+localIP = "minecraft_server"
+localPort = 25565
+remotePort = 25565
+
+# Regular update to ensure safe.
+[[proxies]]
+name = "ssh_gitea"
+type = "tcp"
+localIP = "gitea_app"
+localPort = 2201
+remotePort = 2201
+
+# Regular update to ensure safe.
+[[proxies]]
+name = "ssh_gitlab"
+type = "tcp"
+localIP = "gitlab_gitlab"
+localPort = 2202
+remotePort = 2202

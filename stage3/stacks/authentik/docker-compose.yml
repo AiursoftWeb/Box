@@ -1,0 +1,196 @@
+# depends on
+# image
+# volumes
+# environment
+# networks
+# secrets
+# healthcheck
+# command
+# deploy
+
+version: '3.9'
+
+services:
+  postgresql:
+    image: localhost:8080/public_mirror/postgres:16-alpine
+    volumes:
+      - database:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: /run/secrets/authentik_pg_pass
+      POSTGRES_USER: authentik_pg_user
+      POSTGRES_DB: authentik
+    networks:
+      - internal
+    secrets:
+      - authentik_pg_pass
+    stop_grace_period: 60s
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8G
+      update_config:
+        order: stop-first
+        delay: 60s
+
+  redis:
+    image: localhost:8080/public_mirror/redis:alpine
+    volumes:
+      - redis:/data
+    networks:
+      - internal
+    stop_grace_period: 60s
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 3s
+    command: --save 60 1 --loglevel warning
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4G
+      update_config:
+        order: stop-first
+        delay: 60s
+
+  server:
+    depends_on:
+      - postgresql
+      - redis
+    # This version need to be updated regularly
+    image: localhost:8080/public_mirror/ghcr.io/goauthentik/server:2025.6
+    volumes:
+      - media:/media
+      - custom-templates:/templates
+      - icons:/web/dist/assets/icons
+    environment:
+      - AUTHENTIK_SECRET_KEY=/run/secrets/authentik_secret_key
+      - AUTHENTIK_REDIS__HOST=redis
+      - AUTHENTIK_POSTGRESQL__HOST=postgresql
+      - AUTHENTIK_POSTGRESQL__USER=authentik_pg_user
+      - AUTHENTIK_POSTGRESQL__NAME=authentik
+      - AUTHENTIK_POSTGRESQL__PASSWORD=/run/secrets/authentik_pg_pass
+      - AUTHENTIK_EMAIL__HOST=mail.aiursoft.com
+      - AUTHENTIK_EMAIL__PORT=465
+      - AUTHENTIK_EMAIL__USERNAME=service@aiursoft.com
+      - AUTHENTIK_EMAIL__PASSWORD={{AUTHENTIK_EMAIL_PASSWORD}}
+      - AUTHENTIK_EMAIL__USE_TLS=false
+      - AUTHENTIK_EMAIL__USE_SSL=true
+      - AUTHENTIK_EMAIL__TIMEOUT='10'
+      - AUTHENTIK_EMAIL__FROM=Aiursoft Service <service@aiursoft.com>
+    networks:
+      - proxy_app
+      - internal
+    secrets:
+      - authentik_pg_pass
+      - authentik_secret_key
+    command: server
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8G
+      update_config:
+        order: stop-first
+        delay: 60s
+
+  worker:
+    depends_on:
+      - postgresql
+      - redis
+    image: localhost:8080/public_mirror/ghcr.io/goauthentik/server:2025.6
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - media:/media
+      - certs:/certs
+      - custom-templates:/templates
+      - icons:/web/dist/assets/icons
+    environment:
+      AUTHENTIK_SECRET_KEY: /run/secrets/authentik_secret_key
+      AUTHENTIK_REDIS__HOST: redis
+      AUTHENTIK_POSTGRESQL__HOST: postgresql
+      AUTHENTIK_POSTGRESQL__USER: authentik_pg_user
+      AUTHENTIK_POSTGRESQL__NAME: authentik
+      AUTHENTIK_POSTGRESQL__PASSWORD: /run/secrets/authentik_pg_pass
+    # `user: root` and the docker socket volume are optional.
+    # See more for the docker socket integration here:
+    # https://goauthentik.io/docs/outposts/integrations/docker
+    # Removing `user: root` also prevents the worker from fixing the permissions
+    # on the mounted folders, so when removing this make sure the folders have the correct UID/GID
+    # (1000:1000 by default)
+    networks:
+      - internal
+    secrets:
+      - authentik_pg_pass
+      - authentik_secret_key
+    command: worker
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 4G
+      update_config:
+        order: stop-first
+        delay: 60s
+    
+
+networks:
+  proxy_app:
+    external: true
+  internal:
+    driver: overlay
+
+secrets:
+  authentik_pg_pass:
+    external: true
+  authentik_secret_key:
+    external: true
+
+volumes:
+  icons:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/authentik/icons
+  database:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/authentik/postgres-database
+  redis:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/authentik/redis-data
+  media:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/authentik/media-data
+  certs:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/authentik/certs
+  custom-templates:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/authentik/custom-templates
