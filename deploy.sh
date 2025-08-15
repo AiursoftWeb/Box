@@ -19,9 +19,11 @@ export WARNING="${Yellow}[ WARN ]${Font}"
 # Argument Parsing
 #==========================
 STACK_FILTER=""
-if [[ "$1" == "--filter" ]] && [[ -n "$2" ]]; then
+# Use ${1:-} and ${2:-} to provide a default empty value if arguments are not set
+if [[ "${1:-}" == "--filter" ]] && [[ -n "${2:-}" ]]; then
   STACK_FILTER="$2"
   echo -e "${Green}[  OK  ]${Font} ${Blue} Running with filter, will only deploy stacks containing: '$STACK_FILTER'${Font}"
+  shift 2 # Consume the two arguments so they don't interfere with other parts of the script
 fi
 
 #==========================

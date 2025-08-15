@@ -30,6 +30,7 @@ services:
       - NODE_ENV=production
     networks:
       - proxy_app
+      - internal
     stop_grace_period: 60s
     deploy:
       resources:
@@ -43,6 +44,8 @@ services:
 networks:
   proxy_app:
     external: true
+  internal:
+    driver: overlay
 
 volumes:
   uptime-kuma:
