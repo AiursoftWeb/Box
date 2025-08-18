@@ -3,4 +3,6 @@ stages:
 
 lint:
   stage: build
+  before_script:
+    - python3 -m pip install PyYAML
   script: /usr/bin/python3 ./lint.py ./stage4/
