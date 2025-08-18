@@ -1,0 +1,30 @@
+version: '3.9'
+
+services:
+  server:
+    image: hub.aiursoft.cn/aiursoft/internalimages/reportertts:latest
+    volumes:
+      - generated:/app/index-tts/output_audios
+    networks:
+      - proxy_app
+    stop_grace_period: 20s
+    deploy:
+      resources:
+        limits:
+          cpus: '8.0'
+          memory: 32G
+      update_config:
+        order: start-first
+        delay: 5s
+
+volumes:
+  generated:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/reporter/generated
+
+networks:
+  proxy_app:
+    external: true
