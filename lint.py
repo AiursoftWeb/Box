@@ -6,15 +6,15 @@ import yaml
 
 def is_stateless(conf: dict) -> bool:
     """
-    判断服务是否为无状态：
-    - stop_grace_period 为 20s
-    - 或 deploy.replicas > 2
-    - 或 deploy.update_config.order 为 start-first
+    Determines if a service is stateless based on the following criteria:
+    - stop_grace_period is '20s'
+    - or deploy.replicas > 2
+    - or deploy.update_config.order is 'start-first'
     """
     sgp = conf.get('stop_grace_period')
     if isinstance(sgp, str) and sgp.endswith('s') and sgp[:-1] == '20':
         return True
-    replicas = conf.get('deploy', {}) .get('replicas')
+    replicas = conf.get('deploy', {}).get('replicas')
     if isinstance(replicas, int) and replicas > 2:
         return True
     order = conf.get('deploy', {}).get('update_config', {}).get('order')
@@ -25,62 +25,104 @@ def is_stateless(conf: dict) -> bool:
 
 def validate_service(name: str, conf: dict):
     """
-    根据服务类型（无状态/有状态）校验必需字段及取值规范，
-    返回 (is_stateless, error_list)
+    Validates the service configuration based on its type (stateless/stateful),
+    and returns a tuple of (is_stateless, error_list).
     """
     errors = []
     stateless = is_stateless(conf)
     upd = conf.get('deploy', {}).get('update_config', {})
 
     if stateless:
-        # 无状态服务规范
+        # Rules for stateless services
         if conf.get('stop_grace_period') != '20s':
-            errors.append("stop_grace_period 应为 '20s'")
+            errors.append("stop_grace_period should be '20s'")
         if upd.get('order') != 'start-first':
-            errors.append("deploy.update_config.order 应为 'start-first'")
+            errors.append("deploy.update_config.order should be 'start-first'")
         if upd.get('delay') != '5s':
-            errors.append("deploy.update_config.delay 应为 '5s'")
+            errors.append("deploy.update_config.delay should be '5s'")
     else:
-        # 有状态服务规范
+        # Rules for stateful services
         if conf.get('stop_grace_period') != '60s':
-            errors.append("stop_grace_period 应为 '60s'")
+            errors.append("stop_grace_period should be '60s'")
         if upd.get('order') != 'stop-first':
-            errors.append("deploy.update_config.order 应为 'stop-first'")
+            errors.append("deploy.update_config.order should be 'stop-first'")
         if upd.get('delay') != '60s':
-            errors.append("deploy.update_config.delay 应为 '60s'")
+            errors.append("deploy.update_config.delay should be '60s'")
         replicas = conf.get('deploy', {}).get('replicas')
         if replicas not in (None, 1):
-            errors.append("deploy.replicas 应不存在或等于 1")
+            errors.append("deploy.replicas should not exist or should be 1")
 
     return stateless, errors
 
 
-def process_file(path: str):
-    print(f"\n→ 检查文件: {path}")
-    data = yaml.safe_load(open(path)) or {}
+def process_file(path: str) -> bool:
+    """
+    Processes a single docker-compose file.
+    Returns True if errors are found, otherwise False.
+    """
+    print(f"\n→ Checking file: {path}")
+    try:
+        with open(path, 'r', encoding='utf-8') as f:
+            data = yaml.safe_load(f) or {}
+    except Exception as e:
+        print(f"  ❌ Failed to read or parse YAML file: {e}")
+        return True  # Treat file read/parse failure as an error
+
     services = data.get('services')
     if not isinstance(services, dict):
-        print("  ⚠️ 未发现 services 节点或格式不正确，跳过")
-        return
+        print("  ⚠️ 'services' key not found or is not a dictionary, skipping")
+        return False  # If 'services' key is missing, we don't consider it a linting error
 
-    has_error = False
+    file_has_error = False
     for svc_name, svc_conf in services.items():
         stateless, errs = validate_service(svc_name, svc_conf or {})
-        svc_type = '无状态' if stateless else '有状态'
-        print(f"  服务 '{svc_name}' 被检测为 {svc_type}")
+        svc_type = 'Stateless' if stateless else 'Stateful'
+        print(f"  Service '{svc_name}' detected as {svc_type}")
         if errs:
-            has_error = True
-            print("    ❌ 配置不符合规范：")
+            file_has_error = True
+            print("    ❌ Configuration does not meet standards:")
             for e in errs:
                 print(f"      - {e}")
+    
+    return file_has_error
+
 
 def main(root='./stage4'):
+    """
+    Walks through the directory and checks all docker-compose files.
+    Returns True if any file fails the check.
+    """
+    overall_has_error = False
     for dirpath, _, filenames in os.walk(root):
         for fn in filenames:
-            if fn in ('docker-compose.yml', 'docker.compose.yml'):
-                process_file(os.path.join(dirpath, fn))
+            if fn in ('docker-compose.yml', 'docker-compose.yaml'): # Support both .yaml and .yml extensions
+                # process_file returning True indicates an error was found
+                if process_file(os.path.join(dirpath, fn)):
+                    overall_has_error = True
+    
+    return overall_has_error
 
 
 if __name__ == '__main__':
-    root_dir = sys.argv[1] if len(sys.argv) > 1 else './stage4'
-    main(root_dir)
+    # Determine the root directory to scan
+    if len(sys.argv) > 1:
+        root_dir = sys.argv[1]
+    else:
+        # If no argument is provided, show usage information
+        print("Usage: python lint_script.py <target_directory>")
+        sys.exit(1) # Invalid arguments should also exit with a non-zero code
+
+    if not os.path.isdir(root_dir):
+        print(f"Error: Directory '{root_dir}' does not exist.")
+        sys.exit(1)
+
+    # Execute the main logic
+    has_errors = main(root_dir)
+
+    # Set the exit code based on the result
+    if has_errors:
+        print("\n💥 Linter found errors. Exiting with a non-zero status code.")
+        sys.exit(1)
+    else:
+        print("\n✅ Linter finished successfully. No errors found.")
+        sys.exit(0)

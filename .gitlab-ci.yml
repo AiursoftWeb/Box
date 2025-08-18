@@ -1,6 +1,6 @@
 stages:
   - build
 
-dummy:
+lint:
   stage: build
-  script: echo "Hello, $CI_JOB_NAME!"
+  script: python ./lint.py ./stage4/
