@@ -3,4 +3,4 @@ stages:
 
 lint:
   stage: build
-  script: python ./lint.py ./stage4/
+  script: /usr/bin/python3 ./lint.py ./stage4/
