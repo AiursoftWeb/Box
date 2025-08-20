@@ -46,7 +46,7 @@ services:
       update_config:
         order: start-first
         delay: 5s
-    entrypoint: ["sh", "-c", "/app/static --port 5000 --path /data/mirror/mirrors.ustc.edu.cn --allow-directory-browsing"]
+    entrypoint: ["sh", "-c", "/app/static --port 5000 --path /data/mirror/ossmirror.mycloud.services --allow-directory-browsing"]
 
   web_ppa:
     depends_on:
