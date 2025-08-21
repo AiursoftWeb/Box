@@ -7,6 +7,7 @@ services:
       - generated:/app/index-tts/output_audios
     networks:
       - proxy_app
+      - clickhouse_net
     stop_grace_period: 20s
     deploy:
       resources:
@@ -27,4 +28,6 @@ volumes:
 
 networks:
   proxy_app:
+    external: true
+  clickhouse_net:
     external: true
