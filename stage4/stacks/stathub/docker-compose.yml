@@ -3,8 +3,6 @@ version: '3.9'
 services:
   stathubserver:
     image: hub.aiursoft.cn/aiursoft/stathub
-    volumes:
-      - stathub-data:/data
     environment:
       - RequiresAuth=True
       - OIDC__Authority=https://auth.aiursoft.cn/application/o/stathub
@@ -22,14 +20,6 @@ services:
       update_config:
         order: stop-first
         delay: 60s
-
-volumes:
-  stathub-data:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /swarm-vol/stathub-data
 
 networks:
   proxy_app:
