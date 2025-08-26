@@ -83,6 +83,12 @@ volumes:
       type: none
       o: bind
       device: /swarm-vol/reporter/protal-aspnet
+  protal-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/reporter/protal-db
 
 networks:
   internal:
