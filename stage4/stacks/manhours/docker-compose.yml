@@ -4,7 +4,7 @@ services:
   app:
     image: hub.aiursoft.cn/aiursoft/manhours
     volumes:
-      - manhours-data:/data
+      - manhours-data:/data/Repos
     networks:
       - proxy_app
     stop_grace_period: 20s
