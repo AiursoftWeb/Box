@@ -4,7 +4,7 @@ services:
   app:
     image: hub.aiursoft.cn/anduin/flyclass
     volumes:
-      - flyclass-data:/data
+      - flyclass-aspnet:/data/.aspnet/
     networks:
       - proxy_app
     stop_grace_period: 60s
@@ -18,12 +18,12 @@ services:
         delay: 60s
 
 volumes:
-  flyclass-data:
+  flyclass-aspnet:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /swarm-vol/flyclass-data
+      device: /swarm-vol/flyclass/aspnet
 
 networks:
   proxy_app:
