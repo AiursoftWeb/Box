@@ -1,13 +1,59 @@
 version: '3.9'
 
 services:
-  server:
+  protal:
+    depends_on: 
+      - tts
+      - db
+    image: hub.aiursoft.cn/aiursoft/reporterportal:latest
+    volumes:
+      - portal-fies:/data/files
+      - protal-aspnet:/data/.aspnet/
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=db;Database=protal;Uid=protal;Pwd=<protal_password>;
+      - ConnectionStrings__DbType=MySql
+    networks:
+      - proxy_app
+      - internal
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8G
+      update_config:
+        order: start-first
+        delay: 60s
+
+  db:
+    image: hub.aiursoft.cn/mysql
+    volumes:
+      - protal-db:/var/lib/mysql
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
+      - MYSQL_DATABASE=protal
+      - MYSQL_USER=protal
+      - MYSQL_PASSWORD=<protal_password>
+    networks:
+      - internal
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4G
+      update_config:
+        order: stop-first
+        delay: 60s
+
+  tts:
     image: hub.aiursoft.cn/aiursoft/internalimages/reportertts:latest
     volumes:
       - generated:/app/index-tts/output_audios
     networks:
       - proxy_app
       - clickhouse_net
+      - internal
     stop_grace_period: 20s
     deploy:
       resources:
@@ -25,8 +71,22 @@ volumes:
       type: none
       o: bind
       device: /swarm-vol/reporter/generated
+  portal-fies:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/reporter/portal-files
+  protal-aspnet:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/reporter/protal-aspnet
 
 networks:
+  internal:
+    driver: overlay
   proxy_app:
     external: true
   clickhouse_net:
