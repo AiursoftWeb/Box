@@ -1,16 +1,16 @@
 version: '3.9'
 
 services:
-  protal:
+  portal:
     depends_on: 
       - tts
       - db
     image: hub.aiursoft.cn/aiursoft/reporterportal:latest
     volumes:
-      - portal-fies:/data/files
-      - protal-aspnet:/data/.aspnet/
+      - portal-files:/data/files
+      - portal-aspnet:/data/.aspnet/
     environment:
-      - ConnectionStrings__DefaultConnection=Server=db;Database=protal;Uid=protal;Pwd=<protal_password>;
+      - ConnectionStrings__DefaultConnection=Server=db;Database=portal;Uid=portal;Pwd=<portal_password>;
       - ConnectionStrings__DbType=MySql
     networks:
       - proxy_app
@@ -28,12 +28,12 @@ services:
   db:
     image: hub.aiursoft.cn/mysql
     volumes:
-      - protal-db:/var/lib/mysql
+      - portal-db:/var/lib/mysql
     environment:
       - MYSQL_RANDOM_ROOT_PASSWORD=true
-      - MYSQL_DATABASE=protal
-      - MYSQL_USER=protal
-      - MYSQL_PASSWORD=<protal_password>
+      - MYSQL_DATABASE=portal
+      - MYSQL_USER=portal
+      - MYSQL_PASSWORD=<portal_password>
     networks:
       - internal
     stop_grace_period: 60s
@@ -71,19 +71,19 @@ volumes:
       type: none
       o: bind
       device: /swarm-vol/reporter/generated
-  portal-fies:
+  portal-files:
     driver: local
     driver_opts:
       type: none
       o: bind
       device: /swarm-vol/reporter/portal-files
-  protal-aspnet:
+  portal-aspnet:
     driver: local
     driver_opts:
       type: none
       o: bind
       device: /swarm-vol/reporter/portal-aspnet
-  protal-db:
+  portal-db:
     driver: local
     driver_opts:
       type: none
