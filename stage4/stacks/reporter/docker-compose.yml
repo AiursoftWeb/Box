@@ -88,7 +88,7 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /swarm-vol/reporter/protal-db
+      device: /swarm-vol/reporter/portal-db
 
 networks:
   internal:
