@@ -3,6 +3,8 @@ version: '3.9'
 services:
   stathubserver:
     image: hub.aiursoft.cn/aiursoft/stathub
+    volumes:
+      - stathub-aspnet:/data/.aspnet/
     environment:
       - RequiresAuth=True
       - OIDC__Authority=https://auth.aiursoft.cn/application/o/stathub
@@ -20,6 +22,14 @@ services:
       update_config:
         order: stop-first
         delay: 60s
+
+volumes:
+  stathub-aspnet:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/stathub-data/aspnet
 
 networks:
   proxy_app:
