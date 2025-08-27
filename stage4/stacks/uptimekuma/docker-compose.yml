@@ -4,6 +4,11 @@ version: '3.9'
 services:
   authentik_proxy:
     image: hub.aiursoft.cn/ghcr.io/goauthentik/proxy:2025.6
+    volumes:
+      - type: tmpfs
+        target: /dev/shm
+        tmpfs:
+          size: 2147483648 # 2GB
     environment:
       AUTHENTIK_HOST: "https://auth.aiursoft.cn/"
       AUTHENTIK_INSECURE: "false"
