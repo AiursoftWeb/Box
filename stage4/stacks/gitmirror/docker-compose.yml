@@ -6,11 +6,6 @@ services:
     volumes:
       - data:/data/files
       - aspnet:/data/.aspnet
-    secrets:
-      - source: github-token
-        target: Mirrors:0:TargetToken
-      - source: github-token
-        target: Mirrors:1:TargetToken
     environment:
       - Storage__Path=/data/files
       - Mirrors__0__FromType=GitLab
@@ -33,6 +28,8 @@ services:
       - OIDC__Authority=https://auth.aiursoft.cn/application/o/gitmirror
       - OIDC__ClientId={{GITMIRROR_CLIENT_ID}}
       - OIDC__ClientSecret={{GITMIRROR_CLIENT_SECRET}}
+      - Mirrors__0__TargetToken={{GITHUB_TOKEN}}
+      - Mirrors__1__TargetToken={{GITHUB_TOKEN}}
     networks:
       - proxy_app
     stop_grace_period: 60s
@@ -61,8 +58,4 @@ volumes:
 
 networks:
   proxy_app:
-    external: true
-
-secrets:
-  github-token:
     external: true

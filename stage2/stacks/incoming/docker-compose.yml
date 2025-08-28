@@ -53,9 +53,7 @@ services:
       - frp_net
     environment:
       - FRP_SERVER=110.42.35.222
-    secrets:
-      - source: frp-token
-        target: frp-token
+      - FRP_TOKEN={{FRP_TOKEN}}
     stop_grace_period: 60s
     deploy:
       resources:
@@ -75,9 +73,7 @@ services:
       - frp_net
     environment:
       - FRP_SERVER=45.77.178.215
-    secrets:
-      - source: frp-token
-        target: frp-token
+      - FRP_TOKEN={{FRP_TOKEN}}
     stop_grace_period: 60s
     deploy:
       resources:
@@ -105,8 +101,4 @@ networks:
   proxy_app:
     external: true
   clickhouse_net:
-    external: true
-
-secrets:
-  frp-token:
     external: true

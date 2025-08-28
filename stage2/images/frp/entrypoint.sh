@@ -1,4 +1,4 @@
-token=$(cat /run/secrets/frp-token)
+token=$(echo $FRP_TOKEN)
 serverip=$(echo $FRP_SERVER)
 
 # If token is empty, exit

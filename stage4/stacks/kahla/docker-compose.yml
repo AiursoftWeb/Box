@@ -8,15 +8,12 @@ services:
     volumes:
       - data:/data/files
       - aspnet:/data/.aspnet
-    secrets:
-      - source: kahla-vapid-key-public
-        target: VapidKeys:PublicKey
-      - source: kahla-vapid-key-private
-        target: VapidKeys:PrivateKey
     environment:
         ConnectionStrings__DefaultConnection: Server=db;Database=kahla;Uid=kahla;Pwd=kahla_password;
         ConnectionStrings__DbType: "MySql"
         Storage__Path: /data/files
+        VapidKeys__PublicKey: {{KAHLA_VAPID_KEY_PUBLIC}}
+        VapidKeys__PrivateKey: {{KAHLA_VAPID_KEY_PRIVATE}}
     networks:
       - proxy_app
       - internal
@@ -56,12 +53,6 @@ services:
       update_config:
         order: stop-first
         delay: 60s
-
-secrets:
-  kahla-vapid-key-public:
-    external: true
-  kahla-vapid-key-private:
-    external: true
 
 volumes:
   aspnet:

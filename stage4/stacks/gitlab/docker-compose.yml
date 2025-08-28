@@ -80,10 +80,9 @@ services:
       # Use public endpoint so the jobrunner can access GitLab.
       # The actual jobrunner will not use the internal endpoint.
       - GITLAB_ENDPOINT=http://gitlab
+      - GITLAB_RUNNER_TOKEN={{GITLAB_RUNNER_TOKEN}}
     networks:
       - internal
-    secrets:
-      - gitlab-runner-token
     stop_grace_period: 20s
     deploy:
       resources:
@@ -103,11 +102,9 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
       - GITLAB_ENDPOINT=http://gitlab
+      - GITLAB_RUNNER_TOKEN={{GITLAB_RUNNER_TOKEN_FOR_GROUP}}
     networks:
       - internal
-    secrets:
-      - source: gitlab-runner-token-for-group
-        target: gitlab-runner-token
     stop_grace_period: 20s
     deploy:
       resources:
@@ -152,9 +149,3 @@ networks:
     external: true
   internal:
     driver: overlay
-
-secrets:
-  gitlab-runner-token:
-    external: true
-  gitlab-runner-token-for-group:
-    external: true

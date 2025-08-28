@@ -60,9 +60,7 @@ services:
       - APP_OCR_SEARCH__OCR_MIN_CONFIDENCE=0.05
       - APP_ADMIN_API_ENABLE=True
       - APP_STORAGE__METHOD=local
-    secrets:
-      - source: neko-image-gallery-admin-token
-        target: app_admin_token
+      - APP_ADMIN_TOKEN={{NEKO_IMAGE_GALLERY_ADMIN_TOKEN}}
     # runtime: nvidia
     stop_grace_period: 60s
     deploy:
@@ -116,7 +114,3 @@ networks:
     external: true
   internal:
     driver: overlay
-
-secrets:
-  neko-image-gallery-admin-token:
-    external: true
