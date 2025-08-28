@@ -17,4 +17,6 @@ RUN if curl -f http://mirrors.aiursoft.cn/; then \
         echo "Using default ubuntu sources"; \
     fi
 
+RUN rm /etc/apt/sources.list.d/ubuntu.sources && apt modernize-sources -y && rm /etc/apt/sources.list.bak
+
 RUN apt upgrade -y
