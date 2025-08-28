@@ -3,7 +3,7 @@ FROM localhost:8080/public_mirror/ubuntu:25.04
 COPY aiursoft-source.list /aiursoft-source.list
 COPY huawei-source.list /huawei-sources.list
 
-RUN apt update && apt install -y curl
+RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
 
 RUN if curl -f http://mirrors.aiursoft.cn/; then \
         echo "Using aiursoft sources"; \
