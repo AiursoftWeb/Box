@@ -5,15 +5,15 @@ COPY huawei-source.list /huawei-sources.list
 
 RUN apt update && apt install -y curl
 
-RUN if curl -f http://mirrors.huaweicloud.com/; then \
-        echo "Using huaweicloud sources"; \
-        cp /huawei-sources.list /etc/apt/sources.list && \
-        apt update; \
-    elif curl -f http://mirrors.aiursoft.cn/; then \
+RUN if curl -f http://mirrors.aiursoft.cn/; then \
         echo "Using aiursoft sources"; \
         cp /aiursoft-source.list /etc/apt/sources.list && \
         apt update; \
-    else \
+    elif curl -f http://mirrors.huaweicloud.com/; then \
+        echo "Using huaweicloud sources"; \
+        cp /huawei-sources.list /etc/apt/sources.list && \
+        apt update; \
+    el \
         echo "Using default ubuntu sources"; \
     fi
 
