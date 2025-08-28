@@ -16,6 +16,7 @@ services:
       - Mirrors__0__TargetType=GitHub
       - Mirrors__0__TargetServer=https://api.github.com
       - Mirrors__0__TargetOrgName=Anduin2017
+      - Mirrors__0__TargetToken={{GITHUB_TOKEN}}
       - Mirrors__1__FromType=GitLab
       - Mirrors__1__FromServer=https://gitlab.aiursoft.cn
       - Mirrors__1__FromToken=
@@ -24,12 +25,11 @@ services:
       - Mirrors__1__TargetType=GitHub
       - Mirrors__1__TargetServer=https://api.github.com
       - Mirrors__1__TargetOrgName=AiursoftWeb
+      - Mirrors__1__TargetToken={{GITHUB_TOKEN}}
       - RequiresAuth=True
       - OIDC__Authority=https://auth.aiursoft.cn/application/o/gitmirror
       - OIDC__ClientId={{GITMIRROR_CLIENT_ID}}
       - OIDC__ClientSecret={{GITMIRROR_CLIENT_SECRET}}
-      - Mirrors__0__TargetToken={{GITHUB_TOKEN}}
-      - Mirrors__1__TargetToken={{GITHUB_TOKEN}}
     networks:
       - proxy_app
     stop_grace_period: 60s
