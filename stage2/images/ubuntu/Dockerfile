@@ -1,13 +1,20 @@
 FROM localhost:8080/public_mirror/ubuntu:25.04
 
-COPY source.list /suggested.sources.list
+COPY aiursoft-source.list /aiursoft-source.list
+COPY huawei-source.list /huawei-sources.list
 
 RUN apt update && apt install -y curl
 
-RUN if curl -f http://mirror.aiursoft.cn; then \
-        echo "Using mirror.aiursoft.cn" && \
-        cp /suggested.sources.list /etc/apt/sources.list && \
+RUN if curl -f http://mirrors.huaweicloud.com/; then \
+        echo "Using huaweicloud sources"; \
+        cp /huawei-sources.list /etc/apt/sources.list && \
         apt update; \
+    elif curl -f http://mirrors.aiursoft.cn/; then \
+        echo "Using aiursoft sources"; \
+        cp /aiursoft-source.list /etc/apt/sources.list && \
+        apt update; \
+    else \
+        echo "Using default ubuntu sources"; \
     fi
 
 RUN apt upgrade -y
