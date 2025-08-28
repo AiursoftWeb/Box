@@ -85,7 +85,11 @@ function init_docker_swarm() {
 
 function ensure_docker_ready() {
     # Install docker if not installed
-    apt list --installed | grep -q docker-ce || install_docker
+    if ! command -v docker >/dev/null; then
+        install_docker
+    else
+        print_ok "Docker is already installed."
+    fi
 
     # Init docker swarm if not initialized
     sudo docker info | grep -q "Swarm: active" || init_docker_swarm
