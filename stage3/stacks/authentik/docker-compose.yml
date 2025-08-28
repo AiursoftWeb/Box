@@ -16,11 +16,13 @@ services:
     volumes:
       - database:/var/lib/postgresql/data
     environment:
-      POSTGRES_PASSWORD: {{AUTHENTIK_PG_PASS}}
+      POSTGRES_PASSWORD: /run/secrets/authentik_pg_pass
       POSTGRES_USER: authentik_pg_user
       POSTGRES_DB: authentik
     networks:
       - internal
+    secrets:
+      - authentik_pg_pass
     stop_grace_period: 60s
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
@@ -71,12 +73,12 @@ services:
       - custom-templates:/templates
       - icons:/web/dist/assets/icons
     environment:
-      - AUTHENTIK_SECRET_KEY={{AUTHENTIK_SECRET_KEY}}
+      - AUTHENTIK_SECRET_KEY=/run/secrets/authentik_secret_key
       - AUTHENTIK_REDIS__HOST=redis
       - AUTHENTIK_POSTGRESQL__HOST=postgresql
       - AUTHENTIK_POSTGRESQL__USER=authentik_pg_user
       - AUTHENTIK_POSTGRESQL__NAME=authentik
-      - POSTGRES_PASSWORD={{AUTHENTIK_PG_PASS}}
+      - AUTHENTIK_POSTGRESQL__PASSWORD=/run/secrets/authentik_pg_pass
       - AUTHENTIK_EMAIL__HOST=mail.aiursoft.com
       - AUTHENTIK_EMAIL__PORT=465
       - AUTHENTIK_EMAIL__USERNAME=service@aiursoft.com
@@ -88,6 +90,9 @@ services:
     networks:
       - proxy_app
       - internal
+    secrets:
+      - authentik_pg_pass
+      - authentik_secret_key
     command: server
     stop_grace_period: 60s
     deploy:
@@ -111,12 +116,12 @@ services:
       - custom-templates:/templates
       - icons:/web/dist/assets/icons
     environment:
-      AUTHENTIK_SECRET_KEY: {{AUTHENTIK_SECRET_KEY}}
+      AUTHENTIK_SECRET_KEY: /run/secrets/authentik_secret_key
       AUTHENTIK_REDIS__HOST: redis
       AUTHENTIK_POSTGRESQL__HOST: postgresql
       AUTHENTIK_POSTGRESQL__USER: authentik_pg_user
       AUTHENTIK_POSTGRESQL__NAME: authentik
-      POSTGRES_PASSWORD: {{AUTHENTIK_PG_PASS}}
+      AUTHENTIK_POSTGRESQL__PASSWORD: /run/secrets/authentik_pg_pass
     # `user: root` and the docker socket volume are optional.
     # See more for the docker socket integration here:
     # https://goauthentik.io/docs/outposts/integrations/docker
@@ -125,6 +130,9 @@ services:
     # (1000:1000 by default)
     networks:
       - internal
+    secrets:
+      - authentik_pg_pass
+      - authentik_secret_key
     command: worker
     stop_grace_period: 60s
     deploy:
@@ -142,6 +150,12 @@ networks:
     external: true
   internal:
     driver: overlay
+
+secrets:
+  authentik_pg_pass:
+    external: true
+  authentik_secret_key:
+    external: true
 
 volumes:
   icons:
