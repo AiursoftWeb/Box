@@ -6,12 +6,20 @@ ARG ZOT_VERSION
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends wget ca-certificates \
+    && apt-get install -y --no-install-recommends wget ca-certificates curl \
     && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /etc/zot /config /data
 
-RUN wget -O /usr/local/bin/zot "https://git.aiursoft.cn/PublicVault/zot/releases/download/${ZOT_VERSION}/zot-linux-amd64" \
+# Check if git.aiursoft.cn is accessible. If so, download from the mirror.
+# Otherwise, download from the official GitHub releases.
+RUN if curl -fsS --connect-timeout 5 https://git.aiursoft.cn > /dev/null; then \
+        echo "--> git.aiursoft.cn is accessible, downloading from mirror..."; \
+        wget -O /usr/local/bin/zot "https://git.aiursoft.cn/PublicVault/zot/releases/download/${ZOT_VERSION}/zot-linux-amd64"; \
+    else \
+        echo "--> git.aiursoft.cn is not accessible, downloading from GitHub..."; \
+        wget -O /usr/local/bin/zot "https://github.com/project-zot/zot/releases/download/${ZOT_VERSION}/zot-linux-amd64"; \
+    fi \
     && chmod +x /usr/local/bin/zot
 
 COPY default-config.json /etc/zot/default-config.json
