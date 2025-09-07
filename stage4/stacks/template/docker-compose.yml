@@ -1,0 +1,67 @@
+version: '3.9'
+
+services:
+  app:
+    image: hub.aiursoft.cn/aiursoft/template
+    volumes:
+      - template-aspnet:/data/.aspnet/
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=db;Database=template;Uid=template;Pwd=<template_password>;
+      - ConnectionStrings__DbType=MySql
+      - AppSettings__AuthProvider=OIDC
+      - AppSettings__OIDC__Authority=https://auth.aiursoft.cn/application/o/template
+      - AppSettings__OIDC__ClientId={{TEMPLATE_CLIENT_ID}}
+      - AppSettings__OIDC__ClientSecret={{TEMPLATE_CLIENT_SECRET}}
+    networks:
+      - internal
+      - proxy_app
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+      update_config:
+        order: stop-first
+        delay: 60s
+
+  db:
+    image: hub.aiursoft.cn/mysql
+    volumes:
+      - template-db:/var/lib/mysql
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
+      - MYSQL_DATABASE=template
+      - MYSQL_USER=template
+      - MYSQL_PASSWORD=<template_password>
+    networks:
+      - internal
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4G
+      update_config:
+        order: stop-first
+        delay: 60s
+
+volumes:
+  template-aspnet:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/template-data/aspnet
+  template-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/template-data/mysql
+
+networks:
+  proxy_app:
+    external: true
+  internal:
+    driver: overlay
