@@ -5,9 +5,11 @@ services:
     image: hub.aiursoft.cn/aiursoft/template
     volumes:
       - template-aspnet:/data/.aspnet/
+      - template-files:/data/files
     environment:
       - ConnectionStrings__DefaultConnection=Server=db;Database=template;Uid=template;Pwd=<template_password>;
       - ConnectionStrings__DbType=MySql
+      - Storage__Path=/data/files
       - AppSettings__AuthProvider=OIDC
       - AppSettings__OIDC__Authority=https://auth.aiursoft.cn/application/o/template
       - AppSettings__OIDC__ClientId={{TEMPLATE_CLIENT_ID}}
@@ -47,6 +49,12 @@ services:
         delay: 60s
 
 volumes:
+  template-files:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/template-data/files
   template-aspnet:
     driver: local
     driver_opts:
