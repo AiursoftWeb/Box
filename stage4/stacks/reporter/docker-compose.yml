@@ -7,23 +7,28 @@ services:
       - db
     image: hub.aiursoft.cn/aiursoft/reporterportal:latest
     volumes:
-      - portal-files:/data/files
       - portal-aspnet:/data/.aspnet/
+      - portal-files:/data/files
     environment:
       - ConnectionStrings__DefaultConnection=Server=db;Database=portal;Uid=portal;Pwd=<portal_password>;
       - ConnectionStrings__DbType=MySql
+      - Storage__Path=/data/files
+      - AppSettings__AuthProvider=OIDC
+      - AppSettings__OIDC__Authority=https://auth.aiursoft.cn/application/o/reporter
+      - AppSettings__OIDC__ClientId={{REPORTER_CLIENT_ID}}
+      - AppSettings__OIDC__ClientSecret={{REPORTER_CLIENT_SECRET}}
     networks:
-      - proxy_app
       - internal
-    stop_grace_period: 20s
+      - proxy_app
+    stop_grace_period: 60s
     deploy:
       resources:
         limits:
-          cpus: '4.0'
-          memory: 8G
+          cpus: '2.0'
+          memory: 2G
       update_config:
-        order: start-first
-        delay: 5s
+        order: stop-first
+        delay: 60s
 
   db:
     image: hub.aiursoft.cn/mysql
