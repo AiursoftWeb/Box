@@ -9,14 +9,15 @@ services:
       - proxy_app
     environment:
       - DOMAIN=https://vault.aiursoft.cn
-      - ADMIN_TOKEN={{VAULTWARDEN_ADMIN_TOKEN}}
-      #- OIDC_ENABLED=true
-      #- SIGNUPS_ALLOWED=false
-      #- OIDC_ISSUER_URL=https://auth.aiursoft.cn/application/o/vaultwarden/
-      #- OIDC_CLIENT_ID={{VAULTWARDEN_CLIENT_ID}}
-      #- OIDC_CLIENT_SECRET={{VAULTWARDEN_CLIENT_SECRET}}
-      #- OIDC_SCOPES=openid email profile
-      #- OIDC_USERNAME_CLAIM=preferred_username
+      - SSO_ENABLED=true
+      - SSO_AUTHORITY=https://authentik.company/application/o/vaultwarden/
+      - SSO_CLIENT_ID={{VAULTWARDEN_CLIENT_ID}} # e.g. vaultwarden
+      - SSO_CLIENT_SECRET={{VAULTWARDEN_CLIENT_SECRET}} # e.g. supersecret
+      - SSO_SCOPES="openid email profile offline_access"
+      - SSO_ALLOW_UNKNOWN_EMAIL_VERIFICATION=false
+      - SSO_CLIENT_CACHE_EXPIRATION=0
+      - SSO_ONLY=false # Set to true to disable email+master password login and require SSO
+      - SSO_SIGNUPS_MATCH_EMAIL=true # Match first SSO login to existing account by email
     stop_grace_period: 60s
     deploy:
       update_config:
