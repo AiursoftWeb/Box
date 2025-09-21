@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   app:
-    image: hub.aiursoft.cn/vaultwarden/server:latest
+    image: hub.aiursoft.cn/vaultwarden/server:testing
     volumes:
       - vaultwarden-data:/data/
     networks:
@@ -10,7 +10,7 @@ services:
     environment:
       - DOMAIN=https://vault.aiursoft.cn
       - SSO_ENABLED=true
-      - SSO_AUTHORITY=https://authentik.company/application/o/vaultwarden/
+      - SSO_AUTHORITY=https://auth.aiursoft.cn/application/o/vaultwarden/
       - SSO_CLIENT_ID={{VAULTWARDEN_CLIENT_ID}} # e.g. vaultwarden
       - SSO_CLIENT_SECRET={{VAULTWARDEN_CLIENT_SECRET}} # e.g. supersecret
       - SSO_SCOPES="openid email profile offline_access"
