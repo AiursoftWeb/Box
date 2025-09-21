@@ -1,0 +1,47 @@
+version: '3.9'
+
+services:
+  app:
+    image: hub.aiursoft.cn/vaultwarden/server:latest
+    volumes:
+      - vaultwarden-data:/data/
+    networks:
+      - proxy_app
+    environment:
+      - DOMAIN=https://vault.aiursoft.cn
+      - ADMIN_TOKEN={{VAULTWARDEN_ADMIN_TOKEN}}
+      #- OIDC_ENABLED=true
+      #- SIGNUPS_ALLOWED=false
+      #- OIDC_ISSUER_URL=https://auth.aiursoft.cn/application/o/vaultwarden/
+      #- OIDC_CLIENT_ID={{VAULTWARDEN_CLIENT_ID}}
+      #- OIDC_CLIENT_SECRET={{VAULTWARDEN_CLIENT_SECRET}}
+      #- OIDC_SCOPES=openid email profile
+      #- OIDC_USERNAME_CLAIM=preferred_username
+    stop_grace_period: 60s
+    deploy:
+      update_config:
+        order: stop-first
+        delay: 60s
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4G
+        reservations:
+          cpus: '0.2'
+          memory: 256M
+      restart_policy:
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+
+networks:
+  proxy_app:
+    external: true
+
+volumes:
+  vaultwarden-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/vaultwarden-data/data
