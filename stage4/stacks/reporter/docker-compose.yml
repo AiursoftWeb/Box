@@ -9,6 +9,8 @@ services:
     volumes:
       - portal-aspnet:/data/.aspnet/
       - portal-files:/data/files
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /tmp:/tmp
     environment:
       - ConnectionStrings__DefaultConnection=Server=db;Database=portal;Uid=portal;Pwd=<portal_password>;
       - ConnectionStrings__DbType=MySql
