@@ -99,7 +99,7 @@ function ensure_docker_ready() {
 }
 
 function ensure_packages_needed_ready() {
-    sudo DEBIAN_FRONTEND=noninteractive apt install -y wsdd valgrind curl wget apt-transport-https ca-certificates software-properties-common
+    sudo DEBIAN_FRONTEND=noninteractive apt install -y wsdd valgrind curl wget apt-transport-https ca-certificates
 
     # Install yq. (Run install_yq only if the /usr/bin/yq does not exist.)
     [ -f /usr/bin/yq ] || install_yq
