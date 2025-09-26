@@ -74,6 +74,14 @@ remotePort = 25565
 
 # Regular update to ensure safe.
 [[proxies]]
+name = "mc"
+type = "udp"
+localIP = "minecraft_bedrock"
+localPort = 19132
+remotePort = 19132
+
+# Regular update to ensure safe.
+[[proxies]]
 name = "ssh_gitea"
 type = "tcp"
 localIP = "gitea_app"

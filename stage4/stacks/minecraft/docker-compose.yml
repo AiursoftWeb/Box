@@ -18,6 +18,11 @@ services:
         published: 25565
         protocol: tcp
         mode: host
+      # bedrock
+      - target: 19132
+        published: 19132
+        protocol: udp
+        mode: host
       # 8123 will by proxy by Caddy.
     stop_grace_period: 60s
     deploy:
