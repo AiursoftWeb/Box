@@ -40,7 +40,7 @@ services:
     volumes:
       - music:/music
       - artifacts:/artifacts
-      - covers:/var/www/html/public/img/covers
+      - covers:/var/www/html/public/img/storage
       - search_index:/var/www/html/storage/search-indexes
       - /swarm-vol/koel/config:/var/www/html/.env # This is a single file, not a directory
     networks:
