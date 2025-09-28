@@ -14,3 +14,7 @@ services:
       update_config:
         order: start-first
         delay: 5s
+
+networks:
+  proxy_app:
+    external: true
