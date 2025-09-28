@@ -1,0 +1,16 @@
+version: '3.9'
+
+services:
+  corp-home:
+    image: hub.aiursoft.cn/aiursoft/corp-home:latest
+    networks:
+      - proxy_app
+    stop_grace_period: 20s
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+      update_config:
+        order: start-first
+        delay: 5s
