@@ -4,7 +4,7 @@ services:
   db:
     image: hub.aiursoft.cn/postgres:16-alpine
     volumes:
-      - aipalu-db:/var/lib/postgresql
+      - aipalu-db:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=password
