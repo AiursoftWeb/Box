@@ -34,7 +34,7 @@ services:
       - PORT=9999
       - DATABASE_URL=postgresql://user:password@db:5432/aipalu
       - JWT_KEY={{AIPALU_MAIN_JWT_KEY}}
-      - IMAGE_BASE_URL=https://admin.aiursoft.cn/download/
+      - PUBLIC_IMAGE_BASE_URL=https://admin.aiursoft.cn/download/
     networks:
       - proxy_app
       - internal
