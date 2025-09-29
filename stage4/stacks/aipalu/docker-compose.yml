@@ -271,7 +271,7 @@ services:
       - aipalu-main
     environment:
       - PORT=10004
-      - PUBLIC_HOST_URL=https://aipalui.aiursoft.cn/
+      - PUBLIC_HOST_URL=http://aipalu-main/
       - VOLCENGINE_API_KEY={{AIPALU_VOLCENGINE_API_KEY}}
     networks:
       - internal
