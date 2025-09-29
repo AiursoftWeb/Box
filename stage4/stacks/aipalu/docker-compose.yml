@@ -7,7 +7,7 @@ services:
       - aipalu-db:/var/lib/postgresql
     environment:
       - POSTGRES_USER=user
-      - POSTGRES_PASSWORD=sfsd332*fsadfwG42@#$
+      - POSTGRES_PASSWORD=password
       - POSTGRES_DB=aipalu
     networks:
       - internal
@@ -32,7 +32,7 @@ services:
       - db
     environment:
       - PORT=9999
-      - DATABASE_URL=postgresql://user:sfsd332*fsadfwG42@#$@db:5432/aipalu
+      - DATABASE_URL=postgresql://user:password@db:5432/aipalu
       - JWT_KEY={{AIPALU_MAIN_JWT_KEY}}
       - IMAGE_BASE_URL=https://admin.aiursoft.cn/download/
     networks:
@@ -84,7 +84,7 @@ services:
       - db
     environment:
       - ConnectionStrings__DbType=PostgreSql
-      - ConnectionStrings__DefaultConnection=Server=db;Database=aipalu;Uid=user;Pwd=sfsd332*fsadfwG42@#$;
+      - ConnectionStrings__DefaultConnection=Server=db;Database=aipalu;Uid=user;Pwd=password;
       - Storage__Path=/data/files
       - AppSettings__AuthProvider=OIDC
       - OIDC__Authority=https://auth.aiursoft.cn/application/o/aipalu
