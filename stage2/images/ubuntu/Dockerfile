@@ -13,10 +13,11 @@ RUN if curl -f http://mirrors.aiursoft.cn/; then \
         echo "Using huaweicloud sources"; \
         cp /huawei-sources.list /etc/apt/sources.list && \
         apt update; \
-    el \
+    else \
         echo "Using default ubuntu sources"; \
     fi
 
-RUN rm /etc/apt/sources.list.d/ubuntu.sources && apt modernize-sources -y && rm /etc/apt/sources.list.bak
+#RUN rm /etc/apt/sources.list.d/ubuntu.sources && apt modernize-sources -y && rm /etc/apt/sources.list.bak
+RUN apt modernize-sources -y && rm /etc/apt/sources.list.bak
 
 RUN apt upgrade -y

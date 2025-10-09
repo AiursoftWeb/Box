@@ -4,7 +4,7 @@ services:
   db:
     image: hub.aiursoft.cn/postgres:16-alpine
     volumes:
-      - aipalu-db:/var/lib/postgresql
+      - aipalu-db:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=password
@@ -34,7 +34,7 @@ services:
       - PORT=9999
       - DATABASE_URL=postgresql://user:password@db:5432/aipalu
       - JWT_KEY={{AIPALU_MAIN_JWT_KEY}}
-      - IMAGE_BASE_URL=https://admin.aiursoft.cn/download/
+      - PUBLIC_IMAGE_BASE_URL=https://aipalui-admin.aiursoft.cn/download/
     networks:
       - proxy_app
       - internal
@@ -138,31 +138,6 @@ services:
         delay: 5s
         max_attempts: 3
 
-  authentik-proxy-app-figure:
-    depends_on:
-      - aipalu-app-figure
-    image: hub.aiursoft.cn/ghcr.io/goauthentik/proxy:2025.8
-    volumes:
-      - type: tmpfs
-        target: /dev/shm
-        tmpfs:
-          size: 2147483648 # 2GB
-    environment:
-      AUTHENTIK_HOST: "https://auth.aiursoft.cn/"
-      AUTHENTIK_INSECURE: "false"
-      AUTHENTIK_TOKEN: "{{AIPALU_APP_FIGURE_GATEWAY_OUTPOST_TOKEN}}"
-    stop_grace_period: 20s
-    networks:
-      - proxy_app
-    deploy:
-      resources:
-        limits:
-          cpus: '2.0'
-          memory: 2G
-      update_config:
-        order: start-first
-        delay: 5s
-
   aipalu-app-4-koma-manga:
     image: hub.aiursoft.cn/aiursoft/aipalu/app_4_koma_manga:latest
     depends_on:
@@ -188,31 +163,6 @@ services:
         condition: any
         delay: 5s
         max_attempts: 3
-
-  authentik-proxy-app-4-koma-manga:
-    depends_on:
-      - aipalu-app-4-koma-manga
-    image: hub.aiursoft.cn/ghcr.io/goauthentik/proxy:2025.8
-    volumes:
-      - type: tmpfs
-        target: /dev/shm
-        tmpfs:
-          size: 2147483648 # 2GB
-    environment:
-      AUTHENTIK_HOST: "https://auth.aiursoft.cn/"
-      AUTHENTIK_INSECURE: "false"
-      AUTHENTIK_TOKEN: "{{AIPALU_APP_4_KOMA_MANGA_GATEWAY_OUTPOST_TOKEN}}"
-    stop_grace_period: 20s
-    networks:
-      - proxy_app
-    deploy:
-      resources:
-        limits:
-          cpus: '2.0'
-          memory: 2G
-      update_config:
-        order: start-first
-        delay: 5s
 
   aipalu-app-cool-beauty:
     image: hub.aiursoft.cn/aiursoft/aipalu/app_cool_beauty:latest
@@ -240,38 +190,13 @@ services:
         delay: 5s
         max_attempts: 3
 
-  authentik-proxy-app-cool-beauty:
-    depends_on:
-      - app-cool-beauty
-    image: hub.aiursoft.cn/ghcr.io/goauthentik/proxy:2025.8
-    volumes:
-      - type: tmpfs
-        target: /dev/shm
-        tmpfs:
-          size: 2147483648 # 2GB
-    environment:
-      AUTHENTIK_HOST: "https://auth.aiursoft.cn/"
-      AUTHENTIK_INSECURE: "false"
-      AUTHENTIK_TOKEN: "{{AIPALU_APP_COOL_BEAUTY_GATEWAY_OUTPOST_TOKEN}}"
-    stop_grace_period: 20s
-    networks:
-      - proxy_app
-    deploy:
-      resources:
-        limits:
-          cpus: '2.0'
-          memory: 2G
-      update_config:
-        order: start-first
-        delay: 5s
-
   aipalu-app-building-marker:
     image: hub.aiursoft.cn/aiursoft/aipalu/app_building_marker:latest
     depends_on:
       - aipalu-main
     environment:
       - PORT=10004
-      - PUBLIC_HOST_URL=https://aipalui.aiursoft.cn/
+      - PUBLIC_HOST_URL=http://aipalu-main/
       - VOLCENGINE_API_KEY={{AIPALU_VOLCENGINE_API_KEY}}
     networks:
       - internal
@@ -290,31 +215,6 @@ services:
         condition: any
         delay: 5s
         max_attempts: 3
-
-  authentik-proxy-app-building-marker:
-    depends_on:
-      - app-building-marker
-    image: hub.aiursoft.cn/ghcr.io/goauthentik/proxy:2025.8
-    volumes:
-      - type: tmpfs
-        target: /dev/shm
-        tmpfs:
-          size: 2147483648 # 2GB
-    environment:
-      AUTHENTIK_HOST: "https://auth.aiursoft.cn/"
-      AUTHENTIK_INSECURE: "false"
-      AUTHENTIK_TOKEN: "{{AIPALU_APP_BUILDING_MARKER_GATEWAY_OUTPOST_TOKEN}}"
-    stop_grace_period: 20s
-    networks:
-      - proxy_app
-    deploy:
-      resources:
-        limits:
-          cpus: '2.0'
-          memory: 2G
-      update_config:
-        order: start-first
-        delay: 5s
 
 networks:
   internal:
