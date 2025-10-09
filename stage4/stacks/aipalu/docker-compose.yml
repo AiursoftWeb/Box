@@ -118,7 +118,7 @@ services:
       - aipalu-app-figure:/app/gen-imgs
     environment:
       - PORT=10001
-      - GOOGLE_API_KEY={{AIPALU_GOOGLE_API_KEY}}
+      - VOLCENGINE_API_KEY={{AIPALU_VOLCENGINE_API_KEY}}
       - PUBLIC_HOST_URL=https://aipalui.aiursoft.cn
     networks:
       - proxy_app
