@@ -4,7 +4,7 @@ services:
   app:
     depends_on:
       - db
-    image: hub.aiursoft.cn/docker.io/aiursoft/marktohtml
+    image: hub.aiursoft.cn/aiursoft/marktohtml:latest
     volumes:
       - marktohtml-aspnet:/data/.aspnet/
       - marktohtml-files:/data/files
