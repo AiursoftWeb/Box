@@ -2,6 +2,8 @@ version: "3.9"
 
 services:
   app:
+    depends_on:
+      - db
     image: hub.aiursoft.cn/docker.io/aiursoft/marktohtml
     volumes:
       - marktohtml-aspnet:/data/.aspnet/
@@ -16,12 +18,13 @@ services:
       - AppSettings__OIDC__ClientSecret={{MTH_CLIENT_SECRET}}
     networks:
       - proxy_app
+      - internal
     stop_grace_period: 60s
     deploy:
       resources:
         limits:
           cpus: "2.0"
-          memory: 1G
+          memory: 2G
       update_config:
         order: stop-first
         delay: 60s
