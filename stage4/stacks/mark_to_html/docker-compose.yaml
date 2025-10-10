@@ -4,30 +4,71 @@ services:
   mark_to_html:
     image: hub.aiursoft.cn/docker.io/aiursoft/marktohtml
     volumes:
-      - marktohtml_data:/data
+      - marktohtml-aspnet:/data/.aspnet/
+      - marktohtml-files:/data/files
     environment:
-      AppSettings__AllowAnonymousUsage: false
-      AppSettings__Local__AllowRegister: false
+      - ConnectionStrings__DefaultConnection=Server=db;Database=mth;Uid=mth;Pwd=<mth_password>;
+      - ConnectionStrings__DbType=MySql
+      - Storage__Path=/data/files
+      - AppSettings__AuthProvider=OIDC
+      - AppSettings__OIDC__Authority=https://auth.aiursoft.cn/application/o/mark-to-html
+      - AppSettings__OIDC__ClientId={{MTH_CLIENT_ID}}
+      - AppSettings__OIDC__ClientSecret={{MTH_CLIENT_SECRET}}
     networks:
       - proxy_app
-    stop_grace_period: 30s
+    stop_grace_period: 60s
     deploy:
       resources:
         limits:
-          cpus: "1.0"
+          cpus: "2.0"
           memory: 1G
       update_config:
         order: stop-first
-        delay: 30s
+        delay: 60s
+
+  db:
+    image: hub.aiursoft.cn/mysql
+    volumes:
+      - marktohtml-db:/var/lib/mysql
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
+      - MYSQL_DATABASE=mth
+      - MYSQL_USER=mth
+      - MYSQL_PASSWORD=<mth_password>
+    networks:
+      - internal
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4G
+      update_config:
+        order: stop-first
+        delay: 60s
 
 volumes:
-  marktohtml_data:
+  marktohtml-files:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /swarm-vol/marktohtml/data
+      device: /swarm-vol/marktohtml-data/files
+  marktohtml-aspnet:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/marktohtml-data/aspnet
+  marktohtml-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/marktohtml-data/mysql
 
 networks:
   proxy_app:
     external: true
+  internal:
+    driver: overlay
