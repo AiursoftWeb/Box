@@ -1,0 +1,33 @@
+version: "3.9"
+
+services:
+  mark_to_html:
+    image: hub.aiursoft.cn/docker.io/aiursoft/marktohtml
+    volumes:
+      - marktohtml_data:/data
+    environment:
+      AppSettings__AllowAnonymousUsage: false
+      AppSettings__Local__AllowRegister: false
+    networks:
+      - proxy_app
+    stop_grace_period: 30s
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 1G
+      update_config:
+        order: stop-first
+        delay: 30s
+
+volumes:
+  marktohtml_data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/marktohtml/data
+
+networks:
+  proxy_app:
+    external: true
