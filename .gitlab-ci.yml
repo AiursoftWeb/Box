@@ -3,8 +3,5 @@ stages:
 
 lint:
   stage: build
-  before_script:
-    - sudo apt-get update && sudo apt-get install -y python3-pip # Install pip first
-    - /usr/bin/pip3 install PyYAML                              # Then use it
   script:
     - /usr/bin/python3 ./lint.py ./stage4/
