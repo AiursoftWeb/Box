@@ -99,14 +99,14 @@ services:
       - gateway-data:/data/files
       - gateway-aspnet:/data/.aspnet
     environment:
-      ConnectionStrings__DefaultConnection: Server=ollama-gateway-db;Database=chat;Uid=chat;Pwd=<chat_password>;
-      ConnectionStrings__DbType: MySql
-      Storage__Path: /data/files
-      Underlyings__Ollama__Instance: http://ollama-server:11434/
-      Underlyings__OpenAI__InstanceUrl: https://openai.api2d.net
-      BingSearchAPIKey: {{BING_SEARCH_KEY}}
-      Underlyings__OpenAI__Token: {{OPENAI_KEY}}
-      Underlyings__DeepSeek__Token: {{DEEPSEEK_KEY}}
+      - ConnectionStrings__DefaultConnection=Server=ollama-gateway-db;Database=chat;Uid=chat;Pwd=<chat_password>;
+      - ConnectionStrings__DbType=MySql
+      - Storage__Path=/data/files
+      - Underlyings__Ollama__Instance=http://ollama-server:11434/
+      - Underlyings__OpenAI__InstanceUrl=https://openai.api2d.net
+      - BingSearchAPIKey={{BING_SEARCH_KEY}}
+      - Underlyings__OpenAI__Token={{OPENAI_KEY}}
+      - Underlyings__DeepSeek__Token={{DEEPSEEK_KEY}}
     networks:
       - internal
       - proxy_app

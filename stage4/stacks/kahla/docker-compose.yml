@@ -9,11 +9,11 @@ services:
       - data:/data/files
       - aspnet:/data/.aspnet
     environment:
-        ConnectionStrings__DefaultConnection: Server=db;Database=kahla;Uid=kahla;Pwd=kahla_password;
-        ConnectionStrings__DbType: "MySql"
-        Storage__Path: /data/files
-        VapidKeys__PublicKey: {{KAHLA_VAPID_KEY_PUBLIC}}
-        VapidKeys__PrivateKey: {{KAHLA_VAPID_KEY_PRIVATE}}
+      - ConnectionStrings__DefaultConnection=Server=db;Database=kahla;Uid=kahla;Pwd=kahla_password;
+      - ConnectionStrings__DbType="MySql"
+      - Storage__Path=/data/files
+      - VapidKeys__PublicKey={{KAHLA_VAPID_KEY_PUBLIC}}
+      - VapidKeys__PrivateKey={{KAHLA_VAPID_KEY_PRIVATE}}
     networks:
       - proxy_app
       - internal
