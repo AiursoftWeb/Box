@@ -1,0 +1,31 @@
+version: '3.9'
+
+services:
+  web_immortal:
+    image: hub.aiursoft.cn/aiursoft/static
+    volumes:
+      - immortal-data:/data
+    networks:
+      - proxy_app
+    stop_grace_period: 20s
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8G
+      update_config:
+        order: start-first
+        delay: 5s
+    entrypoint: ["sh", "-c", "/app/static --port 5000 --path /data --mirror https://downloads.immortalwrt.org/ --cache-mirror"]
+
+volumes:
+  immortal-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/immortal-data
+
+networks:
+  proxy_app:
+    external: true

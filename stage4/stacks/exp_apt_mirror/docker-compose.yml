@@ -1,0 +1,53 @@
+version: '3.9'
+
+services:
+  web_apt:
+    image: hub.aiursoft.cn/aiursoft/internalimages/exp-apt-mirror:latest
+    volumes:
+      - exp-apt-mirror-data:/data
+    networks:
+      - proxy_app
+    stop_grace_period: 20s
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8G
+      update_config:
+        order: start-first
+        delay: 5s
+
+  web_ppa:
+    image: hub.aiursoft.cn/aiursoft/internalimages/exp-ppa-mirror:latest
+    volumes:
+      - exp-ppa-mirror-data:/data
+    networks:
+      - proxy_app
+    stop_grace_period: 20s
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8G
+      update_config:
+        order: start-first
+        delay: 5s
+
+volumes:
+  exp-apt-mirror-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/exp-apt-mirror/apt-mirror-data
+  exp-ppa-mirror-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/exp-apt-mirror/ppa-mirror-data
+
+
+networks:
+  proxy_app:
+    external: true
