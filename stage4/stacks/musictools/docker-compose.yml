@@ -1,0 +1,77 @@
+version: "3.9"
+
+services:
+  app:
+    depends_on:
+      - db
+    image: hub.aiursoft.cn/aiursoft/musictools:latest
+    volumes:
+      - musictools-aspnet:/data/.aspnet/
+      - musictools-files:/data/files
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=db;Database=mth;Uid=mth;Pwd=<mth_password>;
+      - ConnectionStrings__DbType=MySql
+      - Storage__Path=/data/files
+      - AppSettings__AuthProvider=OIDC
+      - AppSettings__OIDC__Authority=https://auth.aiursoft.cn/application/o/music-tools
+      - AppSettings__OIDC__ClientId={{MUSIC_TOOLS_CLIENT_ID}}
+      - AppSettings__OIDC__ClientSecret={{MUSIC_TOOLS_CLIENT_SECRET}}
+    networks:
+      - proxy_app
+      - internal
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 2G
+      update_config:
+        order: stop-first
+        delay: 60s
+
+  db:
+    image: hub.aiursoft.cn/mysql
+    volumes:
+      - musictools-db:/var/lib/mysql
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
+      - MYSQL_DATABASE=mth
+      - MYSQL_USER=mth
+      - MYSQL_PASSWORD=<mth_password>
+    networks:
+      - internal
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4G
+      update_config:
+        order: stop-first
+        delay: 60s
+
+volumes:
+  musictools-files:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/musictools-data/files
+  musictools-aspnet:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/musictools-data/aspnet
+  musictools-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/musictools-data/mysql
+
+networks:
+  proxy_app:
+    external: true
+  internal:
+    driver: overlay

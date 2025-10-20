@@ -155,20 +155,6 @@ services:
         order: start-first
         delay: 5s
 
-  pianonote:
-    image: hub.aiursoft.cn/anduin/pianonote:latest
-    networks:
-      - proxy_app
-    stop_grace_period: 20s
-    deploy:
-      resources:
-        limits:
-          cpus: '2.0'
-          memory: 2G
-      update_config:
-        order: start-first
-        delay: 5s
-
 networks:
   proxy_app:
     external: true
