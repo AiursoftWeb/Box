@@ -130,7 +130,7 @@ services:
         tmpfs:
           size: 2147483648 # 2GB
     environment:
-      AUTHENTIK_HOST: "https://auth.aiursoft.cn/"
+      AUTHENTIK_HOST: "https://auth.aiursoft.com/"
       AUTHENTIK_INSECURE: "false"
       AUTHENTIK_TOKEN: "{{OLLAMA_GATEWAY_OUTPOST_TOKEN}}"
     stop_grace_period: 20s
@@ -210,7 +210,7 @@ services:
       - OAUTH_ADMIN_ROLES=openweb-admins
       - OAUTH_PROVIDER_NAME=Aiursoft
       - OAUTH_ROLES_CLAIM=groups
-      - 'OPENID_PROVIDER_URL=https://auth.aiursoft.cn/application/o/openwebchat/.well-known/openid-configuration'
+      - 'OPENID_PROVIDER_URL=https:///application/o/openwebchat/.well-known/openid-configuration'
       - OAUTH_CLIENT_ID={{OPENWEB_CLIENT_ID}}
       - OAUTH_CLIENT_SECRET={{OPENWEB_CLIENT_SECRET}}
       - 'OAUTH_SCOPES=openid email profile'

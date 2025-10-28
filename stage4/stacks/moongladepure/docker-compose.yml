@@ -15,7 +15,7 @@ services:
       - ConnectionStrings__DbType=MySql
       - Storage__Path=/data/files
       - AppSettings__AuthProvider=OIDC
-      - OIDC__Authority=https://auth.aiursoft.cn/application/o/anduinblog
+      - OIDC__Authority=https:///application/o/anduinblog
       - OIDC__ClientId={{ANDUIN_BLOG_CLIENT_ID}}
       - OIDC__ClientSecret={{ANDUIN_BLOG_CLIENT_SECRET}}
     networks:
@@ -73,7 +73,7 @@ services:
       - ConnectionStrings__DbType=MySql
       - Storage__Path=/data/files
       - AppSettings__AuthProvider=OIDC
-      - OIDC__Authority=https://auth.aiursoft.cn/application/o/jimmoenblog
+      - OIDC__Authority=https:///application/o/jimmoenblog
       - OIDC__ClientId={{JIMMOEN_BLOG_CLIENT_ID}}
       - OIDC__ClientSecret={{JIMMOEN_BLOG_CLIENT_SECRET}}
     networks:
@@ -130,7 +130,7 @@ services:
       - ConnectionStrings__DbType=MySql
       - Storage__Path=/data/files
       - AppSettings__AuthProvider=OIDC
-      - OIDC__Authority=https://auth.aiursoft.cn/application/o/restblog
+      - OIDC__Authority=https:///application/o/restblog
       - OIDC__ClientId={{REST_BLOG_CLIENT_ID}}
       - OIDC__ClientSecret={{REST_BLOG_CLIENT_SECRET}}
     networks:
@@ -188,7 +188,7 @@ services:
       - ConnectionStrings__DbType=MySql
       - Storage__Path=/data/files
       - AppSettings__AuthProvider=OIDC
-      - OIDC__Authority=https://auth.aiursoft.cn/application/o/codyblog
+      - OIDC__Authority=https:///application/o/codyblog
       - OIDC__ClientId={{CODY_BLOG_CLIENT_ID}}
       - OIDC__ClientSecret={{CODY_BLOG_CLIENT_SECRET}}
     networks:
@@ -245,7 +245,7 @@ services:
       - ConnectionStrings__DbType=MySql
       - Storage__Path=/data/files
       - AppSettings__AuthProvider=OIDC
-      - OIDC__Authority=https://auth.aiursoft.cn/application/o/gxhaoblog
+      - OIDC__Authority=https:///application/o/gxhaoblog
       - OIDC__ClientId={{GXHAO_BLOG_CLIENT_ID}}
       - OIDC__ClientSecret={{GXHAO_BLOG_CLIENT_SECRET}}
     networks:
@@ -302,7 +302,7 @@ services:
       - ConnectionStrings__DbType=MySql
       - Storage__Path=/data/files
       - AppSettings__AuthProvider=OIDC
-      - OIDC__Authority=https://auth.aiursoft.cn/application/o/anoisblog
+      - OIDC__Authority=https:///application/o/anoisblog
       - OIDC__ClientId={{ANOIS_BLOG_CLIENT_ID}}
       - OIDC__ClientSecret={{ANOIS_BLOG_CLIENT_SECRET}}
     networks:
@@ -359,7 +359,7 @@ services:
       - ConnectionStrings__DbType=MySql
       - Storage__Path=/data/files
       - AppSettings__AuthProvider=OIDC
-      - OIDC__Authority=https://auth.aiursoft.cn/application/o/dvorakblog
+      - OIDC__Authority=https:///application/o/dvorakblog
       - OIDC__ClientId={{DVORAK_BLOG_CLIENT_ID}}
       - OIDC__ClientSecret={{DVORAK_BLOG_CLIENT_SECRET}}
     networks:
@@ -416,7 +416,7 @@ services:
       - ConnectionStrings__DbType=MySql
       - Storage__Path=/data/files
       - AppSettings__AuthProvider=OIDC
-      - OIDC__Authority=https://auth.aiursoft.cn/application/o/kitlaublog
+      - OIDC__Authority=https:///application/o/kitlaublog
       - OIDC__ClientId={{KITLAU_BLOG_CLIENT_ID}}
       - OIDC__ClientSecret={{KITLAU_BLOG_CLIENT_SECRET}}
     networks:
@@ -473,7 +473,7 @@ services:
       - ConnectionStrings__DbType=MySql
       - Storage__Path=/data/files
       - AppSettings__AuthProvider=OIDC
-      - OIDC__Authority=https://auth.aiursoft.cn/application/o/xinbooblog
+      - OIDC__Authority=https:///application/o/xinbooblog
       - OIDC__ClientId={{XINBOO_BLOG_CLIENT_ID}}
       - OIDC__ClientSecret={{XINBOO_BLOG_CLIENT_SECRET}}
     networks:
@@ -530,7 +530,7 @@ services:
       - ConnectionStrings__DbType=MySql
       - Storage__Path=/data/files
       - AppSettings__AuthProvider=OIDC
-      - OIDC__Authority=https://auth.aiursoft.cn/application/o/gbinerblog
+      - OIDC__Authority=https:///application/o/gbinerblog
       - OIDC__ClientId={{GBINER_BLOG_CLIENT_ID}}
       - OIDC__ClientSecret={{GBINER_BLOG_CLIENT_SECRET}}
     networks:
@@ -587,7 +587,7 @@ services:
       - ConnectionStrings__DbType=MySql
       - Storage__Path=/data/files
       - AppSettings__AuthProvider=OIDC
-      - OIDC__Authority=https://auth.aiursoft.cn/application/o/rdfblog
+      - OIDC__Authority=https:///application/o/rdfblog
       - OIDC__ClientId={{RDF_BLOG_CLIENT_ID}}
       - OIDC__ClientSecret={{RDF_BLOG_CLIENT_SECRET}}
     networks:
@@ -644,7 +644,7 @@ services:
       - ConnectionStrings__DbType=MySql
       - Storage__Path=/data/files
       - AppSettings__AuthProvider=OIDC
-      - OIDC__Authority=https://auth.aiursoft.cn/application/o/lyxblog
+      - OIDC__Authority=https:///application/o/lyxblog
       - OIDC__ClientId={{LYX_BLOG_CLIENT_ID}}
       - OIDC__ClientSecret={{LYX_BLOG_CLIENT_SECRET}}
     networks:
@@ -701,7 +701,7 @@ services:
       - ConnectionStrings__DbType=MySql
       - Storage__Path=/data/files
       - AppSettings__AuthProvider=OIDC
-      - OIDC__Authority=https://auth.aiursoft.cn/application/o/shubuzuoblog
+      - OIDC__Authority=https:///application/o/shubuzuoblog
       - OIDC__ClientId={{SHUBUZUO_BLOG_CLIENT_ID}}
       - OIDC__ClientSecret={{SHUBUZUO_BLOG_CLIENT_SECRET}}
     networks:
@@ -758,7 +758,7 @@ services:
       - ConnectionStrings__DbType=MySql
       - Storage__Path=/data/files
       - AppSettings__AuthProvider=OIDC
-      - OIDC__Authority=https://auth.aiursoft.cn/application/o/lilyblog
+      - OIDC__Authority=https:///application/o/lilyblog
       - OIDC__ClientId={{LILY_BLOG_CLIENT_ID}}
       - OIDC__ClientSecret={{LILY_BLOG_CLIENT_SECRET}}
     networks:
@@ -815,7 +815,7 @@ services:
       - ConnectionStrings__DbType=MySql
       - Storage__Path=/data/files
       - AppSettings__AuthProvider=OIDC
-      - OIDC__Authority=https://auth.aiursoft.cn/application/o/carsonblog
+      - OIDC__Authority=https:///application/o/carsonblog
       - OIDC__ClientId={{CARSON_BLOG_CLIENT_ID}}
       - OIDC__ClientSecret={{CARSON_BLOG_CLIENT_SECRET}}
     networks:
@@ -872,7 +872,7 @@ services:
       - ConnectionStrings__DbType=MySql
       - Storage__Path=/data/files
       - AppSettings__AuthProvider=OIDC
-      - OIDC__Authority=https://auth.aiursoft.cn/application/o/zoneblog
+      - OIDC__Authority=https:///application/o/zoneblog
       - OIDC__ClientId={{ZONEBLOG_BLOG_CLIENT_ID}}
       - OIDC__ClientSecret={{ZONEBLOG_BLOG_CLIENT_SECRET}}
     networks:
@@ -930,7 +930,7 @@ services:
       - ConnectionStrings__DbType=MySql
       - Storage__Path=/data/files
       - AppSettings__AuthProvider=OIDC
-      - OIDC__Authority=https://auth.aiursoft.cn/application/o/yuyuyuyublog
+      - OIDC__Authority=https:///application/o/yuyuyuyublog
       - OIDC__ClientId={{YUYUYUYUBLOG_BLOG_CLIENT_ID}}
       - OIDC__ClientSecret={{YUYUYUYUBLOG_BLOG_CLIENT_SECRET}}
     networks:

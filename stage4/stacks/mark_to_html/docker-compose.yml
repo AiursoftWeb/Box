@@ -13,7 +13,7 @@ services:
       - ConnectionStrings__DbType=MySql
       - Storage__Path=/data/files
       - AppSettings__AuthProvider=OIDC
-      - AppSettings__OIDC__Authority=https://auth.aiursoft.cn/application/o/mark-to-html
+      - AppSettings__OIDC__Authority=https:///application/o/mark-to-html
       - AppSettings__OIDC__ClientId={{MTH_CLIENT_ID}}
       - AppSettings__OIDC__ClientSecret={{MTH_CLIENT_SECRET}}
     networks:

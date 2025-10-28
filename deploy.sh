@@ -407,8 +407,8 @@ deploy stage3/stacks/authentik/docker-compose.yml authentik
 deploy stage3/stacks/zot/docker-compose.yml zot
 
 print_ok "Making sure the authentik is ready..."
-while curl -s https://auth.aiursoft.cn > /dev/null; [ $? -ne 0 ]; do
-    print_warn "Waiting for authentik (https://auth.aiursoft.cn) to start... ETA: 25s"
+while curl -s https://auth.aiursoft.com > /dev/null; [ $? -ne 0 ]; do
+    print_warn "Waiting for authentik (https://auth.aiursoft.com) to start... ETA: 25s"
     sleep 1
 done
 

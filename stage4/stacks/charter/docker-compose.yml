@@ -10,7 +10,7 @@ services:
         tmpfs:
           size: 2147483648 # 2GB
     environment:
-      AUTHENTIK_HOST: "https://auth.aiursoft.cn/"
+      AUTHENTIK_HOST: "https://auth.aiursoft.com/"
       AUTHENTIK_INSECURE: "false"
       AUTHENTIK_TOKEN: "{{CHARTER_OUTPOST_TOKEN}}"
     networks:

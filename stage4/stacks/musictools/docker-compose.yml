@@ -13,7 +13,7 @@ services:
       - ConnectionStrings__DbType=MySql
       - Storage__Path=/data/files
       - AppSettings__AuthProvider=OIDC
-      - AppSettings__OIDC__Authority=https://auth.aiursoft.cn/application/o/music-tools
+      - AppSettings__OIDC__Authority=https:///application/o/music-tools
       - AppSettings__OIDC__ClientId={{MUSIC_TOOLS_CLIENT_ID}}
       - AppSettings__OIDC__ClientSecret={{MUSIC_TOOLS_CLIENT_SECRET}}
     networks:
