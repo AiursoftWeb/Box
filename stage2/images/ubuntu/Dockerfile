@@ -18,6 +18,7 @@ RUN if curl -f http://mirrors.aiursoft.com/; then \
     fi
 
 #RUN rm /etc/apt/sources.list.d/ubuntu.sources && apt modernize-sources -y && rm /etc/apt/sources.list.bak
+RUN rm /etc/apt/sources.list.d/ubuntu.sources || true
 RUN apt modernize-sources -y && rm /etc/apt/sources.list.bak
 
 RUN apt upgrade -y
