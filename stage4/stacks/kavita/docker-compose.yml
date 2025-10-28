@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   web:
-    image: hub.aiursoft.cn/jvmilazz0/kavita
+    image: hub.aiursoft.com/jvmilazz0/kavita
     volumes:
       - manga-data:/manga
       - comics-data:/comics

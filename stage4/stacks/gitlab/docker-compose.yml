@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   gitlab:
-    image: hub.aiursoft.cn/gitlab/gitlab-ee
+    image: hub.aiursoft.com/gitlab/gitlab-ee
     ports:
       - target: 2202
         published: 2202
@@ -73,7 +73,7 @@ services:
   runner_register:
     depends_on:
       - gitlab
-    image: hub.aiursoft.cn/aiursoft/internalimages/runner
+    image: hub.aiursoft.com/aiursoft/internalimages/runner
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
@@ -97,7 +97,7 @@ services:
   group_runner_register:
     depends_on:
       - gitlab
-    image: hub.aiursoft.cn/aiursoft/internalimages/runner
+    image: hub.aiursoft.com/aiursoft/internalimages/runner
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:

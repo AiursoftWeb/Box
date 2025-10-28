@@ -1,10 +1,10 @@
-# docker pull hub.aiursoft.cn/passivelemon/terraria-docker:latest
+# docker pull hub.aiursoft.com/passivelemon/terraria-docker:latest
 
 version: '3.9'
 
 services:
   server:
-    image: hub.aiursoft.cn/passivelemon/terraria-docker:latest
+    image: hub.aiursoft.com/passivelemon/terraria-docker:latest
     volumes:
       - terraria:/opt/terraria/config
     networks:

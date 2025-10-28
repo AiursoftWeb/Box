@@ -5,7 +5,7 @@ services:
     depends_on:
       - postgres
       - redis
-    image: hub.aiursoft.cn/chocobozzz/peertube:production-bookworm
+    image: hub.aiursoft.com/chocobozzz/peertube:production-bookworm
     volumes:
       - assets:/app/client/dist
       - data:/data
@@ -39,7 +39,7 @@ services:
         delay: 60s
 
   postgres:
-    image: hub.aiursoft.cn/postgres:13-alpine
+    image: hub.aiursoft.com/postgres:13-alpine
     environment:
       - POSTGRES_USER=peertube
       - POSTGRES_PASSWORD={{PEERTUBE_POSTGRES_PASSWORD}}
@@ -60,7 +60,7 @@ services:
         delay: 60s
 
   redis:
-    image: hub.aiursoft.cn/redis:6-alpine
+    image: hub.aiursoft.com/redis:6-alpine
     volumes:
       #- ./docker-volume/redis:/data
       - redis:/data

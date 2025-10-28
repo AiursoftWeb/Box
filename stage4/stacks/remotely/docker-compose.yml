@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   app:
-    image: hub.aiursoft.cn/immybot/remotely:88
+    image: hub.aiursoft.com/immybot/remotely:88
     volumes:
       - remotely-data:/app/AppData
       - remotely-asp:/root/.aspnet

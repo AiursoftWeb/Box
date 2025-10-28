@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   downloader:
-    image: hub.aiursoft.cn/aiursoft/internalimages/youtubedl
+    image: hub.aiursoft.com/aiursoft/internalimages/youtubedl
     volumes:
       - media-data:/mnt/data
     stop_grace_period: 60s
@@ -16,7 +16,7 @@ services:
         delay: 60s
 
   web:
-    image: hub.aiursoft.cn/jellyfin/jellyfin
+    image: hub.aiursoft.com/jellyfin/jellyfin
     volumes:
       - config-data:/config
       - cache-data:/cache

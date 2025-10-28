@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   web_apt:
-    image: hub.aiursoft.cn/aiursoft/internalimages/exp-apt-mirror:latest
+    image: hub.aiursoft.com/aiursoft/internalimages/exp-apt-mirror:latest
     volumes:
       - exp-apt-mirror-data:/data
     networks:
@@ -18,7 +18,7 @@ services:
         delay: 5s
 
   web_ppa:
-    image: hub.aiursoft.cn/aiursoft/internalimages/exp-ppa-mirror:latest
+    image: hub.aiursoft.com/aiursoft/internalimages/exp-ppa-mirror:latest
     volumes:
       - exp-ppa-mirror-data:/data
     networks:

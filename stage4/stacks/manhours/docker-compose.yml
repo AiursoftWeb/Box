@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   app:
-    image: hub.aiursoft.cn/aiursoft/manhours
+    image: hub.aiursoft.com/aiursoft/manhours
     volumes:
       - manhours-data:/data/Repos
     networks:

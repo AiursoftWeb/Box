@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   app:
-    image: hub.aiursoft.cn/aiursoft/gitmirrorserver:latest
+    image: hub.aiursoft.com/aiursoft/gitmirrorserver:latest
     volumes:
       - data:/data/files
       - aspnet:/data/.aspnet

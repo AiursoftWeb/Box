@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   app:
-    image: hub.aiursoft.cn/vaultwarden/server:testing
+    image: hub.aiursoft.com/vaultwarden/server:testing
     volumes:
       - vaultwarden-data:/data/
     networks:

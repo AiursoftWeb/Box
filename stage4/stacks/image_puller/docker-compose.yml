@@ -2,9 +2,9 @@ version: '3.9'
 
 services:
   downloader:
-    image: hub.aiursoft.cn/aiursoft/internalimages/imagepuller
+    image: hub.aiursoft.com/aiursoft/internalimages/imagepuller
     environment:
-      - MIRROR_TARGET=hub.aiursoft.cn
+      - MIRROR_TARGET=hub.aiursoft.com
       - DOCKER_USERNAME=anduin2019
       - LOCAL_DOCKER_USERNAME=anduin@aiursoft.com
       - DOCKER_PASSWORD={{DOCKER_PASSWORD}}

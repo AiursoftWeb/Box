@@ -1,10 +1,10 @@
-# docker pull hub.aiursoft.cn/passivelemon/terraria-docker:latest
+# docker pull hub.aiursoft.com/passivelemon/terraria-docker:latest
 
 version: '3.9'
 
 services:
   server:
-    image: hub.aiursoft.cn/wolveix/satisfactory-server:latest
+    image: hub.aiursoft.com/wolveix/satisfactory-server:latest
     volumes:
       - satisfactory:/config
     environment:

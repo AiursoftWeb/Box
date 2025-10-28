@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   app:
-    image: hub.aiursoft.cn/anduin/seelies
+    image: hub.aiursoft.com/anduin/seelies
     networks:
       - proxy_app
     stop_grace_period: 20s

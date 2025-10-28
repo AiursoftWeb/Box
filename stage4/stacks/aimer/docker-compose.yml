@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   app:
-    image: hub.aiursoft.cn/aimerneige/blog
+    image: hub.aiursoft.com/aimerneige/blog
     networks:
       - proxy_app
     stop_grace_period: 20s

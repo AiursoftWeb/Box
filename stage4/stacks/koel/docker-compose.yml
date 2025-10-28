@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   authentik_proxy:
-    image: hub.aiursoft.cn/ghcr.io/goauthentik/proxy:2025.8
+    image: hub.aiursoft.com/ghcr.io/goauthentik/proxy:2025.8
     volumes:
       - type: tmpfs
         target: /dev/shm
@@ -26,7 +26,7 @@ services:
         delay: 5s
 
   koel:
-    image: hub.aiursoft.cn/phanan/koel
+    image: hub.aiursoft.com/phanan/koel
     depends_on:
       - database
     environment:
@@ -57,7 +57,7 @@ services:
         delay: 60s
 
   koel-db:
-    image: hub.aiursoft.cn/mysql
+    image: hub.aiursoft.com/mysql
     volumes:
       - db:/var/lib/mysql
     environment:

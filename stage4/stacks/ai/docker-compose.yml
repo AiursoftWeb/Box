@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   ollama-server:
-    image: hub.aiursoft.cn/ollama/ollama:latest
+    image: hub.aiursoft.com/ollama/ollama:latest
     volumes:
       - ollama-data:/root/.ollama
     networks:
@@ -40,7 +40,7 @@ services:
   ollama-warmup:
     depends_on:
       - ollama-server
-    image: hub.aiursoft.cn/alpine
+    image: hub.aiursoft.com/alpine
     networks: 
       - internal
     entrypoint:
@@ -64,7 +64,7 @@ services:
         delay: 5s
 
   ollama-gateway-db:
-    image: hub.aiursoft.cn/mysql
+    image: hub.aiursoft.com/mysql
     volumes:
       - gateway-db:/var/lib/mysql
     environment:
@@ -94,7 +94,7 @@ services:
     depends_on:
       - ollama-gateway-db
       - ollama-warmup
-    image: hub.aiursoft.cn/aiursoft/gptgateway
+    image: hub.aiursoft.com/aiursoft/gptgateway
     volumes:
       - gateway-data:/data/files
       - gateway-aspnet:/data/.aspnet
@@ -123,7 +123,7 @@ services:
   authentik_proxy:
     depends_on:
       - ollama-gateway
-    image: hub.aiursoft.cn/ghcr.io/goauthentik/proxy:2025.8
+    image: hub.aiursoft.com/ghcr.io/goauthentik/proxy:2025.8
     volumes:
       - type: tmpfs
         target: /dev/shm
@@ -146,13 +146,13 @@ services:
         delay: 5s
 
   code-runner:
-    image: hub.aiursoft.cn/aiursoft/cpprunner
+    image: hub.aiursoft.com/aiursoft/cpprunner
     volumes:
       - code-runner-aspnet-data:/data/.aspnet
       - /var/run/docker.sock:/var/run/docker.sock
       - /tmp:/tmp
     environment:
-      - DockerImageSettings__Prefix=hub.aiursoft.cn
+      - DockerImageSettings__Prefix=hub.aiursoft.com
     networks:
       - internal
     stop_grace_period: 20s
@@ -169,7 +169,7 @@ services:
   mcpo:
     depends_on:
       - code-runner
-    image: hub.aiursoft.cn/ghcr.io/open-webui/mcpo:main
+    image: hub.aiursoft.com/ghcr.io/open-webui/mcpo:main
     networks:
       - internal
     volumes:
@@ -189,7 +189,7 @@ services:
     depends_on:
       - mcpo
       - ollama-gateway
-    image: hub.aiursoft.cn/ghcr.io/open-webui/open-webui:main
+    image: hub.aiursoft.com/ghcr.io/open-webui/open-webui:main
     environment:
       - 'OLLAMA_BASE_URL=http://ollama-gateway:5000/'
       - ENABLE_OPENAI_API=False

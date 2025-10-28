@@ -2,11 +2,11 @@ version: '3.9'
 
 services:
   app:
-    image: hub.aiursoft.cn/containrrr/shepherd
+    image: hub.aiursoft.com/containrrr/shepherd
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
-      - REGISTRY_HOST=hub.aiursoft.cn
+      - REGISTRY_HOST=hub.aiursoft.com
       - TZ=UTC
     stop_grace_period: 60s
     deploy:

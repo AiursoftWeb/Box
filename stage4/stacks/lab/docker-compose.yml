@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   authentik_proxy:
-    image: hub.aiursoft.cn/ghcr.io/goauthentik/proxy:2025.8
+    image: hub.aiursoft.com/ghcr.io/goauthentik/proxy:2025.8
     volumes:
       - type: tmpfs
         target: /dev/shm
@@ -25,7 +25,7 @@ services:
         delay: 5s
 
   app:
-    image: hub.aiursoft.cn/aiursoft/internalimages/lab
+    image: hub.aiursoft.com/aiursoft/internalimages/lab
     networks:
       - proxy_app
     stop_grace_period: 20s

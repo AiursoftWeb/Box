@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   app:
-    image: hub.aiursoft.cn/aiursoft/internalimages/kiwix
+    image: hub.aiursoft.com/aiursoft/internalimages/kiwix
     networks:
       - proxy_app
     volumes:

@@ -3,7 +3,7 @@ version: '3'
 services:
   web:
     # This version need to be updated regularly
-    image: hub.aiursoft.cn/nextcloud:31.0.7
+    image: hub.aiursoft.com/nextcloud:31.0.7
     networks: 
       - internal
       - proxy_app
@@ -38,7 +38,7 @@ services:
         delay: 60s
 
   aio:
-    image: hub.aiursoft.cn/ghcr.io/nextcloud-releases/aio-talk
+    image: hub.aiursoft.com/ghcr.io/nextcloud-releases/aio-talk
     environment:
       - TZ=UTC
       - NC_DOMAIN=nextcloud.aiursoft.cn
@@ -73,7 +73,7 @@ services:
   nextcloud-jobrunner:
     depends_on:
       - web
-    image: hub.aiursoft.cn/alpine
+    image: hub.aiursoft.com/alpine
     networks: 
       - internal
     volumes:
@@ -126,7 +126,7 @@ services:
         delay: 60s
 
   nextclouddb:
-    image: hub.aiursoft.cn/mysql
+    image: hub.aiursoft.com/mysql
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
     networks: 
       - internal
@@ -154,7 +154,7 @@ services:
         delay: 60s
 
   redis:
-    image: hub.aiursoft.cn/redis:alpine
+    image: hub.aiursoft.com/redis:alpine
     volumes:
       - nextcloud-redis:/data
     networks: 

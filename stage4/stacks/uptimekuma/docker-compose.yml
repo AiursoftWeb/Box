@@ -3,7 +3,7 @@ version: '3.9'
 
 services:
   authentik_proxy:
-    image: hub.aiursoft.cn/ghcr.io/goauthentik/proxy:2025.8
+    image: hub.aiursoft.com/ghcr.io/goauthentik/proxy:2025.8
     volumes:
       - type: tmpfs
         target: /dev/shm
@@ -27,7 +27,7 @@ services:
         delay: 5s
 
   server:
-    image: hub.aiursoft.cn/louislam/uptime-kuma:1
+    image: hub.aiursoft.com/louislam/uptime-kuma:1
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - uptime-kuma:/app/data

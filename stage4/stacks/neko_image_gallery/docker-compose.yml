@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   authentik_proxy:
-    image: hub.aiursoft.cn/ghcr.io/goauthentik/proxy:2025.8
+    image: hub.aiursoft.com/ghcr.io/goauthentik/proxy:2025.8
     volumes:
       - type: tmpfs
         target: /dev/shm
@@ -26,7 +26,7 @@ services:
         delay: 5s
 
   webapp:
-    image: hub.aiursoft.cn/edgeneko/nekoimagegallery.app
+    image: hub.aiursoft.com/edgeneko/nekoimagegallery.app
     #image: edgeneko/nekoimagegallery.app # Avoid using mirror because this app updates very frequently
     environment:
       - OVERRIDE_API_URL=https://sakuratrak.aiursoft.cn/api
@@ -44,7 +44,7 @@ services:
         delay: 5s
 
   server:
-    image: hub.aiursoft.cn/edgeneko/neko-image-gallery:edge-cpu
+    image: hub.aiursoft.com/edgeneko/neko-image-gallery:edge-cpu
     #image: edgeneko/neko-image-gallery:latest-cpu # Avoid using mirror because this app updates very frequently
     networks:
       - proxy_app
@@ -79,7 +79,7 @@ services:
     command: ["--root-path", "/api"]
 
   qdrant_database:
-    image: hub.aiursoft.cn/qdrant/qdrant
+    image: hub.aiursoft.com/qdrant/qdrant
     networks:
       - internal
       - proxy_app

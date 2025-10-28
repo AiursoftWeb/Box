@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   server:
-    image: hub.aiursoft.cn/aiursoft/internalimages/minecraft
+    image: hub.aiursoft.com/aiursoft/internalimages/minecraft
     volumes:
       - world:/app/world
       - world-nether:/app/world_nether

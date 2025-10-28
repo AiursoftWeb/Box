@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   gameoflife:
-    image: hub.aiursoft.cn/anduin/gameoflife
+    image: hub.aiursoft.com/anduin/gameoflife
     networks:
       - proxy_app
     stop_grace_period: 20s
@@ -16,7 +16,7 @@ services:
         delay: 5s
 
   game2048:
-    image: hub.aiursoft.cn/anduin/2048
+    image: hub.aiursoft.com/anduin/2048
     networks:
       - proxy_app
     stop_grace_period: 20s
@@ -30,7 +30,7 @@ services:
         delay: 5s
 
   hextris:
-    image: hub.aiursoft.cn/anduin/hextris
+    image: hub.aiursoft.com/anduin/hextris
     networks:
       - proxy_app
     stop_grace_period: 20s
@@ -44,7 +44,7 @@ services:
         delay: 5s
 
   cat:
-    image: hub.aiursoft.cn/anduin/phaser-catch-the-cat
+    image: hub.aiursoft.com/anduin/phaser-catch-the-cat
     networks:
       - proxy_app
     stop_grace_period: 20s
@@ -58,7 +58,7 @@ services:
         delay: 5s
 
   three:
-    image: hub.aiursoft.cn/anduin/threebody
+    image: hub.aiursoft.com/anduin/threebody
     networks:
       - proxy_app
     stop_grace_period: 20s
@@ -72,7 +72,7 @@ services:
         delay: 5s
 
   life:
-    image: hub.aiursoft.cn/anduin/liferestart
+    image: hub.aiursoft.com/anduin/liferestart
     networks:
       - proxy_app
     stop_grace_period: 20s
@@ -86,7 +86,7 @@ services:
         delay: 5s
 
   miku:
-    image: hub.aiursoft.cn/indexyz/mikutap
+    image: hub.aiursoft.com/indexyz/mikutap
     networks:
       - proxy_app
     stop_grace_period: 20s
@@ -100,7 +100,7 @@ services:
         delay: 5s
 
   minesweeper:
-    image: hub.aiursoft.cn/anduin/minesweeper
+    image: hub.aiursoft.com/anduin/minesweeper
     networks:
       - proxy_app
     stop_grace_period: 20s
@@ -114,7 +114,7 @@ services:
         delay: 5s
 
   oi:
-    image: hub.aiursoft.cn/anduin/oi-wiki
+    image: hub.aiursoft.com/anduin/oi-wiki
     networks:
       - proxy_app
     stop_grace_period: 20s
@@ -128,7 +128,7 @@ services:
         delay: 5s
 
   ctf:
-    image: hub.aiursoft.cn/anduin/ctf-wiki:latest
+    image: hub.aiursoft.com/anduin/ctf-wiki:latest
     networks:
       - proxy_app
     stop_grace_period: 20s
@@ -142,7 +142,7 @@ services:
         delay: 5s
 
   ipcalc:
-    image: hub.aiursoft.cn/anduin/ipcalc:latest
+    image: hub.aiursoft.com/anduin/ipcalc:latest
     networks:
       - proxy_app
     stop_grace_period: 20s

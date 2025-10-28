@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   app:
-    image: hub.aiursoft.cn/edgeneko/blogv2-src
+    image: hub.aiursoft.com/edgeneko/blogv2-src
     networks:
       - proxy_app
     stop_grace_period: 20s
@@ -17,7 +17,7 @@ services:
         delay: 5s
 
   comments:
-    image: hub.aiursoft.cn/artalk/artalk-go
+    image: hub.aiursoft.com/artalk/artalk-go
     networks:
       - proxy_app
       - internal
@@ -37,7 +37,7 @@ services:
         delay: 5s
 
   db:
-    image: hub.aiursoft.cn/mysql
+    image: hub.aiursoft.com/mysql
     networks: 
       - internal
     volumes:

@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   app:
-    image: hub.aiursoft.cn/anduin/flyclass
+    image: hub.aiursoft.com/anduin/flyclass
     volumes:
       - flyclass-aspnet:/data/.aspnet/
     networks:

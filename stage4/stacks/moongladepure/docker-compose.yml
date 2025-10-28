@@ -4,7 +4,7 @@ services:
   anduin:
     depends_on:
       - anduin-db
-    image: hub.aiursoft.cn/aiursoft/moongladepure
+    image: hub.aiursoft.com/aiursoft/moongladepure
     volumes:
       - anduin-files:/data/files
       - anduin-aspnet:/data/.aspnet/
@@ -32,7 +32,7 @@ services:
         delay: 60s
   
   anduin-db:
-    image: hub.aiursoft.cn/mysql
+    image: hub.aiursoft.com/mysql
     volumes:
       - anduin-db:/var/lib/mysql
     environment:
@@ -62,7 +62,7 @@ services:
   jimmoen:
     depends_on:
       - jimmoen-db
-    image: hub.aiursoft.cn/aiursoft/moongladepure
+    image: hub.aiursoft.com/aiursoft/moongladepure
     volumes:
       - jimmoen-files:/data/files
       - jimmoen-aspnet:/data/.aspnet/
@@ -90,7 +90,7 @@ services:
         delay: 60s
 
   jimmoen-db:
-    image: hub.aiursoft.cn/mysql
+    image: hub.aiursoft.com/mysql
     volumes:
       - jimmoen-db:/var/lib/mysql
     environment:
@@ -119,7 +119,7 @@ services:
   rest:
     depends_on:
       - rest-db
-    image: hub.aiursoft.cn/aiursoft/moongladepure
+    image: hub.aiursoft.com/aiursoft/moongladepure
     volumes:
       - rest-files:/data/files
       - rest-aspnet:/data/.aspnet/
@@ -147,7 +147,7 @@ services:
         delay: 60s
 
   rest-db:
-    image: hub.aiursoft.cn/mysql
+    image: hub.aiursoft.com/mysql
     volumes:
       - rest-db:/var/lib/mysql
     environment:
@@ -177,7 +177,7 @@ services:
   cody:
     depends_on:
       - cody-db
-    image: hub.aiursoft.cn/aiursoft/moongladepure
+    image: hub.aiursoft.com/aiursoft/moongladepure
     volumes:
       - cody-files:/data/files
       - cody-aspnet:/data/.aspnet/
@@ -205,7 +205,7 @@ services:
         delay: 60s
 
   cody-db:
-    image: hub.aiursoft.cn/mysql
+    image: hub.aiursoft.com/mysql
     volumes:
       - cody-db:/var/lib/mysql
     environment:
@@ -234,7 +234,7 @@ services:
   gxhao:
     depends_on:
       - gxhao-db
-    image: hub.aiursoft.cn/aiursoft/moongladepure
+    image: hub.aiursoft.com/aiursoft/moongladepure
     volumes:
       - gxhao-files:/data/files
       - gxhao-aspnet:/data/.aspnet/
@@ -262,7 +262,7 @@ services:
         delay: 60s
 
   gxhao-db:
-    image: hub.aiursoft.cn/mysql
+    image: hub.aiursoft.com/mysql
     volumes:
       - gxhao-db:/var/lib/mysql
     environment:
@@ -291,7 +291,7 @@ services:
   anois:
     depends_on:
       - anois-db
-    image: hub.aiursoft.cn/aiursoft/moongladepure
+    image: hub.aiursoft.com/aiursoft/moongladepure
     volumes:
       - anois-files:/data/files
       - anois-aspnet:/data/.aspnet/
@@ -319,7 +319,7 @@ services:
         delay: 60s
 
   anois-db:
-    image: hub.aiursoft.cn/mysql
+    image: hub.aiursoft.com/mysql
     volumes:
       - anois-db:/var/lib/mysql
     environment:
@@ -348,7 +348,7 @@ services:
   dvorak:
     depends_on:
       - dvorak-db
-    image: hub.aiursoft.cn/aiursoft/moongladepure
+    image: hub.aiursoft.com/aiursoft/moongladepure
     volumes:
       - dvorak-files:/data/files
       - dvorak-aspnet:/data/.aspnet/
@@ -376,7 +376,7 @@ services:
         delay: 60s
 
   dvorak-db:
-    image: hub.aiursoft.cn/mysql
+    image: hub.aiursoft.com/mysql
     volumes:
       - dvorak-db:/var/lib/mysql
     environment:
@@ -405,7 +405,7 @@ services:
   kitlau:
     depends_on:
       - kitlau-db
-    image: hub.aiursoft.cn/aiursoft/moongladepure
+    image: hub.aiursoft.com/aiursoft/moongladepure
     volumes:
       - kitlau-files:/data/files
       - kitlau-aspnet:/data/.aspnet/
@@ -433,7 +433,7 @@ services:
         delay: 60s
 
   kitlau-db:
-    image: hub.aiursoft.cn/mysql
+    image: hub.aiursoft.com/mysql
     volumes:
       - kitlau-db:/var/lib/mysql
     environment:
@@ -462,7 +462,7 @@ services:
   xinboo:
     depends_on:
       - xinboo-db
-    image: hub.aiursoft.cn/aiursoft/moongladepure
+    image: hub.aiursoft.com/aiursoft/moongladepure
     volumes:
       - xinboo-files:/data/files
       - xinboo-aspnet:/data/.aspnet/
@@ -490,7 +490,7 @@ services:
         delay: 60s
 
   xinboo-db:
-    image: hub.aiursoft.cn/mysql
+    image: hub.aiursoft.com/mysql
     volumes:
       - xinboo-db:/var/lib/mysql
     environment:
@@ -519,7 +519,7 @@ services:
   gbiner:
     depends_on:
       - gbiner-db
-    image: hub.aiursoft.cn/aiursoft/moongladepure
+    image: hub.aiursoft.com/aiursoft/moongladepure
     volumes:
       - gbiner-files:/data/files
       - gbiner-aspnet:/data/.aspnet/
@@ -547,7 +547,7 @@ services:
         delay: 60s
 
   gbiner-db:
-    image: hub.aiursoft.cn/mysql
+    image: hub.aiursoft.com/mysql
     volumes:
       - gbiner-db:/var/lib/mysql
     environment:
@@ -576,7 +576,7 @@ services:
   rdf:
     depends_on:
       - rdf-db
-    image: hub.aiursoft.cn/aiursoft/moongladepure
+    image: hub.aiursoft.com/aiursoft/moongladepure
     volumes:
       - rdf-files:/data/files
       - rdf-aspnet:/data/.aspnet/
@@ -604,7 +604,7 @@ services:
         delay: 60s
 
   rdf-db:
-    image: hub.aiursoft.cn/mysql
+    image: hub.aiursoft.com/mysql
     volumes:
       - rdf-db:/var/lib/mysql
     environment:
@@ -633,7 +633,7 @@ services:
   lyx:
     depends_on:
       - lyx-db
-    image: hub.aiursoft.cn/aiursoft/moongladepure
+    image: hub.aiursoft.com/aiursoft/moongladepure
     volumes:
       - lyx-files:/data/files
       - lyx-aspnet:/data/.aspnet/
@@ -661,7 +661,7 @@ services:
         delay: 60s
 
   lyx-db:
-    image: hub.aiursoft.cn/mysql
+    image: hub.aiursoft.com/mysql
     volumes:
       - lyx-db:/var/lib/mysql
     environment:
@@ -690,7 +690,7 @@ services:
   shubuzuo:
     depends_on:
       - shubuzuo-db
-    image: hub.aiursoft.cn/aiursoft/moongladepure
+    image: hub.aiursoft.com/aiursoft/moongladepure
     volumes:
       - shubuzuo-files:/data/files
       - shubuzuo-aspnet:/data/.aspnet/
@@ -718,7 +718,7 @@ services:
         delay: 60s
 
   shubuzuo-db:
-    image: hub.aiursoft.cn/mysql
+    image: hub.aiursoft.com/mysql
     volumes:
       - shubuzuo-db:/var/lib/mysql
     environment:
@@ -747,7 +747,7 @@ services:
   lily:
     depends_on:
       - lily-db
-    image: hub.aiursoft.cn/aiursoft/moongladepure
+    image: hub.aiursoft.com/aiursoft/moongladepure
     volumes:
       - lily-files:/data/files
       - lily-aspnet:/data/.aspnet/
@@ -775,7 +775,7 @@ services:
         delay: 60s
 
   lily-db:
-    image: hub.aiursoft.cn/mysql
+    image: hub.aiursoft.com/mysql
     volumes:
       - lily-db:/var/lib/mysql
     environment:
@@ -804,7 +804,7 @@ services:
   carson:
     depends_on:
       - carson-db
-    image: hub.aiursoft.cn/aiursoft/moongladepure
+    image: hub.aiursoft.com/aiursoft/moongladepure
     volumes:
       - carson-files:/data/files
       - carson-aspnet:/data/.aspnet/
@@ -832,7 +832,7 @@ services:
         delay: 60s
 
   carson-db:
-    image: hub.aiursoft.cn/mysql
+    image: hub.aiursoft.com/mysql
     volumes:
       - carson-db:/var/lib/mysql
     environment:
@@ -861,7 +861,7 @@ services:
   zoneblog:
     depends_on:
       - zoneblog-db
-    image: hub.aiursoft.cn/aiursoft/moongladepure
+    image: hub.aiursoft.com/aiursoft/moongladepure
     volumes:
       - zoneblog-files:/data/files
       - zoneblog-aspnet:/data/.aspnet/
@@ -889,7 +889,7 @@ services:
         delay: 60s
 
   zoneblog-db:
-    image: hub.aiursoft.cn/mysql
+    image: hub.aiursoft.com/mysql
     volumes:
       - zoneblog-db:/var/lib/mysql
     environment:
@@ -919,7 +919,7 @@ services:
   yuyuyuyublog:
     depends_on:
       - yuyuyuyublog-db
-    image: hub.aiursoft.cn/aiursoft/moongladepure
+    image: hub.aiursoft.com/aiursoft/moongladepure
     volumes:
       - yuyuyuyublog-files:/data/files
       - yuyuyuyublog-aspnet:/data/.aspnet/
@@ -947,7 +947,7 @@ services:
         delay: 60s
 
   yuyuyuyublog-db:
-    image: hub.aiursoft.cn/mysql
+    image: hub.aiursoft.com/mysql
     volumes:
       - yuyuyuyublog-db:/var/lib/mysql
     environment:

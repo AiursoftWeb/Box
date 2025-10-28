@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   stathubserver:
-    image: hub.aiursoft.cn/aiursoft/stathub
+    image: hub.aiursoft.com/aiursoft/stathub
     volumes:
       - stathub-aspnet:/data/.aspnet/
     environment:

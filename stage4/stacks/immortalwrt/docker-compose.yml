@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   web_immortal:
-    image: hub.aiursoft.cn/aiursoft/static
+    image: hub.aiursoft.com/aiursoft/static
     volumes:
       - immortal-data:/data
     networks:

@@ -21,7 +21,7 @@ services:
     depends_on:
       - redis
       - database
-    image: hub.aiursoft.cn/ghcr.io/immich-app/immich-server:release
+    image: hub.aiursoft.com/ghcr.io/immich-app/immich-server:release
     volumes:
       - upload-location:/usr/src/app/upload
       - /etc/localtime:/etc/localtime:ro
@@ -48,7 +48,7 @@ services:
     depends_on:
       - redis
       - database
-    image: hub.aiursoft.cn/ghcr.io/immich-app/immich-machine-learning:release
+    image: hub.aiursoft.com/ghcr.io/immich-app/immich-machine-learning:release
     volumes:
       - model-cache:/cache
     environment:
@@ -69,7 +69,7 @@ services:
         delay: 60s
 
   redis:
-    image: hub.aiursoft.cn/valkey/valkey:8-bookworm
+    image: hub.aiursoft.com/valkey/valkey:8-bookworm
     volumes:
       - redis:/data
     networks:
@@ -87,7 +87,7 @@ services:
         delay: 60s
 
   database:
-    image: hub.aiursoft.cn/ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0
+    image: hub.aiursoft.com/ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0
     volumes:
       - db-data:/var/lib/postgresql/data
     environment:
@@ -114,7 +114,7 @@ services:
         delay: 60s
 
   smb:
-    image: hub.aiursoft.cn/andyzhangx/samba:win-fix
+    image: hub.aiursoft.com/andyzhangx/samba:win-fix
     volumes:
       - external:/mount
     environment:

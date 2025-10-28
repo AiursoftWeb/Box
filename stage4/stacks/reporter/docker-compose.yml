@@ -5,7 +5,7 @@ services:
     depends_on: 
       - tts
       - db
-    image: hub.aiursoft.cn/aiursoft/reporterportal:latest
+    image: hub.aiursoft.com/aiursoft/reporterportal:latest
     volumes:
       - portal-aspnet:/data/.aspnet/
       - portal-files:/data/files
@@ -33,7 +33,7 @@ services:
         delay: 60s
 
   db:
-    image: hub.aiursoft.cn/mysql
+    image: hub.aiursoft.com/mysql
     volumes:
       - portal-db:/var/lib/mysql
     environment:
@@ -54,7 +54,7 @@ services:
         delay: 60s
 
   tts:
-    image: hub.aiursoft.cn/aiursoft/internalimages/reportertts:latest
+    image: hub.aiursoft.com/aiursoft/internalimages/reportertts:latest
     volumes:
       - generated:/app/index-tts/output_audios
     networks:

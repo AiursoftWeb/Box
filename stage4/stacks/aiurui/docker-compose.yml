@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   app:
-    image: hub.aiursoft.cn/aiursoft/aiurui
+    image: hub.aiursoft.com/aiursoft/aiurui
     networks:
       - proxy_app
     stop_grace_period: 20s
@@ -17,7 +17,7 @@ services:
         delay: 5s
 
   stack:
-    image: hub.aiursoft.cn/aiursoft/uistack
+    image: hub.aiursoft.com/aiursoft/uistack
     networks:
       - proxy_app
     stop_grace_period: 20s

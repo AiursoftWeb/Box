@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   app:
-    image: hub.aiursoft.cn/aiursoft/homepage
+    image: hub.aiursoft.com/aiursoft/homepage
     networks:
       - proxy_app
     stop_grace_period: 20s

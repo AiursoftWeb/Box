@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   sleepagent:
-    image: hub.aiursoft.cn/anduin/sleepagent
+    image: hub.aiursoft.com/anduin/sleepagent
     volumes:
       - sleepagent-data:/data
     networks:
@@ -21,7 +21,7 @@ services:
   prometheus:
     depends_on:
       - sleepagent # Prometheus needs to be monitoring the web service
-    image: hub.aiursoft.cn/anduin/sleepagent/customized-prometheus
+    image: hub.aiursoft.com/anduin/sleepagent/customized-prometheus
     volumes:
       - prometheus-config:/etc/prometheus
       - prometheus-data:/prometheus
@@ -42,7 +42,7 @@ services:
   grafana:
     depends_on:
       - prometheus # Grafana needs to be using Prometheus as a data source
-    image: hub.aiursoft.cn/anduin/sleepagent/customized-grafana
+    image: hub.aiursoft.com/anduin/sleepagent/customized-grafana
     volumes:
       # TODO: Investigate why everytime reboot, ask for new admin password
       - grafana-config:/etc/grafana
