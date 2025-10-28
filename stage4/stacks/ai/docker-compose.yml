@@ -214,7 +214,7 @@ services:
       - OAUTH_CLIENT_ID={{OPENWEB_CLIENT_ID}}
       - OAUTH_CLIENT_SECRET={{OPENWEB_CLIENT_SECRET}}
       - 'OAUTH_SCOPES=openid email profile'
-      - OPENID_REDIRECT_URI=https://openweb.aiursoft.cn/oauth/oidc/callback
+      - OPENID_REDIRECT_URI=https://openweb.aiursoft.com/oauth/oidc/callback
     volumes:
       - open-webui-data:/app/backend/data
     networks:
