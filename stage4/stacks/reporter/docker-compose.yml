@@ -16,7 +16,7 @@ services:
       - ConnectionStrings__DbType=MySql
       - Storage__Path=/data/files
       - AppSettings__AuthProvider=OIDC
-      - AppSettings__OIDC__Authority=https:///application/o/reporter
+      - AppSettings__OIDC__Authority=https://auth.aiursoft.com/application/o/reporter
       - AppSettings__OIDC__ClientId={{REPORTER_CLIENT_ID}}
       - AppSettings__OIDC__ClientSecret={{REPORTER_CLIENT_SECRET}}
     networks:

@@ -27,7 +27,7 @@ services:
       - ConnectionStrings__DbType=MySql
       - Storage__Path=/data/files
       - AppSettings__AuthProvider=OIDC
-      - AppSettings__OIDC__Authority=https:///application/o/template
+      - AppSettings__OIDC__Authority=https://auth.aiursoft.com/application/o/template
       - AppSettings__OIDC__ClientId={{TEMPLATE_CLIENT_ID}}
       - AppSettings__OIDC__ClientSecret={{TEMPLATE_CLIENT_SECRET}}
     networks:

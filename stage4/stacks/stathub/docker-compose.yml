@@ -7,7 +7,7 @@ services:
       - stathub-aspnet:/data/.aspnet/
     environment:
       - RequiresAuth=True
-      - OIDC__Authority=https:///application/o/stathub
+      - OIDC__Authority=https://auth.aiursoft.com/application/o/stathub
       - OIDC__ClientId={{STATHUB_CLIENT_ID}}
       - OIDC__ClientSecret={{STATHUB_CLIENT_SECRET}}
     networks:

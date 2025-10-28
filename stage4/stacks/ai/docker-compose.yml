@@ -210,7 +210,7 @@ services:
       - OAUTH_ADMIN_ROLES=openweb-admins
       - OAUTH_PROVIDER_NAME=Aiursoft
       - OAUTH_ROLES_CLAIM=groups
-      - 'OPENID_PROVIDER_URL=https:///application/o/openwebchat/.well-known/openid-configuration'
+      - 'OPENID_PROVIDER_URL=https://auth.aiursoft.com/application/o/openwebchat/.well-known/openid-configuration'
       - OAUTH_CLIENT_ID={{OPENWEB_CLIENT_ID}}
       - OAUTH_CLIENT_SECRET={{OPENWEB_CLIENT_SECRET}}
       - 'OAUTH_SCOPES=openid email profile'

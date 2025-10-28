@@ -27,7 +27,7 @@ services:
       - Mirrors__1__TargetOrgName=AiursoftWeb
       - Mirrors__1__TargetToken={{GITHUB_TOKEN}}
       - RequiresAuth=True
-      - OIDC__Authority=https:///application/o/gitmirror
+      - OIDC__Authority=https://auth.aiursoft.com/application/o/gitmirror
       - OIDC__ClientId={{GITMIRROR_CLIENT_ID}}
       - OIDC__ClientSecret={{GITMIRROR_CLIENT_SECRET}}
     networks:

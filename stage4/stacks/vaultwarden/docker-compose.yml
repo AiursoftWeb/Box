@@ -10,7 +10,7 @@ services:
     environment:
       - DOMAIN=https://vault.aiursoft.cn
       - SSO_ENABLED=true
-      - SSO_AUTHORITY=https:///application/o/vaultwarden/
+      - SSO_AUTHORITY=https://auth.aiursoft.com/application/o/vaultwarden/
       - SSO_CLIENT_ID={{VAULTWARDEN_CLIENT_ID}} # e.g. vaultwarden
       - SSO_CLIENT_SECRET={{VAULTWARDEN_CLIENT_SECRET}} # e.g. supersecret
       - SSO_SCOPES="openid email profile offline_access"
