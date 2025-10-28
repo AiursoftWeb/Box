@@ -4,7 +4,7 @@ services:
   web:
     image: hub.aiursoft.com/thedaviddelta/lingva-translate
     environment:
-      - site_domain=translate.aiursoft.cn
+      - site_domain=translate.aiursoft.com
       - default_source_lang=auto
       - default_target_lang=zh
     networks:

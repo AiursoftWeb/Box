@@ -10,7 +10,7 @@ services:
         - vikunja-files:/app/vikunja/files
         - /swarm-vol/vikunja/config:/app/vikunja/config.yml:ro
     environment:
-      - VIKUNJA_SERVICE_PUBLICURL=https://todo.aiursoft.cn
+      - VIKUNJA_SERVICE_PUBLICURL=https://todo.aiursoft.com
       - VIKUNJA_DATABASE_HOST=db
       - VIKUNJA_DATABASE_PASSWORD=vikunja_password
       - VIKUNJA_DATABASE_TYPE=mysql

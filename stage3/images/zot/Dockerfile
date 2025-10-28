@@ -11,13 +11,13 @@ RUN apt-get update \
 
 RUN mkdir -p /etc/zot /config /data
 
-# Check if git.aiursoft.cn is accessible. If so, download from the mirror.
+# Check if git.aiursoft.com is accessible. If so, download from the mirror.
 # Otherwise, download from the official GitHub releases.
-RUN if curl -fsS --connect-timeout 5 https://git.aiursoft.cn > /dev/null; then \
-        echo "--> git.aiursoft.cn is accessible, downloading from mirror..."; \
-        wget -O /usr/local/bin/zot "https://git.aiursoft.cn/PublicVault/zot/releases/download/${ZOT_VERSION}/zot-linux-amd64"; \
+RUN if curl -fsS --connect-timeout 5 https://git.aiursoft.com > /dev/null; then \
+        echo "--> git.aiursoft.com is accessible, downloading from mirror..."; \
+        wget -O /usr/local/bin/zot "https://git.aiursoft.com/PublicVault/zot/releases/download/${ZOT_VERSION}/zot-linux-amd64"; \
     else \
-        echo "--> git.aiursoft.cn is not accessible, downloading from GitHub..."; \
+        echo "--> git.aiursoft.com is not accessible, downloading from GitHub..."; \
         wget -O /usr/local/bin/zot "https://github.com/project-zot/zot/releases/download/${ZOT_VERSION}/zot-linux-amd64"; \
     fi \
     && chmod +x /usr/local/bin/zot

@@ -8,9 +8,9 @@
 
 但是，Turn Server 稍微有一点怪：考虑到在内网，所有业务我们都靠 DNS Override 来配置直接访问内网 IP 地址。但是，Turn Server 不能这么干。它必须要用公网 IP 地址。
 
-所以内网的 DNS 里解析 talk.aiursoft.cn 一定是公网 IP 地址。
+所以内网的 DNS 里解析 talk.aiursoft.com 一定是公网 IP 地址。
 
-公网的人解析 talk.aiursoft.cn 也是公网 IP 地址，无论是哪个 FRPS 节点，都能正常访问通话。
+公网的人解析 talk.aiursoft.com 也是公网 IP 地址，无论是哪个 FRPS 节点，都能正常访问通话。
 
 ## Before
 

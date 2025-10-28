@@ -5,7 +5,7 @@ COPY huawei-source.list /huawei-sources.list
 
 RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
 
-RUN if curl -f http://mirrors.aiursoft.cn/; then \
+RUN if curl -f http://mirrors.aiursoft.com/; then \
         echo "Using aiursoft sources"; \
         cp /aiursoft-source.list /etc/apt/sources.list && \
         apt update; \
