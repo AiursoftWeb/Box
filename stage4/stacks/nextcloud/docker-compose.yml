@@ -22,7 +22,7 @@ services:
       - MYSQL_HOST=nextclouddb
       - REDIS_HOST=redis
       - NEXTCLOUD_DATA_DIR=/mnt/data
-      - NEXTCLOUD_TRUSTED_DOMAINS=nextcloud.aiursoft.cn
+      - NEXTCLOUD_TRUSTED_DOMAINS=nextcloud.aiursoft.com
       - PHP_MEMORY_LIMIT=1G
       - PHP_UPLOAD_LIMIT=1G
       - PHP_OPCACHE_ENABLE=1
@@ -41,8 +41,8 @@ services:
     image: hub.aiursoft.com/ghcr.io/nextcloud-releases/aio-talk
     environment:
       - TZ=UTC
-      - NC_DOMAIN=nextcloud.aiursoft.cn
-      - TALK_HOST=talk.aiursoft.cn
+      - NC_DOMAIN=nextcloud.aiursoft.com
+      - TALK_HOST=talk.aiursoft.com
       - TALK_PORT=3478
       - TURN_SECRET={{NEXTCLOUD_TURN_SECRET}}
       - SIGNALING_SECRET={{NEXTCLOUD_SIGNALING_SECRET}}
