@@ -8,7 +8,7 @@ services:
     networks:
       - proxy_app
     environment:
-      - DOMAIN=https://vault.aiursoft.cn
+      - DOMAIN=https://vault.aiursoft.com
       - SSO_ENABLED=true
       - SSO_AUTHORITY=https://auth.aiursoft.com/application/o/vaultwarden/
       - SSO_CLIENT_ID={{VAULTWARDEN_CLIENT_ID}} # e.g. vaultwarden
