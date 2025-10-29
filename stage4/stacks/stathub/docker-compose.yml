@@ -1,15 +1,21 @@
 version: '3.9'
 
 services:
-  stathubserver:
+  app:
+    depends_on:
+      - db
     image: hub.aiursoft.com/aiursoft/stathub
     volumes:
       - stathub-aspnet:/data/.aspnet/
+      - stathub-files:/data/files
     environment:
-      - RequiresAuth=True
-      - OIDC__Authority=https://auth.aiursoft.com/application/o/stathub
-      - OIDC__ClientId={{STATHUB_CLIENT_ID}}
-      - OIDC__ClientSecret={{STATHUB_CLIENT_SECRET}}
+      - ConnectionStrings__DefaultConnection=Server=db;Database=stathub;Uid=stathub;Pwd=<stathub_password>;
+      - ConnectionStrings__DbType=MySql
+      - Storage__Path=/data/files
+      - AppSettings__AuthProvider=OIDC
+      - AppSettings__OIDC__Authority=https://auth.aiursoft.com/application/o/stathub
+      - AppSettings__OIDC__ClientId={{STATHUB_CLIENT_ID}}
+      - AppSettings__OIDC__ClientSecret={{STATHUB_CLIENT_SECRET}}
     networks:
       - proxy_app
       - internal
@@ -23,13 +29,46 @@ services:
         order: stop-first
         delay: 60s
 
+  db:
+    image: hub.aiursoft.com/mysql
+    volumes:
+      - stathub-db:/var/lib/mysql
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
+      - MYSQL_DATABASE=stathub
+      - MYSQL_USER=stathub
+      - MYSQL_PASSWORD=<stathub_password>
+    networks:
+      - internal
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4G
+      update_config:
+        order: stop-first
+        delay: 60s
+
 volumes:
+  stathub-files:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/stathub-data/files
   stathub-aspnet:
     driver: local
     driver_opts:
       type: none
       o: bind
       device: /swarm-vol/stathub-data/aspnet
+  stathub-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/stathub-data/mysql
 
 networks:
   proxy_app:
