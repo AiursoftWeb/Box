@@ -123,7 +123,7 @@ services:
   authentik_proxy:
     depends_on:
       - ollama-gateway
-    image: hub.aiursoft.com/ghcr.io/goauthentik/proxy:2025.8
+    image: hub.aiursoft.com/ghcr.io/goauthentik/proxy:2025.10.1
     volumes:
       - type: tmpfs
         target: /dev/shm

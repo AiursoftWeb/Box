@@ -65,7 +65,7 @@ services:
       - postgresql
       - redis
     # This version need to be updated regularly
-    image: localhost:8080/public_mirror/ghcr.io/goauthentik/server:2025.8
+    image: localhost:8080/public_mirror/ghcr.io/goauthentik/server:2025.10.1
     volumes:
       - media:/media
       - custom-templates:/templates
@@ -103,7 +103,7 @@ services:
     depends_on:
       - postgresql
       - redis
-    image: localhost:8080/public_mirror/ghcr.io/goauthentik/server:2025.8
+    image: localhost:8080/public_mirror/ghcr.io/goauthentik/server:2025.10.1
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - media:/media
