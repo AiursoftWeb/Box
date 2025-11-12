@@ -1,4 +1,4 @@
-deb http://mirror.aiursoft.com/ubuntu/ plucky main restricted universe multiverse
-deb http://mirror.aiursoft.com/ubuntu/ plucky-updates main restricted universe multiverse
-deb http://mirror.aiursoft.com/ubuntu/ plucky-backports main restricted universe multiverse
-deb http://mirror.aiursoft.com/ubuntu/ plucky-security main restricted universe multiverse
+deb http://mirror.aiursoft.com/ubuntu/ questing main restricted universe multiverse
+deb http://mirror.aiursoft.com/ubuntu/ questing-updates main restricted universe multiverse
+deb http://mirror.aiursoft.com/ubuntu/ questing-backports main restricted universe multiverse
+deb http://mirror.aiursoft.com/ubuntu/ questing-security main restricted universe multiverse

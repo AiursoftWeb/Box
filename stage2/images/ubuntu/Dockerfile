@@ -1,4 +1,4 @@
-FROM localhost:8080/public_mirror/ubuntu:25.04
+FROM localhost:8080/public_mirror/ubuntu:25.10
 
 COPY aiursoft-source.list /aiursoft-source.list
 COPY huawei-source.list /huawei-sources.list

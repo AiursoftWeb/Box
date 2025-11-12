@@ -11,7 +11,7 @@ mirror_image() {
 }
 
 echo "Mirroring Ubuntu..."
-mirror_image "ubuntu:25.04"
+mirror_image "ubuntu:25.10"
 
 echo "Mirroring Caddy builder..."
 mirror_image "caddy:builder"

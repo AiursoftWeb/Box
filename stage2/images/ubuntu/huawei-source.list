@@ -1,4 +1,4 @@
-deb http://mirrors.huaweicloud.com/ubuntu/ plucky main restricted universe multiverse
-deb http://mirrors.huaweicloud.com/ubuntu/ plucky-updates main restricted universe multiverse
-deb http://mirrors.huaweicloud.com/ubuntu/ plucky-backports main restricted universe multiverse
-deb http://mirrors.huaweicloud.com/ubuntu/ plucky-security main restricted universe multiverse
+deb http://mirrors.huaweicloud.com/ubuntu/ questing main restricted universe multiverse
+deb http://mirrors.huaweicloud.com/ubuntu/ questing-updates main restricted universe multiverse
+deb http://mirrors.huaweicloud.com/ubuntu/ questing-backports main restricted universe multiverse
+deb http://mirrors.huaweicloud.com/ubuntu/ questing-security main restricted universe multiverse
