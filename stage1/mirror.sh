@@ -27,4 +27,4 @@ mirror_image "redis:alpine"
 
 # The tag need to be updated regularly.
 echo "Mirroring GoAuthentik server..."
-mirror_image "ghcr.io/goauthentik/server:2025.8"
+mirror_image "ghcr.io/goauthentik/server:2025.10.1"

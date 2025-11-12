@@ -3,7 +3,7 @@ version: '3.9'
 services:
 
   authentik_proxy:
-    image: hub.aiursoft.com/ghcr.io/goauthentik/proxy:2025.8
+    image: hub.aiursoft.com/ghcr.io/goauthentik/proxy:2025.10.1
     volumes:
       - type: tmpfs
         target: /dev/shm
