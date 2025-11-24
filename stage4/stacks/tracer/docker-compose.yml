@@ -26,7 +26,7 @@ services:
           cpus: '2.0'
           memory: 2G
       update_config:
-        order: start-first
+        order: stop-first
         delay: 60s
 
   db:
