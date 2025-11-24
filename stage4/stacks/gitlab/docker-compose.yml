@@ -17,11 +17,10 @@ services:
       - gitlab-log:/var/log/gitlab
       - gitlab-config:/etc/gitlab
       - /etc/localtime:/etc/localtime:ro
-      - type: tmpfs
+      - type: bind
+        source: /dev/shm
         target: /dev/shm
-        tmpfs:
-          # 4GB
-          size: 4294967296 
+        read_only: false
     tmpfs:
       - /tmp:size=2G
     environment:
