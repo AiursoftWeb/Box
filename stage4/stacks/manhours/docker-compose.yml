@@ -1,31 +1,77 @@
-version: '3.9'
+version: "3.9"
 
 services:
   app:
-    image: hub.aiursoft.com/aiursoft/manhours
+    depends_on:
+      - db
+    image: hub.aiursoft.com/aiursoft/manhours:latest
     volumes:
-      - manhours-data:/data/Repos
+      - manhours-aspnet:/data/.aspnet/
+      - manhours-files:/data/files
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=db;Database=mth;Uid=mth;Pwd=<mth_password>;
+      - ConnectionStrings__DbType=MySql
+      - Storage__Path=/data/files
+      - AppSettings__AuthProvider=OIDC
+      - AppSettings__OIDC__Authority=https://auth.aiursoft.com/application/o/manhours
+      - AppSettings__OIDC__ClientId={{MANHOURS_CLIENT_ID}}
+      - AppSettings__OIDC__ClientSecret={{MANHOURS_CLIENT_SECRET}}
     networks:
       - proxy_app
-    stop_grace_period: 20s
+      - internal
+    stop_grace_period: 60s
     deploy:
-      replicas: 3
       resources:
         limits:
-          cpus: '2.0'
+          cpus: "2.0"
           memory: 2G
       update_config:
-        order: start-first
-        delay: 5s
+        order: stop-first
+        delay: 60s
 
-networks:
-  proxy_app:
-    external: true
+  db:
+    image: hub.aiursoft.com/mysql
+    volumes:
+      - manhours-db:/var/lib/mysql
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=true
+      - MYSQL_DATABASE=mth
+      - MYSQL_USER=mth
+      - MYSQL_PASSWORD=<mth_password>
+    networks:
+      - internal
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 4G
+      update_config:
+        order: stop-first
+        delay: 60s
 
 volumes:
-  manhours-data:
+  manhours-files:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /swarm-vol/manhours-data
+      device: /swarm-vol/manhours-data/files
+  manhours-aspnet:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/manhours-data/aspnet
+  manhours-db:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/manhours-data/mysql
+
+networks:
+  proxy_app:
+    external: true
+  internal:
+    driver: overlay
