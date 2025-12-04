@@ -1,7 +1,7 @@
 # Box
 
 [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](https://gitlab.aiursoft.com/aiursoft/box/-/blob/master/LICENSE)
-[![ManHours](https://manhours.aiursoft.com/r/gitlab.aiursoft.com/aiursoft/box.svg)](https://gitlab.aiursoft.com/aiursoft/box/-/commits/master?ref_type=heads)
+[![Man hours](https://manhours.aiursoft.com/r/gitlab.aiursoft.com/aiursoft/box.svg)](https://manhours.aiursoft.com/r/gitlab.aiursoft.com/aiursoft/box.html)
 [![Website](https://img.shields.io/website?url=https%3A%2F%2Fwww.aiursoft.com%2F)](https://www.aiursoft.com)
 
 Box is a modular and secure single-node datacenter bootstrap system designed for home labs, edge servers, and self-hosting environments. It automates the initialization of essential infrastructure services in a staged and dependency-aware manner.
