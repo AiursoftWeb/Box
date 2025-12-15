@@ -16,6 +16,7 @@ type = "tcp"
 localIP = "incoming_sites"
 localPort = 80
 remotePort = 80
+transport.proxyProtocolVersion = "v2"
 
 # Check on Caddy.
 [[proxies]]
