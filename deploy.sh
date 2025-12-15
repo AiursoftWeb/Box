@@ -182,13 +182,13 @@ MOTD_FILE="/etc/motd"
 WARN_MSG="[CRITICAL] Docker disk usage is extremely high (>450GB). Please check."
 
 # Get size in MB
-CURRENT_SIZE=$(du -sm "$DOCKER_DIR" | cut -f1)
+CURRENT_SIZE=$(du -xsm "$DOCKER_DIR" | cut -f1)
 
 if [ "$CURRENT_SIZE" -gt "$TRIGGER_MB" ]; then
     echo "Usage (${CURRENT_SIZE}MB) > Limit (${TRIGGER_MB}MB). Pruning..."
     docker system prune -a --volumes -f
 
-    NEW_SIZE=$(du -sm "$DOCKER_DIR" | cut -f1)
+    NEW_SIZE=$(du -xsm "$DOCKER_DIR" | cut -f1)
     
     if [ "$NEW_SIZE" -gt "$SAFE_MB" ]; then
         echo "Still high after prune: ${NEW_SIZE}MB."

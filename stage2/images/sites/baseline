@@ -7,6 +7,14 @@
 		}
 		level debug
 	}
+	servers :80 {
+		listener_wrappers {
+			proxy_protocol {
+				timeout 2s
+				allow 10.0.0.0/8
+			}
+		}
+	}
 	servers :443 {
 		listener_wrappers {
 			proxy_protocol {
