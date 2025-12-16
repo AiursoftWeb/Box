@@ -13,6 +13,8 @@ services:
       - ConnectionStrings__DbType=MySql
       - AppSettings__WechatAppId={{WCEXAM_APP_ID}}
       - AppSettings__WechatAppSecret={{WCEXAM_APP_SECRET}}
+      - SenparcWeixinSetting__WeixinAppId={{WCEXAM_APP_ID}}
+      - SenparcWeixinSetting__WeixinAppSecret={{WCEXAM_APP_SECRET}}
     networks:
       - proxy_app
       - internal
