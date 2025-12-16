@@ -12,7 +12,7 @@ services:
       - ConnectionStrings__DefaultConnection=Server=db;Database=mth;Uid=mth;Pwd=<mth_password>;
       - ConnectionStrings__DbType=MySql
       - AppSettings__WechatAppId={{WCEXAM_APP_ID}}
-      - AppSettings__WechatAppId={{WCEXAM_APP_SECRET}}
+      - AppSettings__WechatAppSecret={{WCEXAM_APP_SECRET}}
     networks:
       - proxy_app
       - internal
