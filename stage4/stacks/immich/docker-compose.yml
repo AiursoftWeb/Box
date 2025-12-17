@@ -86,6 +86,26 @@ services:
         order: stop-first
         delay: 60s
 
+  ranking:
+    image: hub.aiursoft.com/anduin/photoranking
+    volumes:
+      - external:/photos
+      - ranking-data:/data
+    environment:
+      - TZ=UTC
+      - PhotoRootPath=/photos
+    networks:
+      - proxy_app
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4G
+      update_config:
+        order: stop-first
+        delay: 60s
+
   database:
     image: hub.aiursoft.com/ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0
     volumes:
@@ -180,3 +200,9 @@ volumes:
       type: none
       o: bind
       device: /swarm-vol/immich/redis
+  ranking-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /swarm-vol/immich/ranking-data
