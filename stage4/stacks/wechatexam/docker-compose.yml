@@ -11,12 +11,13 @@ services:
     environment:
       - ConnectionStrings__DefaultConnection=Server=db;Database=mth;Uid=mth;Pwd=<mth_password>;
       - ConnectionStrings__DbType=MySql
-      - AppSettings__Wechat__AppId={{WCEXAM_APP_ID}}
-      - AppSettings__Wechat__AppSecret={{WCEXAM_APP_SECRET}}
+      - Storage__Path=/data/files
       - AppSettings__AuthProvider=OIDC
       - AppSettings__OIDC__Authority=https://auth.aiursoft.com/application/o/we-chat-exam
       - AppSettings__OIDC__ClientId={{WCE_CLIENT_ID}}
       - AppSettings__OIDC__ClientSecret={{WCE_CLIENT_SECRET}}
+      - AppSettings__Wechat__AppId={{WCEXAM_APP_ID}}
+      - AppSettings__Wechat__AppSecret={{WCEXAM_APP_SECRET}}
     networks:
       - proxy_app
       - internal
