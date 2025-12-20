@@ -14,7 +14,7 @@ services:
       - SSO_CLIENT_ID={{VAULTWARDEN_CLIENT_ID}} # e.g. vaultwarden
       - SSO_CLIENT_SECRET={{VAULTWARDEN_CLIENT_SECRET}} # e.g. supersecret
       - SSO_SCOPES="openid email profile offline_access"
-      - SSO_ALLOW_UNKNOWN_EMAIL_VERIFICATION=false
+      - SSO_ALLOW_UNKNOWN_EMAIL_VERIFICATION=true
       - SSO_CLIENT_CACHE_EXPIRATION=0
       - SSO_ONLY=true # Set to true to disable email+master password login and require SSO
       - SSO_SIGNUPS_MATCH_EMAIL=true # Match first SSO login to existing account by email
