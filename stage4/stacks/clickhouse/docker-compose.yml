@@ -29,11 +29,15 @@ services:
     environment:
       - CLICKHOUSE_USER=default
       - CLICKHOUSE_PASSWORD=123456
+      - CLICKHOUSE_TELEMETRY_OPT_OUT=1 
+      - CLICKHOUSE_DO_NOT_CHECK_UPDATES=1
     networks:
       - proxy_app
       - clickhouse_net
     volumes:
       - click-house-data:/var/lib/clickhouse
+      - /swarm-vol/click-house/config_override.xml:/etc/clickhouse-server/config.d/config_override.xml
+      - /swarm-vol/click-house/users_override.xml:/etc/clickhouse-server/users.d/users_override.xml
     stop_grace_period: 60s
     deploy:
       resources:
