@@ -17,7 +17,6 @@ services:
       - OLLAMA_DEBUG=1              # 保持开启，观察日志
       - OLLAMA_NUM_PARALLEL=1       # 3090 显存有限，30B Q8 很大，并发设为 1 比较稳
       - GIN_MODE=release
-      - OLLAMA_KV_CACHE_TYPE=f16  # 可选：Q8_0 的 KV Cache 可能会导致计算精度问题或某些 backend bug，如果显存够（24G*2=48G，模型30G），可以试试 f16
     stop_grace_period: 60s
     deploy:
       resources:
@@ -54,7 +53,7 @@ services:
           apk add curl && \
           sleep 40 && \
           while true; do \
-            curl -v http://ollama-server:11434/api/generate -d '{"model": "qwen3:30b-a3b-thinking-2507-q8_0:30b-a3b-thinking-2507-q8_0"}'; \
+            curl -v http://ollama-server:11434/api/generate -d '{"model": "qwen3:30b-a3b-thinking-2507-q8_0"}'; \
             sleep 900; \
           done
     stop_grace_period: 20s
