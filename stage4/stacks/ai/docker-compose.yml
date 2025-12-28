@@ -8,6 +8,8 @@ services:
     networks:
       - internal
     environment:
+      - OLLAMA_NUM_CTX=32768
+      - OLLAMA_NUM_BATCH=2048
       - OLLAMA_SCHED_SPREAD=1
       - OLLAMA_KV_CACHE_TYPE=q8_0
       - OLLAMA_FLASH_ATTENTION=1
