@@ -112,6 +112,7 @@ services:
       - BingSearchAPIKey={{BING_SEARCH_KEY}}
       - Underlyings__OpenAI__Token={{OPENAI_KEY}}
       - Underlyings__DeepSeek__Token={{DEEPSEEK_KEY}}
+      - ApiKey={{OLLAMA_GATEWAY_API_KEY}}
     networks:
       - internal
       - proxy_app
