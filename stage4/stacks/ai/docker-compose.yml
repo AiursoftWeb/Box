@@ -55,7 +55,7 @@ services:
           apk add curl && \
           sleep 40 && \
           while true; do \
-            curl -v http://ollama-server:11434/api/generate -d '{"model": "qwen3:30b-a3b-thinking-2507-q8_0"}'; \
+            curl -v http://ollama-server:11434/api/generate -d '{"model": "qwen3:32b-q8_0"}'; \
             sleep 900; \
           done
     stop_grace_period: 20s
