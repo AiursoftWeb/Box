@@ -11,6 +11,7 @@ services:
     environment:
       - OpenAI__CompletionApiUrl=https://chat.aiursoft.com/api/chat
       - OpenAI__Model=qwen3:30b-a3b-thinking-2507-q8_0
+      - OpenAI__Token={{OLLAMA_GATEWAY_API_KEY}}
       - ConnectionStrings__DefaultConnection=Server=anduin-db;Database=anduin;Uid=anduin;Pwd=<anduin_password>;
       - ConnectionStrings__DbType=MySql
       - Storage__Path=/data/files
@@ -69,6 +70,7 @@ services:
     environment:
       - OpenAI__CompletionApiUrl=https://chat.aiursoft.com/api/chat
       - OpenAI__Model=qwen3:30b-a3b-thinking-2507-q8_0
+      - OpenAI__Token={{OLLAMA_GATEWAY_API_KEY}}
       - ConnectionStrings__DefaultConnection=Server=jimmoen-db;Database=jimmoen;Uid=jimmoen;Pwd=<jimmoen_password>;
       - ConnectionStrings__DbType=MySql
       - Storage__Path=/data/files
@@ -126,6 +128,7 @@ services:
     environment:
       - OpenAI__CompletionApiUrl=https://chat.aiursoft.com/api/chat
       - OpenAI__Model=qwen3:30b-a3b-thinking-2507-q8_0
+      - OpenAI__Token={{OLLAMA_GATEWAY_API_KEY}}
       - ConnectionStrings__DefaultConnection=Server=rest-db;Database=rest;Uid=rest;Pwd=<rest_password>;
       - ConnectionStrings__DbType=MySql
       - Storage__Path=/data/files
@@ -184,6 +187,7 @@ services:
     environment:
       - OpenAI__CompletionApiUrl=https://chat.aiursoft.com/api/chat
       - OpenAI__Model=qwen3:30b-a3b-thinking-2507-q8_0
+      - OpenAI__Token={{OLLAMA_GATEWAY_API_KEY}}
       - ConnectionStrings__DefaultConnection=Server=cody-db;Database=cody;Uid=cody;Pwd=<cody_password>;
       - ConnectionStrings__DbType=MySql
       - Storage__Path=/data/files
@@ -241,6 +245,7 @@ services:
     environment:
       - OpenAI__CompletionApiUrl=https://chat.aiursoft.com/api/chat
       - OpenAI__Model=qwen3:30b-a3b-thinking-2507-q8_0
+      - OpenAI__Token={{OLLAMA_GATEWAY_API_KEY}}
       - ConnectionStrings__DefaultConnection=Server=gxhao-db;Database=gxhao;Uid=gxhao;Pwd=<gxhao_password>;
       - ConnectionStrings__DbType=MySql
       - Storage__Path=/data/files
@@ -298,6 +303,7 @@ services:
     environment:
       - OpenAI__CompletionApiUrl=https://chat.aiursoft.com/api/chat
       - OpenAI__Model=qwen3:30b-a3b-thinking-2507-q8_0
+      - OpenAI__Token={{OLLAMA_GATEWAY_API_KEY}}
       - ConnectionStrings__DefaultConnection=Server=anois-db;Database=anois;Uid=anois;Pwd=<anois_password>;
       - ConnectionStrings__DbType=MySql
       - Storage__Path=/data/files
@@ -355,6 +361,7 @@ services:
     environment:
       - OpenAI__CompletionApiUrl=https://chat.aiursoft.com/api/chat
       - OpenAI__Model=qwen3:30b-a3b-thinking-2507-q8_0
+      - OpenAI__Token={{OLLAMA_GATEWAY_API_KEY}}
       - ConnectionStrings__DefaultConnection=Server=dvorak-db;Database=dvorak;Uid=dvorak;Pwd=<dvorak_password>;
       - ConnectionStrings__DbType=MySql
       - Storage__Path=/data/files
@@ -412,6 +419,7 @@ services:
     environment:
       - OpenAI__CompletionApiUrl=https://chat.aiursoft.com/api/chat
       - OpenAI__Model=qwen3:30b-a3b-thinking-2507-q8_0
+      - OpenAI__Token={{OLLAMA_GATEWAY_API_KEY}}
       - ConnectionStrings__DefaultConnection=Server=kitlau-db;Database=kitlau;Uid=kitlau;Pwd=<kitlau_password>;
       - ConnectionStrings__DbType=MySql
       - Storage__Path=/data/files
@@ -469,6 +477,7 @@ services:
     environment:
       - OpenAI__CompletionApiUrl=https://chat.aiursoft.com/api/chat
       - OpenAI__Model=qwen3:30b-a3b-thinking-2507-q8_0
+      - OpenAI__Token={{OLLAMA_GATEWAY_API_KEY}}
       - ConnectionStrings__DefaultConnection=Server=xinboo-db;Database=xinboo;Uid=xinboo;Pwd=<xinboo_password>;
       - ConnectionStrings__DbType=MySql
       - Storage__Path=/data/files
@@ -526,6 +535,7 @@ services:
     environment:
       - OpenAI__CompletionApiUrl=https://chat.aiursoft.com/api/chat
       - OpenAI__Model=qwen3:30b-a3b-thinking-2507-q8_0
+      - OpenAI__Token={{OLLAMA_GATEWAY_API_KEY}}
       - ConnectionStrings__DefaultConnection=Server=gbiner-db;Database=gbiner;Uid=gbiner;Pwd=<gbiner_password>;
       - ConnectionStrings__DbType=MySql
       - Storage__Path=/data/files
@@ -583,6 +593,7 @@ services:
     environment:
       - OpenAI__CompletionApiUrl=https://chat.aiursoft.com/api/chat
       - OpenAI__Model=qwen3:30b-a3b-thinking-2507-q8_0
+      - OpenAI__Token={{OLLAMA_GATEWAY_API_KEY}}
       - ConnectionStrings__DefaultConnection=Server=rdf-db;Database=rdf;Uid=rdf;Pwd=<rdf_password>;
       - ConnectionStrings__DbType=MySql
       - Storage__Path=/data/files
@@ -640,6 +651,7 @@ services:
     environment:
       - OpenAI__CompletionApiUrl=https://chat.aiursoft.com/api/chat
       - OpenAI__Model=qwen3:30b-a3b-thinking-2507-q8_0
+      - OpenAI__Token={{OLLAMA_GATEWAY_API_KEY}}
       - ConnectionStrings__DefaultConnection=Server=lyx-db;Database=lyx;Uid=lyx;Pwd=<lyx_password>;
       - ConnectionStrings__DbType=MySql
       - Storage__Path=/data/files
@@ -697,6 +709,7 @@ services:
     environment:
       - OpenAI__CompletionApiUrl=https://chat.aiursoft.com/api/chat
       - OpenAI__Model=qwen3:30b-a3b-thinking-2507-q8_0
+      - OpenAI__Token={{OLLAMA_GATEWAY_API_KEY}}
       - ConnectionStrings__DefaultConnection=Server=shubuzuo-db;Database=shubuzuo;Uid=shubuzuo;Pwd=<shubuzuo_password>;
       - ConnectionStrings__DbType=MySql
       - Storage__Path=/data/files
@@ -754,6 +767,7 @@ services:
     environment:
       - OpenAI__CompletionApiUrl=https://chat.aiursoft.com/api/chat
       - OpenAI__Model=qwen3:30b-a3b-thinking-2507-q8_0
+      - OpenAI__Token={{OLLAMA_GATEWAY_API_KEY}}
       - ConnectionStrings__DefaultConnection=Server=lily-db;Database=lily;Uid=lily;Pwd=<lily_password>;
       - ConnectionStrings__DbType=MySql
       - Storage__Path=/data/files
@@ -811,6 +825,7 @@ services:
     environment:
       - OpenAI__CompletionApiUrl=https://chat.aiursoft.com/api/chat
       - OpenAI__Model=qwen3:30b-a3b-thinking-2507-q8_0
+      - OpenAI__Token={{OLLAMA_GATEWAY_API_KEY}}
       - ConnectionStrings__DefaultConnection=Server=carson-db;Database=carson;Uid=carson;Pwd=<carson_password>;
       - ConnectionStrings__DbType=MySql
       - Storage__Path=/data/files
@@ -868,6 +883,7 @@ services:
     environment:
       - OpenAI__CompletionApiUrl=https://chat.aiursoft.com/api/chat
       - OpenAI__Model=qwen3:30b-a3b-thinking-2507-q8_0
+      - OpenAI__Token={{OLLAMA_GATEWAY_API_KEY}}
       - ConnectionStrings__DefaultConnection=Server=zoneblog-db;Database=zoneblog;Uid=zoneblog;Pwd=<zoneblog_password>;
       - ConnectionStrings__DbType=MySql
       - Storage__Path=/data/files
@@ -926,6 +942,7 @@ services:
     environment:
       - OpenAI__CompletionApiUrl=https://chat.aiursoft.com/api/chat
       - OpenAI__Model=qwen3:30b-a3b-thinking-2507-q8_0
+      - OpenAI__Token={{OLLAMA_GATEWAY_API_KEY}}
       - ConnectionStrings__DefaultConnection=Server=yuyuyuyublog-db;Database=yuyuyuyublog;Uid=yuyuyuyublog;Pwd=<yuyuyuyublog_password>;
       - ConnectionStrings__DbType=MySql
       - Storage__Path=/data/files
