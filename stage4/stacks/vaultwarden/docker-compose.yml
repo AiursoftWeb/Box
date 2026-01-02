@@ -19,6 +19,8 @@ services:
       - SSO_ONLY=true # Set to true to disable email+master password login and require SSO
       - SSO_SIGNUPS_MATCH_EMAIL=true # Match first SSO login to existing account by email
       - ADMIN_TOKEN={{VAULTWARDEN_ADMIN_TOKEN}} # e.g. supersecretadmintoken
+      - SSO_CLIENT_CACHE_EXPIRATION=300  # 改为 5 分钟而不是 0
+      - SSO_DEBUG=true  # 添加调试日志
     stop_grace_period: 60s
     deploy:
       update_config:
