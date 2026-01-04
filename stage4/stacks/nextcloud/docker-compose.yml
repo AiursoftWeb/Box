@@ -37,39 +37,6 @@ services:
         order: stop-first
         delay: 60s
 
-  aio:
-    image: hub.aiursoft.com/ghcr.io/nextcloud-releases/aio-talk
-    environment:
-      - TZ=UTC
-      - NC_DOMAIN=nextcloud.aiursoft.com
-      - TALK_HOST=talk.aiursoft.com
-      - TALK_PORT=3478
-      - TURN_SECRET={{NEXTCLOUD_TURN_SECRET}}
-      - SIGNALING_SECRET={{NEXTCLOUD_SIGNALING_SECRET}}
-      - INTERNAL_SECRET={{NEXTCLOUD_INTERNAL_SECRET}}
-    networks: 
-      - internal
-      - proxy_app
-      - frp_net
-    ports:
-      - target: 3478
-        published: 3478
-        protocol: tcp
-        mode: host
-      - target: 3478
-        published: 3478
-        protocol: udp
-        mode: host
-    stop_grace_period: 60s
-    deploy:
-      resources:
-        limits:
-          memory: 8192M
-          cpus: '8.0'
-      update_config:
-        order: stop-first
-        delay: 60s
-
   nextcloud-jobrunner:
     depends_on:
       - web
