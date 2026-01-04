@@ -23,7 +23,7 @@ FROM localhost:8080/public_mirror/caddy:latest
 
 WORKDIR /app
 
-EXPOSE 80 443
+EXPOSE 80 81 443 444
 
 COPY --from=caddy-build-env /usr/bin/caddy /usr/bin/caddy
 COPY --from=config-build-env /app/Dist/Caddyfile /etc/caddy/Caddyfile

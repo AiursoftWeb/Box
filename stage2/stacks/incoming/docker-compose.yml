@@ -4,7 +4,7 @@ services:
   sites:
     image: localhost:8080/box_starting/local_sites
     ports:
-      # These ports are for internal use. For external, FRP will handle it.
+      # Internal LAN direct access (no Proxy Protocol)
       - target: 80
         published: 80
         protocol: tcp
