@@ -1,5 +1,5 @@
 # The version need to be updated regularly.
-ARG ZOT_VERSION=v2.1.7
+ARG ZOT_VERSION=v2.1.13
 FROM localhost:8080/box_starting/local_ubuntu
 
 ARG ZOT_VERSION
