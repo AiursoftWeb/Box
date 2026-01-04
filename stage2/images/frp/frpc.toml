@@ -1,7 +1,7 @@
 serverAddr = "FRP_SERVER_IP"
 serverPort = 7000
 auth.token = "FRP_TOKEN"
-transport.poolCount = 6
+# transport.poolCount = 6
 transport.protocol = "quic" 
 # transport.useCompression = true 
 webServer.addr = "0.0.0.0"
