@@ -1,7 +1,6 @@
 serverAddr = "FRP_SERVER_IP"
 serverPort = 7000
 auth.token = "FRP_TOKEN"
-loginFailExit = false
 # transport.poolCount = 6
 transport.protocol = "quic" 
 # transport.useCompression = true 
@@ -16,20 +15,18 @@ webServer.password = "admin"
 name = "http"
 type = "tcp"
 localIP = "incoming_sites"
-localPort = 81
+localPort = 80
 remotePort = 80
 transport.proxyProtocolVersion = "v2"
-transport.useCompression = true
 
 # Check on Caddy.
 [[proxies]]
 name = "https"
 type = "tcp"
 localIP = "incoming_sites"
-localPort = 444
+localPort = 443
 remotePort = 443
 transport.proxyProtocolVersion = "v2"
-transport.useCompression = true
 
 # Regular update to ensure safe.
 [[proxies]]

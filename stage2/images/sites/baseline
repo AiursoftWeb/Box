@@ -8,14 +8,6 @@
 		level debug
 	}
 	servers :80 {
-	}
-	servers :443 {
-		listener_wrappers {
-			http_redirect
-			tls
-		}
-	}
-	servers :81 {
 		listener_wrappers {
 			proxy_protocol {
 				timeout 2s
@@ -23,7 +15,7 @@
 			}
 		}
 	}
-	servers :444 {
+	servers :443 {
 		listener_wrappers {
 			proxy_protocol {
 				timeout 2s
