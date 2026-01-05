@@ -43,22 +43,6 @@ localIP = "satisfactory_server"
 localPort = 7777
 remotePort = 7777
 
-# Regular update to ensure safe.
-[[proxies]]
-name = "nextcloud_talk_tcp"
-type = "tcp"
-localIP = "nextcloud_aio"
-localPort = 3478
-remotePort = 3478
-
-# Regular update to ensure safe.
-[[proxies]]
-name = "nextcloud_talk_udp"
-type = "udp"
-localIP = "nextcloud_aio"
-localPort = 3478
-remotePort = 3478
-
 [[proxies]]
 name = "satisfactory_messaging"
 type = "tcp"
