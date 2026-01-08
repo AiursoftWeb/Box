@@ -34,20 +34,6 @@ localIP = "satisfactory_server"
 localPort = 7777
 remotePort = 7777
 
-[[proxies]]
-name = "satisfactory_udp"
-type = "udp"
-localIP = "satisfactory_server"
-localPort = 7777
-remotePort = 7777
-
-[[proxies]]
-name = "satisfactory_messaging"
-type = "tcp"
-localIP = "satisfactory_server"
-localPort = 8888
-remotePort = 8888
-
 # Regular update to ensure safe.
 [[proxies]]
 name = "mc"
@@ -55,14 +41,6 @@ type = "tcp"
 localIP = "minecraft_server"
 localPort = 25565
 remotePort = 25565
-
-# Regular update to ensure safe.
-[[proxies]]
-name = "mc_bedrock"
-type = "udp"
-localIP = "minecraft_server"
-localPort = 19132
-remotePort = 19132
 
 # Regular update to ensure safe.
 [[proxies]]
