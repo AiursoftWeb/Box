@@ -1,11 +1,9 @@
 serverAddr = "FRP_SERVER_IP"
 serverPort = 7000
 auth.token = "FRP_TOKEN"
-# transport.poolCount = 6
+transport.poolCount = 16
 transport.protocol = "tcp" 
-# transport.useCompression = true 
 webServer.addr = "0.0.0.0"
-# TODO: Proxy with Caddy
 webServer.port = 7400
 webServer.user = "admin"
 webServer.password = "admin"
