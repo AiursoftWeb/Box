@@ -18,6 +18,9 @@ services:
       - AppSettings__OIDC__ClientSecret={{WCE_CLIENT_SECRET}}
       - AppSettings__Wechat__AppId={{WCEXAM_APP_ID}}
       - AppSettings__Wechat__AppSecret={{WCEXAM_APP_SECRET}}
+      - OpenAI__CompletionApiUrl=https://ollama.aiursoft.com/api/chat
+      - OpenAI__Model=qwen3:30b-a3b-instruct-2507-q8_0
+      - OpenAI__Token={{OLLAMA_GATEWAY_API_KEY}}
     networks:
       - proxy_app
       - internal
