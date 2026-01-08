@@ -28,14 +28,6 @@ transport.proxyProtocolVersion = "v2"
 
 # Regular update to ensure safe.
 [[proxies]]
-name = "satisfactory_tcp"
-type = "tcp"
-localIP = "satisfactory_server"
-localPort = 7777
-remotePort = 7777
-
-# Regular update to ensure safe.
-[[proxies]]
 name = "mc"
 type = "tcp"
 localIP = "minecraft_server"
