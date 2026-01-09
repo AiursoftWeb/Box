@@ -306,7 +306,8 @@ function create_network() {
     known_networks=$(sudo docker network ls --format '{{.Name}}')
     if [[ $known_networks != *"$network_name"* ]]; then
         print_warn "Creating network $network_name with subnet $subnet..."
-        networkId=$(sudo docker network create --driver overlay --attachable --subnet $subnet --scope swarm $network_name)
+        # MTU should be 1350 to avoid fragmentation in most cases
+        networkId=$(sudo docker network create --driver overlay --attachable --subnet $subnet --scope swarm --opt com.docker.network.driver.mtu=1350 $network_name)
         print_ok "Network $network_name created with id $networkId"
     fi
 }
