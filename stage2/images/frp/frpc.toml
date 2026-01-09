@@ -2,6 +2,8 @@ serverAddr = "FRP_SERVER_IP"
 serverPort = 7000
 auth.token = "FRP_TOKEN"
 transport.poolCount = 5
+transport.protocol = "quic"
+transport.tcpMux = true
 webServer.addr = "0.0.0.0"
 webServer.port = 7400
 webServer.user = "admin"
@@ -15,6 +17,8 @@ localIP = "incoming_sites"
 localPort = 80
 remotePort = 80
 transport.proxyProtocolVersion = "v2"
+transport.useEncryption = false
+transport.useCompression = true
 
 # Check on Caddy.
 [[proxies]]
@@ -24,6 +28,8 @@ localIP = "incoming_sites"
 localPort = 443
 remotePort = 443
 transport.proxyProtocolVersion = "v2"
+transport.useEncryption = false
+transport.useCompression = true
 
 # Regular update to ensure safe.
 [[proxies]]
@@ -32,6 +38,8 @@ type = "tcp"
 localIP = "minecraft_server"
 localPort = 25565
 remotePort = 25565
+transport.useEncryption = false
+transport.useCompression = false
 
 # Regular update to ensure safe.
 [[proxies]]
@@ -40,6 +48,8 @@ type = "tcp"
 localIP = "gitea_app"
 localPort = 2201
 remotePort = 2201
+transport.useEncryption = false
+transport.useCompression = false
 
 # Regular update to ensure safe.
 [[proxies]]
@@ -48,3 +58,5 @@ type = "tcp"
 localIP = "gitlab_gitlab"
 localPort = 2202
 remotePort = 2202
+transport.useEncryption = false
+transport.useCompression = false
