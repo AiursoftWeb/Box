@@ -18,7 +18,7 @@ localPort = 80
 remotePort = 80
 transport.proxyProtocolVersion = "v2"
 transport.useEncryption = false
-transport.useCompression = true
+transport.useCompression = false
 
 # Check on Caddy.
 [[proxies]]
@@ -29,7 +29,7 @@ localPort = 443
 remotePort = 443
 transport.proxyProtocolVersion = "v2"
 transport.useEncryption = false
-transport.useCompression = true
+transport.useCompression = false
 
 # Regular update to ensure safe.
 [[proxies]]
