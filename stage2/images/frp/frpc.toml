@@ -8,7 +8,7 @@ webServer.addr = "0.0.0.0"
 webServer.port = 7400
 webServer.user = "admin"
 webServer.password = "admin"
-login_fail_exit = true
+loginFailExit = true
 
 # Check on Caddy.
 [[proxies]]
