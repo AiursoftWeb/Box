@@ -33,7 +33,7 @@ COLUMNS = [
     'ts', 'level', 'logger', 'msg',
     'remote_ip', 'remote_port', 'method', 'host', 'uri',
     'status', 'duration_ms', 'bytes_sent',
-    'user_agent', 'err_id', 'err_trace'
+    'user_agent', 'country', 'err_id', 'err_trace'
 ]
 
 # Shutdown event
@@ -126,7 +126,8 @@ def transform(rec):
         str(rec.get('level', '')),
         str(rec.get('logger', '')),
         str(rec.get('msg', '')),
-        str(request.get('remote_ip', '')),
+        # Prioritize client_ip (real IP resolved by trusted_proxies) over remote_ip (Cloudflare node IP)
+        str(request.get('client_ip') or request.get('remote_ip', '')),
         int(request.get('remote_port', 0) or 0),
         str(request.get('method', '')),
         str(request.get('host', '')),
@@ -135,6 +136,7 @@ def transform(rec):
         float(duration_ms),
         int(rec.get('size', rec.get('bytes_sent', 0)) or 0),
         str(extract_first(headers, 'User-Agent')),
+        str(extract_first(headers, 'Cf-Ipcountry')),  # Country code from Cloudflare
         str(rec.get('err_id', '')),
         str(rec.get('err_trace', ''))
     )
