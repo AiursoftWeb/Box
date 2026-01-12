@@ -13,6 +13,9 @@ mirror_image() {
 echo "Mirroring Ubuntu..."
 mirror_image "ubuntu:25.10"
 
+echo "Mirroring Cloudflared..."
+mirror_image "cloudflare/cloudflared"
+
 echo "Mirroring Caddy builder..."
 mirror_image "caddy:builder"
 

@@ -14,8 +14,19 @@ services:
         protocol: tcp
         mode: host
     networks:
-      - frp_net
-      - proxy_app
+      proxy_app:
+        aliases:
+          # Network aliases for internal DNS resolution
+          # Allows internal services to resolve these domains directly to Caddy
+          # without needing to go through Cloudflare or modify /etc/hosts
+          ---DOMAINS---
+          # Add more domains as needed
+      frp_net:
+    environment:
+      # Cloudflare API token for Let's Encrypt DNS-01 challenge
+      # Create token at: Cloudflare Dashboard -> My Profile -> API Tokens
+      # Required permissions: Zone:DNS:Edit for target zones
+      - CLOUDFLARE_API_TOKEN={{CLOUDFLARE_API_TOKEN}}
     volumes:
       - sites-data:/data
     stop_grace_period: 60s
@@ -30,6 +41,23 @@ services:
     # Do NOT auto redeploy this. Because this is built locally.
     # Every time we run the deploy.sh will update the image.
     # During incidents, we may need to manually ssh into the server and restart the service.
+
+  tunnel:
+    image: localhost:8080/public_mirror/cloudflare/cloudflared:latest
+    networks:
+      - frp_net
+    environment:
+      - TUNNEL_TOKEN={{CLOUDFLARE_DNS_TOKEN}}
+    command: tunnel run
+    stop_grace_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '8.0'
+          memory: 16G
+      update_config:
+        order: stop-first
+        delay: 60s
 
   pysyncer:
     image: localhost:8080/box_starting/local_pysyncer
