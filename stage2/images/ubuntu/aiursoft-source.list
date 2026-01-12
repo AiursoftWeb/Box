@@ -1,4 +1,4 @@
-deb http://mirror.aiursoft.com/ubuntu/ questing main restricted universe multiverse
-deb http://mirror.aiursoft.com/ubuntu/ questing-updates main restricted universe multiverse
-deb http://mirror.aiursoft.com/ubuntu/ questing-backports main restricted universe multiverse
-deb http://mirror.aiursoft.com/ubuntu/ questing-security main restricted universe multiverse
+deb https://mirror.aiursoft.com/ubuntu/ questing main restricted universe multiverse
+deb https://mirror.aiursoft.com/ubuntu/ questing-updates main restricted universe multiverse
+deb https://mirror.aiursoft.com/ubuntu/ questing-backports main restricted universe multiverse
+deb https://mirror.aiursoft.com/ubuntu/ questing-security main restricted universe multiverse
