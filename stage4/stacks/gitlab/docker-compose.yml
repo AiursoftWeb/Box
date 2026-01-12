@@ -83,6 +83,7 @@ services:
       - GITLAB_RUNNER_TOKEN={{GITLAB_RUNNER_TOKEN}}
     networks:
       - internal
+      - proxy_app
     stop_grace_period: 20s
     deploy:
       resources:
@@ -105,6 +106,7 @@ services:
       - GITLAB_RUNNER_TOKEN={{GITLAB_RUNNER_TOKEN_FOR_GROUP}}
     networks:
       - internal
+      - proxy_app
     stop_grace_period: 20s
     deploy:
       resources:

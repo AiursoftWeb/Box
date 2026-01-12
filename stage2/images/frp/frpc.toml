@@ -10,28 +10,6 @@ webServer.user = "admin"
 webServer.password = "admin"
 loginFailExit = true
 
-# Check on Caddy.
-[[proxies]]
-name = "http"
-type = "tcp"
-localIP = "incoming_sites"
-localPort = 80
-remotePort = 80
-transport.proxyProtocolVersion = "v2"
-transport.useEncryption = false
-transport.useCompression = false
-
-# Check on Caddy.
-[[proxies]]
-name = "https"
-type = "tcp"
-localIP = "incoming_sites"
-localPort = 443
-remotePort = 443
-transport.proxyProtocolVersion = "v2"
-transport.useEncryption = false
-transport.useCompression = false
-
 # Regular update to ensure safe.
 [[proxies]]
 name = "mc"
