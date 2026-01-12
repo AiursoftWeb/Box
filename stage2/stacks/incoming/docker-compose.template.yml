@@ -95,26 +95,6 @@ services:
     # Every time we run the deploy.sh will update the image.
     # During incidents, we may need to manually ssh into the server and restart the service.
 
-  frpc_jp:
-    image: localhost:8080/box_starting/local_frp
-    networks:
-      - frp_net
-    environment:
-      - FRP_SERVER=45.77.178.215
-      - FRP_TOKEN={{FRP_TOKEN}}
-    stop_grace_period: 60s
-    deploy:
-      resources:
-        limits:
-          cpus: '4.0'
-          memory: 8G
-      update_config:
-        order: stop-first
-        delay: 60s
-    # Do NOT auto redeploy this. Because this is built locally.
-    # Every time we run the deploy.sh will update the image.
-    # During incidents, we may need to manually ssh into the server and restart the service.
-
 volumes:
   sites-data:
     driver: local
