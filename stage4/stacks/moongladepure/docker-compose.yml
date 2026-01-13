@@ -63,7 +63,7 @@ services:
   jimmoen:
     depends_on:
       - jimmoen-db
-    image: hub.aiursoft.com/aiursoft/moongladepure
+    image: hub.aiursoft.com/aiursoft/moongladepure:code-first
     volumes:
       - jimmoen-files:/data/files
       - jimmoen-aspnet:/data/.aspnet/
@@ -354,7 +354,7 @@ services:
   dvorak:
     depends_on:
       - dvorak-db
-    image: hub.aiursoft.com/aiursoft/moongladepure
+    image: hub.aiursoft.com/aiursoft/moongladepure:code-first
     volumes:
       - dvorak-files:/data/files
       - dvorak-aspnet:/data/.aspnet/
