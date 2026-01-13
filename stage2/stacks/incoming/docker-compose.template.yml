@@ -48,7 +48,16 @@ services:
       - frp_net
     environment:
       - TUNNEL_TOKEN={{CLOUDFLARE_TUNNEL_TOKEN}}
-    command: tunnel --no-autoupdate run --protocol http2 --metrics 0.0.0.0:2000
+      # 使用环境变量替代命令行 flag
+      - NO_AUTOUPDATE=true
+      - TUNNEL_METRICS=0.0.0.0:2000
+      - TUNNEL_TRANSPORT_PROTOCOL=http2
+      # 新增优化参数（同样使用环境变量）
+      - TUNNEL_HA_CONNECTIONS=4
+      - TUNNEL_HEARTBEAT_INTERVAL=10s
+      - TUNNEL_HEARTBEAT_COUNT=2
+    # command 保持最简，只保留动作
+    command: tunnel run
     stop_grace_period: 60s
     deploy:
       resources:
