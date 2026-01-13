@@ -470,7 +470,7 @@ services:
   xinboo:
     depends_on:
       - xinboo-db
-    image: hub.aiursoft.com/aiursoft/moongladepure
+    image: hub.aiursoft.com/aiursoft/moongladepure:code-first
     volumes:
       - xinboo-files:/data/files
       - xinboo-aspnet:/data/.aspnet/
