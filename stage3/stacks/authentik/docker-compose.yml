@@ -70,6 +70,8 @@ services:
       - media:/media
       - custom-templates:/templates
       - icons:/web/dist/assets/icons
+      - /home/anduin/authentik-patch/wechat.py:/authentik/sources/oauth/types/wechat.py
+      # patch /home/anduin/authentik-patch to /
     environment:
       - AUTHENTIK_SECRET_KEY={{AUTHENTIK_SECRET_KEY}}
       - AUTHENTIK_REDIS__HOST=redis
