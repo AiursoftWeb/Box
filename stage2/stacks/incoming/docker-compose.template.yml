@@ -48,7 +48,7 @@ services:
       - frp_net
     environment:
       - TUNNEL_TOKEN={{CLOUDFLARE_TUNNEL_TOKEN}}
-    command: tunnel run
+    command: tunnel run --protocol http2 --no-autoupdate --metrics localhost:2000
     stop_grace_period: 60s
     deploy:
       resources:
