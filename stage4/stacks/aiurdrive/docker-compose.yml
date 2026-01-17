@@ -6,33 +6,33 @@ services:
       - db
     image: hub.aiursoft.com/aiursoft/aiurdrive
     volumes:
-      - data:/data/files
-      - aspnet:/data/.aspnet
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /tmp:/tmp
+      - aiurdrive-aspnet:/data/.aspnet/
+      - aiurdrive-files:/data/files
     environment:
-      AiFeatures__HyperScaling: "True"
-      ConnectionStrings__DefaultConnection: Server=db;Database=aiurdrive;Uid=aiurdrive;Pwd=<aiurdrive_password>;
-      ConnectionStrings__DbType: MySql
-      Storage__Path: /data/files
+      - ConnectionStrings__DefaultConnection=Server=db;Database=aiurdrive;Uid=aiurdrive;Pwd=<aiurdrive_password>;
+      - ConnectionStrings__DbType=MySql
+      - Storage__Path=/data/files
+      - AppSettings__AuthProvider=OIDC
+      - AppSettings__OIDC__Authority=https://auth.aiursoft.com/application/o/aiurdrive
+      - AppSettings__OIDC__ClientId={{AIURDRIVE_CLIENT_ID}}
+      - AppSettings__OIDC__ClientSecret={{AIURDRIVE_CLIENT_SECRET}}
     networks:
-      - proxy_app
       - internal
-    stop_grace_period: 20s
+      - proxy_app
+    stop_grace_period: 60s
     deploy:
-      replicas: 2
       resources:
         limits:
-          cpus: '4.0'
-          memory: 4G
+          cpus: '2.0'
+          memory: 2G
       update_config:
-        order: start-first
-        delay: 5s
+        order: stop-first
+        delay: 60s
 
   db:
     image: hub.aiursoft.com/mysql
     volumes:
-      - db:/var/lib/mysql
+      - aiurdrive-db:/var/lib/mysql
     environment:
       - MYSQL_RANDOM_ROOT_PASSWORD=true
       - MYSQL_DATABASE=aiurdrive
@@ -41,40 +41,34 @@ services:
     networks:
       - internal
     stop_grace_period: 60s
-    healthcheck:
-      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root --silent"]
-      start_period: 20s
-      interval: 30s
-      retries: 5
-      timeout: 5s
     deploy:
       resources:
         limits:
-          cpus: '4.0'
-          memory: 8G
+          cpus: '2.0'
+          memory: 4G
       update_config:
         order: stop-first
         delay: 60s
 
 volumes:
-  aspnet:
+  aiurdrive-files:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /swarm-vol/aiurdrive/aspnet
-  data:
+      device: /swarm-vol/aiurdrive-data/files
+  aiurdrive-aspnet:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /swarm-vol/aiurdrive/data
-  db:
+      device: /swarm-vol/aiurdrive-data/aspnet
+  aiurdrive-db:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /swarm-vol/aiurdrive/db
+      device: /swarm-vol/aiurdrive-data/mysql
 
 networks:
   proxy_app:
