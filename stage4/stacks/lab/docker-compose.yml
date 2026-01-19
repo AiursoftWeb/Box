@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   authentik_proxy:
-    image: hub.aiursoft.com/ghcr.io/goauthentik/proxy:2025.10.3
+    image: hub.aiursoft.com/ghcr.io/goauthentik/proxy:2025.12.1
     volumes:
       - type: bind
         source: /dev/shm
