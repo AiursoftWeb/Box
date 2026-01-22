@@ -89,7 +89,7 @@ services:
     networks:
       - frp_net
     environment:
-      - FRP_SERVER=110.42.14.204
+      - FRP_SERVER=110.42.61.7
       - FRP_TOKEN={{FRP_TOKEN}}
     stop_grace_period: 60s
     deploy:
